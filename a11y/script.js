@@ -1,5 +1,17 @@
-document.head.innerHTML += '<link rel="stylesheet" href="https://nicolasambroise.github.io/a11y/js_modal.css">'
-document.head.innerHTML += '<script src="https://nicolasambroise.github.io/a11y/js_modal.js"></script>'
+// Add CSS file
+let cssModal = document.getElementById('injected-css');
+if (cssModal === null) {
+  cssModal = document.createElement('link');
+  cssModal.id = 'injected-css';
+  cssModal.rel = 'stylesheet';
+  document.getElementsByTagName('head')[0].appendChild(cssModal);
+}
+cssModal.href = 'https://nicolasambroise.github.io/a11y/js_modal.css?v=' + Date.now();
+
+var jsModal = document.createElement('script');
+jsModal.src = 'https://nicolasambroise.github.io/a11y/js_modal.js';
+document.body.appendChild(jsModal);
+
 
 var result_crit = "<p>test1</p>";
 var result_nc = "<p>test2</p>";
