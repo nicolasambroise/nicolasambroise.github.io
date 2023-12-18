@@ -10,7 +10,7 @@ cssModal.href = 'https://nicolasambroise.github.io/a11y/js-modal.css?v=' + Date.
 
 var jsModal = document.createElement('script');
 jsModal.src = 'https://nicolasambroise.github.io/a11y/js-modal.js?v=' + Date.now();
-document.body.appendChild(jsModal);
+document.getElementsByTagName('head')[0].appendChild(jsModal);
 
 
 var result_crit = "<p>test1</p>";
