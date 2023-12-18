@@ -6,10 +6,10 @@ if (cssModal === null) {
   cssModal.rel = 'stylesheet';
   document.getElementsByTagName('head')[0].appendChild(cssModal);
 }
-cssModal.href = 'https://nicolasambroise.github.io/a11y/js_modal.css?v=' + Date.now();
+cssModal.href = 'https://nicolasambroise.github.io/a11y/js-modal.css?v=' + Date.now();
 
 var jsModal = document.createElement('script');
-jsModal.src = 'https://nicolasambroise.github.io/a11y/js_modal.js';
+jsModal.src = 'https://nicolasambroise.github.io/a11y/js-modal.js?v=' + Date.now();
 document.body.appendChild(jsModal);
 
 
