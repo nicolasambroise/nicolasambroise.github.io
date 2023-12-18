@@ -245,7 +245,7 @@ o	Todo : Ajouter du JS pour détecter également les $nbsp; */
 	  nia05a_query.style.outlineOffset = "5px";
 	}
 
-	const nia05b_nodes = document.querySelectorAll("*:not(:where(div, span, img, svg, use, i, time[datetime], iframe, canvas, script, td, input, textarea, select[disabled], option[disabled]))");
+	const nia05b_nodes = document.querySelectorAll("body *:not(:where(div, span, img, svg, use, path, circle, i, time[datetime], iframe, canvas, script, td, input, textarea, select[disabled], option[disabled]))");
 	let nia05b_flag = false;
 	let clean_node = "";
 	console.log(nia05b_nodes.length + " elements détécté sur cette page");
@@ -524,10 +524,10 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 /*- -------------------------------------------------------------------------------- */
 // END
 
-result_crit += "</ul>";
-result_nc += "</ul>";
-result_nth += "</ul>";
-result_dev += "</ul>";
+if (result_crit == "<ul>";){result_crit = "<p>-</p>";}else{result_crit += "</ul>";}
+if (result_nc == "<ul>";){result_nc = "<p>-</p>";}else{result_nc += "</ul>";}
+if (result_nth == "<ul>";){result_nth = "<p>-</p>";}else{result_nth += "</ul>";}
+if (result_dev == "<ul>";){result_dev = "<p>-</p>";}else{result_dev += "</ul>";}
 
 // W3C
 
@@ -542,7 +542,7 @@ result_dev += "</ul>";
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
 NIAmodalA11Y.setAttribute("id", "NIAmodalA11Y");
-NIAmodalA11Y.innerHTML = '<h1>A11Y Review</h1><h2>Points critiques</h2>'+result_crit+'<h2>Points non-conforme</h2>'+result_nc+'<h2>Nice-to-have</h2>'+result_nth+'<h2>Problèmes dev</h2>'+result_dev+'<hr><h2>W3C</h2><p>Todo</p><h2>WAVE</h2><p>Todo</p><h2>Lighthouse</h2><p>Todo</p>';
+NIAmodalA11Y.innerHTML = '<h1>A11Y Review</h1><h2>Points critiques</h2>'+result_crit+'<h2>Points non-conforme</h2>'+result_nc+'<h2>Nice-to-have</h2>'+result_nth+'<h2>Problèmes dev</h2>'+result_dev+'<hr><h2>W3C</h2><p>-</p><h2>WAVE</h2><p>-</p><h2>Lighthouse</h2><p>-</p>';
 document.body.appendChild(NIAmodalA11Y);
 
 setTimeout(() => {
