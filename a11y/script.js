@@ -524,10 +524,10 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 /*- -------------------------------------------------------------------------------- */
 // END
 
-if (result_crit == "<ul>";){result_crit = "<p>-</p>";}else{result_crit += "</ul>";}
-if (result_nc == "<ul>";){result_nc = "<p>-</p>";}else{result_nc += "</ul>";}
-if (result_nth == "<ul>";){result_nth = "<p>-</p>";}else{result_nth += "</ul>";}
-if (result_dev == "<ul>";){result_dev = "<p>-</p>";}else{result_dev += "</ul>";}
+if (result_crit == "<ul>"){result_crit = "<p>-</p>";}else{result_crit += "</ul>";}
+if (result_nc == "<ul>"){result_nc = "<p>-</p>";}else{result_nc += "</ul>";}
+if (result_nth == "<ul>"){result_nth = "<p>-</p>";}else{result_nth += "</ul>";}
+if (result_dev == "<ul>"){result_dev = "<p>-</p>";}else{result_dev += "</ul>";}
 
 // W3C
 
