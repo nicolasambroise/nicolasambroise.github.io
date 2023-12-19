@@ -24,10 +24,10 @@ if(!currentUrl.includes(".public.lu") && !currentUrl.includes(".gouvernement.lu"
 alert("Ce Bookmarklet est à utiliser seulement sur les sites étatiques luxembourgeois");
 }
 // Init result message
-let result_crit = "<ul>";
-let result_nc = "<ul>";
-let result_nth = "<ul>";
-let result_dev = "<ul>";
+let result_crit = "";
+let result_nc = "";
+let result_nth = "";
+let result_dev = "";
 
 /*- -------------------------------------------------------------------------------- */
 
@@ -197,10 +197,11 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 	let content = "", title = "";
 	console.log(nia03e_nodes.length + " liens detectés sur cette page");
 	for(let i = 0; i < nia03e_nodes.length; i++){
-		title = nia03e_nodes[i].getAttribute("title").toLowerCase()
-		content = nia03e_nodes[i].textContent.toLowerCase();
+		title = nia03e_nodes[i].getAttribute("title").toLowerCase().replace(/\n|\r/g, "").trim();
+		content = nia03e_nodes[i].textContent.toLowerCase().replace(/\n|\r/g, "").trim();
 		if(!title.includes(content)){
 			//nia03e_nodes[i].innerHTML = "";
+			console.log("["+title+"] contain ["+content+"]");
 			nia03e_nodes[i].style.outline = "3px solid red";
 			nia03e_nodes[i].style.outlineOffset = "-2px";
 			nia03e_flag = true;
@@ -238,14 +239,14 @@ if(currentUrl.includes("contact.html")){
 o	Todo : Ajouter du JS pour détecter également les $nbsp; */
 
 	// A. Bloc vide
-	const nia05a_query = document.querySelectorAll('*:not(:where(div, span, img, svg, use, path, circle, rect i, time[datetime], iframe, canvas, script, td, input, textarea, select[disabled], option[disabled])):empty');
+	const nia05a_query = document.querySelectorAll('*:not(:where(div, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"])):empty');
 	if(nia05a_query && nia05a_query.lenght > 0){
 	  result_nc += "<li>05-A : Présence de balise vide</li>";
 	  nia05a_query.style.outline = "3px solid red";
 	  nia05a_query.style.outlineOffset = "5px";
 	}
 
-	const nia05b_nodes = document.querySelectorAll("body *:not(:where(div, span, img, svg, use, path, circle, rect i, time[datetime], iframe, canvas, script, td, input, textarea, select[disabled], option[disabled]))");
+	const nia05b_nodes = document.querySelectorAll('body *:not(:where(div, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"]))');
 	let nia05b_flag = false;
 	let clean_node = "";
 	console.log(nia05b_nodes.length + " elements détécté sur cette page");
@@ -253,6 +254,8 @@ o	Todo : Ajouter du JS pour détecter également les $nbsp; */
 		clean_node = nia05b_nodes[i].innerHTML.replaceAll(/\s/g,'');
 		if(clean_node == "" && !nia05b_nodes[i].hasChildNodes()){
 			//nodes[i].innerHTML = "";
+			console.log(nia05b_nodes[i]);
+			console.log(nia05b_nodes[i].parentElement);
 			nia05b_nodes[i].style.outline = "3px solid red";
 			nia05b_nodes[i].style.outlineOffset = "-2px";
 			nia05b_flag = true;
@@ -523,26 +526,21 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 
 /*- -------------------------------------------------------------------------------- */
 // END
-
-if (result_crit == "<ul>"){result_crit = "<p>-</p>";}else{result_crit += "</ul>";}
-if (result_nc == "<ul>"){result_nc = "<p>-</p>";}else{result_nc += "</ul>";}
-if (result_nth == "<ul>"){result_nth = "<p>-</p>";}else{result_nth += "</ul>";}
-if (result_dev == "<ul>"){result_dev = "<p>-</p>";}else{result_dev += "</ul>";}
-
-// W3C
-
-
-// WAVE
-
-
-// Lighthouse
-
+let result_global = "";
+if (result_crit != ""){result_crit = "<h2>Points critiques</h2><ul>"+result_crit+"</ul>";}
+if (result_nc != ""){result_nc = "<h2>Points non-conforme</h2><ul>"+result_nc+"</ul>";}
+if (result_nth != ""){result_nth = "<h2>Nice-to-have</h2><ul>"+result_nth+"</ul>";}
+if (result_dev != ""){result_dev = "<h2>Problèmes dev</h2><ul>"+result_dev+"</ul>";}
+if (result_crit == "" && result_crit == "" && result_crit == "" && result_crit == "" ){
+  result_global = "Pas de points remontés !"; 
+}
+else { result_global = result_crit + result_nc + result_nth + result_dev;}
 
 
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
 NIAmodalA11Y.setAttribute("id", "NIAmodalA11Y");
-NIAmodalA11Y.innerHTML = '<h1>A11Y Review</h1><h2>Points critiques</h2>'+result_crit+'<h2>Points non-conforme</h2>'+result_nc+'<h2>Nice-to-have</h2>'+result_nth+'<h2>Problèmes dev</h2>'+result_dev+'<hr><h2>W3C</h2><p>-</p><h2>WAVE</h2><p>-</p><h2>Lighthouse</h2><p>-</p>';
+NIAmodalA11Y.innerHTML = '<h1>A11Y Review</h1>'+result_global+'<hr><h2>Test automatique</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURI(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURI(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURI(currentUrl)+'" target="_blank">lien</a></li></ul>';
 document.body.appendChild(NIAmodalA11Y);
 
 setTimeout(() => {
