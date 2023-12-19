@@ -199,7 +199,7 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 	for(let i = 0; i < nia03e_nodes.length; i++){
 		title = nia03e_nodes[i].getAttribute("title").toLowerCase()
 		content = nia03e_nodes[i].textContent.toLowerCase();
-		if(title.includes(content)){
+		if(!title.includes(content)){
 			//nia03e_nodes[i].innerHTML = "";
 			nia03e_nodes[i].style.outline = "3px solid red";
 			nia03e_nodes[i].style.outlineOffset = "-2px";
@@ -238,14 +238,14 @@ if(currentUrl.includes("contact.html")){
 o	Todo : Ajouter du JS pour détecter également les $nbsp; */
 
 	// A. Bloc vide
-	const nia05a_query = document.querySelectorAll('*:not(:where(div, span, i, time[datetime], iframe, canvas, script, td, textarea, select[disabled], option[disabled], input[type=checkbox][id])):empty');
+	const nia05a_query = document.querySelectorAll('*:not(:where(div, span, img, svg, use, path, circle, rect i, time[datetime], iframe, canvas, script, td, input, textarea, select[disabled], option[disabled])):empty');
 	if(nia05a_query && nia05a_query.lenght > 0){
 	  result_nc += "<li>05-A : Présence de balise vide</li>";
 	  nia05a_query.style.outline = "3px solid red";
 	  nia05a_query.style.outlineOffset = "5px";
 	}
 
-	const nia05b_nodes = document.querySelectorAll("body *:not(:where(div, span, img, svg, use, path, circle, i, time[datetime], iframe, canvas, script, td, input, textarea, select[disabled], option[disabled]))");
+	const nia05b_nodes = document.querySelectorAll("body *:not(:where(div, span, img, svg, use, path, circle, rect i, time[datetime], iframe, canvas, script, td, input, textarea, select[disabled], option[disabled]))");
 	let nia05b_flag = false;
 	let clean_node = "";
 	console.log(nia05b_nodes.length + " elements détécté sur cette page");
