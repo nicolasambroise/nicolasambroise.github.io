@@ -90,15 +90,15 @@ o	Absence de copyright/caption/légende sur une image Core V3,
 o	Images v1 légendés presence du aria-label sur le figure */
 
 	// A. Présence d’un attribut alt sur toutes les images 
-	const nia02a_query = document.querySelectorAll('img:not([alt])');
+	const nia02a_query = document.querySelectorAll('img:not([alt]):not([src="//cdn.public.lu/guichet-lu/pictures/maps/icon-parent.png"])');
 	if(nia02a_query && nia02a_query.length > 0){
 	  result_nc += "<li>02-A : Présence de " + nia02a_query.length + " image sans attribut alt</li>";
 	  setOutline(nia02a_query,"red");
 	}
 
 	// B. Vérification des attributs des svg, 
-	const nia02b1_query = document.querySelectorAll('svg:not([aria-hidden="true"])'); 
-	const nia02b2_query = document.querySelectorAll('svg:not([focusable="false"])');
+	const nia02b1_query = document.querySelectorAll('svg:not([aria-hidden="true"]):not(.iconset)'); 
+	const nia02b2_query = document.querySelectorAll('svg:not([focusable="false"]):not(.iconset)');
 	if(nia02b1_query && nia02b1_query.length > 0){
 	  result_nc += "<li>02-B : Absence de certains attributs sur des SVG (aria-hidden=true)</li>";
 	  setOutline(nia02b1_query,"red");
@@ -133,7 +133,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l’attribut title du lien */
 
 	// A. Verification de la présence du suffix sur les liens externe
-	const nia03a1_query = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="Nouvelle fenêtre"])');
+	const nia03a1_query = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo)');
 	const nia03a2_query = document.querySelectorAll('html[lang="fr"] a[title$="Nouvelle fenêtre"]:not([target="_blank"])');
 	if((nia03a1_query && nia03a1_query.length > 0) || (nia03a2_query && nia03a2_query.length > 0)){
 	  result_dev += "<li>03-A : Vérifier la présence de suffixe sur les liens externes</li>";
@@ -192,22 +192,51 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 if(currentUrl.includes("contact.html")){
 
 	// A. Champ générique 
-	const nia04a1_query = document.querySelectorAll('input[name="name"]:not([autocomplete="family-name"])');
-	const nia04a2_query = document.querySelectorAll('input[name="firstname"]:not([autocomplete="given-name"])');
-	const nia04a3_query = document.querySelectorAll('input[type="email"]:not([autocomplete="email"])');
-	const nia04a4_query = document.querySelectorAll('input[type="tel"]:not([autocomplete="tel"])');
-	const nia04a5_query = document.querySelectorAll('input[name="phone"]:not([autocomplete="tel"])');
-	const nia04a6_query = document.querySelectorAll('input[name="country"]:not([autocomplete="country-name"])');
-	const nia04a7_query = document.querySelectorAll('select[name="country"]:not([autocomplete="country"])');
-	if(nia04a1_query.length > 0 || nia04a2_query.length > 0 || nia04a3_query.length > 0 || nia04a4_query.length > 0 || nia04a5_query.length > 0 || nia04a6_query.length > 0 ||nia04a7_query.length > 0 ){
-	  result_nc += "<li>04-A : Absence d'attribut autocomplete sur les champs formulaire</li>";
+	const nia04a1_query = document.querySelectorAll('input[name="name"]:not([autocomplete="family-name"]), input[name="lastname"]:not([autocomplete="family-name"])');
+	if(nia04a1_query && nia04a1_query.length > 0){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (name)</li>";
 	  setOutline(nia04a1_query,"red");
+	}
+	
+	const nia04a2_query = document.querySelectorAll('input[name="firstname"]:not([autocomplete="given-name"])');
+	if(nia04a2_query && nia04a2_query.length > 0){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (firstname)</li>";
 	  setOutline(nia04a2_query,"red");
+	}
+	const nia04a3_query = document.querySelectorAll('input[type="email"]:not([autocomplete="email"])');
+	if(nia04a3_query && nia04a3_query.length > 0){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (email)</li>";
 	  setOutline(nia04a3_query,"red");
+	}
+	const nia04a4_query = document.querySelectorAll('input[type="tel"]:not([autocomplete="tel"]), input[name="phone"]:not([autocomplete="tel"])');
+	if(nia04a4_query && nia04a4_query.length > 0){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (phone)</li>";
 	  setOutline(nia04a4_query,"red");
+	}
+	const nia04a5_query = document.querySelectorAll('input[name="postal"]:not([autocomplete="postal-code"]),input[type="postal-code"]:not([autocomplete="postal-code"])');
+	if(nia04a5_query && nia04a5_query.length > 0){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (postal)</li>";
 	  setOutline(nia04a5_query,"red");
+	}
+	const nia04a6_query = document.querySelectorAll('input[name="country"]:not([autocomplete="country-name"]), select[name="country"]:not([autocomplete="country"])');
+	if(nia04a6_query && nia04a6_query.length > 0){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (country)</li>";
 	  setOutline(nia04a6_query,"red");
+	}
+	const nia04a7_query = document.querySelectorAll('input[name="matricule"][autocomplete]');
+	if(nia04a7_query && nia04a7_query.length > 0 ){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (matricule)</li>";
 	  setOutline(nia04a7_query,"red");
+	}
+	const nia04a8_query = document.querySelectorAll('input[name="city"]:not([autocomplete="address-level2"]), input[name="ville"]:not([autocomplete="address-level2"])');
+	if(nia04a8_query && nia04a8_query.length > 0){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (ville)</li>";
+	  setOutline(nia04a8_query,"red");
+	}
+	const nia04a9_query = document.querySelectorAll('input[name="adresse"]:not([autocomplete="street-address"]), input[name="street"]:not([autocomplete="street-address"])');
+	if(nia04a9_query && nia04a9_query.length > 0 ){
+	  result_nc += "<li>04-A : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (adresse)</li>";
+	  setOutline(nia04a9_query,"red");
 	}
 	
 	
@@ -271,22 +300,21 @@ if(currentUrl.includes("contact.html")){
 		}
 	}
 	if(nia04c_flag == true) {
-	  result_nc += "<li>04-C : Présence de champs sans labels</li>";
+	  result_nc += "<li>04-C : Présence de champs sans ou avec plus d'un label</li>";
 	}
-	
-	
+
 
 /* 🗸 NIA-05 Empty : Mise en avant des balises et paragraphes vides
 o	Todo : Ajouter du JS pour détecter également les $nbsp; */
 
 	// A. Bloc vide
-	const nia05a_query = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo)):empty');
+	const nia05a_query = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, br, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo)):empty');
 	if(nia05a_query && nia05a_query.length > 0){
 	  result_nc += "<li>05-A : Présence de balise vide</li>";
 	  setOutline(nia05a_query,"red");
 	}
 
-	const nia05b_nodes = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo))');
+	const nia05b_nodes = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, br, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo))');
 	let nia05b_flag = false;
 	let clean_node = "";
 	console.log(nia05b_nodes.length + " elements détécté sur cette page");
@@ -342,7 +370,7 @@ o S’assurer que les titres sont dans le bon ordre*/
 	const nia07d_query = document.querySelectorAll('b,p:not(.cmp-form__mandatory-text) > strong,span > strong,div > strong, *:not(.accordionItem) > *:not(.article-summary):not(.article-metas):not(.search-metas) > p:not(.cmp-lastupdate):not(.cmp-form__mandatory-text):not(.at):first-child');
 	if(nia07d_query && nia07d_query.length > 0){
 	  result_nth += "<li>07-D : Présence de texte resemblant à des titres n'étant pas balisé comme tel</li>";
-	  setOutline(nia07d_query,"red");
+	  setOutline(nia07d_query,"yellow");
 	}
 
 /* 🗸 NIA-08 Table : Mise en avant des tableaux et vérification présence des bons attributs sur les tableaux. S’assurer que les tableaux sont bien créé avec le composant Tableau et pas un copier/coller de word. Vérifier en particulier les balises et les attributs « scope »
@@ -532,6 +560,22 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 	  setOutline(nia13d_sitemap,"red");
 	}
 }
+
+
+/* 14. Presence de lorem ipsum */
+	
+	const nia14a_nodes = document.querySelectorAll('.cmp-text');
+	let nia14a_flag = false;
+	console.log(nia14a_nodes.length + " textes détéctés sur cette page");
+	for(let i = 0; i < nia14a_nodes.length; i++){
+		if(nia14a_nodes[i].textContent.includes('Lorem ipsum')){
+			setItemOutline(nia14a_nodes[i],"orange");
+			nia14a_flag = true;
+		}
+	}
+	if(nia14a_flag == true) {
+	  result_nth += "<li>14-A : Présence de Lorem ipsum sur la page</li>";
+	}
 
 /*- -------------------------------------------------------------------------------- */
 // END
