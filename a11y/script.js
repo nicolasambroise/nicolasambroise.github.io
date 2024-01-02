@@ -42,6 +42,7 @@ o	Todo : Ajouter du JS pour prendre en compte le menu et les dp modale
 	const nia01a_nodes = document.querySelectorAll('button.anchor[data-destination^="#headernav"]:not(.anchor-close)');
 	let nia01a_flag = false;
 	if(nia01a_nodes && nia01a_nodes.length > 0){
+		if(debug_flag) console.log("[nia01a] Boucle sur les "+nia01a_nodes.length + " ancres detectés sur cette page");
 		for(let i = 0; i < nia01a_nodes.length; i++){
 			if(nia01a_nodes[i].parentElement.tagName != 'NAV' && nia01a_nodes[i].parentElement.parentElement.tagName != 'NAV'){
 				setItemOutline(nia01a_nodes[i],"red","nia01a");
@@ -148,8 +149,8 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 	const nia03a2_query = document.querySelectorAll('html[lang="fr"] a[title$="Nouvelle fenêtre"]:not([target="_blank"])');
 	if((nia03a1_query && nia03a1_query.length > 0 && isItemsVisible(nia03a1_query)) || (nia03a2_query && nia03a2_query.length > 0 && isItemsVisible(nia03a2_query))){
 	  result_dev += "<li>03-A : Vérifier la présence de suffixe sur les liens externes</li>";
-	  setItemsOutline(nia03a1_query,"red","nia03a1");
-	  setItemsOutline(nia03a2_query,"red","nia03a2");
+	  if(nia03a1_query && nia03a1_query.length > 0 && isItemsVisible(nia03a1_query)) setItemsOutline(nia03a1_query,"red","nia03a1");
+	  if(nia03a2_query && nia03a2_query.length > 0 && isItemsVisible(nia03a2_query)) setItemsOutline(nia03a2_query,"red","nia03a2");
 	}
 
 	// B. Verification de titre vide
@@ -177,12 +178,12 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 	const nia03e_nodes = document.querySelectorAll("a[title]");
 	let nia03e_flag = false;
 	let nia03e_results = [];
-	let content = "", title = "", lang = "", textContent = "";
-	if(debug_flag) console.log("[nia03e] "+nia03e_nodes.length + " liens detectés sur cette page");
+	let content = "", title = "", lang = "";
+	if(debug_flag) console.log("[nia03e] Boucle sur les "+nia03e_nodes.length + " liens detectés sur cette page");
 	for(let i = 0; i < nia03e_nodes.length; i++){
 		lang = nia03e_nodes[i].closest('[lang]').getAttribute('lang')
 		title = sanitizeText(nia03e_nodes[i].getAttribute("title"),lang);
-		content = sanitizeText(nia03e_nodes[i].textContent,lang);
+		content = sanitizeText(nia03e_nodes[i].innerText,lang);
 		if(!title.includes(content)){
 			if(debug_flag) console.log("%cERROR","font-weight:700;color:darkred","["+title+"] VS ["+content+"] ");
 			setItemOutline(nia03e_nodes[i],"red","nia03e");
@@ -263,7 +264,7 @@ if(currentUrl.includes("contact.html")){
 	const nia04b_nodes = document.querySelectorAll('input[type="email"]');
 	let nia04b_flag = false;
 	let id = "", desc = "", label = "", help = "";
-	if(debug_flag) console.log("[nia04b] "+nia04b_nodes.length + " champs email detectés sur cette page");
+	if(debug_flag) console.log("[nia04b] Boucle sur les "+nia04b_nodes.length + " champs email detectés sur cette page");
 	for(let i = 0; i < nia04b_nodes.length; i++){
 		id = "", desc = "", label = "", help = "";
 		id = nia04b_nodes[i].getAttribute("id");
@@ -296,7 +297,7 @@ if(currentUrl.includes("contact.html")){
 	const nia04c_nodes = document.querySelectorAll("input:not([aria-label]):not([aria-labelledby]):not([type='hidden']):not([type='submit']):not([type='reset']):not([type='button']), select:not([aria-label]):not([aria-labelledby]), textarea:not([aria-label]):not([aria-labelledby])");
 	let nia04c_flag = false;
 	let label = "", id = "";
-	if(debug_flag) console.log("[nia04c] "+nia04c_nodes.length + " champs detectés sur cette page");
+	if(debug_flag) console.log("[nia04c] Boucle sur les "+nia04c_nodes.length + " champs detectés sur cette page");
 	for(let i = 0; i < nia04c_nodes.length; i++){
 		id = nia04c_nodes[i].getAttribute("id");
 		if(!id || id == ""){
@@ -320,18 +321,26 @@ if(currentUrl.includes("contact.html")){
 o	Todo : Ajouter du JS pour détecter également les $nbsp; */
 
 	// A. Bloc vide
-	//const nia05a_query = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, br, hr, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo)):empty');
-	const nia05a_query = document.querySelectorAll('*:not(.ol-attribution) > :where(p, span, td, th, strong, em, a, q, blockquote):not([aria-hidden="true"]):not(.mapboxgl-ctrl-logo):empty');
-	if(nia05a_query && nia05a_query.length > 0 && isItemsVisible(nia05a_query)){
+	//const nia05a_nodes = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, br, hr, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo)):empty');
+	const nia05a_nodes = document.querySelectorAll('*:not(.ol-attribution) > :where(p, span, td, th, strong, em, a, q, blockquote):not([aria-hidden="true"]):not(.mapboxgl-ctrl-logo):empty');
+	let container = "";
+	if(nia05a_nodes && nia05a_nodes.length > 0 && isItemsVisible(nia05a_nodes)){
 	  result_nc += "<li>05-A : Présence de balise vide</li>";
-	  setItemsOutline(nia05a_query,"red","nia05a");
+	  for(let i = 0; i < nia05a_nodes.length; i++){
+			if(isItemVisible(nia05a_nodes[i])){
+				setItemOutline(nia05a_nodes[i],"red","nia05a");
+				container = nia05a_nodes[i].parentElement;
+				container.style.outline = "3px dotted red";
+				container.style.outlineOffset = "-2px";
+			}
+		}
 	}
 
 	//const nia05b_nodes = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, br, hr, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo))');
-	const nia05b_nodes = document.querySelectorAll('*:not(.ol-attribution) > :where(p, span, td, th, strong, em, a, q, blockquote):not([aria-hidden="true"]):not(.mapboxgl-ctrl-logo)');
+	const nia05b_nodes = document.querySelectorAll('*:not(.ol-attribution) > :where(p, span, td, th, strong, em, a, q, blockquote):not([aria-hidden="true"]):not(.mapboxgl-ctrl-logo):not(:empty)');
 	let nia05b_flag = false;
 	let clean_node = ""; container = "";
-	if(debug_flag) console.log("[nia05b] " + nia05b_nodes.length + " elements détéctés sur cette page");
+	if(debug_flag) console.log("[nia05b] Boucle sur les " + nia05b_nodes.length + " elements détéctés sur cette page");
 	for(let i = 0; i < nia05b_nodes.length; i++){
 		if(nia05b_nodes[i].childElementCount == 0){
 			clean_node = nia05b_nodes[i].innerText.replaceAll(/\s/g,'').replace(/\n|\r|-|,|\|/g, "").replace(/  +/g, " ").trim();
@@ -383,7 +392,7 @@ o S’assurer que les titres sont dans le bon ordre*/
 	}
 
 	// D. Heading simulé
-	const nia07d_query = document.querySelectorAll('b,p:not(.cmp-form__mandatory-text) > strong,span > strong,div > strong, *:not(.accordionItem) > *:not(figcaption):not(.article-summary):not(.article-metas):not(.search-metas):not(.cmp-grid__textContainer):not(.feed-item-content):not(.meta-themes):not(.description):not(.meta-published-update) > p:not(.cmp-lastupdate):not(.cmp-form__mandatory-text):not(.at):not(.feed-item-author):not(.orejime-Notice-description):first-child');
+	const nia07d_query = document.querySelectorAll('b,p:not(.cmp-form__mandatory-text) > strong:first-child ,span > strong:first-child ,div > strong:first-child , *:not(.accordionItem) > *:not(figcaption):not(.article-summary):not(.article-metas):not(.search-metas):not(.cmp-grid__textContainer):not(.feed-item-content):not(.meta-themes):not(.description):not(.meta-published-update) > p:not(.cmp-lastupdate):not(.cmp-form__mandatory-text):not(.at):not(.feed-item-author):not(.orejime-Notice-description):first-child');
 	if(nia07d_query && nia07d_query.length > 0 && isItemsVisible(nia07d_query)){
 	  result_nth += "<li>07-D : Présence de texte resemblant à des titres n'étant pas balisé comme tel</li>";
 	  setItemsOutline(nia07d_query,"yellow","nia07d");
@@ -582,7 +591,7 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 	
 	const nia14a_nodes = document.querySelectorAll('.cmp-text');
 	let nia14a_flag = false;
-	if(debug_flag) console.log("[nia14a] "+nia14a_nodes.length + " textes détéctés sur cette page");
+	if(debug_flag) console.log("[nia14a] Boucle sur les "+nia14a_nodes.length + " textes détéctés sur cette page");
 	for(let i = 0; i < nia14a_nodes.length; i++){
 		if(nia14a_nodes[i].textContent.includes('Lorem ipsum')){
 			setItemOutline(nia14a_nodes[i],"orange","nia14a");
@@ -607,7 +616,7 @@ else { result_global = result_crit + result_nc + result_nth + result_dev;}
 
 // Fonction color error
 function setItemsOutline(items,color,classname){
-	if(debug_flag) console.log("["+classname+"] Detecté sur "+items.length+" éléments");
+	if(debug_flag) console.log("["+classname+"] Problème detecté sur "+items.length+" éléments");
 	let item;
 	for(let i = 0; i < items.length; i++){
 		setItemOutline(items[i],color,classname);
@@ -638,7 +647,6 @@ function isItemVisible(item){
 function sanitizeText(txt, locale) {
 	return txt.toLowerCase().toLocaleLowerCase(locale).replaceAll(/\n|\r/g, ' ').replaceAll(/[.:;,?!{}$()|'"-]/g, ' ').replaceAll(/\s+/g, ' ').trim();
 }
-
 
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
