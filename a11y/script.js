@@ -643,7 +643,7 @@ function sanitizeText(txt, locale) {
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
 NIAmodalA11Y.setAttribute("id", "NIAmodalA11Y");
-NIAmodalA11Y.innerHTML = '<h1>A11Y Review</h1>'+result_global+'<hr><h2>Test automatique</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul>';
+NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><h2>Test automatique</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div>';
 document.body.appendChild(NIAmodalA11Y);
 
 setTimeout(() => {
