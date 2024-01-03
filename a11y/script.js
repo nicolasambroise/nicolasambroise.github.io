@@ -45,6 +45,7 @@ o	Todo : Ajouter du JS pour prendre en compte le menu et les dp modale
 		if(debug_flag) console.log("[nia01a] Boucle sur les "+nia01a_nodes.length + " ancres detectés sur cette page");
 		for(let i = 0; i < nia01a_nodes.length; i++){
 			if(nia01a_nodes[i].parentElement.tagName != 'NAV' && nia01a_nodes[i].parentElement.parentElement.tagName != 'NAV'){
+				// --> Todo : remplacer par un .closest(nav) plus propre ici
 				setItemOutline(nia01a_nodes[i],"red","nia01a");
 				nia01a_flag = true;
 			}
@@ -57,7 +58,7 @@ o	Todo : Ajouter du JS pour prendre en compte le menu et les dp modale
 	// B. Breadcrumb
 	const nia01b_query = document.querySelectorAll('nav[id^=breadcrumb-] .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child');
 	if(nia01b_query && nia01b_query.length > 0 && isItemsVisible(nia01b_query)){
-	  result_dev += "<li><a href='#' data-destination='nia01b' class='result-focus'>01-B</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane</li>";
+	  result_dev += "<li><a href='#' data-destination='nia01b' class='result-focus'>01-B</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane --> Vérifier dans les propriétés de la page que celle-ci n'est pas cachée dans la navigation.</li>";
 	  setItemsOutline(nia01b_query,"red","nia01b");
 	}
 
@@ -88,13 +89,13 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	// A. Présence d’un attribut alt sur toutes les images 
 	const nia02a1_query = document.querySelectorAll('img:not([alt]):not([src^="//cdn.public.lu/guichet-lu/pictures/maps/"]):not([aria-label]):not([aria-labelledby]):not([title]), [role="image"]:not([aria-label]):not([aria-labelledby])');
 	if(nia02a1_query && nia02a1_query.length > 0 && isItemsVisible(nia02a1_query)){
-	  result_nc += "<li><a href='#' data-destination='nia02a1' class='result-focus'>02-A</a> : Présence de " + nia02a_query.length + " images sans alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a>]</li>";
+	  result_nc += "<li><a href='#' data-destination='nia02a1' class='result-focus'>02-A</a> : Présence de " + nia02a1_query.length + " images sans alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a>]</li>";
 	  setItemsOutline(nia02a1_query,"red","nia02a1");
 	}
 	
 	const nia02a2_query = document.querySelectorAll('img:not([alt]):not([src^="//cdn.public.lu/guichet-lu/pictures/maps/"])');
 	if(nia02a2_query && nia02a2_query.length > 0 && isItemsVisible(nia02a2_query)){
-	  result_nth += "<li><a href='#' data-destination='nia02a2' class='result-focus'>02-A</a> : Présence de " + nia02a_query.length + " images sans attribut alt</li>";
+	  result_nth += "<li><a href='#' data-destination='nia02a2' class='result-focus'>02-A</a> : Présence de " + nia02a2_query.length + " images sans attribut alt</li>";
 	  setItemsOutline(nia02a2_query,"yellow","nia02a2");
 	}
 
@@ -471,7 +472,7 @@ o	Todo : Ajouter du JS pour détecter également les $nbsp; */
 		}
 	}
 	if(nia05b_flag == true) {
-	  result_nc += "<li><a href='#' data-destination='nia05b' class='result-focus'>05-B</a> : Présence de balise vide (avec contenu assimilable à vide) </li>";
+	  result_nc += "<li><a href='#' data-destination='nia05b' class='result-focus'>05-B</a> : Présence de balises vides (ou avec un contenu assimilable à vide) </li>";
 	}
 
 /* 🗸 NIA-06 List : Mise en avant des listes */
@@ -511,8 +512,10 @@ o S’assurer que les titres sont dans le bon ordre*/
 	// D. Heading simulé
 	const nia07d_query = document.querySelectorAll('b,p:not(.cmp-form__mandatory-text) > strong:first-child ,span > strong:first-child ,div > strong:first-child , *:not(.accordionItem) > *:not(figcaption):not(.article-summary):not(.article-metas):not(.search-metas):not(.cmp-grid__textContainer):not(.feed-item-content):not(.meta-themes):not(.description):not(.meta-published-update) > p:not(.cmp-lastupdate):not(.cmp-form__mandatory-text):not(.at):not(.feed-item-author):not(.orejime-Notice-description):first-child');
 	if(nia07d_query && nia07d_query.length > 0 && isItemsVisible(nia07d_query)){
-	  result_nth += "<li><a href='#' data-destination='nia07d' class='result-focus'>07-D</a> : Présence de texte ressemblant à des titres n'étant pas balisé comme tel</li>";
+	  result_nth += "<li><a href='#' data-destination='nia07d' class='result-focus'>07-D</a> : Présence de texte ressemblant à des titres n'étant pas balisé comme tel - A vérifier au cas par cas</li>";
 	  setItemsOutline(nia07d_query,"yellow","nia07d");
+	  
+	  // --> Todo ajouter une boucle pour exclure les textes de plus de 150 caractères et ceux rédigé dans une taille de texte plus petit que la taille de base.
 	}
 	
 	// E. Ordre Heading
@@ -821,10 +824,7 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 				nia15a_loop = nia15a_nodes[i].renderOptions.host.__loop;
 				nia15a_counter = nia15a_nodes[i].renderOptions.host._counter;
 				nia15a_controls = nia15a_nodes[i].renderOptions.host.__controls;
-				
-				console.log("autoplay : "+nia15a_autoplay);
-				console.log("controls : "+nia15a_controls);
-
+				if(debug_flag) console.log("autoplay : "+nia15a_autoplay + " | controls : "+nia15a_controls);
 				if(nia15a_autoplay == true && nia15a_controls == false){
 					if(nia15a_loop == true){
 						result_nc += "<li><a href='#' data-destination='nia15a1' class='result-focus'>15-A</a> : Les animations lues automatiquement et qui boucles doivent avoir un controleur play/pause [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-13-8-1' target='_blank'>RGAA 13.8.1</a>]</li>";
@@ -832,7 +832,7 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 					}
 					else {
 						nia15a_duration = nia15a_totalFrames / nia15a_frameRate * nia15a_counter; // 150 / 30 * 1 = 5 
-						console.log("duration : "+nia15a_duration +" s");
+						if(debug_flag)  console.log("duration : "+nia15a_duration +" s");
 						if (nia15a_duration > 5){
 							result_nc += "<li><a href='#' data-destination='nia15a2' class='result-focus'>15-A</a> : Les animations lues automatiquement et qui durent plus de 5s doivent avoir un controleur play/pause [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-13-8-1' target='_blank'>RGAA 13.8.1</a>]</li>";
 							setItemOutline(nia15a_nodes[i],"red","nia15a2");
@@ -866,8 +866,8 @@ function setItemsOutline(items,color,classname){
 
 function setItemOutline(item,color,classname){
 	if(debug_flag) console.log(item);
-	if(color == "red"){ color = "red !important";}
-	item.style.outline = "3px solid "+color;
+	if(color == "red"){ item.setAttribute("style","outline: 3px solid red !important");}
+	else {item.style.outline = "3px solid "+color;}
 	item.style.outlineOffset = "5px";
 	item.classList.add(classname);
 }
@@ -894,7 +894,7 @@ function sanitizeText(txt, locale) {
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
 NIAmodalA11Y.setAttribute("id", "NIAmodalA11Y");
-NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><h2>Test automatique</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div>';
+NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><h2>Tests automatiques</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div>';
 document.body.appendChild(NIAmodalA11Y);
 
 let NIAmodalA11Ybtn = document.createElement('button');
