@@ -77,7 +77,7 @@ o	Todo : Ajouter du JS pour prendre en compte le menu et les dp modale
 	}
 
 
-/* 🗸 Thématique RGAA 1 : 02 Images
+/* 🗸 02 Images : Thématique RGAA 1
 
 Vérification de plusieurs points concernant les images : 
 o	Présence d’un attribut alt sur toutes les images 
@@ -251,8 +251,9 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	
 	
 	
-/* 🗸 NIA-03 LinkTitle : Liste des liens internes et externe, affichage des attributs title des liens et vérification d’erreurs courantes.
-o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l’attribut title du lien */
+/* 🗸 NIA-03 Lien - Thématique RGAA 6
+ - Liste des liens internes et externe, affichage des attributs title des liens et vérification d’erreurs courantes.
+ */
 
 	// A. Verification de la présence du suffix sur les liens externe
 	const nia03a1_query = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo)');
@@ -266,7 +267,7 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 	// B. Verification de titre vide
 	const nia03b_query = document.querySelectorAll('a[title=" "],a[title="Nouvelle fenêtre"],a[title="- Nouvelle fenêtre"],a[title$="Nouvelle fenêtre - Nouvelle fenêtre"]');
 	if(nia03b_query && nia03b_query.length > 0 && isItemsVisible(nia03b_query)){
-	  result_nc += "<li><a href='#' data-destination='nia03b' class='result-focus'>03-B</a> : Vérifier qu'il n'y a pas de lien avec </li>";
+	  result_nc += "<li><a href='#' data-destination='nia03b' class='result-focus'>03-B</a> : Vérifier qu'il n'y a pas de lien avec un titre vide [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-6.1.1' target='_blank'>RGAA 6.1.1</a>]</li>";
 	  setItemsOutline(nia03b_query,"red","nia03b");
 	}
 
@@ -275,9 +276,11 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 	if(nia03c_query && nia03c_query.length > 0 && isItemsVisible(nia03c_query)){
 	  result_nc += "<li><a href='#' data-destination='nia03c' class='result-focus'>03-C</a> : Présence du suffixe Nouvelle fenêtre sur une page non rédiger en français</li>";
 	  setItemsOutline(nia03c_query,"orange","nia03c");
+	  
+	  // --> Todo vérifier si le contenu de la page est en FR 
 	}
 	
-	// D. Absence de copyright/caption/légende sur une image Core V3
+	// D. Présence d'un conflit dans les attribut de liens
 	const nia03d_query = document.querySelectorAll('a[aria-label][aria-labelledby]');
 	if(nia03d_query && nia03d_query.length > 0 && isItemsVisible(nia03d_query)){
 	  result_nc += "<li><a href='#' data-destination='nia03d' class='result-focus'>03-D</a> : Présence d'un conflit dans les attributs des liens</li>";
@@ -287,7 +290,6 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 	// E. Vérifier que le title reprend à minimum le contenu textuel
 	const nia03e_nodes = document.querySelectorAll("a[title]");
 	let nia03e_flag = false;
-	let nia03e_results = [];
 	let nia03e_content = "", nia03e_title = "", nia03e_lang = "";
 	if(nia03e_nodes && nia03e_nodes.length > 0){
 		if(debug_flag) console.log("[nia03e] Boucle sur les "+nia03e_nodes.length + " liens detectés sur cette page");
@@ -303,7 +305,35 @@ o	Todo : Ajouter du JS pour voir si le contenu textuel est bien compris dans l�
 		}
 	}
 	if(nia03e_flag == true) {
-	  result_nc += "<li><a href='#' data-destination='nia03e' class='result-focus'>03-E</a> : Présence de liens dont l'attribut title ne reprend pas le contenu textuel</li>";
+	  result_nc += "<li><a href='#' data-destination='nia03e' class='result-focus'>03-E</a> : Présence de liens dont l'attribut title ne reprend pas le contenu textuel [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-6-1-5' target='_blank'>RGAA 6.1.5</a>]</li>";
+	}
+	
+	// F. Chaque lien a t'il un intitulé
+	const nia03f_nodes = document.querySelectorAll('a,[role="link"]');
+	let nia03f_flag = false;
+	let nia03f_lang = "";
+	if(nia03f_nodes && nia03f_nodes.length > 0){
+		if(debug_flag) console.log("[nia03f] Boucle sur les "+nia03f_nodes.length + " liens detectés sur cette page");
+		for(let i = 0; i < nia03f_nodes.length; i++){
+			nia03f_lang = nia03f_nodes[i].closest('[lang]').getAttribute('lang')
+			if((nia03f_nodes[i].hasAttribute("title") && sanitizeText(nia03f_nodes[i].getAttribute("title"),nia03f_lang).length > 0) || sanitizeText(nia03f_nodes[i].innerText).length > 0){
+				// Le lien a un contenu
+			}
+			else {
+				setItemOutline(nia03f_nodes[i],"red","nia03f");
+				nia03f_flag = true;
+			}
+		}
+	}
+	if(nia03f_flag == true) {
+	  result_nc += "<li><a href='#' data-destination='nia03f' class='result-focus'>03-F</a> : Présence de liens dont le contenu est vide [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-6-1-5' target='_blank'>RGAA 6.1.5</a>]</li>";
+	}
+	
+	// G. Présence de liens sans href
+	const nia03g_query = document.querySelectorAll('a:not([href])');
+	if(nia03g_query && nia03g_query.length > 0 && isItemsVisible(nia03g_query)){
+	  result_dev += "<li><a href='#' data-destination='nia03g' class='result-focus'>03-G</a> : Présence d'un lien sans destination</li>";
+	  setItemsOutline(nia03g_query,"red","nia03g");
 	}
 
 /* 🗸 NIA-04 Autocomplete : Mise en avant des champs de formulaire avec un attribut autocomplete et vérification de la présence des attributs autocomplete pertinent sur les champs de formulaire classique */
@@ -545,13 +575,16 @@ o S’assurer que les titres sont dans le bon ordre*/
 	  result_nth += "<li><a href='#' data-destination='nia07e' class='result-focus'>07-E</a> : Présence de sauts de titres </li>";
 	}
 
-/* 🗸 NIA-08 Table : Mise en avant des tableaux et vérification présence des bons attributs sur les tableaux. S’assurer que les tableaux sont bien créé avec le composant Tableau et pas un copier/coller de word. Vérifier en particulier les balises et les attributs « scope »
+/* 🗸 NIA-08 Tableau : Thématique RGAA 5
+ - vérification présence des bons attributs sur les tableaux. 
+ - Eviter les éléments ajoutés par les copier/coller de word. 
+ - Vérifier en particulier les attributs « scope » sur les éléments de header
 */
 
 	// A. Attribut de tableau
-	const nia08a_query = document.querySelectorAll(':where([role="table"],table) th:not([scope="row"]):not([scope="col"])');
+	const nia08a_query = document.querySelectorAll(':where([role="table"],table:not([role="presentation"])) th:not([scope="row"]):not([scope="col"]):not([id]):not([role="rowheader"]):not([role="columnheader"])');
 	if(nia08a_query && nia08a_query.length > 0 && isItemsVisible(nia08a_query)){
-	  result_nc += "<li><a href='#' data-destination='nia08a' class='result-focus'>08-A</a> : Absence de l'attribut scope sur les en-tete de tableau</li>";
+	  result_nc += "<li><a href='#' data-destination='nia08a' class='result-focus'>08-A</a> : Absence de l'attribut scope sur les en-tete de tableau [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-5-7-1' target='_blank'>RGAA 5.7.1</a>]</li>";
 	  setItemsOutline(nia08a_query,"red","nia08a");
 	}
 	
@@ -565,10 +598,36 @@ o S’assurer que les titres sont dans le bon ordre*/
 	// C. Attribut deprecated
 	const nia08c_query = document.querySelectorAll('th[header], td[header]');
 	if(nia08c_query && nia08c_query.length > 0 && isItemsVisible(nia08c_query)){
-	  result_nth += "<li><a href='#' data-destination='nia08c' class='result-focus'>08-C</a> : Presence d'attribut obsolete dans un tableau</li>";
-	  setItemsOutline(nia08c_query,"red","nia08c");
+	  result_nth += "<li><a href='#' data-destination='nia08c' class='result-focus'>08-C</a> : Presence attributs header obsolete dans un tableau</li>";
+	  setItemsOutline(nia08c_query,"yellow","nia08c");
 	}
 	
+	// D. Tableau de mise en forme
+	const nia08d_query = document.querySelectorAll('table[role="presentation"][summary], table[role="presentation"] :where(caption,thead,th,tfoot,[role="rowheader"],[role="columnheader"],td[scope],td[headers],td[axis])');
+	if(nia08d_query && nia08d_query.length > 0 && isItemsVisible(nia08d_query)){
+	  result_nc += "<li><a href='#' data-destination='nia08d' class='result-focus'>08-D</a> : Presence d'élements incompatible avec un tableau de mise en forme [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-5-8-1' target='_blank'>RGAA 5.8.1</a>]</li>";
+	  setItemsOutline(nia08d_query,"red","nia08d");
+	}
+	
+	// E. Chaque tableau à un entete de ligne ou de colonne balisé avec th ou role="columnheader" ou role="rowheader" 
+	const nia08e_nodes = document.querySelectorAll(':where([role="table"],table:not([role="presentation"]))');
+	let nia08e_flag = false;
+	let nia08e_html = "";
+	if(nia08e_nodes && nia08e_nodes.length > 0){
+		if(debug_flag) console.log("[nia08e] Boucle sur les "+nia08e_nodes.length + " tableaux détéctés sur cette page");
+		for(let i = 0; i < nia08e_nodes.length; i++){
+			nia08e_html = nia08e_nodes[i].innerHTML.toLowerCase;
+			if(!nia08e_html.includes('<th') && !nia08e_html.includes('role="columnheader"') && !nia08e_html.includes('role="rowheader"')){
+				setItemOutline(nia08e_nodes[i],"red","nia08e");
+				nia08e_flag = true;
+			}
+		}
+	}
+	if(nia08e_flag == true) {
+	  result_nth += "<li><a href='#' data-destination='nia08e' class='result-focus'>08-E</a> : Présence d'un tableau de données sans en-tête [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-5-6-1' target='_blank'>RGAA 5.6.1</a>]</li>";
+	}
+	
+
 
 /* 🗸 NIA-09 Tabindex : Mise en avant des éléments possédant un tabindex défini. Vérifier l'absence d’attribut « tabindex » positif dans le contenu*/
 
@@ -882,6 +941,8 @@ function isItemsVisible(items){
 
 function isItemVisible(item){
 	let lang = item.closest('[lang]').getAttribute('lang');
+	// textContent : recup les elements cachés et les <script><style>
+	// innerText : ne recupère pas les élements cachés
 	if(sanitizeText(item.textContent,lang) == sanitizeText(item.innerText,lang)) return true;
 	return false
 }
