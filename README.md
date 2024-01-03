@@ -3,8 +3,12 @@
 ## Installation du bookmarklet
 
 Affichage dans une fenêtre modale des non-conformités au RGAA, des nice-to-have ainsi que des recommandations pour le rédacteur.
-Pour installer le Bookmarklet il suffit de glisser ce lien dans votre barre de favori : 
-[Check Access](javascript%3A%28function%28%29%7Bdocument.body.appendChild%28document.createElement%28%27script%27%29%29.src%3D%27https%3A%2F%2Fnicolasambroise.github.io%2Fa11y%2Fscript.js%27%3B%7D%29%28%29%3B)
+
+Pour installer le Bookmarklet il suffit de **glisser le lien** présent sur [cette page](https://nicolasambroise.github.io/a11y/install_bookmarklet.html) dans votre barre de favori. 
+
+Alternative possible, faire un clic droit sur votre barre de favori et sélectionner "Ajouter un favori" puis copier-coller la ligne ci-dessous dans le champ URL
+
+`javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://nicolasambroise.github.io/a11y/script.js';})();`
 
 ## Liste des Checks
 1. Configuration des composants AEM
