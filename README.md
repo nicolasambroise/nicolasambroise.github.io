@@ -29,20 +29,33 @@ Alternative possible, faire un clic droit sur votre barre de favori et sélectio
 4. Formulaire et Autocomplete
 	- Autocomplete sur les champs classique
 	- Présence d'une étiquette (label)
-5. Balises vides
-6. Listes
-7. Hierarchie des titres
+5. Element Obligatoire
+	- Balises vides
+	- Doctype et page title
+6. Structure de l'information
+	- Liste
+	- Landmark
+	- Cadres
+7. Titres
 	- Heading caché au outil d'assistance 
 	- Heading simulé
-	- Présence de saut de titre
+	- Hierarchie des titres
 8. Tableau
 	- Attribut de tableau de mise en forme
 	- Attribut de tableau informatif
-9. TabIndex
-	- Absance de tabindex positif
+9. Navigation 
+	- Plan du site
+	- Tabindex positif
+	- Skiplinks
 10. Balises/attributs obsolètes
 11. Changement de langue 
-12. Intitulé des boutons
-13. Plan du site incomplet
-14. Cadres
-15. Animation Lottie
+12. Boutons
+13. Animation Lottie
+
+## Collaborer
+
+N'hésitez pas à me remonter les problèmes, faux-positifs ou vos suggessions d'améliorations.
+
+## Licence
+
+A définir

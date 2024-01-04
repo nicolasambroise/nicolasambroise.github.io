@@ -67,7 +67,7 @@ footer{
 			<h2 tabindex="-1" dir="auto">Installation du bookmarklet</h2>
 			<p dir="auto">Affichage dans une fenêtre modale des non-conformités au RGAA, des nice-to-have ainsi que des recommandations pour le rédacteur.</p>
 			<p>Pour installer le Bookmarklet il suffit de <strong>glisser le lien</strong> suivant sur votre barre de favori :
-				<a class="bookmarklet" href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://nicolasambroise.github.io/a11y/script.js';})();" title="Check Access - drag me to a toolbar">Check Access</a>
+				<a class="bookmarklet" href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://nicolasambroise.github.io/a11y/script.js';})();" title="Check Access - drag me to a toolbar" ICON="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADa0lEQVQ4jV3TTUxcZRQG4Pd892fu/FBxYGZgaGkDSqdQm2qUICkmaLCiG2OaVpNKamJY+LM0DRskTYwaF8ZUXVBTibqwLlhIa2MIJQOJRSMqEiQiBekUhvltwszcYe6d7zsu6ML0LN+cd/c+BADMTETEAPBnkvtD5eWXdzPLvShlGkCA8IW2zdCR6Yz3yLfHGun6/zs6GERE/MVPHHzpoa0L6ZvvDeY2ZozK3QQqdpEBwPQGDniDzQPmwZ5X8qnN0fFb0WEiyoNBxCMQX/Xzg8+HFq+UZj94JvXPnNIMn2IjIMJ9Q0RESE2+z+QUlHRtEXm4S/h7zk/9kDl2ZuA63SWAKZva+rT04ztvbC/FK0ZN2FCOTdahbnS8dpkA4I+xQa6uz0AzfewWMm5D+1Me/3MffV4fib5Fv97mZx9Y/PBqfvYiWc1dQoKokl4BV13U97xJAJCd/Yw1w4BZ1wqA2Lnzswr2vM3F4+df0A/w32dz63FDQa/uO36a9j95mux8iu3NBXLyt1kycOjUx1Sz/xH21kXpztx3SG7Ow12PG9GjL76q7yaXesv5BJuBoMjOfAJ74xcOHj1JoY4+1gQRACgA2ZWblLhxke21OEx/UJTzCd5NLvUKWUpFpOMAQifhlmAvX8Pql2d5LX6ZlHShpIuNmTGsXDrFpcVxkGsDQifpuKiWUhGdQAwQAAY0DZpRC1MpWN59EJoBANAMC6blh+YPgqWz93vvhPCH05qpA8x7qXIhSSdfuJXLOzmUC3n4Im0sySAoF0R7K9JMHbo/khJWY8e0VdtEquoosAArCc0TYF+0ndIL1zizcJUD0XbSrACzklAsoKqOsmqbyGrsmBYJOvyN2dLrcmUHpBmspAO9JgzD8nAx8TsVNuZJtzys+0NQ0oHQDObKDsyWXndLP/y1eLwZk3VPDFyKxLp1Wcy4UMzehhg0EFWyq+xkV1kDka+xHVDMsphxI7Fuvb7z3OijTTQpeIRo4t/osO/E0FSordMj7RyqhbRMzE8oLqUgSxkk5ieUW0jLaimHUFunx3diaOr79YZ3eQSCwCAQ9jC1bl1Iz40NumuThp3ZgNAMBgClXPLXH4Te0ueGu86Njt+KDr/efQ/T/Zx/S3J/k7NyppL66+lqIdkAAHpN47YnEruxacauPHYf5/8A8rS0HJ+Lh/MAAAAASUVORK5CYII=">Check Access</a>
 			</p>
 			<p>Alternative possible, faire un clic droit sur votre barre de favori et sélectionner "Ajouter un favori" puis copier-coller la ligne ci-dessous dans le champ URL</p>
 			<pre><code>javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://nicolasambroise.github.io/a11y/script.js';})();</code></pre>
@@ -103,13 +103,24 @@ footer{
 				<li>Présence d'une étiquette (label)</li>
 				</ul>
 				</li>
+				<li>Element Obligatoire
+				<ul dir="auto">
 				<li>Balises vides</li>
-				<li>Listes</li>
-				<li>Hierarchie des titres
+				<li>Doctype et page title</li>
+				</ul>
+				</li>
+				<li>Structure de l'information
+				<ul dir="auto">
+				<li>Liste</li>
+				<li>Landmark</li>
+				<li>Cadres</li>
+				</ul>
+				</li>
+				<li>Titres
 				<ul dir="auto">
 				<li>Heading caché au outil d'assistance</li>
 				<li>Heading simulé</li>
-				<li>Présence de saut de titre</li>
+				<li>Hierarchie des titres</li>
 				</ul>
 				</li>
 				<li>Tableau
@@ -118,18 +129,22 @@ footer{
 				<li>Attribut de tableau informatif</li>
 				</ul>
 				</li>
-				<li>TabIndex
+				<li>Navigation 
 				<ul dir="auto">
-				<li>Absance de tabindex positif</li>
+				<li>Plan du site</li>
+				<li>Tabindex positif</li>
+				<li>Skiplinks</li>
 				</ul>
 				</li>
 				<li>Balises/attributs obsolètes</li>
 				<li>Changement de langue</li>
-				<li>Intitulé des boutons</li>
-				<li>Plan du site incomplet</li>
-				<li>Cadres</li>
+				<li>Boutons</li>
 				<li>Animation Lottie</li>
 			</ol>
+			<h2 tabindex="-1" dir="auto">Collaborer</h2>
+			<p>N'hésitez pas à me remonter les problèmes, faux-positifs ou vos suggessions d'améliorations.</p>
+			<h2 tabindex="-1" dir="auto">Licence</h2>
+			<p>A définir</p>
 		</article>
 	</main>
 	
