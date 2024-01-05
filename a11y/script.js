@@ -37,8 +37,8 @@ let result_dev = "";
 
 /*- -------------------------------------------------------------------------------- */
 
-/* 🗸 NIA-01 AEM Component : vérifie les points concernant la configuration des composants AEM suivant :  Intitulé de bouton menu,  Breadcrumb, Tooltip, Menu langue, Recherche
-o	Todo : Ajouter du JS pour prendre en compte le menu et les dp modale
+/* 🗸 NIA-01 AEM Component 
+- vérifie les points concernant la configuration des composants AEM suivant :  Intitulé de bouton menu,  Breadcrumb, Tooltip, Menu langue, Recherche, Vidéo, Menu
 */
 
 	// A. Position de bouton menu
@@ -59,32 +59,34 @@ o	Todo : Ajouter du JS pour prendre en compte le menu et les dp modale
 	}
 
 	// B. Breadcrumb
-	const nia01b_query = document.querySelectorAll('nav[id^=breadcrumb-] .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child');
-	if(nia01b_query && nia01b_query.length > 0 && isItemsVisible(nia01b_query)){
+	const nia01b_nodes = document.querySelectorAll('nav[id^=breadcrumb-] .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child');
+	if(nia01b_nodes && nia01b_nodes.length > 0 && isItemsVisible(nia01b_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia01b' class='result-focus'>01-B</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane --> Vérifier dans les propriétés de la page que celle-ci n'est pas cachée dans la navigation.</li>";
-	  setItemsOutline(nia01b_query,"red","nia01b");
+	  setItemsOutline(nia01b_nodes,"red","nia01b");
 	}
 
 	// C. Tooltip
-	const nia01c_query = document.querySelectorAll('.search-view');
-	if(nia01c_query && nia01c_query.length > 0 && isItemsVisible(nia01c_query)){
+	const nia01c_nodes = document.querySelectorAll('.search-view');
+	if(nia01c_nodes && nia01c_nodes.length > 0 && isItemsVisible(nia01c_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia01c' class='result-focus'>01-C</a> : Présence de tooltip non accessible sur les résultats de recherches [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-10-13-1' target='_blank'>RGAA 10.13.1</a>]</li>";
-	  setItemsOutline(nia01c_query,"red","nia01c");
+	  setItemsOutline(nia01c_nodes,"red","nia01c");
 	}
 
 	// D. Menu langue
-	const nia01d_query = document.querySelectorAll('nav[id^="language-"]:not([aria-label])');
-	if(nia01d_query && nia01d_query.length > 0 && isItemsVisible(nia01d_query)){
+	const nia01d_nodes = document.querySelectorAll('nav[id^="language-"]:not([aria-label])');
+	if(nia01d_nodes && nia01d_nodes.length > 0 && isItemsVisible(nia01d_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia01d' class='result-focus'>01-D</a> : Absence de l'aria-label sur le menu de selection de langue (à ajouter dans le cqdialog)</li>";
-	  setItemsOutline(nia01d_query,"red","nia01d");
+	  setItemsOutline(nia01d_nodes,"red","nia01d");
 	}
 
 	// E. Video player
-	const nia01e_query = document.querySelectorAll('.cmp-multiplayer .player_img img[alt="Lire la vidéo Youtube, voir légende ci-après"][lang]:not([lang="fr"])');
-	if(nia01e_query && nia01e_query.length > 0 && isItemsVisible(nia01e_query)){
+	const nia01e_nodes = document.querySelectorAll('.cmp-multiplayer .player_img img[alt="Lire la vidéo Youtube, voir légende ci-après"][lang]:not([lang="fr"])');
+	if(nia01e_nodes && nia01e_nodes.length > 0 && isItemsVisible(nia01e_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia01e' class='result-focus'>01-E</a> : Traduction manquante dans le composant Multimedia Player</li>";
-	  setItemsOutline(nia01e_query,"orange","nia01e");
+	  setItemsOutline(nia01e_nodes,"orange","nia01e");
 	}
+	
+	// F. Menu -- Todo
 
 /* 🗸 02 Images : Thématique RGAA 1
 
@@ -96,129 +98,165 @@ o	Absence de copyright/caption/légende sur une image Core V3,
 o	Images v1 légendés presence du aria-label sur le figure */
 
 	// A. Présence d’un attribut alt sur toutes les images 
-	const nia02a1_query = document.querySelectorAll('img:not([alt]):not([src^="//cdn.public.lu/guichet-lu/pictures/maps/"]):not([aria-label]):not([aria-labelledby]):not([title]), [role="image"]:not([aria-label]):not([aria-labelledby])');
-	if(nia02a1_query && nia02a1_query.length > 0 && isItemsVisible(nia02a1_query)){
-	  result_nc += "<li><a href='#' data-destination='nia02a1' class='result-focus'>02-A</a> : Présence de " + nia02a1_query.length + " images sans alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a>]</li>";
-	  setItemsOutline(nia02a1_query,"red","nia02a1");
+	const nia02a1_nodes = document.querySelectorAll('img:not([alt]):not([src^="//cdn.public.lu/guichet-lu/pictures/maps/"]):not([aria-label]):not([aria-labelledby]):not([title]), [role="image"]:not([aria-label]):not([aria-labelledby])');
+	if(nia02a1_nodes && nia02a1_nodes.length > 0 && isItemsVisible(nia02a1_nodes)){
+	  result_nc += "<li><a href='#' data-destination='nia02a1' class='result-focus'>02-A</a> : Présence de " + nia02a1_nodes.length + " images sans alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a>]</li>";
+	  setItemsOutline(nia02a1_nodes,"red","nia02a1");
 	}
 	
-	const nia02a2_query = document.querySelectorAll('img:not([alt]):not([src^="//cdn.public.lu/guichet-lu/pictures/maps/"])');
-	if(nia02a2_query && nia02a2_query.length > 0 && isItemsVisible(nia02a2_query)){
-	  result_nth += "<li><a href='#' data-destination='nia02a2' class='result-focus'>02-A</a> : Présence de " + nia02a2_query.length + " images sans attribut alt</li>";
-	  setItemsOutline(nia02a2_query,"yellow","nia02a2");
+	const nia02a2_nodes = document.querySelectorAll('img:not([alt]):not([src^="//cdn.public.lu/guichet-lu/pictures/maps/"])');
+	if(nia02a2_nodes && nia02a2_nodes.length > 0 && isItemsVisible(nia02a2_nodes)){
+	  result_nth += "<li><a href='#' data-destination='nia02a2' class='result-focus'>02-A</a> : Présence de " + nia02a2_nodes.length + " images sans attribut alt</li>";
+	  setItemsOutline(nia02a2_nodes,"yellow","nia02a2");
 	}
 
 	// B. Vérification des attributs des svg, 
-	const nia02b1_query = document.querySelectorAll('svg:not([aria-hidden="true"]):not(.iconset)'); 
-	const nia02b2_query = document.querySelectorAll('svg:not([focusable="false"]):not(.iconset)');
-	if(nia02b1_query && nia02b1_query.length > 0 && isItemsVisible(nia02b1_query)){
+	const nia02b1_nodes = document.querySelectorAll('svg:not([aria-hidden="true"]):not(.iconset)'); 
+	const nia02b2_nodes = document.querySelectorAll('svg:not([focusable="false"]):not(.iconset)');
+	if(nia02b1_nodes && nia02b1_nodes.length > 0 && isItemsVisible(nia02b1_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02b1' class='result-focus'>02-B</a> : Absence de certains attributs sur des SVG (aria-hidden=true)</li>";
-	  setItemsOutline(nia02b1_query,"red","nia02b1");
+	  setItemsOutline(nia02b1_nodes,"red","nia02b1");
 	}
-	if(nia02b2_query && nia02b2_query.length > 0 && isItemsVisible(nia02b2_query)){
+	if(nia02b2_nodes && nia02b2_nodes.length > 0 && isItemsVisible(nia02b2_nodes)){
 	  result_nth += "<li><a href='#' data-destination='nia02b2' class='result-focus'>02-B</a> : Absence de certains attributs sur des SVG (focusable=false)</li>";
-	  setItemsOutline(nia02b2_query,"orange","nia02b2");
+	  setItemsOutline(nia02b2_nodes,"orange","nia02b2");
 	}
 	
-	const nia02b3_query = document.querySelectorAll('svg[role="img"]:not([title]):not([aria-labelledby]):not([aria-label])');
-	if(nia02b3_query && nia02b3_query.length > 0 && isItemsVisible(nia02b3_query)){
+	const nia02b3_nodes = document.querySelectorAll('svg[role="img"]:not([title]):not([aria-labelledby]):not([aria-label])');
+	if(nia02b3_nodes && nia02b3_nodes.length > 0 && isItemsVisible(nia02b3_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02b3' class='result-focus'>02-B</a> : Les images vectorielle porteuse d'information doivent posséder une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-5' target='_blank'>RGAA 1.1.5</a>]</li>";
-	  setItemsOutline(nia02b3_query,"red","nia02b3");
+	  setItemsOutline(nia02b3_nodes,"red","nia02b3");
 	}
 	
-	const nia02b4_query = document.querySelectorAll('svg[aria-hidden="true"][aria-label], svg[aria-hidden="true"][aria-labelledby]');
-	if(nia02b4_query && nia02b4_query.length > 0 && isItemsVisible(nia02b4_query)){
+	const nia02b4_nodes = document.querySelectorAll('svg[aria-hidden="true"][aria-label], svg[aria-hidden="true"][aria-labelledby]');
+	if(nia02b4_nodes && nia02b4_nodes.length > 0 && isItemsVisible(nia02b4_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02b4' class='result-focus'>02-B</a> : Les images vectorielle de décoration ne doivent pas posséder une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-4' target='_blank'>RGAA 1.2.4</a>]</li>";
-	  setItemsOutline(nia02b4_query,"red","nia02b4");
+	  setItemsOutline(nia02b4_nodes,"red","nia02b4");
 	}
 	
-	// --> Todo : ajouter le test 1.2.4 sur la présence de balise <title> ou <desc> dans les SVG
+	const nia02b5_nodes = document.querySelectorAll('svg[aria-hidden="true"] title, svg[aria-hidden="true"] desc');
+	let nia02b5_flag = false;
+	if(nia02b5_nodes && nia02b5_nodes.length > 0){
+		for(let i = 0; i < nia02b5_nodes.length; i++){
+			if(isItemsVisible(nia02b5_nodes[i]) && ((nia02b5_nodes[i].hasAttribute('title') && nia02b5_nodes[i].getAttribute('title').length > 0) || (nia02b5_nodes[i].hasAttribute('desc') && nia02b5_nodes[i].getAttribute('desc').length > 0))){
+				setItemOutline(nia02b5_nodes[i],"red","nia02b5");
+				nia02b5_flag = true;
+			}
+		}
+	}
+	if(nia02b5_flag == true){
+		result_nc += "<li><a href='#' data-destination='nia02b5' class='result-focus'>02-B</a> : Les images vectorielle de décoration ne doivent pas posséder une alternative textuelle dans des balises 'title' ou 'desc' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-4' target='_blank'>RGAA 1.2.4</a>]</li>";
+	}
 	
 	// C. Alt vide sur les images de search logique. 
-	const nia02c_query = document.querySelectorAll('.cmp-focus img:not([alt=""])');
-	if(nia02c_query && nia02c_query.length > 0 && isItemsVisible(nia02c_query)){
-	  result_dev += "<li><a href='#' data-destination='nia02c' class='result-focus'>02-C</a> : Présence de " + nia02a_query.length + " image de search-logic sans attribut alt</li>";
-	  setItemsOutline(nia02c_query,"red","nia02c");
+	const nia02c_nodes = document.querySelectorAll('.cmp-focus img:not([alt=""])');
+	if(nia02c_nodes && nia02c_nodes.length > 0 && isItemsVisible(nia02c_nodes)){
+	  result_dev += "<li><a href='#' data-destination='nia02c' class='result-focus'>02-C</a> : Présence de " + nia02a_nodes.length + " image de search-logic sans attribut alt</li>";
+	  setItemsOutline(nia02c_nodes,"red","nia02c");
 	}
 
 	// D. Absence de copyright/caption/légende sur une image Core V3
-	const nia02d_query = document.querySelectorAll('.cmp-image[data-cmp-hook-image="imageV3"] .cmp-image__title');
-	if(nia02d_query && nia02d_query.length > 0 && isItemsVisible(nia02d_query)){
+	const nia02d_nodes = document.querySelectorAll('.cmp-image[data-cmp-hook-image="imageV3"] .cmp-image__title');
+	if(nia02d_nodes && nia02d_nodes.length > 0 && isItemsVisible(nia02d_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia02d' class='result-focus'>02-D</a> : Présence d'un caption non lié à son image (image v3)</li>";
-	  setItemsOutline(nia02d_query,"red","nia02d");
+	  setItemsOutline(nia02d_nodes,"red","nia02d");
 	}
 	
 	// E. Images v1 légendés presence du aria-label sur le figure
-	const nia02e_query = document.querySelectorAll('figure[data-cmp-hook-image="figure"] figcaption');
-	if(nia02e_query && nia02e_query.length > 0 && isItemsVisible(nia02e_query)){
+	const nia02e_nodes = document.querySelectorAll('figure[data-cmp-hook-image="figure"] figcaption');
+	if(nia02e_nodes && nia02e_nodes.length > 0 && isItemsVisible(nia02e_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia02e' class='result-focus'>02-E</a> : Les captions des images ne sont pas correctement restitué (image v1)</li>";
-	  setItemsOutline(nia02e_query,"red","nia02e");
+	  setItemsOutline(nia02e_nodes,"red","nia02e");
 	}
 	
 	// F. Vérification sur les images atypique
-	const nia02f1_query = document.querySelectorAll('area:not([aria-label]):not([alt])');
-	if(nia02f1_query && nia02f1_query.length > 0 && isItemsVisible(nia02f1_query)){
-	  result_dev += "<li><a href='#' data-destination='nia02f1' class='result-focus'>02-F</a> : Les zones d'image réactive porteuse d'information doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-2' target='_blank'>RGAA 1.1.2</a>]</li>";
-	  setItemsOutline(nia02f1_query,"red","nia02f1");
+	const nia02f1_nodes = document.querySelectorAll('area:not([aria-label]):not([alt])');
+	if(nia02f1_nodes && nia02f1_nodes.length > 0 && isItemsVisible(nia02f1_nodes)){
+	  result_nc += "<li><a href='#' data-destination='nia02f1' class='result-focus'>02-F</a> : Les zones d'image réactive porteuse d'information doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-2' target='_blank'>RGAA 1.1.2</a>]</li>";
+	  setItemsOutline(nia02f1_nodes,"red","nia02f1");
 	}
 	
-	const nia02f2_query = document.querySelectorAll('input[type="image"]:not([alt]):not([aria-label]):not([aria-labelledby]):not([title])');
-	if(nia02f2_query && nia02f2_query.length > 0 && isItemsVisible(nia02f2_query)){
-	  result_dev += "<li><a href='#' data-destination='nia02f2' class='result-focus'>02-F</a> : Les boutons de type image (balise input avec attribut type=image doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-3' target='_blank'>RGAA 1.1.3</a>]</li>";
-	  setItemsOutline(nia02f2_query,"red","nia02f2");
+	const nia02f2_nodes = document.querySelectorAll('input[type="image"]:not([alt]):not([aria-label]):not([aria-labelledby]):not([title])');
+	if(nia02f2_nodes && nia02f2_nodes.length > 0 && isItemsVisible(nia02f2_nodes)){
+	  result_nc += "<li><a href='#' data-destination='nia02f2' class='result-focus'>02-F</a> : Les boutons de type image (balise input avec attribut type=image doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-3' target='_blank'>RGAA 1.1.3</a>]</li>";
+	  setItemsOutline(nia02f2_nodes,"red","nia02f2");
 	}
 	
-	const nia02f3_query = document.querySelectorAll('object[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
-	if(nia02f3_query && nia02f3_query.length > 0 && isItemsVisible(nia02f3_query)){
+	const nia02f3_nodes = document.querySelectorAll('object[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
+	if(nia02f3_nodes && nia02f3_nodes.length > 0 && isItemsVisible(nia02f3_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02f3' class='result-focus'>02-F</a> : Les images objects porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-6' target='_blank'>RGAA 1.1.6</a>]</li>";
-	  setItemsOutline(nia02f3_query,"red","nia02f3");
+	  setItemsOutline(nia02f3_nodes,"red","nia02f3");
 	}
 
-	const nia02f4_query = document.querySelectorAll('embed[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
-	if(nia02f4_query && nia02f4_query.length > 0 && isItemsVisible(nia02f4_query)){
+	const nia02f4_nodes = document.querySelectorAll('embed[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
+	if(nia02f4_nodes && nia02f4_nodes.length > 0 && isItemsVisible(nia02f4_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02f4' class='result-focus'>02-F</a> : Les images embarquée porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-7' target='_blank'>RGAA 1.1.7</a>]</li>";
-	  setItemsOutline(nia02f4_query,"red","nia02f4");
+	  setItemsOutline(nia02f4_nodes,"red","nia02f4");
 	}
 
-	const nia02f5_query = document.querySelectorAll('canvas[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby])');
-	if(nia02f5_query && nia02f5_query.length > 0 && isItemsVisible(nia02f5_query)){
+	const nia02f5_nodes = document.querySelectorAll('canvas[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby])');
+	if(nia02f5_nodes && nia02f5_nodes.length > 0 && isItemsVisible(nia02f5_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02f5' class='result-focus'>02-F</a> : Les images bitmap (balise canvas) porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-8' target='_blank'>RGAA 1.1.8</a>]</li>";
-	  setItemsOutline(nia02f5_query,"red","nia02f5");
+	  setItemsOutline(nia02f5_nodes,"red","nia02f5");
 	}
 	
 	// G. Les images de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle
-	const nia02g1_query = document.querySelectorAll('img:where([alt=""],[aria-hidden="true"],[role="presentation"],[role="none"]):where([aria-label][aria-labelledby][title])');
-	if(nia02g1_query && nia02g1_query.length > 0 && isItemsVisible(nia02g1_query)){
+	const nia02g1_nodes = document.querySelectorAll('img:where([alt=""],[aria-hidden="true"],[role="presentation"],[role="none"]):where([aria-label][aria-labelledby][title])');
+	if(nia02g1_nodes && nia02g1_nodes.length > 0 && isItemsVisible(nia02g1_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02g1' class='result-focus'>02-G</a> : Les images de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-1' target='_blank'>RGAA 1.2.1</a>] </li>";
-	  setItemsOutline(nia02g1_query,"red","nia02g1");
+	  setItemsOutline(nia02g1_nodes,"red","nia02g1");
 	}
 	
-	const nia02g2_query = document.querySelectorAll('area:not([href]):where([alt=""],[aria-hidden="true"],[role="presentation"],[role="none"]):where([aria-label],[aria-labelledby],[title])');
-	if(nia02g2_query && nia02g2_query.length > 0 && isItemsVisible(nia02g2_query)){
+	const nia02g2_nodes = document.querySelectorAll('area:not([href]):where([alt=""],[aria-hidden="true"],[role="presentation"],[role="none"]):where([aria-label],[aria-labelledby],[title])');
+	if(nia02g2_nodes && nia02g2_nodes.length > 0 && isItemsVisible(nia02g2_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02g2' class='result-focus'>02-G</a> : Les zone non cliquable de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-2' target='_blank'>RGAA 1.2.2</a>] </li>";
-	  setItemsOutline(nia02g2_query,"red","nia02g2");
+	  setItemsOutline(nia02g2_nodes,"red","nia02g2");
 	}
 	
-	const nia02g3_query = document.querySelectorAll('object[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
-	if(nia02g3_query && nia02g3_query.length > 0 && isItemsVisible(nia02g3_query)){
+	const nia02g3_nodes = document.querySelectorAll('object[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
+	if(nia02g3_nodes && nia02g3_nodes.length > 0 && isItemsVisible(nia02g3_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02g3' class='result-focus'>02-G</a> : Les images object de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-3' target='_blank'>RGAA 1.2.3</a>] </li>";
-	  setItemsOutline(nia02g3_query,"red","nia02g3");
+	  setItemsOutline(nia02g3_nodes,"red","nia02g3");
 	}
 	
-	// --> Todo : il manque la condition dépourvu de contenu pour le test 1.2.3
-	
-	const nia02g4_query = document.querySelectorAll('canvas[aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
-	if(nia02g4_query && nia02g4_query.length > 0 && isItemsVisible(nia02g4_query)){
-	  result_nc += "<li><a href='#' data-destination='nia02g4' class='result-focus'>02-G</a> : Les images bitmap de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-5' target='_blank'>RGAA 1.2.5</a>] </li>";
-	  setItemsOutline(nia02g4_query,"red","nia02g4");
+	const nia02g4_nodes = document.querySelectorAll('canvas[aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
+	if(nia02g4_nodes && nia02g4_nodes.length > 0 && isItemsVisible(nia02g4_nodes)){
+	  result_nc += "<li><a href='#' data-destination='nia02g4' class='result-focus'>02-G</a> : Les images bitmap de décoration (canvas) ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-5' target='_blank'>RGAA 1.2.5</a>] </li>";
+	  setItemsOutline(nia02g4_nodes,"red","nia02g4");
 	}
 	
-	// --> Todo : il manque la condition dépourvu de contenu pour le test 1.2.5
-	
-	const nia02g5_query = document.querySelectorAll('embed[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
-	if(nia02g5_query && nia02g5_query.length > 0 && isItemsVisible(nia02g5_query)){
+	const nia02g5_nodes = document.querySelectorAll('embed[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
+	if(nia02g5_nodes && nia02g5_nodes.length > 0 && isItemsVisible(nia02g5_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02g4' class='result-focus'>02-G</a> : Les images embarquées de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-6' target='_blank'>RGAA 1.2.6</a>] </li>";
-	  setItemsOutline(nia02g5_query,"red","nia02g5");
+	  setItemsOutline(nia02g5_nodes,"red","nia02g5");
+	}
+	
+	const nia02g6_nodes = document.querySelectorAll('object[type^="image/"][aria-hidden="true"]');
+	let nia02g6_flag = false;
+	if(nia02g6_nodes && nia02g6_nodes.length > 0){
+	  for(let i = 0; i < nia02g6_nodes.length; i++){
+	    if(isItemVisible(nia02g6_nodes[i]) && nia02g6_nodes[i].text().length > 0){
+		  setItemOutline(nia02g6_nodes[i],"red","nia02g6");
+		  nia02g6_flag = true;
+		}
+	  }
+	}
+	if(nia02g6_flag == true){
+		 result_nc += "<li><a href='#' data-destination='nia02g6' class='result-focus'>02-G</a> : Les images object de décoration ne doivent pas avoir de contenu alternatif présent entre ses balises [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-3' target='_blank'>RGAA 1.2.3</a>] </li>";
+	}
+	
+	const nia02g7_nodes = document.querySelectorAll('canvas[aria-hidden="true"]');
+	let nia02g7_flag = false;
+	if(nia02g7_nodes && nia02g7_nodes.length > 0){
+	  for(let i = 0; i < nia02g7_nodes.length; i++){
+	    if(isItemVisible(nia02g7_nodes[i]) && nia02g7_nodes[i].text().length > 0){
+		  setItemOutline(nia02g7_nodes[i],"red","nia02g7");
+		  nia02g7_flag = true;
+		}
+	  }
+	}
+	if(nia02g7_flag == true){
+		 result_nc += "<li><a href='#' data-destination='nia02g7' class='result-focus'>02-G</a> : Les images bitmap de décoration (canvas) ne doivent pas avoir de contenu alternatif présent entre ses balises [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-3' target='_blank'>RGAA 1.2.3</a>] </li>";
 	}
 	
 	// H. L'alternative doit être courte et concise - estimation max 150 caractères
@@ -265,35 +303,33 @@ o	Images v1 légendés presence du aria-label sur le figure */
  */
 
 	// A. Verification de la présence du suffix sur les liens externe
-	const nia03a1_query = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo)');
-	const nia03a2_query = document.querySelectorAll('html[lang="fr"] a[title$="Nouvelle fenêtre"]:not([target="_blank"])');
-	if((nia03a1_query && nia03a1_query.length > 0 && isItemsVisible(nia03a1_query)) || (nia03a2_query && nia03a2_query.length > 0 && isItemsVisible(nia03a2_query))){
+	const nia03a_nodes = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo), html[lang="fr"] a[title$="- Nouvelle fenêtre"]:not([target="_blank"]), html[lang="en"] a[target="_blank"]:not([title$="- New window"]):not(.mapboxgl-ctrl-logo),html[lang="en"] a[title$="- New window"]:not([target="_blank"]), html[lang="de"] a[target="_blank"]:not([title$="- Neues Fenster"]):not(.mapboxgl-ctrl-logo),html[lang="de"] a[title$="- Neues Fenster"]:not([target="_blank"]),html[lang="lb"] a[target="_blank"]:not([title$="- Nei Fënster"]):not(.mapboxgl-ctrl-logo),html[lang="lb"] a[title$="- Nei Fënster"]:not([target="_blank"])');
+	if(nia03a_nodes && nia03a_nodes.length > 0 && isItemsVisible(nia03a_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia03a' class='result-focus'>03-A</a> : Vérifier la présence de suffixe sur les liens externes</li>";
-	  if(nia03a1_query && nia03a1_query.length > 0 && isItemsVisible(nia03a1_query)) setItemsOutline(nia03a1_query,"red","nia03a");
-	  if(nia03a2_query && nia03a2_query.length > 0 && isItemsVisible(nia03a2_query)) setItemsOutline(nia03a2_query,"red","nia03a");
+	 if(nia03a_nodes && nia03a_nodes.length > 0 && isItemsVisible(nia03a_nodes)) setItemsOutline(nia03a_nodes,"red","nia03a");
 	}
 
 	// B. Verification de titre vide
-	const nia03b_query = document.querySelectorAll('a[title=" "],a[title="Nouvelle fenêtre"],a[title="- Nouvelle fenêtre"],a[title$="Nouvelle fenêtre - Nouvelle fenêtre"]');
-	if(nia03b_query && nia03b_query.length > 0 && isItemsVisible(nia03b_query)){
+	const nia03b_nodes = document.querySelectorAll('a[title=" "],a[title="Nouvelle fenêtre"],a[title="- Nouvelle fenêtre"],a[title$="Nouvelle fenêtre - Nouvelle fenêtre"]');
+	if(nia03b_nodes && nia03b_nodes.length > 0 && isItemsVisible(nia03b_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia03b' class='result-focus'>03-B</a> : Vérifier qu'il n'y a pas de lien avec un titre vide [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-6.1.1' target='_blank'>RGAA 6.1.1</a>]</li>";
-	  setItemsOutline(nia03b_query,"red","nia03b");
+	  setItemsOutline(nia03b_nodes,"red","nia03b");
 	}
 
 	// C. Probleme de lang
-	const nia03c_query = document.querySelectorAll('html:not([lang="fr"]) a[title$="Nouvelle fenêtre"]');
-	if(nia03c_query && nia03c_query.length > 0 && isItemsVisible(nia03c_query)){
-	  result_nc += "<li><a href='#' data-destination='nia03c' class='result-focus'>03-C</a> : Présence du suffixe Nouvelle fenêtre sur une page non rédiger en français</li>";
-	  setItemsOutline(nia03c_query,"orange","nia03c");
-	  
-	  // --> Todo vérifier si le contenu de la page est en FR 
+	const nia03c_nodes = document.querySelectorAll('html:not([lang="fr"]) a[title$="- Nouvelle fenêtre"], html:not([lang="en"]) a[title$="- New window"], html:not([lang="de"]) a[title$="- Neues Fenster"], html:not([lang="lb"]) a[title$="- Nei Fënster"]');
+	if(nia03c_nodes && nia03c_nodes.length > 0 && isItemsVisible(nia03c_nodes)){
+	  for(let i = 0; i < nia02g7_nodes.length; i++){
+		  result_nc += "<li><a href='#' data-destination='nia03c' class='result-focus'>03-C</a> : Présence du suffixe 'Nouvelle fenêtre' sur une page non rédiger en français (de même pour les autres langues)</li>";
+		  setItemsOutline(nia03c_nodes,"orange","nia03c");
+		}
 	}
 	
 	// D. Présence d'un conflit dans les attribut de liens
-	const nia03d_query = document.querySelectorAll('a[aria-label][aria-labelledby]');
-	if(nia03d_query && nia03d_query.length > 0 && isItemsVisible(nia03d_query)){
+	const nia03d_nodes = document.querySelectorAll('a[aria-label][aria-labelledby]');
+	if(nia03d_nodes && nia03d_nodes.length > 0 && isItemsVisible(nia03d_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia03d' class='result-focus'>03-D</a> : Présence d'un conflit dans les attributs des liens</li>";
-	  setItemsOutline(nia03d_query,"red","nia03d");
+	  setItemsOutline(nia03d_nodes,"red","nia03d");
 	}
 
 	// E. Vérifier que le title reprend à minimum le contenu textuel
@@ -325,13 +361,8 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		if(debug_flag) console.log("[nia03f] Boucle sur les "+nia03f_nodes.length + " liens detectés sur cette page");
 		for(let i = 0; i < nia03f_nodes.length; i++){
 			nia03f_lang = nia03f_nodes[i].closest('[lang]').getAttribute('lang')
-			if((nia03f_nodes[i].hasAttribute("title") && sanitizeText(nia03f_nodes[i].getAttribute("title"),nia03f_lang).length > 0) || sanitizeText(nia03f_nodes[i].innerText).length > 0){
-				// Le lien a un contenu textuel
-			}
-			else if(nia03f_nodes[i].querySelectorAll('img:not([alt=""]):not([aria-hidden="true"]):not([hidden])').length > 0){
-				// Le lien contient uniquement une image non décorative
-			}
-			else {
+			//Ni dans l'attribut title, ni dans le contenu textuel, ni dans l'attribut alt des images enfants
+			if( !(nia03f_nodes[i].hasAttribute("title") && sanitizeText(nia03f_nodes[i].getAttribute("title"),nia03f_lang).length > 0) && sanitizeText(nia03f_nodes[i].innerText).length == 0 && nia03f_nodes[i].querySelectorAll('img:not([alt=""]):not([aria-hidden="true"]):not([hidden])').length == 0){
 				setItemOutline(nia03f_nodes[i],"red","nia03f");
 				nia03f_flag = true;
 			}
@@ -342,116 +373,116 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	}
 	
 	// G. Présence de liens sans href
-	const nia03g_query = document.querySelectorAll('a:not([href])');
-	if(nia03g_query && nia03g_query.length > 0 && isItemsVisible(nia03g_query)){
+	const nia03g_nodes = document.querySelectorAll('a:not([href])');
+	if(nia03g_nodes && nia03g_nodes.length > 0 && isItemsVisible(nia03g_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia03g' class='result-focus'>03-G</a> : Présence d'un lien sans destination</li>";
-	  setItemsOutline(nia03g_query,"red","nia03g");
+	  setItemsOutline(nia03g_nodes,"red","nia03g");
 	}
 
 /* 🗸 NIA-04 Formulaire - Thématique RGAA 11
 - Autocomplete : Mise en avant des champs de formulaire avec un attribut autocomplete et vérification de la présence des attributs autocomplete pertinent sur les champs de formulaire classique */
 
-if(currentUrl.includes("contact.html")){
+	if(currentUrl.includes("contact.html")){
 
-	// A. Champ générique 
-	const nia04a1_query = document.querySelectorAll('input[name="name"]:not([autocomplete="family-name"]), input[name="lastname"]:not([autocomplete="family-name"])');
-	if(nia04a1_query && nia04a1_query.length > 0){
-	  result_nc += "<li><a href='#' data-destination='nia04a1' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (name) - utiliser 'family-name' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a1_query,"red","nia04a1");
-	}
-	const nia04a2_query = document.querySelectorAll('input[name="firstname"]:not([autocomplete="given-name"])');
-	if(nia04a2_query && nia04a2_query.length > 0){
-	  result_nc += "<li><a href='#' data-destination='nia04a2' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (firstname) - utiliser 'given-name' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a2_query,"red","nia04a2");
-	}
-	const nia04a3_query = document.querySelectorAll('input[type="email"]:not([autocomplete="email"])');
-	if(nia04a3_query && nia04a3_query.length > 0){
-	  result_nc += "<li><a href='#' data-destination='nia04a3' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (email) - utiliser 'email' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a3_query,"red","nia04a3");
-	}
-	const nia04a4_query = document.querySelectorAll('input[type="tel"]:not([autocomplete="tel"]), input[name="phone"]:not([autocomplete="tel"])');
-	if(nia04a4_query && nia04a4_query.length > 0){
-	  result_nc += "<li><a href='#' data-destination='nia04a4' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (phone) - utiliser 'tel' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a4_query,"red","nia04a4");
-	}
-	const nia04a5_query = document.querySelectorAll('input[name="postal"]:not([autocomplete="postal-code"]),input[type="postal-code"]:not([autocomplete="postal-code"])');
-	if(nia04a5_query && nia04a5_query.length > 0){
-	  result_nc += "<li><a href='#' data-destination='nia04a5' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (postal) - utiliser 'postal-code' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a5_query,"red","nia04a5");
-	}
-	const nia04a6_query = document.querySelectorAll('input[name="country"]:not([autocomplete="country-name"]), select[name="country"]:not([autocomplete="country"])');
-	if(nia04a6_query && nia04a6_query.length > 0){
-	  result_nc += "<li><a href='#' data-destination='nia04a6' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (country) - utiliser 'country-name' ou 'country' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a6_query,"red","nia04a6");
-	}
-	const nia04a7_query = document.querySelectorAll('input[name="matricule"][autocomplete]');
-	if(nia04a7_query && nia04a7_query.length > 0 ){
-	  result_nc += "<li><a href='#' data-destination='nia04a7' class='result-focus'>04-A</a> : Attribut erronée sur des champs formulaire (matricule) - Enlever l'attribut [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a7_query,"red","nia04a7");
-	}
-	const nia04a8_query = document.querySelectorAll('input[name="city"]:not([autocomplete="address-level2"]), input[name="ville"]:not([autocomplete="address-level2"])');
-	if(nia04a8_query && nia04a8_query.length > 0){
-	  result_nc += "<li><a href='#' data-destination='nia04a8' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (ville) - Utiliser 'address-level2' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a8_query,"red","nia04a8");
-	}
-	const nia04a9_query = document.querySelectorAll('textarea[name="adresse"]:not([autocomplete="street-address"]), input[name="adresse"]:not([autocomplete="street-address"]), input[name="street"]:not([autocomplete="street-address"])');
-	if(nia04a9_query && nia04a9_query.length > 0 ){
-	  result_nc += "<li><a href='#' data-destination='nia04a9' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (adresse) - Utiliser 'street-address' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a9_query,"red","nia04a9");
-	}
-	const nia04a10_query = document.querySelectorAll('input[name="organisation"]:not([autocomplete="organization"]), input[name="organization"]:not([autocomplete="organization"])');
-	if(nia04a10_query && nia04a10_query.length > 0 ){
-	  result_nc += "<li><a href='#' data-destination='nia04a10' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (organisation) - utiliser 'organization' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a10_query,"red","nia04a10");
-	}
-	const nia04a11_query = document.querySelectorAll('input[name="fonction"]:not([autocomplete="organization-title"]), input[name="function"]:not([autocomplete="organization-title"])');
-	if(nia04a11_query && nia04a11_query.length > 0 ){
-	  result_nc += "<li><a href='#' data-destination='nia04a11' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (function) - utiliser 'organization-title' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
-	  setItemsOutline(nia04a11_query,"red","nia04a11");
-	}
-	
-	
-	// B. Vérifier le format sur l'email
-	const nia04b_nodes = document.querySelectorAll('input[type="email"]');
-	let nia04b_flag = false;
-	let nia04b_id = "", nia04b_desc = "", nia04b_label = "", nia04b_help = "";
-	if(nia04b_nodes && nia04b_nodes.length > 0){
-		if(debug_flag) console.log("[nia04b] Boucle sur les "+nia04b_nodes.length + " champs email detectés sur cette page");
-		for(let i = 0; i < nia04b_nodes.length; i++){
-			nia04b_id = "", nia04b_desc = "", nia04b_label = "", nia04b_help = "";
-			nia04b_id = nia04b_nodes[i].getAttribute("id");
-			nia04b_desc = nia04b_nodes[i].getAttribute("aria-describedby");
-			if(nia04b_id && nia04b_id != ""){
-				nia04b_label = document.querySelector("label[for='"+nia04b_id+"']");
-				if(!nia04b_label){
+		// A. Champ générique 
+		const nia04a1_nodes = document.querySelectorAll('input[name="name"]:not([autocomplete="family-name"]), input[name="lastname"]:not([autocomplete="family-name"])');
+		if(nia04a1_nodes && nia04a1_nodes.length > 0){
+		  result_nc += "<li><a href='#' data-destination='nia04a1' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (name) - utiliser 'family-name' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a1_nodes,"red","nia04a1");
+		}
+		const nia04a2_nodes = document.querySelectorAll('input[name="firstname"]:not([autocomplete="given-name"])');
+		if(nia04a2_nodes && nia04a2_nodes.length > 0){
+		  result_nc += "<li><a href='#' data-destination='nia04a2' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (firstname) - utiliser 'given-name' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a2_nodes,"red","nia04a2");
+		}
+		const nia04a3_nodes = document.querySelectorAll('input[type="email"]:not([autocomplete="email"])');
+		if(nia04a3_nodes && nia04a3_nodes.length > 0){
+		  result_nc += "<li><a href='#' data-destination='nia04a3' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (email) - utiliser 'email' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a3_nodes,"red","nia04a3");
+		}
+		const nia04a4_nodes = document.querySelectorAll('input[type="tel"]:not([autocomplete="tel"]), input[name="phone"]:not([autocomplete="tel"])');
+		if(nia04a4_nodes && nia04a4_nodes.length > 0){
+		  result_nc += "<li><a href='#' data-destination='nia04a4' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (phone) - utiliser 'tel' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a4_nodes,"red","nia04a4");
+		}
+		const nia04a5_nodes = document.querySelectorAll('input[name="postal"]:not([autocomplete="postal-code"]),input[type="postal-code"]:not([autocomplete="postal-code"])');
+		if(nia04a5_nodes && nia04a5_nodes.length > 0){
+		  result_nc += "<li><a href='#' data-destination='nia04a5' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (postal) - utiliser 'postal-code' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a5_nodes,"red","nia04a5");
+		}
+		const nia04a6_nodes = document.querySelectorAll('input[name="country"]:not([autocomplete="country-name"]), select[name="country"]:not([autocomplete="country"])');
+		if(nia04a6_nodes && nia04a6_nodes.length > 0){
+		  result_nc += "<li><a href='#' data-destination='nia04a6' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (country) - utiliser 'country-name' ou 'country' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a6_nodes,"red","nia04a6");
+		}
+		const nia04a7_nodes = document.querySelectorAll('input[name="matricule"][autocomplete]');
+		if(nia04a7_nodes && nia04a7_nodes.length > 0 ){
+		  result_nc += "<li><a href='#' data-destination='nia04a7' class='result-focus'>04-A</a> : Attribut erronée sur des champs formulaire (matricule) - Enlever l'attribut [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a7_nodes,"red","nia04a7");
+		}
+		const nia04a8_nodes = document.querySelectorAll('input[name="city"]:not([autocomplete="address-level2"]), input[name="ville"]:not([autocomplete="address-level2"])');
+		if(nia04a8_nodes && nia04a8_nodes.length > 0){
+		  result_nc += "<li><a href='#' data-destination='nia04a8' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (ville) - Utiliser 'address-level2' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a8_nodes,"red","nia04a8");
+		}
+		const nia04a9_nodes = document.querySelectorAll('textarea[name="adresse"]:not([autocomplete="street-address"]), input[name="adresse"]:not([autocomplete="street-address"]), input[name="street"]:not([autocomplete="street-address"])');
+		if(nia04a9_nodes && nia04a9_nodes.length > 0 ){
+		  result_nc += "<li><a href='#' data-destination='nia04a9' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (adresse) - Utiliser 'street-address' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a9_nodes,"red","nia04a9");
+		}
+		const nia04a10_nodes = document.querySelectorAll('input[name="organisation"]:not([autocomplete="organization"]), input[name="organization"]:not([autocomplete="organization"])');
+		if(nia04a10_nodes && nia04a10_nodes.length > 0 ){
+		  result_nc += "<li><a href='#' data-destination='nia04a10' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (organisation) - utiliser 'organization' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a10_nodes,"red","nia04a10");
+		}
+		const nia04a11_nodes = document.querySelectorAll('input[name="fonction"]:not([autocomplete="organization-title"]), input[name="function"]:not([autocomplete="organization-title"])');
+		if(nia04a11_nodes && nia04a11_nodes.length > 0 ){
+		  result_nc += "<li><a href='#' data-destination='nia04a11' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (function) - utiliser 'organization-title' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+		  setItemsOutline(nia04a11_nodes,"red","nia04a11");
+		}
+		
+		
+		// B. Vérifier le format sur l'email
+		const nia04b_nodes = document.querySelectorAll('input[type="email"]');
+		let nia04b_flag = false;
+		let nia04b_id = "", nia04b_desc = "", nia04b_label = "", nia04b_help = "";
+		if(nia04b_nodes && nia04b_nodes.length > 0){
+			if(debug_flag) console.log("[nia04b] Boucle sur les "+nia04b_nodes.length + " champs email detectés sur cette page");
+			for(let i = 0; i < nia04b_nodes.length; i++){
+				nia04b_id = "", nia04b_desc = "", nia04b_label = "", nia04b_help = "";
+				nia04b_id = nia04b_nodes[i].getAttribute("id");
+				nia04b_desc = nia04b_nodes[i].getAttribute("aria-describedby");
+				if(nia04b_id && nia04b_id != ""){
+					nia04b_label = document.querySelector("label[for='"+nia04b_id+"']");
+					if(!nia04b_label){
+						setItemOutline(nia04b_nodes[i],"red","nia04b");
+						nia04b_flag = true;
+					}
+				}
+				if(nia04b_desc && nia04b_desc != ""){
+					nia04b_help = document.querySelector("[id="+nia04b_desc+"]");
+					if(!nia04b_help){
+						setItemOutline(nia04b_nodes[i],"red","nia04b");
+						nia04b_flag = true;
+					}
+				}
+				if((nia04b_label && nia04b_label != "" && nia04b_label.innerText.match(/^\S+@\S+\.\S+$/)) || (nia04b_help && nia04b_help != "" && nia04b_help.innerText.match(/^\S+@\S+\.\S+$/))){
 					setItemOutline(nia04b_nodes[i],"red","nia04b");
 					nia04b_flag = true;
 				}
-			}
-			if(nia04b_desc && nia04b_desc != ""){
-				nia04b_help = document.querySelector("[id="+nia04b_desc+"]");
-				if(!nia04b_help){
-					setItemOutline(nia04b_nodes[i],"red","nia04b");
-					nia04b_flag = true;
-				}
-			}
-			if((nia04b_label && nia04b_label != "" && nia04b_label.innerText.match(/^\S+@\S+\.\S+$/)) || (nia04b_help && nia04b_help != "" && nia04b_help.innerText.match(/^\S+@\S+\.\S+$/))){
-				setItemOutline(nia04b_nodes[i],"red","nia04b");
-				nia04b_flag = true;
 			}
 		}
+		if(nia04b_flag == true) {
+		  result_nc += "<li><a href='#' data-destination='nia04b' class='result-focus'>04-B</a> : Présence de champs email sans exemple de format [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-5' target='_blank'>RGAA 11.10.5</a>]</li>";
+		}
+		
+		// C. Check intitulé bouton envoi 
+		const nia04c_btn = document.querySelector('html[lang="fr"] form button.cmp-form-button[type="SUBMIT"][name="preview"]');
+		if(nia04c_btn && nia04c_btn.text() == "Prévisualiser puis envoyer" ){
+		  result_nth += "<li><a href='#' data-destination='nia04c' class='result-focus'>04-C</a> : Vérifier si le bouton de soumission possède bien la notion de prévisualisation' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-12-1' target='_blank'>RGAA 11.12.1</a>]</li>";
+		  setItemsOutline(nia04c_btn,"yellow","nia04c");
+		}
 	}
-	if(nia04b_flag == true) {
-	  result_nc += "<li><a href='#' data-destination='nia04b' class='result-focus'>04-B</a> : Présence de champs email sans exemple de format [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-5' target='_blank'>RGAA 11.10.5</a>]</li>";
-	}
-	
-	// C. Check intitulé bouton envoi 
-	const nia04c_btn = document.querySelector('html[lang="fr"] form button.cmp-form-button[type="SUBMIT"][name="preview"]');
-	if(nia04c_btn && nia04c_btn.text() == "Prévisualiser puis envoyer" ){
-	  result_nth += "<li><a href='#' data-destination='nia04c' class='result-focus'>04-C</a> : Vérifier si le bouton de soumission possède bien la notion de prévisualisation' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-12-1' target='_blank'>RGAA 11.12.1</a>]</li>";
-	  setItemsOutline(nia04c_btn,"yellow","nia04c");
-	}
-}
 
 	// C. Vérifier si les champs ont bien un label
 	const nia04d_nodes = document.querySelectorAll("input:not([aria-label]):not([aria-labelledby]):not([type='hidden']):not([type='submit']):not([type='reset']):not([type='button']), select:not([aria-label]):not([aria-labelledby]), textarea:not([aria-label]):not([aria-labelledby])");
@@ -479,13 +510,65 @@ if(currentUrl.includes("contact.html")){
 	}
 
 
-	// E. Todo 11.6 fieldset avec legend
+	// E. fieldset avec legend
+	const nia04e_nodes = document.querySelectorAll('fieldset');
+	let nia04e_flag = false;
+	if(nia04e_nodes && nia04e_nodes.length > 0){
+		if(debug_flag) console.log("[nia04e] Boucle sur les "+nia04e_nodes.length + " fielset detectés sur cette page");
+		for(let i = 0; i < nia04e_nodes.length; i++){
+			if(isItemVisible(nia04e_nodes[i]) && nia04e_nodes[i].firstChild.tagName != "LEGEND" && nia04e_nodes[i].firstChild.firstChild.tagName != "LEGEND"){
+				setItemsOutline(nia04e_nodes[i],"yellow","nia04e");
+				nia04e_flag = true;
+			}
+		}
+	}
+	if(nia04e_flag == true) {
+		result_nc += "<li><a href='#' data-destination='nia04e' class='result-focus'>04-E</a> : Absence de la légende dans un filedset [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-6-1' target='_blank'>RGAA 11.6.1</a>]'</li>";
+	}
 
-	// F. Todo 11.10 required ou aria-required="true" possède un asterisque dans le label
+	// F. Required ou aria-required="true" possède un asterisque dans le label
+	const nia04f_nodes = document.querySelectorAll('form [required], form [aria-required="true"]');
+	const nia04f_desc = document.querySelectorAll('cmp-form__mandatory-text')
+	let nia04f_flag = false;
+	let nia04f_id, nia04f_label;
+	if(nia04f_nodes && nia04f_nodes.length > 0){
+		if(debug_flag) console.log("[nia04f] Boucle sur les "+nia04e_nodes.length + " champs obligatoire detectés sur cette page");
+		for(let i = 0; i < nia04f_nodes.length; i++){
+			if(isItemVisible(nia04f_nodes[i])){
+				nia04f_id = nia04f_nodes[i].getAttribute("id");
+				if(!nia04f_id || nia04f_id == ""){
+					setItemOutline(nia04f_nodes[i],"red","nia04f");
+					nia04f_flag = true;
+				}
+				else{
+					nia04f_label = document.querySelectorAll("label[for='"+nia04f_id+"']");
+					if(!nia04f_label || nia04f_label.length == 0){
+						setItemOutline(nia04f_nodes[i],"red","nia04f");
+						nia04f_flag = true;
+					}
+					if(!nia04f_label[0].innerText.contains("*")){
+						setItemOutline(nia04f_nodes[i],"red","nia04f");
+						nia04f_flag = true;
+					}
+				}
+			}
+		}
+		if(nia04f_desc.length == 0){
+			result_nc += "<li>04-F : Absence d'indication de la signification de l'astrisque sur un champ obligatoire [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-1' target='_blank'>RGAA 11.10.1</a>]'</li>";
+		}
+	}
+	if(nia04f_flag == true) {
+		result_nc += "<li><a href='#' data-destination='nia04e' class='result-focus'>04-F</a> : Absence d'astrisque sur un champ obligatoire [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-1' target='_blank'>RGAA 11.10.1</a>]'</li>";
+	}
 
-	// G. Todo 11.5 --> Champ et étiquette accolé en recupérant les positions ?
+	// G. Pas d'autocomplete sur les champs radio/checkbox
+	const nia04g_nodes = document.querySelectorAll('input[type="checkbox"][autocomplete]:not([autocomplete="off"]),input[type="radio"][autocomplete]:not([autocomplete="off"])');
+	if(nia04g_nodes && nia04g_nodes.length > 0 && isItemsVisible(nia04g_nodes)){
+	  result_nc += "<li><a href='#' data-destination='nia04g' class='result-focus'>04-G</a> : Présence d'autocomplete sur un champ de type 'checkbox' ou 'Radiobutton' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
+	  setItemsOutline(nia04g_btn,"red","nia04g");
+	}
 
-
+	// H. Todo 11.5 --> Champ et étiquette accolé en recupérant les positions ?
 
 
 /* 🗸 NIA-05 Element Obligatoire - Thématique RGAA 8
@@ -497,7 +580,7 @@ if(currentUrl.includes("contact.html")){
 	const nia05a_nodes = document.querySelectorAll('*:not(.ol-attribution) > :where(p, span, td, th, strong, em, a, q, blockquote, aside, ul):not([aria-hidden="true"]):not(.mapboxgl-ctrl-logo):empty');
 	let nia05a_container = "";
 	if(nia05a_nodes && nia05a_nodes.length > 0 && isItemsVisible(nia05a_nodes)){
-	  result_nc += "<li><a href='#' data-destination='nia05b' class='result-focus'>05-A : Présence de balise vide [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-9-1' target='_blank'>RGAA 8.9.1</a>]</li>";
+	  result_nc += "<li><a href='#' data-destination='nia05b' class='result-focus'>05-A</a> : Présence de balise vide [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-9-1' target='_blank'>RGAA 8.9.1</a>]</li>";
 	  for(let i = 0; i < nia05a_nodes.length; i++){
 			if(isItemVisible(nia05a_nodes[i])){
 				setItemOutline(nia05a_nodes[i],"red","nia05a");
@@ -548,73 +631,101 @@ if(currentUrl.includes("contact.html")){
 	}
 	
 	// E. Changement de sens de lecture
-	const nia05e_query = document.querySelectorAll('[dir]:not([dir="rtl"]):not([dir="lrt"])');
-	if(nia05e_query && nia05e_query.length > 0 && isItemsVisible(nia05e_query)){
+	const nia05e_nodes = document.querySelectorAll('[dir]:not([dir="rtl"]):not([dir="lrt"])');
+	if(nia05e_nodes && nia05e_nodes.length > 0 && isItemsVisible(nia05e_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia05e' class='result-focus'>05-E</a> : Vérifier la valeur de définition du sens de lecture [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-10-2' target='_blank'>RGAA 8.10.2</a>]</li>";
-	  setItemsOutline(nia06a_query,"red","nia05e");
+	  setItemsOutline(nia06a_nodes,"red","nia05e");
 	}
 	
+	// F. Todo Id dupliqué
 
 /* 🗸 NIA-06 Structure de l'information - Thématique RGAA 9 
 - Landmark
 - List : Mise en avant des listes */
 
 	// A. Vérifier qu'il n'y a pas de role sur les container de liste
-	const nia06a_query = document.querySelectorAll('ul[role]:not([role="list"]),ol[role]:not([role="list"]),li[role]:not([role="listitem"]),dl[role]:not([role="listitem"])');
-	if(nia06a_query && nia06a_query.length > 0 && isItemsVisible(nia06a_query)){
+	const nia06a_nodes = document.querySelectorAll('ul[role]:not([role="list"]),ol[role]:not([role="list"]),li[role]:not([role="listitem"]),dl[role]:not([role="listitem"])');
+	if(nia06a_nodes && nia06a_nodes.length > 0 && isItemsVisible(nia06a_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia06a' class='result-focus'>06-A</a> : Vérifier qu'il n'y a pas de role sur les container de liste [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-3-1' target='_blank'>RGAA 9.3.1</a>]</li>";
-	  setItemsOutline(nia06a_query,"red","nia06a");
+	  setItemsOutline(nia06a_nodes,"red","nia06a");
+	}
+	
+	// B. Vérifier que le liste <ul> et <ol> ne contienne que des <li> ou [role="listitem"]
+	const nia06b_nodes = document.querySelectorAll(':where(ul,ol,[role="list"]) > *:not(li):not([role="listitem"])');
+	console.log("nia06b_nodes : "+nia06b_nodes.length);
+	if(nia06b_nodes && nia06b_nodes.length > 0){
+	  result_nc += "<li><a href='#' data-destination='nia06b' class='result-focus'>06-B</a> : Présence d'un élement non autorisé dans une liste [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-3-1' target='_blank'>RGAA 9.3.1</a>]</li>";
+	  setItemsOutline(nia06b_nodes,"red","nia06b");
 	}
 	
 	// --> Todo : landmark 9.2.1
 	
-	// B. Vérifier que la zone d’en-tête est structurée au moyen d’un élément <header> ;
+	// C. Vérifier que la zone d’en-tête est structurée au moyen d’un élément <header> ;
 	// <header class="page-header" role="banner">
 	
 	
-	// C. Vérifier que les zones de navigation principales et secondaires sont structurées au moyen d’un élément <nav> ;
-	// D. Vérifier que l’élément <nav> n’est pas utilisé en dehors de la structuration des zones de navigation principales et secondaires ;
+	// D. Vérifier que les zones de navigation principales et secondaires sont structurées au moyen d’un élément <nav> ;
+	// E. Vérifier que l’élément <nav> n’est pas utilisé en dehors de la structuration des zones de navigation principales et secondaires ;
 	
-	// E. Vérifier que la zone de contenu principal est structurée au moyen d’un élément <main> ;
+	// F. Vérifier que la zone de contenu principal est structurée au moyen d’un élément <main> ;
 	// Si le document possède plusieurs éléments <main>, vérifier qu’un seul de ces éléments est visible (les autres occurrences de l’élément sont pourvues d’un attribut hidden) ;
 	// <main id="main" class="page-main " role="main">
 	
 	
-	// F. Vérifier que la zone de pied de page est structurée au moyen d’un élément <footer>.
+	// G. Vérifier que la zone de pied de page est structurée au moyen d’un élément <footer>.
 
-	// G. Todo : Presence de double espace 10.1.3
+
 	
 	// H. Cadres avec un titre
-	const nia06h_query = document.querySelectorAll('frame:not([title]),iframe:not([title])');
-	if(nia06h_query && nia06h_query.length > 0 && isItemsVisible(nia06h_query)){
+	const nia06h_nodes = document.querySelectorAll('frame:not([title]),iframe:not([title])');
+	if(nia06h_nodes && nia06h_nodes.length > 0 && isItemsVisible(nia06h_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia06h' class='result-focus'>06-H</a> : Chaque cadre doit avoir un titre  [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-2-1-1' target='_blank'>RGAA 2.1.1</a>] </li>";
-	  setItemsOutline(nia06h_query,"red","nia06h");
+	  setItemsOutline(nia06h_nodes,"red","nia06h");
 	}
 
+	// I. Presence de triple espace (double concidéré comme erreur d'inattention)
+	const nia06i_nodes = document.querySelectorAll('.cmp-text');
+	let nia06i_flag = false;
+	let nia06i_result;
+	if(nia06i_nodes && nia06i_nodes.length > 0){
+		for(let i = 0; i < nia06i_nodes.length; i++){
+			if(isItemVisible(nia06i_nodes[i])){
+				const nia06i_result = nia06i_nodes[i].innerText.match(/   +/g);
+				if(nia06i_result && nia06i_result.length > 0) {
+					setItemOutline(nia06i_nodes[i],"yellow","nia06i");
+					nia06i_flag = true;
+				}
+			}
+		}
+	}	
+	if(nia06i_flag == true) {
+	  result_nth += "<li><a href='#' data-destination='nia06i' class='result-focus'>06-I</a> : Présence d'espace pour créer des effets de marges ou d'alignement [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-10-1-3' target='_blank'>RGAA 10.1.3</a>] </li>";
+	  setItemsOutline(nia06i_nodes,"yellow","nia06i");
+	}
 
 /* 🗸 NIA-07 Title : Mise en avant des titres (<Hn> et ceux qui ont les roles=heading). 
 o Vérification de la présence de titres simulés - S’assurer que les titres sont bien balisés avec des balises <Hn> et pas seulement avec du gras.
 o S’assurer que les titres sont dans le bon ordre*/
 
 	// A. Heading avec role
-	const nia07a_query = document.querySelectorAll('h1[role]:not([role="heading"]),h2[role]:not([role="heading"]),h3[role]:not([role="heading"]),h4[role]:not([role="heading"]),h5[role]:not([role="heading"]),h6[role]:not([role="heading"])');
-	if(nia07a_query && nia07a_query.length > 0 && isItemsVisible(nia07a_query)){
+	const nia07a_nodes = document.querySelectorAll('h1[role]:not([role="heading"]),h2[role]:not([role="heading"]),h3[role]:not([role="heading"]),h4[role]:not([role="heading"]),h5[role]:not([role="heading"]),h6[role]:not([role="heading"])');
+	if(nia07a_nodes && nia07a_nodes.length > 0 && isItemsVisible(nia07a_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia07a' class='result-focus'>07-A</a> : Présence de titre avec un attribut role</li>";
-	  setItemsOutline(nia07a_query,"red","nia07a");
+	  setItemsOutline(nia07a_nodes,"red","nia07a");
 	}
 
 	// B. Aria-level sans heading
-	const nia07b_query = document.querySelectorAll('[aria-level]:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not([role="heading"])');
-	if(nia07b_query && nia07b_query.length > 0 && isItemsVisible(nia07b_query)){
+	const nia07b_nodes = document.querySelectorAll('[aria-level]:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not([role="heading"])');
+	if(nia07b_nodes && nia07b_nodes.length > 0 && isItemsVisible(nia07b_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia07b' class='result-focus'>07-B</a> : Présence d'attribut aria-level en dehors de titre</li>";
-	  setItemsOutline(nia07b_query,"red","nia07b");
+	  setItemsOutline(nia07b_nodes,"red","nia07b");
 	}
 	
 	// C. Heading caché au outil d'assistance 
-	const nia07c_query = document.querySelectorAll('h1[aria-hidden],h2[aria-hidden],h3[aria-hidden],h4[aria-hidden],h5[aria-hidden],h6[aria-hidden]');
-	if(nia07c_query && nia07c_query.length > 0 && isItemsVisible(nia07c_query)){
+	const nia07c_nodes = document.querySelectorAll('h1[aria-hidden],h2[aria-hidden],h3[aria-hidden],h4[aria-hidden],h5[aria-hidden],h6[aria-hidden]');
+	if(nia07c_nodes && nia07c_nodes.length > 0 && isItemsVisible(nia07c_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia07c' class='result-focus'>07-C</a> : Présence de titre caché au outil d'assistance </li>";
-	  setItemsOutline(nia07c_query,"red","nia07c");
+	  setItemsOutline(nia07c_nodes,"red","nia07c");
 	}
 
 	// D. Heading simulé
@@ -668,31 +779,31 @@ o S’assurer que les titres sont dans le bon ordre*/
 */
 
 	// A. Attribut de tableau
-	const nia08a_query = document.querySelectorAll(':where([role="table"],table:not([role="presentation"])) th:not([scope="row"]):not([scope="col"]):not([id]):not([role="rowheader"]):not([role="columnheader"])');
-	if(nia08a_query && nia08a_query.length > 0 && isItemsVisible(nia08a_query)){
+	const nia08a_nodes = document.querySelectorAll(':where([role="table"],table:not([role="presentation"])) th:not([scope="row"]):not([scope="col"]):not([id]):not([role="rowheader"]):not([role="columnheader"])');
+	if(nia08a_nodes && nia08a_nodes.length > 0 && isItemsVisible(nia08a_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia08a' class='result-focus'>08-A</a> : Absence de l'attribut scope sur les en-tete de tableau [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-5-7-1' target='_blank'>RGAA 5.7.1</a>]</li>";
-	  setItemsOutline(nia08a_query,"red","nia08a");
+	  setItemsOutline(nia08a_nodes,"red","nia08a");
 	}
 	
 	// B. Attribut deprecated
-	const nia08b_query = document.querySelectorAll(':where([role="table"],table):where([align],[bgcolor],[border],[frame],[cellpadding],[cellspacing],[width],[summary],[rules])');
-	if(nia08b_query && nia08b_query.length > 0 && isItemsVisible(nia08b_query)){
+	const nia08b_nodes = document.querySelectorAll(':where([role="table"],table):where([align],[bgcolor],[border],[frame],[cellpadding],[cellspacing],[width],[summary],[rules])');
+	if(nia08b_nodes && nia08b_nodes.length > 0 && isItemsVisible(nia08b_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia08b' class='result-focus'>08-B</a> : Presence d'attribut obsolete sur un tableau</li>";
-	  setItemsOutline(nia08b_query,"red","nia08b");
+	  setItemsOutline(nia08b_nodes,"red","nia08b");
 	}
 
 	// C. Attribut deprecated
-	const nia08c_query = document.querySelectorAll('th[header], td[header]');
-	if(nia08c_query && nia08c_query.length > 0 && isItemsVisible(nia08c_query)){
+	const nia08c_nodes = document.querySelectorAll('th[header], td[header]');
+	if(nia08c_nodes && nia08c_nodes.length > 0 && isItemsVisible(nia08c_nodes)){
 	  result_nth += "<li><a href='#' data-destination='nia08c' class='result-focus'>08-C</a> : Presence attributs header obsolete dans un tableau</li>";
-	  setItemsOutline(nia08c_query,"yellow","nia08c");
+	  setItemsOutline(nia08c_nodes,"yellow","nia08c");
 	}
 	
 	// D. Tableau de mise en forme
-	const nia08d_query = document.querySelectorAll('table[role="presentation"][summary], table[role="presentation"] :where(caption,thead,th,tfoot,[role="rowheader"],[role="columnheader"],td[scope],td[headers],td[axis])');
-	if(nia08d_query && nia08d_query.length > 0 && isItemsVisible(nia08d_query)){
+	const nia08d_nodes = document.querySelectorAll('table[role="presentation"][summary], table[role="presentation"] :where(caption,thead,th,tfoot,[role="rowheader"],[role="columnheader"],td[scope],td[headers],td[axis])');
+	if(nia08d_nodes && nia08d_nodes.length > 0 && isItemsVisible(nia08d_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia08d' class='result-focus'>08-D</a> : Presence d'élements incompatible avec un tableau de mise en forme [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-5-8-1' target='_blank'>RGAA 5.8.1</a>]</li>";
-	  setItemsOutline(nia08d_query,"red","nia08d");
+	  setItemsOutline(nia08d_nodes,"red","nia08d");
 	}
 	
 	// E. Chaque tableau à un entete de ligne ou de colonne balisé avec th ou role="columnheader" ou role="rowheader" 
@@ -720,51 +831,83 @@ o S’assurer que les titres sont dans le bon ordre*/
 - Pertinance du plan du site
 - Tabindex : Mise en avant des éléments possédant un tabindex défini. Vérifier l'absence d’attribut « tabindex » positif dans le contenu*/
 
-if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html")){
-	const nia09a_footer = document.querySelectorAll('.page-footernav a[href*="contact"][href$=".html"]');
-	const nia09b_footer = document.querySelectorAll('.page-footernav a[href*="accessibilite"][href$=".html"]');
-	const nia09c_footer = document.querySelectorAll('.page-footernav a[href*="aspects-legaux"][href$=".html"]');
-	const nia09d_footer = document.querySelectorAll('.page-footernav a[href*="a-propos"][href$=".html"]');
-	const nia09a_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="contact"][href$=".html"]');
-	const nia09b_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="accessibilite"][href$=".html"]');
-	const nia09c_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="aspects-legaux"][href$=".html"]');
-	const nia09d_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="a-propos"][href$=".html"]');
+	if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html")){
+		const nia09a_footer = document.querySelectorAll('.page-footernav a[href*="contact"][href$=".html"]');
+		const nia09b_footer = document.querySelectorAll('.page-footernav a[href*="accessibilite"][href$=".html"]');
+		const nia09c_footer = document.querySelectorAll('.page-footernav a[href*="aspects-legaux"][href$=".html"]');
+		const nia09d_footer = document.querySelectorAll('.page-footernav a[href*="a-propos"][href$=".html"]');
+		const nia09a_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="contact"][href$=".html"]');
+		const nia09b_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="accessibilite"][href$=".html"]');
+		const nia09c_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="aspects-legaux"][href$=".html"]');
+		const nia09d_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="a-propos"][href$=".html"]');
 
-	if(nia09a_footer && nia09a_sitemap && nia09a_footer.length != nia09a_sitemap.length){
-	  result_nc += "<li><a href='#' data-destination='nia09a' class='result-focus'>09-A</a> : Il manque la page contact dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
-	  setItemsOutline(nia09a_footer,"red","nia09a");
-	  setItemsOutline(nia09a_sitemap,"red","nia09a");
-	}
+		if(nia09a_footer && nia09a_sitemap && nia09a_footer.length != nia09a_sitemap.length){
+		  result_nc += "<li><a href='#' data-destination='nia09a' class='result-focus'>09-A</a> : Il manque la page contact dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
+		  setItemsOutline(nia09a_footer,"red","nia09a");
+		  setItemsOutline(nia09a_sitemap,"red","nia09a");
+		}
 
-	if(nia09b_footer && nia09b_sitemap && nia09b_footer.length != nia09b_sitemap.length){
-	  result_nc += "<li><a href='#' data-destination='nia09b' class='result-focus'>09-B</a> : Il manque la page Accessibilité dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
-	  setItemsOutline(nia09b_footer,"red","nia09b");
-	  setItemsOutline(nia09b_sitemap,"red","nia09b");
+		if(nia09b_footer && nia09b_sitemap && nia09b_footer.length != nia09b_sitemap.length){
+		  result_nc += "<li><a href='#' data-destination='nia09b' class='result-focus'>09-B</a> : Il manque la page Accessibilité dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
+		  setItemsOutline(nia09b_footer,"red","nia09b");
+		  setItemsOutline(nia09b_sitemap,"red","nia09b");
+		}
+		
+		if(nia09c_footer && nia09c_sitemap && nia09c_footer.length != nia09c_sitemap.length){
+		  result_nc += "<li><a href='#' data-destination='nia09c' class='result-focus'>09-C</a> : Il manque la page aspect légaux dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
+		  setItemsOutline(nia09c_footer,"red","nia09c");
+		  setItemsOutline(nia09c_sitemap,"red","nia09c");
+		}
+		
+		if(nia09d_footer && nia09d_sitemap && nia09d_footer.length != nia09d_sitemap.length){
+		  result_nc += "<li><a href='#' data-destination='nia09d' class='result-focus'>09-D</a> : Il manque la page A propos dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
+		  setItemsOutline(nia09d_footer,"red","nia09d");
+		  setItemsOutline(nia09d_sitemap,"red","nia09d");
+		}
 	}
-	
-	if(nia09c_footer && nia09c_sitemap && nia09c_footer.length != nia09c_sitemap.length){
-	  result_nc += "<li><a href='#' data-destination='nia09c' class='result-focus'>09-C</a> : Il manque la page aspect légaux dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
-	  setItemsOutline(nia09c_footer,"red","nia09c");
-	  setItemsOutline(nia09c_sitemap,"red","nia09c");
-	}
-	
-	if(nia09d_footer && nia09d_sitemap && nia09d_footer.length != nia09d_sitemap.length){
-	  result_nc += "<li><a href='#' data-destination='nia09d' class='result-focus'>09-D</a> : Il manque la page A propos dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-3-1' target='_blank'>RGAA 12.3.1</a>]</li>";
-	  setItemsOutline(nia09d_footer,"red","nia09d");
-	  setItemsOutline(nia09d_sitemap,"red","nia09d");
-	}
-}
 
 	// E. Presence d'attibut tabindex positif
-	const nia09e_query = document.querySelectorAll('[tabindex]:not([tabindex="0"]):not([tabindex="-1"])');
-	if(nia09e_query && nia09e_query.length > 0 && isItemsVisible(nia09e_query)){
+	const nia09e_nodes = document.querySelectorAll('[tabindex]:not([tabindex="0"]):not([tabindex="-1"])');
+	if(nia09e_nodes && nia09e_nodes.length > 0 && isItemsVisible(nia09e_nodes)){
 	  result_nth += "<li><a href='#' data-destination='nia09e' class='result-focus'>09-E</a> : Presence d'attibut tabindex positif [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-8-1' target='_blank'>RGAA 12.8.1</a>]</li>";
-	  setItemsOutline(nia09e_query,"orange","nia09e");
+	  setItemsOutline(nia09e_nodes,"orange","nia09e");
 	}
 
-	// F. Todo -- 2 systemes de navigation (plan du site, recherche, menu) 12.1.1
+	// F. 2 systemes de navigation (plan du site, recherche, menu)
+	const nia09f_nav = document.querySelector('nav.topnav #headernav');
+	const nia09f_search = document.querySelector('div.topsearch[role="search"]');
+	const nia09f_plan = document.querySelector('.page-footernav a[href*="plan"][href$=".html"]');
+	let nia09f_counter = 0;
+	if(nia09f_nav && isItemVisible(nia09f_nav)){nia09f_counter++;}
+	if(nia09f_search && isItemVisible(nia09f_search)){nia09f_counter++;}
+	if(nia09f_plan && isItemVisible(nia09f_plan)){nia09f_counter++;}
+	if(nia09f_counter >= 2){
+	  result_nc += "<li>09-F : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>";
+	}
 	
-	// G. Todo -- Skiplinks 12.7.1
+	// G. Skiplinks
+	const nia09g_main = document.querySelector('.skiplinks a[href="#main"]');
+	if(nia09g_main == null){
+		result_nc += "<li>09-G : Absence de skiplinks pour aller à la zone de contenu principale [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>";
+	}
+	
+	const nia09g2_nodes = document.querySelectorAll('.skiplinks a[href]');
+	let nia09g2_flag = false;
+	let nia09g2_dest = "";
+	if(nia09g2_nodes && nia09g2_nodes.length > 0){
+		if(debug_flag) console.log("[nia09g2] Boucle sur les "+nia09g2_nodes.length + " skiplinks détéctés sur cette page");
+		for(let i = 0; i < nia09g2_nodes.length; i++){
+			nia09g2_dest = document.querySelector(nia09g2_nodes[i].getAttribute("href"))
+			if(nia09g2_dest == null){
+				if(debug_flag) console.log(nia09g2_nodes[i]);
+				nia09g2_flag = true;
+			}
+		}
+	}
+	if(nia09g2_flag == true){
+	  result_dev += "<li>09-G : Un skiplinks n'est pas correctement lié à sa destination [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>";
+	}
+
 
 /* 🗸 NIA-10 Old tag : Mise en avant de la présence d’attributs obsolètes. Vérifier qu'il n'y a pas de balise ou d’attribut obsolète dans le contenu (Fréquent lors de refonte ou de copier/coller)*/
 
@@ -792,17 +935,17 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 	*/
 
 	// A. Old tag NC
-	const nia10a_query = document.querySelectorAll('acronym,applet,basefont,big,center,dir,font,frame,frameset,isindex,noframes,s,strike,tt,u,blink,marquee,s'); // NC
-	if(nia10a_query && nia10a_query.length > 0 && isItemsVisible(nia10a_query)){
+	const nia10a_nodes = document.querySelectorAll('acronym,applet,basefont,big,center,dir,font,frame,frameset,isindex,noframes,s,strike,tt,u,blink,marquee,s'); // NC
+	if(nia10a_nodes && nia10a_nodes.length > 0 && isItemsVisible(nia10a_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia10a' class='result-focus'>10-A</a> : Présence de balise HTML obsolètes ou servant à la présentation de l'information [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-10-1-1' target='_blank'>RGAA 10.1.1</a>]</li>";
-	  setItemsOutline(nia10a_query,"red","nia10a");
+	  setItemsOutline(nia10a_nodes,"red","nia10a");
 	}
 	
 	// B. Old tag Nice-to-have
-	const nia10b_query = document.querySelectorAll('i,b'); // NtH
-	if(nia10b_query && nia10b_query.length > 0 && isItemsVisible(nia10b_query)){
+	const nia10b_nodes = document.querySelectorAll('i,b'); // NtH
+	if(nia10b_nodes && nia10b_nodes.length > 0 && isItemsVisible(nia10b_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia10b' class='result-focus'>10-B</a> : Présence de balises 'i' ou 'b', voir pour les remplacer par 'em' et 'strong' lorsque nécessaire</li>";
-	  setItemsOutline(nia10b_query,"orange","nia10b");
+	  setItemsOutline(nia10b_nodes,"orange","nia10b");
 	}
 
 	/* B. Old attribut
@@ -861,17 +1004,17 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 	*/
 
 	// C. Old attribut
-	const nia10c_query = document.querySelectorAll('link[rev], a[rev],link[charset], a[charset],a[shape],a[coords],img[longdesc], iframe[longdesc],link[target],area[nohref],head[profile],html[version],img[name],meta[scheme],object[archive],object[classid],object[codebase],object[codetype],object[declare],object[standby],param[valuetype],param[type],td[axis],t[axis],td[abbr], t[abbr],td[scope],caption[align], iframe[align], img[align], input[align], object[align], legend[align], table[align], hr[align], div[align], h1[align], h2[align], h3[align], h4[align], h5[align], h6[align], p[align], col[align], colgroup[align], tbody[align], td[align], tfoot[align], th[align], thead[align], tr[align],body[alink],body[link],body[vlink],body[text],body[background],table[bgcolor], tr[bgcolor], td[bgcolor], th[bgcolor], body[bgcolor],table[border], object[border],table[cellpadding],table[cellspacing],col[char], colgroup[char], tbody[char], td[char], tfoot[char], th[char], thead[char],tr[char],col[charoff], colgroup[charoff], tbody[charoff], td[charoff], tfoot[charoff], th[charoff], thead[charoff], tr[charoff],br[clear],dl[compact], menu[compact], ol[compact], ul[compact],table[frame],iframe[frameborder],img[hspace], object[hspace],img[vspace], object[vspace],iframe[marginheight],iframe[marginwidth],hr[noshade],td[nowrap], th[nowrap],table[rules],iframe[scrolling],hr[size],li[type], ol[type], ul[type],col[valign], colgroup[valign], tbody[valign], td[valign], tfoot[valign], th[valign], thead[valign], tr[valign],hr[width], table[width], td[width], th[width], col[width], colgroup[width], pre[width]'); // NC
-	if(nia10c_query && nia10c_query.length > 0 && isItemsVisible(nia10c_query)){
+	const nia10c_nodes = document.querySelectorAll('link[rev], a[rev],link[charset], a[charset],a[shape],a[coords],img[longdesc], iframe[longdesc],link[target],area[nohref],head[profile],html[version],img[name],meta[scheme],object[archive],object[classid],object[codebase],object[codetype],object[declare],object[standby],param[valuetype],param[type],td[axis],t[axis],td[abbr], t[abbr],td[scope],caption[align], iframe[align], img[align], input[align], object[align], legend[align], table[align], hr[align], div[align], h1[align], h2[align], h3[align], h4[align], h5[align], h6[align], p[align], col[align], colgroup[align], tbody[align], td[align], tfoot[align], th[align], thead[align], tr[align],body[alink],body[link],body[vlink],body[text],body[background],table[bgcolor], tr[bgcolor], td[bgcolor], th[bgcolor], body[bgcolor],table[border], object[border],table[cellpadding],table[cellspacing],col[char], colgroup[char], tbody[char], td[char], tfoot[char], th[char], thead[char],tr[char],col[charoff], colgroup[charoff], tbody[charoff], td[charoff], tfoot[charoff], th[charoff], thead[charoff], tr[charoff],br[clear],dl[compact], menu[compact], ol[compact], ul[compact],table[frame],iframe[frameborder],img[hspace], object[hspace],img[vspace], object[vspace],iframe[marginheight],iframe[marginwidth],hr[noshade],td[nowrap], th[nowrap],table[rules],iframe[scrolling],hr[size],li[type], ol[type], ul[type],col[valign], colgroup[valign], tbody[valign], td[valign], tfoot[valign], th[valign], thead[valign], tr[valign],hr[width], table[width], td[width], th[width], col[width], colgroup[width], pre[width]'); // NC
+	if(nia10c_nodes && nia10c_nodes.length > 0 && isItemsVisible(nia10c_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia10c' class='result-focus'>10-C</a> : Présence d'attributs HTML obsoletes</li>";
-	  setItemsOutline(nia10c_query,"red","nia10c");
+	  setItemsOutline(nia10c_nodes,"red","nia10c");
 	}
 	
 	// D. Presentation attribut
-	const nia10d_query = document.querySelectorAll('[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [color], [compact], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), [width]:not(img):not(object):not(embed):not(canvas):not(svg),[height]:not(img):not(object):not(embed):not(canvas):not(svg)'); 
-	if(nia10d_query && nia10d_query.length > 0 && isItemsVisible(nia10d_query)){
+	const nia10d_nodes = document.querySelectorAll('[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [color], [compact], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), [width]:not(img):not(object):not(embed):not(canvas):not(svg),[height]:not(img):not(object):not(embed):not(canvas):not(svg)'); 
+	if(nia10d_nodes && nia10d_nodes.length > 0 && isItemsVisible(nia10d_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia10d' class='result-focus'>10-D</a> : Présence d'attributs HTML servant à la présentation de l'information [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-10-1-2' target='_blank'>RGAA 10.1.2</a>]</li>";
-	  setItemsOutline(nia10d_query,"red","nia10d");
+	  setItemsOutline(nia10d_nodes,"red","nia10d");
 	}
 
 
@@ -879,10 +1022,10 @@ if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html"))
 */
 
   // A. Absence de lang
-  	const nia11a_query = document.querySelectorAll('html:not([lang])');
-	if(nia11a_query && nia11a_query.length > 0 && isItemsVisible(nia11a_query)){
+  	const nia11a_nodes = document.querySelectorAll('html:not([lang])');
+	if(nia11a_nodes && nia11a_nodes.length > 0 && isItemsVisible(nia11a_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia11a' class='result-focus'>11-A</a> : Aucune langue défini par défaut sur la page [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-3-1' target='_blank'>RGAA 8.3.1</a>]</li>";
-	  setItemsOutline(nia11a_query,"red","nia11a");
+	  setItemsOutline(nia11a_nodes,"red","nia11a");
 	}
 	
 	
@@ -910,22 +1053,22 @@ o	L'attribut « title » doit reprendre à minimum le contenu textuel de celui-c
 */
 
 	/* A&B. Recherche */
-	const nia12a1_query = document.querySelectorAll('.topsearch:not([role="search"])');
-	const nia12a2_query = document.querySelectorAll('html[lang="fr"] .topsearch:not([aria-label="Globale"])');
-	if((nia12a1_query && nia12a1_query.length > 0 && isItemsVisible(nia12a1_query)) || (nia12a2_query && nia12a2_query.length > 0 && isItemsVisible(nia12a2_query))){
+	const nia12a1_nodes = document.querySelectorAll('.topsearch:not([role="search"])');
+	const nia12a2_nodes = document.querySelectorAll('html[lang="fr"] .topsearch:not([aria-label="Globale"])');
+	if((nia12a1_nodes && nia12a1_nodes.length > 0 && isItemsVisible(nia12a1_nodes)) || (nia12a2_nodes && nia12a2_nodes.length > 0 && isItemsVisible(nia12a2_nodes))){
 	  result_dev += "<li><a href='#' data-destination='nia12a' class='result-focus'>12-A</a> : Absence de certaines propriétés sur le champ de recherche (role=search et aria-label=Globale)</li>";
-	  setItemsOutline(nia12a1_query,"red","nia12a");
-	  setItemsOutline(nia12a2_query,"red","nia12a");
+	  setItemsOutline(nia12a1_nodes,"red","nia12a");
+	  setItemsOutline(nia12a2_nodes,"red","nia12a");
 	}
 
-	const nia12b1_query = document.querySelectorAll('html[lang="fr"] #topsearch > #search-field-top:not([title^="Rechercher"])');
-	const nia12b2_query = document.querySelectorAll('html[lang="fr"] #topsearch > #search-field-top:not([placeholder^="Rechercher"])');
-	const nia12b3_query = document.querySelectorAll('html[lang="fr"] #topsearch > button:not([title^="Rechercher"])');
-	if((nia12b1_query && nia12b1_query.length > 0 && isItemsVisible(nia12b1_query)) || (nia12b2_query && nia12b2_query.length > 0 && isItemsVisible(nia12b2_query)) || (nia12b3_query && nia12b3_query.length > 0 && isItemsVisible(nia12b3_query))){
+	const nia12b1_nodes = document.querySelectorAll('html[lang="fr"] #topsearch > #search-field-top:not([title^="Rechercher"])');
+	const nia12b2_nodes = document.querySelectorAll('html[lang="fr"] #topsearch > #search-field-top:not([placeholder^="Rechercher"])');
+	const nia12b3_nodes = document.querySelectorAll('html[lang="fr"] #topsearch > button:not([title^="Rechercher"])');
+	if((nia12b1_nodes && nia12b1_nodes.length > 0 && isItemsVisible(nia12b1_nodes)) || (nia12b2_nodes && nia12b2_nodes.length > 0 && isItemsVisible(nia12b2_nodes)) || (nia12b3_nodes && nia12b3_nodes.length > 0 && isItemsVisible(nia12b3_nodes))){
 	  result_nc += "<li><a href='#' data-destination='nia12b' class='result-focus'>12-B</a> : Problème dans les intitulés du champ de recherche (title et placeholder)</li>";
-	  setItemsOutline(nia12b1_query,"red","nia12b");
-	  setItemsOutline(nia12b2_query,"orange","nia12b");
-	  setItemsOutline(nia12b3_query,"red","nia12b");
+	  setItemsOutline(nia12b1_nodes,"red","nia12b");
+	  setItemsOutline(nia12b2_nodes,"orange","nia12b");
+	  setItemsOutline(nia12b3_nodes,"red","nia12b");
 	}
 
 	/* C. Anchor */
@@ -967,10 +1110,10 @@ o	L'attribut « title » doit reprendre à minimum le contenu textuel de celui-c
 	}
 	
 	/* D. Button */
-	const nia12d_query = document.querySelectorAll('button[role=button]');
-	if(nia12d_query && nia12d_query.length > 0 && isItemsVisible(nia12d_query)){
+	const nia12d_nodes = document.querySelectorAll('button[role=button]');
+	if(nia12d_nodes && nia12d_nodes.length > 0 && isItemsVisible(nia12d_nodes)){
 	  result_nth += "<li><a href='#' data-destination='nia12d' class='result-focus'>12-D</a> : Il n'est pas nécessaire d'ajouter un role button sur un éléments boutons</li>";
-	  setItemsOutline(nia12d_query,"yellow","nia12d");
+	  setItemsOutline(nia12d_nodes,"yellow","nia12d");
 	}
 
 
@@ -1086,10 +1229,15 @@ for(let i = 0; i < result_focus.length; i++){
   result_focus[i].addEventListener('click', (e) => {
     e.preventDefault();
 	targetElement = document.querySelector("."+result_focus[i].getAttribute('data-destination'));
-	targetElementOffset = targetElement.getBoundingClientRect().top - document.body.getBoundingClientRect().top
-	window.scroll({ top: targetElementOffset, left: 0, behavior: 'smooth' });
-	targetElement.style.outlineWidth = "10px";
-	setTimeout(() => {targetElement.style.outlineWidth = "3px";}, 3000);
+	if(targetElement){
+		targetElementOffset = targetElement.getBoundingClientRect().top - document.body.getBoundingClientRect().top
+		window.scroll({ top: targetElementOffset, left: 0, behavior: 'smooth' });
+		targetElement.style.outlineWidth = "10px";
+		setTimeout(() => {targetElement.style.outlineWidth = "3px";}, 3000);
+	}
+	else{
+		alert("Element non visible : ."+result_focus[i].getAttribute('data-destination'));
+	}
   });
 }
 
