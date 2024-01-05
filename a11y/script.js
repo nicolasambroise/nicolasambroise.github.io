@@ -235,7 +235,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	let nia02g6_flag = false;
 	if(nia02g6_nodes && nia02g6_nodes.length > 0){
 	  for(let i = 0; i < nia02g6_nodes.length; i++){
-	    if(isItemVisible(nia02g6_nodes[i]) && nia02g6_nodes[i].text().length > 0){
+	    if(isItemVisible(nia02g6_nodes[i]) && nia02g6_nodes[i].textContent.length > 0){
 		  setItemOutline(nia02g6_nodes[i],"red","nia02g6");
 		  nia02g6_flag = true;
 		}
@@ -249,7 +249,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	let nia02g7_flag = false;
 	if(nia02g7_nodes && nia02g7_nodes.length > 0){
 	  for(let i = 0; i < nia02g7_nodes.length; i++){
-	    if(isItemVisible(nia02g7_nodes[i]) && nia02g7_nodes[i].text().length > 0){
+	    if(isItemVisible(nia02g7_nodes[i]) && nia02g7_nodes[i].textContent.length > 0){
 		  setItemOutline(nia02g7_nodes[i],"red","nia02g7");
 		  nia02g7_flag = true;
 		}
@@ -273,7 +273,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 					setItemOutline(nia02h_nodes[i],"red","nia02h1");
 					result_nc += "<li><a href='#' data-destination='nia02h1' class='result-focus'>02-H</a> : Problème de référence introuvable ur un attribut aria-labelledby</li>";
 				}
-				else if(sanitizeText(nia02h_label[0].text(),nia02h_lang).length > 150){
+				else if(sanitizeText(nia02h_label[0].textContent,nia02h_lang).length > 150){
 					setItemOutline(nia02h_nodes[i],"yellow","nia02h");
 					nia02h_flag = true;
 				}
@@ -478,7 +478,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		
 		// C. Check intitulé bouton envoi 
 		const nia04c_btn = document.querySelector('html[lang="fr"] form button.cmp-form-button[type="SUBMIT"][name="preview"]');
-		if(nia04c_btn && nia04c_btn.text() == "Prévisualiser puis envoyer" ){
+		if(nia04c_btn && nia04c_btn.textContent == "Prévisualiser puis envoyer" ){
 		  result_nth += "<li><a href='#' data-destination='nia04c' class='result-focus'>04-C</a> : Vérifier si le bouton de soumission possède bien la notion de prévisualisation' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-12-1' target='_blank'>RGAA 11.12.1</a>]</li>";
 		  setItemsOutline(nia04c_btn,"yellow","nia04c");
 		}
@@ -532,7 +532,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	let nia04f_flag = false;
 	let nia04f_id, nia04f_label;
 	if(nia04f_nodes && nia04f_nodes.length > 0){
-		if(debug_flag) console.log("[nia04f] Boucle sur les "+nia04e_nodes.length + " champs obligatoire detectés sur cette page");
+		if(debug_flag) console.log("[nia04f] Boucle sur les "+nia04f_nodes.length + " champs obligatoire detectés sur cette page");
 		for(let i = 0; i < nia04f_nodes.length; i++){
 			if(isItemVisible(nia04f_nodes[i])){
 				nia04f_id = nia04f_nodes[i].getAttribute("id");
@@ -546,7 +546,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 						setItemOutline(nia04f_nodes[i],"red","nia04f");
 						nia04f_flag = true;
 					}
-					if(!nia04f_label[0].innerText.contains("*")){
+					else if(!(nia04f_label[0].textContent).includes("*")){
 						setItemOutline(nia04f_nodes[i],"red","nia04f");
 						nia04f_flag = true;
 					}
@@ -634,10 +634,33 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	const nia05e_nodes = document.querySelectorAll('[dir]:not([dir="rtl"]):not([dir="lrt"])');
 	if(nia05e_nodes && nia05e_nodes.length > 0 && isItemsVisible(nia05e_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia05e' class='result-focus'>05-E</a> : Vérifier la valeur de définition du sens de lecture [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-10-2' target='_blank'>RGAA 8.10.2</a>]</li>";
-	  setItemsOutline(nia06a_nodes,"red","nia05e");
+	  setItemsOutline(nia05e_nodes,"red","nia05e");
 	}
 	
-	// F. Todo Id dupliqué
+	// F. Id dupliqué
+	const nia05f_nodes = document.querySelectorAll('[id]');
+	let nia05f_flag = false;
+	let nia05f_ids = {};
+	let nia05f_currentId;
+	if(nia05f_nodes && nia05e_nodes.length > 0){
+		for(let i = 0; i < nia05f_nodes.length; i++){
+			nia05f_currentId = nia05f_nodes[i].id ? nia05f_nodes[i].id : "undefined";
+			if(isNaN(nia05f_ids[nia05f_currentId])) {
+				nia05f_ids[nia05f_currentId] = 0;
+			}
+			else{
+				nia05f_flag = true;
+				setItemsOutline(nia05f_nodes,"red","nia05f");
+			}
+			nia05f_ids[nia05f_currentId]++;
+		}
+	}
+	if(nia05f_flag == true){
+	  console.log(nia05f_ids);
+	  result_dev += "<li><a href='#' data-destination='nia05f' class='result-focus'>05-F</a> : Présence d'Id dupliqué [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-2-1' target='_blank'>RGAA 8.2.1</a>]</li>";
+	}
+	
+	// G. Todo--> Govbar
 
 /* 🗸 NIA-06 Structure de l'information - Thématique RGAA 9 
 - Landmark
@@ -662,19 +685,80 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	
 	// C. Vérifier que la zone d’en-tête est structurée au moyen d’un élément <header> ;
 	// <header class="page-header" role="banner">
-	
+	const nia06c_nodes = document.querySelector('header.page-header[role="banner"]');
+	if(nia06c_nodes == null){
+		result_dev += "<li>06-C : Il y a un problème avec la structuration du header [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>";
+	}
 	
 	// D. Vérifier que les zones de navigation principales et secondaires sont structurées au moyen d’un élément <nav> ;
+	// <nav class="page-headernav" role="navigation" aria-label="Menu principal" id="headernav">
+	const nia06d_nodes = document.querySelectorAll('nav.page-headernav[role="navigation"]');
+	if(nia06d_nodes == null){
+		result_dev += "<li>06-D : Il y a un problème avec la structuration de la navigation [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>";
+	}
+	
 	// E. Vérifier que l’élément <nav> n’est pas utilisé en dehors de la structuration des zones de navigation principales et secondaires ;
+	const nia06e1_nodes = document.querySelectorAll('nav:not([role="navigation"])');
+	if(nia06e1_nodes && nia06e1_nodes.length > 0 && isItemsVisible(nia06e1_nodes)){
+	  result_nc += "<li><a href='#' data-destination='nia06e1' class='result-focus'>06-E</a> : Présence d'une zone de navigation sans attribut role</li>";
+	  setItemsOutline(nia06e1_nodes,"red","nia06e1");
+	}
+	
+	/*
+	Les principales barres de navigation (critère 12.2) sont :
+	Un menu de navigation ;
+	Un fil d’ariane ;
+	Une liste de navigation d’une liste de résultats ;
+	Des liens d’évitement.
+	
+	Il existe différents types de menu de navigation (critère 12.1 et critère 12.2) :
+	Menu de navigation principal ;
+	Menu de sous-rubrique ;
+	Menu contextuel ;
+	Table des matières concernant un ensemble de pages.
+	*/
+	const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs) > nav:not(.page-headernav):not(.page-headernavmobile):not(.cmp-breadcrumb):not(.page-localnav):not(.right-part)');
+	if(nia06e2_nodes && nia06e2_nodes.length > 0&& isItemsVisible(nia06e2_nodes)){
+	  result_nc += "<li><a href='#' data-destination='nia06e2' class='result-focus'>06-E</a> : Présence d'une balise nav utilisé en dehors d'une zone de navigation [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>";
+	  setItemsOutline(nia06e2_nodes,"red","nia06e2");
+	}
 	
 	// F. Vérifier que la zone de contenu principal est structurée au moyen d’un élément <main> ;
 	// Si le document possède plusieurs éléments <main>, vérifier qu’un seul de ces éléments est visible (les autres occurrences de l’élément sont pourvues d’un attribut hidden) ;
 	// <main id="main" class="page-main " role="main">
 	
+	const nia06f1_nodes = document.querySelectorAll('main:not([role="main"])');
+	if(nia06f1_nodes && nia06f1_nodes.length > 0 && isItemsVisible(nia06f1_nodes)){
+	  result_nth += "<li><a href='#' data-destination='nia06f1' class='result-focus'>06-F</a> : Présence d'une zone de contenu principal sans attribut role</li>";
+	  setItemsOutline(nia06f1_nodes,"red","nia06f1");
+	}
+	
+	const nia06f2_nodes = document.querySelectorAll('main');
+	let nia06f2_counter = 0;
+	if(nia06f2_nodes && nia06f2_nodes.length > 1){
+		for(let i = 0; i < nia06f2_nodes.length; i++){
+			if(isItemVisible(nia06f2_nodes[i])){
+				nia06f2_counter++;
+			}
+			if(nia06f2_counter > 1){
+				result_nc += "<li><a href='#' data-destination='nia06f2' class='result-focus'>06-F</a> : Présence de plusieurs zone de contenu principal [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>";
+				setItemsOutline(nia06f2_nodes,"red","nia06f2");
+				break;
+			}
+		}
+	}
 	
 	// G. Vérifier que la zone de pied de page est structurée au moyen d’un élément <footer>.
+	const nia06g1_nodes = document.querySelectorAll('footer:not([role="contentinfo"])');
+	if(nia06g1_nodes && nia06g1_nodes.length > 0 && isItemsVisible(nia06g1_nodes)){
+	  result_nth += "<li><a href='#' data-destination='nia06g1' class='result-focus'>06-G</a> : Présence d'une zone de pied de page sans attribut role</li>";
+	  setItemsOutline(nia06g1_nodes,"red","nia06g1");
+	}
 
-
+	const nia06g2_nodes = document.querySelector('footer.page-footer[role="contentinfo"]');
+	if(nia06g2_nodes == null){
+		result_dev += "<li>06-G : Il y a un problème avec la structuration du footer [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>";
+	}
 	
 	// H. Cadres avec un titre
 	const nia06h_nodes = document.querySelectorAll('frame:not([title]),iframe:not([title])');
@@ -753,11 +837,11 @@ o S’assurer que les titres sont dans le bon ordre*/
 		if(debug_flag) console.log("[nia07e] Boucle sur les " + nia07e_nodes.length + " titres détéctés sur cette page");
 		for(let i = 0; i < nia07e_nodes.length; i++){
 			if(isItemVisible(nia07e_nodes[i])){
-				if(nia07e_nodes[i].tagName == 'H1' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].attr('aria-level').value == "1" && nia07e_nodes[i].attr('role').value == "heading")) {nia07e_current_level = 1;}
-				else if(nia07e_nodes[i].tagName == 'H3' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].attr('aria-level').value == "3" && nia07e_nodes[i].attr('role').value == "heading")) {nia07e_current_level = 3;}
-				else if(nia07e_nodes[i].tagName == 'H4' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].attr('aria-level').value == "4" && nia07e_nodes[i].attr('role').value == "heading")) {nia07e_current_level = 4;}
-				else if(nia07e_nodes[i].tagName == 'H5' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].attr('aria-level').value == "5" && nia07e_nodes[i].attr('role').value == "heading")) {nia07e_current_level = 5;}
-				else if(nia07e_nodes[i].tagName == 'H6' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].attr('aria-level').value == "6" && nia07e_nodes[i].attr('role').value == "heading")) {nia07e_current_level = 6;}
+				if(nia07e_nodes[i].tagName == 'H1' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].getAttribute('aria-level').value == "1" && nia07e_nodes[i].getAttribute('role').value == "heading")) {nia07e_current_level = 1;}
+				else if(nia07e_nodes[i].tagName == 'H3' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].getAttribute('aria-level').value == "3" && nia07e_nodes[i].getAttribute('role').value == "heading")) {nia07e_current_level = 3;}
+				else if(nia07e_nodes[i].tagName == 'H4' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].getAttribute('aria-level').value == "4" && nia07e_nodes[i].getAttribute('role').value == "heading")) {nia07e_current_level = 4;}
+				else if(nia07e_nodes[i].tagName == 'H5' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].getAttribute('aria-level').value == "5" && nia07e_nodes[i].getAttribute('role').value == "heading")) {nia07e_current_level = 5;}
+				else if(nia07e_nodes[i].tagName == 'H6' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].getAttribute('aria-level').value == "6" && nia07e_nodes[i].getAttribute('role').value == "heading")) {nia07e_current_level = 6;}
 				else {nia07e_current_level = 2;}
 				if(nia07e_current_level - nia07e_previous_level > 1){
 					setItemOutline(nia07e_nodes[i],"yellow","nia07e");
@@ -1212,7 +1296,9 @@ function sanitizeText(txt, locale) {
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
 NIAmodalA11Y.setAttribute("id", "NIAmodalA11Y");
-NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><h2>Tests automatiques</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div>';
+NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel"><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div></details></div>';
+
+/*<h2>Tests automatiques</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div>';*/
 document.body.appendChild(NIAmodalA11Y);
 
 let NIAmodalA11Ybtn = document.createElement('button');

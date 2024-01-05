@@ -114,6 +114,18 @@
   outline: auto;
 }
 
+#NIAmodalA11Y.modal .modal-body summary{
+  cursor: pointer;
+}
+
+#NIAmodalA11Y.modal .modal-body summary svg{
+  vertical-align: text-bottom;
+  margin-left: 15px;
+  fill: currentColor;
+  height: 24px;
+  width: 24px;
+}
+
 #NIAmodalA11Ybtn,
 #NIAmodalA11Ybtn:focus,
 #NIAmodalA11Ybtn:hover {
@@ -138,7 +150,6 @@
   outline: 1px solid darkblue;
   outline-offset : -1px;
 }
-
 
 #NIAmodalA11Ybtn:before,
 #NIAmodalA11Ybtn:after,
