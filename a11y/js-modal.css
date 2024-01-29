@@ -157,3 +157,8 @@
 #NIAmodalA11Y.modal *:after{
 	content: none;
 }
+
+#NIAmodalA11Y.modal #result_html5 li{
+  font-size: small;
+  line-height: normal;
+}

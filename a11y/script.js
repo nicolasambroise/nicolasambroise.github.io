@@ -34,9 +34,13 @@ let result_crit = "";
 let result_nc = "";
 let result_nth = "";
 let result_dev = "";
+let result_man = "";
 
 /*- -------------------------------------------------------------------------------- */
 /* Pre-porcessing */
+
+// clean console
+console.clear();
 
 // Ouverture des Accordéons
 const accordion = document.querySelectorAll('.cmp-accordion details');
@@ -114,13 +118,13 @@ o	Absence de copyright/caption/légende sur une image Core V3,
 o	Images v1 légendés presence du aria-label sur le figure */
 
 	// A. Présence d’un attribut alt sur toutes les images 
-	const nia02a1_nodes = document.querySelectorAll('*:not(.ol-overlay-container) > img:not([alt]):not([aria-label]):not([aria-labelledby]):not([title]), [role="image"]:not([aria-label]):not([aria-labelledby])');
+	const nia02a1_nodes = document.querySelectorAll('*:not(.ol-overlay-container) > *:not(.ol-overlay-container) >  img:not([alt]):not([aria-label]):not([aria-labelledby]):not([title]), [role="image"]:not([aria-label]):not([aria-labelledby])');
 	if(nia02a1_nodes && nia02a1_nodes.length > 0 && isItemsVisible(nia02a1_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia02a1' class='result-focus'>02-A</a> : Présence de " + nia02a1_nodes.length + " images sans alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a>]</li>";
 	  setItemsOutline(nia02a1_nodes,"red","nia02a1");
 	}
 	
-	const nia02a2_nodes = document.querySelectorAll('*:not(.ol-overlay-container) > img:not([alt])');
+	const nia02a2_nodes = document.querySelectorAll('*:not(.ol-overlay-container) > *:not(.ol-overlay-container) > img:not([alt])');
 	if(nia02a2_nodes && nia02a2_nodes.length > 0 && isItemsVisible(nia02a2_nodes)){
 	  result_nth += "<li><a href='#' data-destination='nia02a2' class='result-focus'>02-A</a> : Présence de " + nia02a2_nodes.length + " images sans attribut alt</li>";
 	  setItemsOutline(nia02a2_nodes,"yellow","nia02a2");
@@ -329,7 +333,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 			if(isItemVisible(nia03a_nodes[i])){
 				nia03a_lang = nia03a_nodes[i].closest('[lang]').getAttribute('lang');
 				nia03a_title = nia03a_nodes[i].getAttribute("title");
-				if(!((nia03a_lang == "en" && nia03a_title.endsWith("- New window")) || (nia03a_lang == "fr" && nia03a_title.endsWith("- Nouvelle fenêtre")) || (nia03a_lang == "de" && nia03a_title.endsWith("- Neues Fenster")) || (nia03a_lang == "lb" && nia03a_title.endsWith("- Nei Fënster")))){
+				if(!nia03a_title || !((nia03a_title && nia03a_lang == "en" && nia03a_title.endsWith("- New window")) || (nia03a_title && nia03a_lang == "fr" && nia03a_title.endsWith("- Nouvelle fenêtre")) || (nia03a_title && nia03a_lang == "de" && nia03a_title.endsWith("- Neues Fenster")) || (nia03a_title && nia03a_lang == "lb" && nia03a_title.endsWith("- Nei Fënster")))){
 					setItemOutline(nia03a_nodes[i],"red","nia03a");
 					nia03a_flag = true;
 				}
@@ -408,6 +412,39 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	if(nia03g_nodes && nia03g_nodes.length > 0 && isItemsVisible(nia03g_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia03g' class='result-focus'>03-G</a> : Présence d'un lien sans destination</li>";
 	  setItemsOutline(nia03g_nodes,"red","nia03g");
+	}
+	
+	// H. Todo : Liens tel: mailto: fax:
+	const nia03h_nodes = document.querySelectorAll('*:not(.mcgyver-slot.share-email) > a[href^="mailto:"],a[href^="fax:"],a[href^="tel:"]');
+	let nia03h_flag = false;
+	let nia03h_regexmail = /^((?=.+@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*(?:\.[A-Za-z]{2,}))$/;
+	let nia03h_regexphone = /^((\+|00)|\((\+|00)[0-9]{1,4}\))?[0-9\+\-\s\(\)\.]*$/;
+	let nia03h_content ="";
+	
+	if(nia03h_nodes && nia03h_nodes.length > 0){
+	  for(let i = 0; i < nia03h_nodes.length; i++){
+			if(isItemVisible(nia03h_nodes[i])){
+				nia03h_content = nia03h_nodes[i].getAttribute("href");
+				// Si mailto verification de la regex email
+				if(nia03h_content.indexOf("mailto:") == 0 && nia03h_content.replace("mailto:","").match(nia03h_regexmail)){
+					// OK
+				}
+				// Si tel ou fax verifiation de la regex tel
+				else if(nia03h_content.indexOf("tel:") == 0 && nia03h_content.replace("tel:","").match(nia03h_regexphone)){
+					// OK
+				}
+				else if(nia03h_content.indexOf("fax:") == 0 && nia03h_content.replace("fax:","").match(nia03h_regexphone)){
+					// OK
+				}
+				else {
+					setItemOutline(nia03h_nodes[i],"red","nia03h");
+					nia03h_flag = true;
+				}
+			}
+		}
+	}
+	if(nia03h_flag == true) {
+	  result_nc += "<li><a href='#' data-destination='nia03h' class='result-focus'>03-H</a> : Présence de liens tel:, fax: ou mailto: non valide </li>";
 	}
 
 /* 🗸 NIA-04 Formulaire - Thématique RGAA 11
@@ -1146,6 +1183,7 @@ o S’assurer que les titres sont dans le bon ordre*/
 	const nia09d_plan = document.querySelector('.page-footernav a[href*="plan"][href$=".html"]');
 	const nia09d_nav_btn = document.querySelector('[class^=page-headernav] button.anchor');
 	const nia09d_search_btn = document.querySelector('div.topsearch[role="search"] button.anchor');
+	const nia09d_footer_links = document.querySelectorAll('footer .nav-item > a:not([target="_blank"])');
 	
 	let nia09d_counter = 0;
 	if(nia09d_nav && isItemVisible(nia09d_nav)){nia09d_counter++;}
@@ -1154,7 +1192,12 @@ o S’assurer que les titres sont dans le bon ordre*/
 	else if(nia09d_search && nia09d_search_btn && isItemVisible(nia09d_search_btn)){nia09d_counter++;}
 	if(nia09d_plan && isItemVisible(nia09d_plan)){nia09d_counter++;}
 	if(nia09d_counter < 2){
-	  result_nc += "<li>09-D : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>";
+		if(nia09d_footer_links && nia09d_footer_links.length <= 3){
+			result_man += "<li>09-D : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>";
+		}
+		else {
+			result_nc += "<li>09-D : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>";
+		}
 	}
 	
 	// G. Skiplinks
@@ -1172,7 +1215,12 @@ o S’assurer que les titres sont dans le bon ordre*/
 			nia09e2_dest = document.querySelector(nia09e2_nodes[i].getAttribute("href"))
 			if(nia09e2_dest == null){
 				if(debug_flag) console.log(nia09e2_nodes[i]);
-				nia09e2_flag = true;
+				if(isItemDisplayNone(nia09e2_nodes[i])){
+					result_man += "<li>09-E : Un skiplinks non visible (display:none) n'a pas de destination [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>";
+				}
+				else{
+					nia09e2_flag = true;
+				}
 			}
 		}
 	}
@@ -1441,10 +1489,11 @@ if (result_crit != ""){result_crit = "<h2>Points critiques</h2><ul>"+result_crit
 if (result_nc != ""){result_nc = "<h2>Points non-conforme</h2><ul>"+result_nc+"</ul>";}
 if (result_nth != ""){result_nth = "<h2>Nice-to-have</h2><ul>"+result_nth+"</ul>";}
 if (result_dev != ""){result_dev = "<h2>Problèmes dev</h2><ul>"+result_dev+"</ul>";}
-if (result_crit == "" && result_nc == "" && result_nth == "" && result_dev == "" ){
+if (result_man != ""){result_man = "<h2>A vérifier manuellement</h2><ul>"+result_man+"</ul>";}
+if (result_crit == "" && result_nc == "" && result_nth == "" && result_dev == "" && result_man == ""  ){
   result_global = "Pas de points remontés !"; 
 }
-else { result_global = result_crit + result_nc + result_nth + result_dev;}
+else { result_global = result_crit + result_nc + result_nth + result_man + result_dev;}
 
 // Fonction color error
 function setItemsOutline(items,color,classname){
@@ -1487,15 +1536,22 @@ function isItemSROnly(item){
 	return false
 }
 
+function isItemDisplayNone(item){
+	const style = window.getComputedStyle(item);
+	if(style.display =='none') return true;
+	return false
+}
+
 // Fonction Sanitize Text = No extra space, trimmed 
 function sanitizeText(txt, locale) {
 	return txt.toLowerCase().toLocaleLowerCase(locale).replaceAll(/\n|\r/g, ' ').replaceAll(/[.:;,?!{}$()|'"-]/g, ' ').replaceAll(/\s+/g, ' ').trim();
 }
 
+
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
 NIAmodalA11Y.setAttribute("id", "NIAmodalA11Y");
-NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel"><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div></details></div>';
+NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel"><ul><li id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div></details></div>';
 
 /*<h2>Tests automatiques</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div>';*/
 document.body.appendChild(NIAmodalA11Y);
@@ -1525,6 +1581,48 @@ for(let i = 0; i < result_focus.length; i++){
 	}
   });
 }
+
+// Fonction Validator HTML5 async 
+const checkerUrl = "https://validator.nu/?out=json"
+async function valid(url = checkerUrl) {
+  const response = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: new XMLSerializer().serializeToString(document)
+  });
+  return response.json();
+}
+
+valid()
+  .then(data => {
+    console.log(data);
+	
+	// Filter data result
+	const filterStrings=["role is unnecessary for element","Section lacks heading"].join("|");
+	const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
+	let msg_html5 = "";
+	
+	if (error.length) {
+	  console.group(`%c${error.length} validation errors`, "background-color:#D93025;color:#FFF;padding:1px 4px");
+	  error.forEach(msg => {
+		console.groupCollapsed(`%c${msg.message} (line: ${msg.lastLine})`, "color:#D93025");
+		console.table(msg);
+		msg_html5 += "<li>"+msg.message+" (line: "+msg.lastLine+")</li>";
+		console.groupEnd();
+	  })
+	  console.groupEnd();
+	  if(msg_html5  != ""){
+		console.log("ok" + msg_html5)
+		let elem = document.getElementById("result_html5");
+		elem.innerHTML += "<ul>"+msg_html5+"</ul>";
+	  }
+	}
+  })
 
 // Fonction open modal 
 function openNIAmodalA11Y(){
