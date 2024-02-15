@@ -4,11 +4,19 @@
 
 Affichage dans une fenêtre modale des non-conformités au RGAA, des nice-to-have ainsi que des recommandations pour le rédacteur.
 
-Pour installer le Bookmarklet il suffit de **glisser le lien** présent sur [cette page](https://nicolasambroise.github.io/a11y/install_bookmarklet.html) dans votre barre de favori. 
+Pour installer le Bookmarklet il suffit de **glisser le lien** présent sur [cette page](https://nicolasambroise.github.io/a11y/install_bookmarklet.html) dans votre barre de favoris. 
 
-Alternative possible, faire un clic droit sur votre barre de favori et sélectionner "Ajouter un favori" puis copier-coller la ligne ci-dessous dans le champ URL
+## Installations alternatives 
+
+Vous pouvez créer manuellement le favori : faire un clic droit sur votre barre de favoris et sélectionner "Ajouter un favori" puis copier-coller la ligne ci-dessous dans le champ URL
 
 `javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://nicolasambroise.github.io/a11y/script.js';})();`
+
+Il est également possible d'utiliser le bookmarklet en tant qu'extension Chrome. Pour ce faire cloner les sources de ce projet en local, Puis ouvrir la page des [extensions chrome](chrome://extensions/) et cliquer sur "charger l'extension non empaquetée" (le mode developpeur doit être activé) et selectionner le répertoire. L'inconvénient de cette méthode est de devoir sychroniser régulièrement et manuellement les sources du code.
+
+## Utilisation
+
+Pour utiliser la vérification sur une page de votre site, il suffit d'ouvir la page dans votre navigateur et de cliquer sur le lien dans votre barre de favoris.
 
 ## Liste des Checks
 1. Configuration des composants AEM
@@ -58,4 +66,4 @@ N'hésitez pas à me remonter les problèmes, faux-positifs ou vos suggessions d
 
 ## Licence
 
-A définir
+Copyright : Nicolas AMBROISE - Licence MIT
