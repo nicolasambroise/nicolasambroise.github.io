@@ -1,3 +1,6 @@
+/* Script Check A11Y - Nicolas AMBROISE */
+
+
 // Variables config globale
 const debug_flag = true; // true -> affiche les logs
 
@@ -37,7 +40,7 @@ let result_dev = "";
 let result_man = "";
 
 /*- -------------------------------------------------------------------------------- */
-/* Pre-porcessing */
+/* Pre-processing */
 
 // clean console
 console.clear();
@@ -57,9 +60,11 @@ function seeMoreAddress(){
 }
 setTimeout(seeMoreAddress(),5000); // Todo wait for geoportail data-loaded = true;
 
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-01 AEM Component 
 - vérifie les points concernant la configuration des composants AEM suivant :  Intitulé de bouton menu,  Breadcrumb, Tooltip, Menu langue, Recherche, Vidéo, Menu
 */
+if(debug_flag) console.log("01 AEM Component");
 
 	// A. Position de bouton menu
 	const nia01a_nodes = document.querySelectorAll('button.anchor[data-destination^="#headernav"]:not(.anchor-close)');
@@ -108,6 +113,7 @@ setTimeout(seeMoreAddress(),5000); // Todo wait for geoportail data-loaded = tru
 	
 	// F. Menu -- Todo
 
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 02 Images : Thématique RGAA 1
 
 Vérification de plusieurs points concernant les images : 
@@ -116,17 +122,18 @@ o	Vérification des attributs des svg,
 o	Alt vide sur les images de search logique. 
 o	Absence de copyright/caption/légende sur une image Core V3,
 o	Images v1 légendés presence du aria-label sur le figure */
+if(debug_flag) console.log("02 Images");
 
 	// A. Présence d’un attribut alt sur toutes les images 
 	const nia02a1_nodes = document.querySelectorAll('*:not(.ol-overlay-container) > *:not(.ol-overlay-container) >  img:not([alt]):not([aria-label]):not([aria-labelledby]):not([title]), [role="image"]:not([aria-label]):not([aria-labelledby])');
 	if(nia02a1_nodes && nia02a1_nodes.length > 0 && isItemsVisible(nia02a1_nodes)){
-	  result_nc += "<li><a href='#' data-destination='nia02a1' class='result-focus'>02-A</a> : Présence de " + nia02a1_nodes.length + " images sans alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a>]</li>";
+	  result_nc += "<li><a href='#' data-destination='nia02a1' class='result-focus'>02-A</a> : Présence de " + nia02a1_nodes.length + " images sans alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>";
 	  setItemsOutline(nia02a1_nodes,"red","nia02a1");
 	}
 	
 	const nia02a2_nodes = document.querySelectorAll('*:not(.ol-overlay-container) > *:not(.ol-overlay-container) > img:not([alt])');
 	if(nia02a2_nodes && nia02a2_nodes.length > 0 && isItemsVisible(nia02a2_nodes)){
-	  result_nth += "<li><a href='#' data-destination='nia02a2' class='result-focus'>02-A</a> : Présence de " + nia02a2_nodes.length + " images sans attribut alt</li>";
+	  result_nth += "<li><a href='#' data-destination='nia02a2' class='result-focus'>02-A</a> : Présence de " + nia02a2_nodes.length + " images sans attribut alt [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-1' target='_blank'>RGAA 1.1.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>";
 	  setItemsOutline(nia02a2_nodes,"yellow","nia02a2");
 	}
 
@@ -204,7 +211,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	
 	const nia02f3_nodes = document.querySelectorAll('object[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
 	if(nia02f3_nodes && nia02f3_nodes.length > 0 && isItemsVisible(nia02f3_nodes)){
-	  result_nc += "<li><a href='#' data-destination='nia02f3' class='result-focus'>02-F</a> : Les images objects porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-6' target='_blank'>RGAA 1.1.6</a>]</li>";
+	  result_nc += "<li><a href='#' data-destination='nia02f3' class='result-focus'>02-F</a> : Les images objects porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-1-6' target='_blank'>RGAA 1.1.6</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-porteuse-dinformation-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 113</a>]</li>";
 	  setItemsOutline(nia02f3_nodes,"red","nia02f3");
 	}
 
@@ -316,11 +323,73 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	  result_nth += "<li><a href='#' data-destination='nia02h' class='result-focus'>02-H</a> : Présence d'alternative textuelle trop longue [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-3-9' target='_blank'>RGAA 1.3.9</a>]</li>";
 	}
 	
+	// I Chaque image-lien est dotée d'une alternative textuelle appropriée.
+	const nia02i_nodes = document.querySelectorAll('a:not(.blocklink):has(> img)');
+	let nia02i_title ="";
+	let nia02i_flag = false;
+	if(nia02i_nodes && nia02i_nodes.length > 0){
+	  for(let i = 0; i < nia02i_nodes.length; i++){
+			if(isItemVisible(nia02i_nodes[i])){
+				if(nia02i_nodes[i].childElementCount == 1 && nia02i_nodes[i].getElementsByTagName("img")[0].getAttribute("alt") == ""){
+					setItemOutline(nia02i_nodes[i],"yellow","nia02i");
+					nia02i_flag = true;
+				}
+			}
+		}
+	}
+	if(nia02i_flag == true) {
+	  result_nth += "<li><a href='#' data-destination='nia02i' class='result-focus'>02-I</a> : Présence d'image-lien avec une alternative textuelle non pertinente [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-lien-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'> Opquast 112</a>]</li>";
+	}
+	
+	// J.Les vignettes et aperçus ne sont pas des images de taille supérieure redimensionnées côté client.
+	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p) > img');
+	let nia02j_css_h ="", nia02j_css_w ="",nia02j_html_h ="", nia02j_html_w ="",nia02j_natural_h ="", nia02j_natural_w ="";
+	let nia02j_flag = false;
+	if(nia02j_nodes && nia02j_nodes.length > 0){
+		for(let i = 0; i < nia02j_nodes.length; i++){
+			if(isItemVisible(nia02j_nodes[i])){
+				if(debug_flag) console.log(isItemVisible(nia02j_nodes[i]));
+				
+				nia02j_css_h = nia02j_nodes[i].height;
+				nia02j_css_w = nia02j_nodes[i].width;
+				nia02j_html_h = nia02j_nodes[i].getAttribute('height');
+				nia02j_html_w = nia02j_nodes[i].getAttribute('width');
+				nia02j_natural_h = nia02j_nodes[i].naturalHeight;
+				nia02j_natural_w = nia02j_nodes[i].naturalWidth;
+				
+				if(nia02j_html_h && (Math.abs(nia02j_html_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_html_h/nia02j_css_h) > 1.5)){
+					if(debug_flag) console.log("Html Height : "+ nia02j_html_h+" vs "+nia02j_css_h);
+					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
+					nia02j_flag = true;
+				}
+				else if(nia02j_html_w && (Math.abs(nia02j_html_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_html_w/nia02j_css_w) > 1.5)){
+					if(debug_flag) console.log("Html Width : "+ nia02j_html_w+" vs "+nia02j_css_w);
+					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
+					nia02j_flag = true;
+				}
+				else if(Math.abs(nia02j_natural_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_natural_h/nia02j_css_h) > 1.5){
+					if(debug_flag) console.log("Natural Height : "+ nia02j_natural_h+" vs "+nia02j_css_h);
+					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
+					nia02j_flag = true;
+				}
+				else if(Math.abs(nia02j_natural_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_natural_w/nia02j_css_w) > 1.5){
+					if(debug_flag) console.log("Natural Width : "+ nia02j_natural_w+" vs "+nia02j_css_w);
+					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
+					nia02j_flag = true;
+				}
+			}
+		}
+	}
+	if(nia02j_flag == true) {
+	  result_nth += "<li><a href='#' data-destination='nia02j' class='result-focus'>02-J</a> : Présence d'image redimentionnées côté Client [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-vignettes-et-apercus-ne-sont-pas-des-images-de-taille-superieure-redimensionnees-cote-client' target='_blank'> Opquast 114</a>]</li>";
+	}
 	
 	
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-03 Lien - Thématique RGAA 6
  - Liste des liens internes et externe, affichage des attributs title des liens et vérification d’erreurs courantes.
  */
+if(debug_flag) console.log("03 Liens");
 
 	// A. Verification de la présence du suffix sur les liens externe
 	const nia03a_nodes = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="- Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo), html[lang="fr"] a[title$="- Nouvelle fenêtre"]:not([target="_blank"]), html[lang="en"] a[target="_blank"]:not([title$="- New window"]):not(.mapboxgl-ctrl-logo),html[lang="en"] a[title$="- New window"]:not([target="_blank"]), html[lang="de"] a[target="_blank"]:not([title$="- Neues Fenster"]):not(.mapboxgl-ctrl-logo),html[lang="de"] a[title$="- Neues Fenster"]:not([target="_blank"]),html[lang="lb"] a[target="_blank"]:not([title$="- Nei Fënster"]):not(.mapboxgl-ctrl-logo),html[lang="lb"] a[title$="- Nei Fënster"]:not([target="_blank"])');
@@ -341,7 +410,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		}
 	}
 	if(nia03a_flag == true){
-	  result_dev += "<li><a href='#' data-destination='nia03a' class='result-focus'>03-A</a> : Vérifier la présence de suffixe sur les liens externes</li>";
+	  result_dev += "<li><a href='#' data-destination='nia03a' class='result-focus'>03-A</a> : Vérifier la présence de suffixe sur les liens externes [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/lutilisateur-est-averti-des-ouvertures-de-nouvelles-fenetres' target='_blank'>Opquast 141</a>]</li>";
 	}
 
 	// B. Verification de titre vide
@@ -404,7 +473,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		}
 	}
 	if(nia03f_flag == true) {
-	  result_nc += "<li><a href='#' data-destination='nia03f' class='result-focus'>03-F</a> : Présence de liens dont le contenu est vide [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-6-1-5' target='_blank'>RGAA 6.1.5</a>]</li>";
+	  result_nc += "<li><a href='#' data-destination='nia03f' class='result-focus'>03-F</a> : Présence de liens dont le contenu est vide [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-6-1-5' target='_blank'>RGAA 6.1.5</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-libelle-de-chaque-lien-decrit-sa-fonction-ou-la-nature-du-contenu-vers-lequel-il-pointe' target='_blank'>Opquast 131</a>]</li>";
 	}
 	
 	// G. Présence de liens sans href
@@ -414,7 +483,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	  setItemsOutline(nia03g_nodes,"red","nia03g");
 	}
 	
-	// H. Todo : Liens tel: mailto: fax:
+	// H. Liens tel: mailto: fax:
 	const nia03h_nodes = document.querySelectorAll('*:not(.mcgyver-slot.share-email) > a[href^="mailto:"],a[href^="fax:"],a[href^="tel:"]');
 	let nia03h_flag = false;
 	let nia03h_regexmail = /^((?=.+@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*(?:\.[A-Za-z]{2,}))$/;
@@ -446,9 +515,30 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	if(nia03h_flag == true) {
 	  result_nc += "<li><a href='#' data-destination='nia03h' class='result-focus'>03-H</a> : Présence de liens tel:, fax: ou mailto: non valide </li>";
 	}
-
+	
+	// I Todo lien sur "ici" ou sur "lien"
+	const nia03i_nodes = document.querySelectorAll('html[lang="fr"] a');
+	let nia03i_content ="";
+	let nia03i_flag = false;
+	if(nia03i_nodes && nia03i_nodes.length > 0){
+	  for(let i = 0; i < nia03i_nodes.length; i++){
+			if(isItemVisible(nia03i_nodes[i])){
+				nia03i_content = nia03i_nodes[i].innerHTML;
+				if(nia03i_content == "ici" || nia03i_content == "cliquer ici" || nia03i_content == "cliquez ici" || nia03i_content == "lire la suite" || nia03i_content == "lien" ){
+					setItemOutline(nia03i_nodes[i],"yellow","nia03i");
+					nia03i_flag = true;
+				}
+			}
+		}
+	}
+	if(nia03i_flag == true) {
+	  result_nth += "<li><a href='#' data-destination='nia03i' class='result-focus'>03-I</a> : Présence de liens non pertinent [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-libelle-de-chaque-lien-decrit-sa-fonction-ou-la-nature-du-contenu-vers-lequel-il-pointe' target='_blank'> Opquast 132</a>]</li>";
+	}
+	
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-04 Formulaire - Thématique RGAA 11
 - Autocomplete : Mise en avant des champs de formulaire avec un attribut autocomplete et vérification de la présence des attributs autocomplete pertinent sur les champs de formulaire classique */
+if(debug_flag) console.log("04 Formulaire");
 
 	if(currentUrl.includes("contact.html")){
 
@@ -508,7 +598,6 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		  result_nc += "<li><a href='#' data-destination='nia04a11' class='result-focus'>04-A</a> : Absence d'attribut autocomplete ou attribut erronée sur des champs formulaire (function) - utiliser 'organization-title' [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-13-1' target='_blank'>RGAA 11.13.1</a>]</li>";
 		  setItemsOutline(nia04a11_nodes,"red","nia04a11");
 		}
-		
 		
 		// B. Vérifier le format sur l'email
 		const nia04b_nodes = document.querySelectorAll('input[type="email"]');
@@ -576,7 +665,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		}
 	}
 	if(nia04d_flag == true) {
-	  result_nc += "<li><a href='#' data-destination='nia04d' class='result-focus'>04-D</a> : Présence de champs sans ou avec plus d'un label [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-1-1' target='_blank'>RGAA 11.1.1</a>]</li>";
+	result_nc += "<li><a href='#' data-destination='nia04d' class='result-focus'>04-D</a> : Présence de champs sans ou avec plus d'un label [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-1-1' target='_blank'>RGAA 11.1.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-champ-de-formulaire-est-associe-dans-le-code-source-a-une-etiquette-qui-lui-est-propre' target='_blank'>Opquast 67</a>]</li>";
 	}
 
 	// E. fieldset avec legend
@@ -662,7 +751,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		}
 	}
 	if(nia04f_flag == true) {
-		result_nc += "<li><a href='#' data-destination='nia04f' class='result-focus'>04-F</a> : Absence d'astrisque sur un champ obligatoire [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-1' target='_blank'>RGAA 11.10.1</a>]'</li>";
+		result_nc += "<li><a href='#' data-destination='nia04f' class='result-focus'>04-F</a> : Absence d'astrisque sur un champ obligatoire [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-1' target='_blank'>RGAA 11.10.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/letiquette-de-chaque-champ-de-formulaire-indique-si-la-saisie-est-obligatoire' target='_blank'>Opquast 69</a>]'</li>";
 	}
 
 	// G. Pas d'autocomplete sur les champs radio/checkbox
@@ -729,13 +818,74 @@ o	Images v1 légendés presence du aria-label sur le figure */
 		}
 	}
 	if(nia04h_flag == true){
-	  result_nc += "<li><a href='#' data-destination='nia04h' class='result-focus'>04-H</a> : Le Champ et l'étiquette doivent être accolé [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-5-1' target='_blank'>RGAA 11.5.1</a>]</li>";
+	  result_nc += "<li><a href='#' data-destination='nia04h' class='result-focus'>04-H</a> : Le Champ et l'étiquette doivent être accolé [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-5-1' target='_blank'>RGAA 11.5.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-etiquette-de-formulaire-est-visuellement-rattachee-au-champ-quelle-decrit' target='_blank'>Opquast 75</a>]</li>";
+	}
+	
+	// I Les informations complétant l'étiquette d'un champ sont associées à celui-ci dans le code source
+	const nia04i_nodes = document.querySelectorAll("input[aria-describedby]");
+	let nia04i_flag = false;
+	let nia04i_desc = "", nia04i_id = "";
+	if(nia04i_nodes && nia04i_nodes.length > 0){
+		if(debug_flag) console.log("[nia04i] Boucle sur les "+nia04i_nodes.length + " champs avec desc detectés sur cette page");
+		for(let i = 0; i < nia04i_nodes.length; i++){
+			if(isItemVisible(nia04i_nodes[i])){
+				nia04i_id = nia04i_nodes[i].getAttribute("aria-describedby");
+				if(!nia04i_id || nia04i_id == ""){
+					setItemOutline(nia04i_nodes[i],"red","nia04i");
+					nia04i_flag = true;
+				}
+				else{
+					nia04i_desc = document.querySelectorAll("[id='"+nia04i_id+"']");
+					if(!nia04i_desc || nia04i_desc.length != 1){
+						setItemOutline(nia04i_nodes[i],"red","nia04i");
+						nia04i_flag = true;
+					}
+				}
+			}
+		}
+	}
+	if(nia04i_flag == true) {
+		result_nc += "<li><a href='#' data-destination='nia04i' class='result-focus'>04-I</a> : Présence d'attribut aria-describedby non lié à un texte d'aide <a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-informations-completant-letiquette-dun-champ-sont-associees-a-celui-ci-dans-le-code-source' target='_blank'>Opquast 68</a>]</li>";
+	}
+	
+	// J Le format de saisie des champs de formulaire qui le nécessitent est indiqué (soit un aria-descibedby, soit des paranthèses dans le label)
+	const nia04j_nodes = document.querySelectorAll("input[type='email']:not([aria-describedby]), input[type='tel']:not([aria-describedby]), input[pattern]:not([aria-describedby]):not([pattern='.*\\\\S.*'])");
+	let nia04j_flag = false;
+	let nia04j_label = "", nia04j_id = "";
+	if(nia04j_nodes && nia04j_nodes.length > 0){
+		if(debug_flag) console.log("[nia04j] Boucle sur les "+nia04j_nodes.length + " champs avec format detectés sur cette page");
+		for(let i = 0; i < nia04j_nodes.length; i++){
+			if(isItemVisible(nia04j_nodes[i])){
+				nia04j_id = nia04j_nodes[i].getAttribute("id");
+				if(!nia04j_id || nia04j_id == ""){
+					setItemOutline(nia04j_nodes[i],"red","nia04j");
+					nia04j_flag = true;
+				}
+				else{
+					nia04j_label = document.querySelectorAll("[for='"+nia04j_id+"']");
+					if(!nia04j_label || nia04j_label.length != 1){
+						setItemOutline(nia04j_nodes[i],"red","nia04j");
+						nia04j_flag = true;
+					}
+					else if(nia04j_label[0].innerText.indexOf("(") < 0){
+						setItemOutline(nia04j_nodes[i],"red","nia04j");
+						nia04j_flag = true;
+					}
+				}
+			}
+		}
+	}
+	if(nia04j_flag == true) {
+		result_nc += "<li><a href='#' data-destination='nia04j' class='result-focus'>04-J</a> : Absence du format de saisie dans un texte d'aide <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-format-de-saisie-des-champs-de-formulaire-qui-le-necessitent-est-indique' target='_blank'>Opquast 70</a>]</li>";
 	}
 
 
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-05 Element Obligatoire - Thématique RGAA 8
 - Empty : Mise en avant des balises et paragraphes vides
 */
+
+if(debug_flag) console.log("05 Element Obligatoire");
 
 	// A. Bloc vide
 	//const nia05a_nodes = document.querySelectorAll('body *:not(.ol-attribution) > *:not(:where(div, br, hr, img, svg, use, path, circle, rect, i, time[datetime], iframe, canvas, script, td, input, textarea, select, option, [aria-hidden="true"], source, meta, .mapboxgl-ctrl-logo)):empty');
@@ -835,7 +985,7 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	}
 	if(nia05f_flag == true){
 	  console.log(nia05f_ids);
-	  result_dev += "<li><a href='#' data-destination='nia05f' class='result-focus'>05-F</a> : Présence d'Id dupliqué [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-2-1' target='_blank'>RGAA 8.2.1</a>]</li>";
+	  result_dev += "<li><a href='#' data-destination='nia05f' class='result-focus'>05-F</a> : Présence d'Id dupliqué [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-2-1' target='_blank'>RGAA 8.2.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-identifiant-html-nest-utilise-quune-seule-fois-par-page' target='_blank'>Opquast 229</a>]</li>";
 	}
 	
 	// G. Présence de la Govbar
@@ -863,10 +1013,27 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	// https://stackoverflow.com/questions/143815/determine-if-an-html-elements-content-overflows
 	// https://webtips.dev/webtips/javascript/find-overflowing-elements-with-javascript
 	// https://www.stevefenton.co.uk/blog/2022/12/detect-overflowing-elements/
+	
+	
+	// J. TODO Opquast	
+	/*
+	Règle n°3 : Le code source de chaque page contient une métadonnée qui en décrit le contenu. ==> Présence de meta name=description
+	Règle n°13 : La page des résultats de recherche indique le nombre de résultats, le nombre de pages de résultats, et le nombre de résultats par page.
+	Règle n°97 : Le titre de chaque page permet d'identifier le site.
+	Règle n°99 : Le code source des pages contient un appel valide à une icône de favori.
+	Règle n°151 : Chaque page affiche une information permettant de connaître son emplacement dans l'arborescence du site.
+	Règle n°160 : Le focus clavier n'est ni supprimé ni masqué.
+	Règle n°181 : La taille des éléments cliquables est suffisante.
+	Règle n°186 : Les styles ne justifient pas le texte.
+	Règle n°187 : Les mises en majuscules à des fins décoratives sont effectuées à l'aide des styles
+	*/
 
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-06 Structure de l'information - Thématique RGAA 9 
 - Landmark
 - List : Mise en avant des listes */
+
+if(debug_flag) console.log("06 Structure");
 
 	// A. Vérifier qu'il n'y a pas de role sur les container de liste
 	const nia06a_nodes = document.querySelectorAll('ul[role]:not([role="list"]):not([role="listbox"]),ol[role]:not([role="list"]):not([role="tablist"]),li[role]:not([role="listitem"]):not([role="option"]),dl[role]:not([role="listitem"])');
@@ -998,9 +1165,12 @@ o	Images v1 légendés presence du aria-label sur le figure */
 	  setItemsOutline(nia06i_nodes,"yellow","nia06i");
 	}
 
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-07 Title : Mise en avant des titres (<Hn> et ceux qui ont les roles=heading). 
 o Vérification de la présence de titres simulés - S’assurer que les titres sont bien balisés avec des balises <Hn> et pas seulement avec du gras.
 o S’assurer que les titres sont dans le bon ordre*/
+
+if(debug_flag) console.log("07 Titre");
 
 	// A. Heading avec role
 	const nia07a_nodes = document.querySelectorAll('h1[role]:not([role="heading"]),h2[role]:not([role="heading"]),h3[role]:not([role="heading"]),h4[role]:not([role="heading"]),h5[role]:not([role="heading"]),h6[role]:not([role="heading"])');
@@ -1066,12 +1236,15 @@ o S’assurer que les titres sont dans le bon ordre*/
 	if(nia07e_flag == true) {
 	  result_nth += "<li><a href='#' data-destination='nia07e' class='result-focus'>07-E</a> : Présence de sauts de titres [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-1-1' target='_blank'>RGAA 9.1.1</a>]</li>";
 	}
-
+	
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-08 Tableau : Thématique RGAA 5
  - vérification présence des bons attributs sur les tableaux. 
  - Eviter les éléments ajoutés par les copier/coller de word. 
  - Vérifier en particulier les attributs « scope » sur les éléments de header
 */
+
+if(debug_flag) console.log("08 Tableau");
 
 	// A. Attribut de tableau
 	const nia08a_nodes = document.querySelectorAll(':where([role="table"],table:not([role="presentation"])) th:not([scope="row"]):not([scope="col"]):not([id]):not([headers]):not([role="rowheader"]):not([role="columnheader"])');
@@ -1121,10 +1294,12 @@ o S’assurer que les titres sont dans le bon ordre*/
 	}
 	
 
-
+/*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-09 Navigation 
 - Pertinance du plan du site
 - Tabindex : Mise en avant des éléments possédant un tabindex défini. Vérifier l'absence d’attribut « tabindex » positif dans le contenu*/
+
+if(debug_flag) console.log("09 Navigation");
 
 	if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html")){
 		console.log("Page plan du site ");
@@ -1190,7 +1365,7 @@ o S’assurer que les titres sont dans le bon ordre*/
 	// C. Presence d'attibut tabindex positif
 	const nia09c_nodes = document.querySelectorAll('[tabindex]:not([tabindex="0"]):not([tabindex="-1"])');
 	if(nia09c_nodes && nia09c_nodes.length > 0 && isItemsVisible(nia09c_nodes)){
-	  result_nth += "<li><a href='#' data-destination='nia09c' class='result-focus'>09-C</a> : Presence d'attibut tabindex positif [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-8-1' target='_blank'>RGAA 12.8.1</a>]</li>";
+	  result_nth += "<li><a href='#' data-destination='nia09c' class='result-focus'>09-C</a> : Presence d'attibut tabindex positif [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-8-1' target='_blank'>RGAA 12.8.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-navigation-au-clavier-seffectue-dans-un-ordre-previsible' target='_blank'>Opquast 162</a>]</li>";
 	  setItemsOutline(nia09c_nodes,"orange","nia09c");
 	}
 
@@ -1220,7 +1395,7 @@ o S’assurer que les titres sont dans le bon ordre*/
 	// G. Skiplinks
 	const nia09e_main = document.querySelector('.skiplinks a[href="#main"]');
 	if(nia09e_main == null){
-		result_nc += "<li>09-E : Absence de skiplinks pour aller à la zone de contenu principale [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>";
+		result_nc += "<li>09-E : Absence de skiplinks pour aller à la zone de contenu principale [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-contient-des-liens-dacces-rapide-places-au-debut-du-code-source' target='_blank'>Opquast 159</a>]</li>";
 	}
 	
 	const nia09e2_nodes = document.querySelectorAll('.skiplinks a[href]');
@@ -1248,7 +1423,12 @@ o S’assurer que les titres sont dans le bon ordre*/
 	// F taille des éléments interactifs
 	/*La taille d’interaction de 16px par 16px du bouton « i » est réduite et n’est pas conforme au WCAG 2.2. La taille minimum attendue est de 24px par 24px. Ce point sera surement à évaluer dans les prochaines versions du RGAA.*/
 
-/* 🗸 NIA-10 Old tag : Mise en avant de la présence d’attributs obsolètes. Vérifier qu'il n'y a pas de balise ou d’attribut obsolète dans le contenu (Fréquent lors de refonte ou de copier/coller)*/
+/*- -------------------------------------------------------------------------------- */
+/* 🗸 NIA-10 Old tag
+Mise en avant de la présence d’attributs obsolètes. Vérifier qu'il n'y a pas de balise ou d’attribut obsolète dans le contenu (Fréquent lors de refonte ou de copier/coller) 
+*/
+
+if(debug_flag) console.log("10 Old tag");
 
 	/* A. Old tag
 	<acronym>	Defines an acronym
@@ -1357,14 +1537,17 @@ o S’assurer que les titres sont dans le bon ordre*/
 	  setItemsOutline(nia10d_nodes,"red","nia10d");
 	}
 
-
-/* 11. Chgt de langue - Langue : Vérifier que le contenu rédigé dans une langue étrangère possède un attribut « lang » pertinent
+/*- -------------------------------------------------------------------------------- */
+/* 11. Chgt de langue
+- Langue : Vérifier que le contenu rédigé dans une langue étrangère possède un attribut « lang » pertinent
 */
+
+if(debug_flag) console.log("11 Langue");
 
   // A. Absence de lang
   	const nia11a_nodes = document.querySelectorAll('html:not([lang])');
 	if(nia11a_nodes && nia11a_nodes.length > 0 && isItemsVisible(nia11a_nodes)){
-	  result_dev += "<li><a href='#' data-destination='nia11a' class='result-focus'>11-A</a> : Aucune langue défini par défaut sur la page [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-3-1' target='_blank'>RGAA 8.3.1</a>]</li>";
+	  result_dev += "<li><a href='#' data-destination='nia11a' class='result-focus'>11-A</a> : Aucune langue défini par défaut sur la page [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-3-1' target='_blank'>RGAA 8.3.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-de-chaque-page-indique-la-langue-principale-du-contenu' target='_blank'>Opquast 125</a>]</li>";
 	  setItemsOutline(nia11a_nodes,"red","nia11a");
 	}
 	
@@ -1384,13 +1567,15 @@ o S’assurer que les titres sont dans le bon ordre*/
 	if(nia11b_flag == true) {
 	  result_nth += "<li><a href='#' data-destination='nia11b' class='result-focus'>11-B</a> : Présence de Lorem ipsum sur la page</li>";
 	}
-
+	
+/*- -------------------------------------------------------------------------------- */
 /* 12. Boutons
 Intitulé des boutons : Pour les boutons pour ouvrir la recherche, lancer la recherche, ouvrir les filtres et ouvrir le menu :
 o	L'attribut « aria-label » doit être identique à l'attribut title
 o	L'attribut « title » doit reprendre à minimum le contenu textuel de celui-ci 
-
 */
+
+if(debug_flag) console.log("12 Boutons");
 
 	/* A&B. Recherche */
 	const nia12a1_nodes = document.querySelectorAll('.topsearch:not([role="search"])');
@@ -1456,8 +1641,10 @@ o	L'attribut « title » doit reprendre à minimum le contenu textuel de celui-c
 	  setItemsOutline(nia12d_nodes,"yellow","nia12d");
 	}
 
-
+/*- -------------------------------------------------------------------------------- */
 /* 13. Animation Lottie */
+
+if(debug_flag) console.log("13 Animation");
 
 	// A. Max duration = 5s si autoplay / Pas de loop
 	const nia13a_nodes = document.querySelectorAll('lottie-player');
@@ -1499,14 +1686,43 @@ o	L'attribut « title » doit reprendre à minimum le contenu textuel de celui-c
 			}
 		}
 	}
-
+	
+/*- -------------------------------------------------------------------------------- */
 /* 14. Couleur */
+
+if(debug_flag) console.log("14 Couleur");
 
 	// --> test 10.5.1 color / bg/ degradé
 	// --> test 10.6.1 lien visible par rapport au texte environnemt
 	// --> test 10.7.1 prise de focus visible
 	
 
+/*- -------------------------------------------------------------------------------- */
+/* 15. Securité */
+
+if(debug_flag) console.log("15 Sécurité");
+
+/*
+Règle n°24 : Les en-têtes envoyés par le serveur spécifient la politique de communication des referrers.
+Règle n°25 : Les liens externes qui ouvrent une nouvelle fenêtre ne partagent pas d'information de contexte.
+Règle n°185 : Une famille générique de police est indiquée comme dernier élément de substitution.
+Règle n°188 : Le site ne bloque pas les fonctionnalités de zoom du navigateur.
+Règle n°190 : Le site propose des styles dédiés à l'impression.
+Règle n°191 : Le contenu de chaque page est disponible à l'impression sans blocs de navigation.
+Règle n°192 : Toutes les pages utilisent le protocole HTTPS.
+Règle n°194 : Les pages utilisant HTTPS ont un en-tête de transport strict.
+Règle n°195 : Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP.
+Règle n°201 : Les en-têtes envoyés par le serveur désactivent la détection automatique du type MIME de chaque ressource.
+Règle n°202 : Le serveur indique le type MIME de chaque ressource.
+Règle n°206 : Le serveur envoie les informations indiquant les domaines autorisés à intégrer ses pages dans des cadres.
+Règle n°207 : Le site propose un mécanisme de sécurité permettant de restreindre l'origine des contenus.
+Règle n°208 : Le serveur ne communique pas d'informations sur les logiciels et langages utilisés.
+Règle n°209 : Le contrôle d'intégrité des ressources tierces est présent et valide
+Règle n°225 : Le code source de chaque page contient une métadonnée qui définit le jeu de caractères.
+Règle n°226 : Le codage de caractères utilisé est UTF-8.
+Règle n°230 : Le site ne bloque pas la copie de contenu
+Règle n°231 : Le site ne bloque pas l'accès au menu contextuel
+*/
 
 /*- -------------------------------------------------------------------------------- */
 // END

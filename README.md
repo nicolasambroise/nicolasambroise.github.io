@@ -12,7 +12,7 @@ Vous pouvez créer manuellement le favori : faire un clic droit sur votre barre 
 
 `javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://nicolasambroise.github.io/a11y/script.js';})();`
 
-Il est également possible d'utiliser le bookmarklet en tant qu'extension Chrome. Pour ce faire cloner les sources de ce projet en local, Puis ouvrir la page des [extensions chrome](chrome://extensions/) et cliquer sur "charger l'extension non empaquetée" (le mode developpeur doit être activé) et selectionner le répertoire. L'inconvénient de cette méthode est de devoir sychroniser régulièrement et manuellement les sources du code.
+Il est également possible d'utiliser le bookmarklet en tant qu'extension Chrome. Pour se faire, cloner les sources de ce projet en local, Puis ouvrir la page des [extensions chrome](chrome://extensions/) et cliquer sur "charger l'extension non empaquetée" (le mode developpeur doit être activé) et selectionner le répertoire. L'inconvénient de cette méthode est de devoir sychroniser régulièrement et manuellement les sources du code.
 
 ## Utilisation
 
