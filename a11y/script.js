@@ -28,6 +28,10 @@ if(!document.body.classList.contains('modal-injected')){
 // Current URL
 const currentUrl = window.location.href;
 if(debug_flag) console.log(currentUrl);
+const homepage = document.querySelector('h1.logo.logo--homepage');
+let isHomepage = false;
+if(homepage) {isHomepage = true;}
+
 
 if(!currentUrl.includes(".public.lu") && !currentUrl.includes(".gouvernement.lu") && !currentUrl.includes(".etat.lu")){
   alert("Ce Bookmarklet est à utiliser seulement sur les sites étatiques luxembourgeois");
@@ -58,7 +62,7 @@ function seeMoreAddress(){
 		address[i].style.display = "block";
 	}
 }
-setTimeout(seeMoreAddress(),5000); // Todo wait for geoportail data-loaded = true;
+setTimeout(seeMoreAddress(),5000); // --> Todo : remplacer par un wait for geoportail data-loaded = true;
 
 /*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-01 AEM Component 
@@ -342,7 +346,7 @@ if(debug_flag) console.log("02 Images");
 	}
 	
 	// J.Les vignettes et aperçus ne sont pas des images de taille supérieure redimensionnées côté client.
-	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p) > img');
+	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header) > img');
 	let nia02j_css_h ="", nia02j_css_w ="",nia02j_html_h ="", nia02j_html_w ="",nia02j_natural_h ="", nia02j_natural_w ="";
 	let nia02j_flag = false;
 	if(nia02j_nodes && nia02j_nodes.length > 0){
@@ -357,23 +361,23 @@ if(debug_flag) console.log("02 Images");
 				nia02j_natural_h = nia02j_nodes[i].naturalHeight;
 				nia02j_natural_w = nia02j_nodes[i].naturalWidth;
 				
-				if(nia02j_html_h && (Math.abs(nia02j_html_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_html_h/nia02j_css_h) > 1.5)){
-					if(debug_flag) console.log("Html Height : "+ nia02j_html_h+" vs "+nia02j_css_h);
+				if(nia02j_html_h && (Math.abs(nia02j_html_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_html_h/nia02j_css_h) > 2)){
+					//if(debug_flag) console.log("Html Height : "+ nia02j_html_h+" vs "+nia02j_css_h);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
 				}
-				else if(nia02j_html_w && (Math.abs(nia02j_html_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_html_w/nia02j_css_w) > 1.5)){
-					if(debug_flag) console.log("Html Width : "+ nia02j_html_w+" vs "+nia02j_css_w);
+				else if(nia02j_html_w && (Math.abs(nia02j_html_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_html_w/nia02j_css_w) > 2)){
+					//if(debug_flag) console.log("Html Width : "+ nia02j_html_w+" vs "+nia02j_css_w);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
 				}
-				else if(Math.abs(nia02j_natural_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_natural_h/nia02j_css_h) > 1.5){
-					if(debug_flag) console.log("Natural Height : "+ nia02j_natural_h+" vs "+nia02j_css_h);
+				else if(Math.abs(nia02j_natural_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_natural_h/nia02j_css_h) > 2){
+					//if(debug_flag) console.log("Natural Height : "+ nia02j_natural_h+" vs "+nia02j_css_h);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
 				}
-				else if(Math.abs(nia02j_natural_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_natural_w/nia02j_css_w) > 1.5){
-					if(debug_flag) console.log("Natural Width : "+ nia02j_natural_w+" vs "+nia02j_css_w);
+				else if(Math.abs(nia02j_natural_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_natural_w/nia02j_css_w) > 2){
+					//if(debug_flag) console.log("Natural Width : "+ nia02j_natural_w+" vs "+nia02j_css_w);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
 				}
@@ -516,7 +520,7 @@ if(debug_flag) console.log("03 Liens");
 	  result_nc += "<li><a href='#' data-destination='nia03h' class='result-focus'>03-H</a> : Présence de liens tel:, fax: ou mailto: non valide </li>";
 	}
 	
-	// I Todo lien sur "ici" ou sur "lien"
+	// I Lien sur "ici" ou sur "lien"
 	const nia03i_nodes = document.querySelectorAll('html[lang="fr"] a');
 	let nia03i_content ="";
 	let nia03i_flag = false;
@@ -1009,23 +1013,92 @@ if(debug_flag) console.log("05 Element Obligatoire");
 		}
 	}
 	
-	// I. TODO -->  Detect Overflow
+	// I. Le code source de chaque page contient une métadonnée qui en décrit le contenu. ==> Présence de meta name=description 
+	const nia05i_node = document.querySelector('meta[name="description"]');
+	if(nia05i_node == null || nia05i_node.content == null || nia05i_node.content == "" ){
+		result_nth += "<li>05-I : Absence de métadonnée qui en décrit le contenu [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-de-chaque-page-contient-une-metadonnee-qui-en-decrit-le-contenu' target='_blank'>Opquast 3</a>]</li>";
+	}
+	
+	// J. Le code source des pages contient un appel valide à une icône de favori.
+	const nia05j_node = document.querySelector("link[rel*='icon']");
+	if(nia05j_node == null || nia05j_node.getAttribute("href") == null || nia05j_node.getAttribute("href") == "" ){
+		result_nth += "<li>05-J : Absence de Favicon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-des-pages-contient-un-appel-valide-a-un-icone-de-favori' target='_blank'>Opquast 99</a>]</li>";
+	}
+
+	// K. Chaque page affiche une information permettant de connaître son emplacement dans l'arborescence du site.
+	if(isHomepage == false){
+		const nia05k_node = document.querySelector(".cmp-breadcrumb");
+		if(!nia05k_node){
+			result_nth += "<li>05-K : Absence de Fils d'Ariane [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-affiche-une-information-permettant-de-connaitre-son-emplacement-dans-larborescence-du-site' target='_blank'>Opquast 151</a>]</li>";
+		}
+	}
+	
+	// L. Le focus clavier n'est ni supprimé ni masqué.
+	const nia05l_nodes = document.querySelectorAll("summary");
+	if(nia05l_nodes && nia05l_nodes.length > 0){
+		nia05l_node[0].addEventListener("focus", (e) => {
+			if( e.target.style.outline == 0){
+				setItemOutline(nia05l_nodes[0],"red","nia05l");
+				result_dev += "<li><a href='#' data-destination='nia05l' class='result-focus'>05-L</a> : Le focus clavier est supprimer d'un élément accordéon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-focus-clavier-nest-ni-supprime-ni-masque' target='_blank'>Opquast 160</a>]</li>";
+			}
+		});
+		nia05l_node[0].focus();
+	}
+	
+	// M. Les styles ne justifient pas le texte.
+	const nia05m_node = document.querySelector("p");
+	if(nia05m_node && nia05m_node.style.textAlign == "justify"){
+		setItemOutline(nia05m_node,"yellow","nia05m");
+		result_nth += "<li><a href='#' data-destination='nia05m' class='result-focus'>05-M</a> : Présence de texte justifier [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-styles-ne-justifient-pas-le-texte' target='_blank'>Opquast 186</a>]</li>";
+	}
+	
+	// N. Les mises en majuscules à des fins décoratives sont effectuées à l'aide des styles.
+	function isUpperCase (textInput) {  
+	  return textInput === String(textInput).toUpperCase();
+	}
+	const nia05n_h1 = document.querySelector("h1");
+	const nia05n_h2 = document.querySelector("h2");
+	const nia05n_h3 = document.querySelector("h3");
+	const nia05n_h4 = document.querySelector("h4");
+	const nia05n_h5 = document.querySelector("h5");
+	const nia05n_h6 = document.querySelector("h6");
+	if(nia05n_h1 && isUpperCase(nia05n_h1)){
+		setItemOutline(nia05n_h1,"yellow","nia05n1");
+		result_nth += "<li><a href='#' data-destination='nia05n1' class='result-focus'>05-N</a> : Présence de titre H1 en majuscule [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-mises-en-majuscules-a-des-fins-decoratives-sont-effectuees-a-laide-des-styles' target='_blank'>Opquast 187</a>]</li>";
+	}
+	if(nia05n_h2 && isUpperCase(nia05n_h2)){
+		setItemOutline(nia05n_h2,"yellow","nia05n2");
+		result_nth += "<li><a href='#' data-destination='nia05n2' class='result-focus'>05-N</a> : Présence de titre H2 en majuscule [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-mises-en-majuscules-a-des-fins-decoratives-sont-effectuees-a-laide-des-styles' target='_blank'>Opquast 187</a>]</li>";
+	}
+	if(nia05n_h1 && isUpperCase(nia05n_h3)){
+		setItemOutline(nia05n_h3,"yellow","nia05n3");
+		result_nth += "<li><a href='#' data-destination='nia05n3' class='result-focus'>05-N</a> : Présence de titre H3 en majuscule [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-mises-en-majuscules-a-des-fins-decoratives-sont-effectuees-a-laide-des-styles' target='_blank'>Opquast 187</a>]</li>";
+	}
+	if(nia05n_h1 && isUpperCase(nia05n_h4)){
+		setItemOutline(nia05n_h4,"yellow","nia05n4");
+		result_nth += "<li><a href='#' data-destination='nia05n4' class='result-focus'>05-N</a> : Présence de titre H4 en majuscule [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-mises-en-majuscules-a-des-fins-decoratives-sont-effectuees-a-laide-des-styles' target='_blank'>Opquast 187</a>]</li>";
+	}
+	if(nia05n_h1 && isUpperCase(nia05n_h5)){
+		setItemOutline(nia05n_h5,"yellow","nia05n5");
+		result_nth += "<li><a href='#' data-destination='nia05n5' class='result-focus'>05-N</a> : Présence de titre H5 en majuscule [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-mises-en-majuscules-a-des-fins-decoratives-sont-effectuees-a-laide-des-styles' target='_blank'>Opquast 187</a>]</li>";
+	}
+	if(nia05n_h1 && isUpperCase(nia05n_h6)){
+		setItemOutline(nia05n_h6,"yellow","nia05n6");
+		result_nth += "<li><a href='#' data-destination='nia05n6' class='result-focus'>05-N</a> : Présence de titre H6 en majuscule [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-mises-en-majuscules-a-des-fins-decoratives-sont-effectuees-a-laide-des-styles' target='_blank'>Opquast 187</a>]</li>";
+	}
+
+	
+	// Y. TODO -->  Detect Overflow
 	// https://stackoverflow.com/questions/143815/determine-if-an-html-elements-content-overflows
 	// https://webtips.dev/webtips/javascript/find-overflowing-elements-with-javascript
 	// https://www.stevefenton.co.uk/blog/2022/12/detect-overflowing-elements/
 	
 	
-	// J. TODO Opquast	
+	// Z. TODO Opquast	
 	/*
-	Règle n°3 : Le code source de chaque page contient une métadonnée qui en décrit le contenu. ==> Présence de meta name=description
+	
 	Règle n°13 : La page des résultats de recherche indique le nombre de résultats, le nombre de pages de résultats, et le nombre de résultats par page.
 	Règle n°97 : Le titre de chaque page permet d'identifier le site.
-	Règle n°99 : Le code source des pages contient un appel valide à une icône de favori.
-	Règle n°151 : Chaque page affiche une information permettant de connaître son emplacement dans l'arborescence du site.
-	Règle n°160 : Le focus clavier n'est ni supprimé ni masqué.
-	Règle n°181 : La taille des éléments cliquables est suffisante.
-	Règle n°186 : Les styles ne justifient pas le texte.
-	Règle n°187 : Les mises en majuscules à des fins décoratives sont effectuées à l'aide des styles
 	*/
 
 /*- -------------------------------------------------------------------------------- */
@@ -1420,8 +1493,26 @@ if(debug_flag) console.log("09 Navigation");
 	  result_dev += "<li>09-E : Un skiplinks n'est pas correctement lié à sa destination [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>";
 	}
 
-	// F taille des éléments interactifs
-	/*La taille d’interaction de 16px par 16px du bouton « i » est réduite et n’est pas conforme au WCAG 2.2. La taille minimum attendue est de 24px par 24px. Ce point sera surement à évaluer dans les prochaines versions du RGAA.*/
+	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
+	const nia09f_nodes = document.querySelectorAll('a, button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
+	let nia09f_flag = false;
+	let nia09f_rect = "";
+	if(nia09f_nodes && nia09f_nodes.length > 0){
+		if(debug_flag) console.log("[nia09f] Boucle sur les "+nia09f_nodes.length + " elements interactif détéctés sur cette page");
+		for(let i = 0; i < nia09f_nodes.length; i++){
+			if(isItemVisible(nia09f_nodes[i])){
+				nia09f_rect = nia09f_nodes[i].parentElement.getBoundingClientRect();
+				console.log(nia09f_rect);
+				if((nia09f_rect["width"] < 24 || nia09f_rect["height"] < 24) && nia09f_rect["width"] != 0 && nia09f_rect["height"] !=0 ){
+					nia09f_flag = true;
+					setItemOutline(nia09f_nodes[i],"red","nia09f");
+				}
+			}
+		}
+	}
+	if(nia09e2_flag == true){
+	  result_dev += "<li>09-F : Taille d'éléments interactifs minimum attendue est de 24px par 24px [<a href='https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html' target='_blank'>WCAG 2.2 SC258</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-taille-des-elements-cliquables-est-suffisante' target='_blank'>Opquast 181</a>]</li>";
+	}
 
 /*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-10 Old tag
@@ -1637,7 +1728,7 @@ if(debug_flag) console.log("12 Boutons");
 	/* D. Button */
 	const nia12d_nodes = document.querySelectorAll('button[role=button]');
 	if(nia12d_nodes && nia12d_nodes.length > 0 && isItemsVisible(nia12d_nodes)){
-	  result_nth += "<li><a href='#' data-destination='nia12d' class='result-focus'>12-D</a> : Il n'est pas nécessaire d'ajouter un role button sur un éléments boutons</li>";
+	  result_dev += "<li><a href='#' data-destination='nia12d' class='result-focus'>12-D</a> : Il n'est pas nécessaire d'ajouter un role button sur un éléments boutons</li>";
 	  setItemsOutline(nia12d_nodes,"yellow","nia12d");
 	}
 
@@ -1845,7 +1936,7 @@ valid()
     console.log(data);
 	
 	// Filter data result
-	const filterStrings=["role is unnecessary for element","Section lacks heading"].join("|");
+	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed"].join("|");
 	const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
 	let msg_html5 = "";
 	
