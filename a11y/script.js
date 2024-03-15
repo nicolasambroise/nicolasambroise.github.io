@@ -115,7 +115,261 @@ if(debug_flag) console.log("01 AEM Component");
 	  setItemsOutline(nia01e_nodes,"orange","nia01e");
 	}
 	
-	// F. Menu -- Todo
+	// F. Menu
+	
+	/* F1. Check si le menu existe */
+	const nia01f_menu = document.querySelector('nav.topnav > .page-headernav > .navigation-container > ul.nav ,nav.page-headernav > .navigation-container > ul.nav');
+	let nia01f_hasPasserelle = false; 
+	let nia01f_isModal = false; 
+	if(nia01f_menu){
+		const nia01f01_node = document.querySelector('nav#headernav:not([role="navigation"])');
+		if(nia01f01_node && isItemVisible(nia01f01_node)){
+		  result_dev += "<li><a href='#' data-destination='nia01f01' class='result-focus'>01-F</a> : Role navigation absent de la barre de navigation</li>";
+		  setItemsOutline(nia01f01_node,"yellow","nia01f01");
+		}
+		const nia01f02_node = document.querySelector('nav#headernav:not([aria-label])');
+		if(nia01f02_node && isItemVisible(nia01f02_node)){
+		  result_dev += "<li><a href='#' data-destination='nia01f02' class='result-focus'>01-F</a> : Attribut Aria-label absent de la barre de navigation</li>";
+		  setItemsOutline(nia01f02_node,"yellow","nia01f02");
+		}
+
+		// Check si un acces aux pages passerelles est disponible depuis la navigation
+		const nia01f03_node = nia01f_menu.querySelector(':scope > li.has-subnav > a');
+		if(nia01f03_node){
+			nia01f_hasPasserelle = true;
+			console.log("Le menu utilise des pages passerelles");
+		}
+		else{
+			console.log("Le menu n'utilise pas de pages passerelles");
+		}
+		
+		// Itération sur les items du menu
+		const nia01f10_nodes = nia01f_menu.querySelectorAll(':scope > li');
+		let nia01f10_flag = false;
+		if(nia01f10_nodes && nia01f10_nodes.length > 0){
+			for(let i = 0; i < nia01f10_nodes.length; i++){
+				if(isItemVisible(nia01f10_nodes[i])){
+					let nia01f11_nodes = nia01f10_nodes[i].querySelectorAll(':scope > a');
+					let nia01f12_nodes = nia01f10_nodes[i].querySelectorAll(':scope > button');
+					let nia01f13_nodes = nia01f10_nodes[i].querySelectorAll(':scope > ul');
+					
+					if(nia01f10_nodes[i].classList.contains("has-subnav")){
+						
+						/* F2. Avec accès aux pages passerelles depuis la navigation: 
+						Sur l'item de rubrique vérifier existance de (li.has-subnav > a) et de (li.has-subnav > button) + le button doit avoir l'attribut aria-expanded */
+						if(nia01f_hasPasserelle){
+							if(!nia01f11_nodes || nia01f11_nodes.length != 1){
+								console.log("F2.1 Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f21' class='result-focus'>01-F</a> Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f21"); nia01f10_flag = true;
+							}
+							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
+								console.log("F2.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f22' class='result-focus'>01-F</a> : Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f22"); nia01f10_flag = true;
+							}
+							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
+								console.log("F2.3 Un problème a été detecté pour l'élement n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f23' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f23"); nia01f10_flag = true;
+							}
+							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expended")){
+								console.log("F2.4 Un problème a été detecté pour l'élement n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f24' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f24"); nia01f10_flag = true;
+							}
+							else{
+								console.log("L'item de menu "+i+" avec page passerelles et sous-menu est OK")
+							}
+						}
+
+						/* F3. Sans l’accès aux pages passerelles depuis la navigation:
+						Sur l'item de rubrique vérifier existance de (li.has-subnav > button) + cette item doit avoir l'attribut aria-expanded */
+						else{
+							if(nia01f11_nodes && nia01f11_nodes.length > 0){
+								console.log("F3.1 Un problème a été detecté pour l'élement n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f31' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f31"); nia01f10_flag = true;
+							}
+							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
+								console.log("F3.2 Un problème a été detecté pour l'élement n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f32' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f32"); nia01f10_flag = true;
+							}
+							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
+								console.log("F3.3 Un problème a été detecté pour l'élement n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f33' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f33"); nia01f10_flag = true;
+							}
+							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expended")){
+								console.log("F3.4 Un problème a été detecté pour l'élement n°"+i);
+								result_dev += "<li><a href='#' data-destination='nia01f34' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								setItemOutline(nia01f10_nodes[i],"red","nia01f34"); nia01f10_flag = true;
+							}
+							else{
+								console.log("L'item de menu "+i+" sans page passerelles et sous-menu est OK")
+							}
+						}
+					}
+					else {
+						/* F4 Vérifier que les élements (li:not(.has-subnav) > a) n'ont pas d'attribut aria-expended ni aria-haspopup ni est suivi d'un élément ul */
+						if(!nia01f11_nodes || nia01f11_nodes.length != 1){
+							console.log("F4.1 Un problème a été detecté pour l'élement n°"+i);
+							result_dev += "<li><a href='#' data-destination='nia01f41' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							setItemOutline(nia01f10_nodes[i],"red","nia01f41"); nia01f10_flag = true;
+						}
+						else if(nia01f12_nodes && nia01f12_nodes.length > 0){
+							console.log("F4.2 Un problème a été detecté pour l'élement n°"+i);
+							result_dev += "<li><a href='#' data-destination='nia01f42' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							setItemOutline(nia01f10_nodes[i],"red","nia01f42"); nia01f10_flag = true;
+						}
+						else if(nia01f13_nodes && nia01f13_nodes.length > 0){
+							console.log("F4.3 Un problème a été detecté pour l'élement n°"+i);
+							result_dev += "<li><a href='#' data-destination='nia01f43' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							setItemOutline(nia01f10_nodes[i],"red","nia01f43"); nia01f10_flag = true;
+						}
+						else if(nia01f11_nodes && (nia01f11_nodes[0].hasAttribute("aria-expended") || nia01f11_nodes[0].hasAttribute("aria-haspopup"))){
+							console.log("F4.4 Un problème a été detecté pour l'élement n°"+i);
+							result_dev += "<li><a href='#' data-destination='nia01f44' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							setItemOutline(nia01f10_nodes[i],"red","nia01f44"); nia01f10_flag = true;
+						}
+						else{
+							console.log("L'item de menu "+i+" sans sous-menu est OK")
+						}
+					}
+				}
+			}
+		}
+		if(nia01f10_flag == true){
+			result_dev += "<li> 01-F : Faiblesse dans l'accessibilité du menu</li>";
+		}
+		
+		// On resize pour voir le menu (Attention certain attributs sont ajouté en JS)
+		/*
+		const currentWidth = window.innerWidth;
+		const currentHeight = window.innerHeight;
+		window.resizeTo(320, 500);
+		document.body.style.zoom = "400%";
+		*/
+		
+			// Check si le menu mobile s'ouvre en disclosure ou en modale
+			const nia01f20_btn = document.querySelector('.topnav > button.anchor.anchor-scroll, .page-headernav > button.anchor.anchor-scroll, .page-headernavmobile > button.anchor.anchor-scroll');
+			if(nia01f20_btn){
+				const nia01f20_btnText = nia01f20_btn.innerText;
+				const nia01f20_btnDest = nia01f20_btn.getAttribute("data-destination");
+				const nia01f30_Dest = document.querySelector(nia01f20_btnDest);
+				
+				if(!nia01f20_btn.hasAttribute("aria-expanded")){
+					nia01f_isModal = true;
+					console.log("Le menu mobile s'ouvre dans une modale");
+					
+					if(!nia01f20_btn.hasAttribute("aria-haspopup")){
+						console.log("F5.1 : Absence de l'attribut aria-haspopup=dialog du bouton d'ouverture du menu");
+						result_dev += "<li><a href='#' data-destination='nia01f51' class='result-focus'>01-F</a> : Absence de l'attribut aria-haspopup=dialog du bouton d'ouverture du menu</li>";
+						setItemOutline(nia01f20_btn,"yellow","nia01f51");
+					}
+				}
+				else{
+					console.log("Le menu mobile s'ouvre dans un disclosure");
+					
+					if(nia01f20_btn.getAttribute("aria-expanded") == true){
+						console.log("F5.2 : Erreur dans la valeur de l'attribut aria-expanded du bouton d'ouverture du menu");
+						result_dev += "<li><a href='#' data-destination='nia01f52' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut aria-expanded du bouton d'ouverture du menu</li>";
+						setItemOutline(nia01f20_btn,"red","nia01f52");
+					}
+					
+					if(!(Boolean(nia01f30_Dest.closest('[role="dialog"]')) || Boolean(nia01f30_Dest.closest('[aria-modal="true"]')))){
+						console.log("F5.3 : Erreur dans le type d'ouverture du menu : Modal ou Disclosure ?");
+						result_dev += "<li><a href='#' data-destination='nia01f53' class='result-focus'>01-F</a> : Erreur dans le type d'ouverture du menu : Modal ou Disclosure ?</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f53");
+					}
+				}
+				if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") == false){
+					console.log("F5.4 : Vocalisation du menu caché en mobile");
+					result_dev += "<li><a href='#' data-destination='nia01f54' class='result-focus'>01-F</a> : Vocalisation du menu caché en mobile</li>";
+					setItemOutline(nia01f30_Dest,"red","nia01f54");
+				}
+			
+				// On click sur le bouton pour ouvrir le menu
+				nia01f20_btn.click();
+				
+				if(nia01f20_btn.innerText != nia01f20_btnText){
+					console.log("F6.1 Attention le texte du bouton d'ouverture du menu à changé cela ne devrai pas être le cas");
+					result_dev += "<li><a href='#' data-destination='nia01f61' class='result-focus'>01-F</a> : Attention le texte du bouton d'ouverture du menu à changé cela ne devrai pas être le cas</li>";
+					setItemOutline(nia01f20_btn,"red","nia01f61");
+				}
+				
+				if(nia01f_isModal){
+					// une fois ouvert, #headernav-mobile possède un attribut aria-hidden="false" aria-modal="true" role="dialog" aria-label="Menu principal"
+					if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") != false){
+						console.log("F6.2 Erreur dans la valeur de l'attribut aria-hidden du menu modal ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f62' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut aria-hidden du menu modal ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f62");
+					}
+					
+					if(!nia01f30_Dest.hasAttribute("aria-modal") || nia01f30_Dest.getAttribute("aria-modal") != true){
+						console.log("F6.3 Erreur dans la valeur de l'attribut aria-modal du menu modal ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f63' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut aria-modal du menu modal ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f63");
+					}
+					
+					if(!nia01f30_Dest.hasAttribute("role") || nia01f30_Dest.getAttribute("role") != "dialog"){
+						console.log("F6.4 Erreur dans la valeur de l'attribut role du menu modal ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f64' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut role du menu modal ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f64");
+					}
+					
+					if(!(nia01f30_Dest.hasAttribute("aria-label") || nia01f30_Dest.hasAttribute("aria-labelledby"))){
+						console.log("F6.5 Erreur dans la valeur de l'attribut aria-label du menu modal ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f65' class='result-focus'>01-F</a> : F6.5 Erreur dans la valeur de l'attribut aria-label du menu modal ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f65");
+					}
+					// le premier élément de cette modale est un button.anchor-close
+					if(nia01f30_Dest.firstChild.tagName == 'BUTTON' && nia01f30_Dest.firstChild.className.contains("anchor-close")){
+						console.log("F6.6 Erreur au niveau du bouton close du menu modal ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f66' class='result-focus'>01-F</a> : Erreur au niveau du bouton close du menu modal ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f66");
+					}
+				}
+				else{
+					// une fois ouvert, #headernav-mobile possède un attribut aria-hidden="false" - Absence de aria-modal="true" role="dialog"
+					if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") != false){
+						console.log("F6.7 Erreur dans la valeur de l'attribut aria-hidden du menu disclosure ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f67' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut aria-hidden du menu disclosure ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f67");
+					}
+					
+					if(nia01f30_Dest.hasAttribute("aria-modal") && nia01f30_Dest.getAttribute("aria-modal") == true){
+						console.log("F6.8 Erreur dans la valeur de l'attribut aria-modal du menu disclosure ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f68' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut aria-modal du menu disclosure ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f68");
+					}
+					
+					if(nia01f30_Dest.hasAttribute("role") && nia01f30_Dest.getAttribute("role") == "dialog"){
+						console.log("F6.9 Erreur dans la valeur de l'attribut role du menu disclosure ouvert");
+						result_dev += "<li><a href='#' data-destination='nia01f69' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut role du menu disclosure ouvert</li>";
+						setItemOutline(nia01f30_Dest,"red","nia01f69");
+					}
+				}
+			}
+			else {
+				result_man += "<li>01-F : Absence de menu mobile</li>";
+			}
+
+		//window.resizeTo(currentWidth, currentHeight);
+	}
+	else {
+		  result_man += "<li>01-F : Absence de barre de navigation</li>";
+	}
+
+	
+		
+			
+		
+			
+
+		
+
 
 /*- -------------------------------------------------------------------------------- */
 /* 🗸 02 Images : Thématique RGAA 1
@@ -349,6 +603,8 @@ if(debug_flag) console.log("02 Images");
 	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header) > img');
 	let nia02j_css_h ="", nia02j_css_w ="",nia02j_html_h ="", nia02j_html_w ="",nia02j_natural_h ="", nia02j_natural_w ="";
 	let nia02j_flag = false;
+	let nia02j_ratio_max = 2;
+	let nia02j_ratio_min = 0.5;
 	if(nia02j_nodes && nia02j_nodes.length > 0){
 		for(let i = 0; i < nia02j_nodes.length; i++){
 			if(isItemVisible(nia02j_nodes[i])){
@@ -361,22 +617,22 @@ if(debug_flag) console.log("02 Images");
 				nia02j_natural_h = nia02j_nodes[i].naturalHeight;
 				nia02j_natural_w = nia02j_nodes[i].naturalWidth;
 				
-				if(nia02j_html_h && (Math.abs(nia02j_html_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_html_h/nia02j_css_h) > 2)){
+				if(nia02j_html_h && (Math.abs(nia02j_html_h/nia02j_css_h) < nia02j_ratio_min || Math.abs(nia02j_html_h/nia02j_css_h) > nia02j_ratio_max)){
 					//if(debug_flag) console.log("Html Height : "+ nia02j_html_h+" vs "+nia02j_css_h);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
 				}
-				else if(nia02j_html_w && (Math.abs(nia02j_html_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_html_w/nia02j_css_w) > 2)){
+				else if(nia02j_html_w && (Math.abs(nia02j_html_w/nia02j_css_w) < nia02j_ratio_min || Math.abs(nia02j_html_w/nia02j_css_w) > nia02j_ratio_max)){
 					//if(debug_flag) console.log("Html Width : "+ nia02j_html_w+" vs "+nia02j_css_w);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
 				}
-				else if(Math.abs(nia02j_natural_h/nia02j_css_h) < 0.5 || Math.abs(nia02j_natural_h/nia02j_css_h) > 2){
+				else if(Math.abs(nia02j_natural_h/nia02j_css_h) < nia02j_ratio_min || Math.abs(nia02j_natural_h/nia02j_css_h) > nia02j_ratio_max){
 					//if(debug_flag) console.log("Natural Height : "+ nia02j_natural_h+" vs "+nia02j_css_h);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
 				}
-				else if(Math.abs(nia02j_natural_w/nia02j_css_w) < 0.5 || Math.abs(nia02j_natural_w/nia02j_css_w) > 2){
+				else if(Math.abs(nia02j_natural_w/nia02j_css_w) < nia02j_ratio_min || Math.abs(nia02j_natural_w/nia02j_css_w) > nia02j_ratio_max){
 					//if(debug_flag) console.log("Natural Width : "+ nia02j_natural_w+" vs "+nia02j_css_w);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j");
 					nia02j_flag = true;
@@ -460,7 +716,7 @@ if(debug_flag) console.log("03 Liens");
 	}
 	
 	// F. Chaque lien a t'il un intitulé
-	const nia03f_nodes = document.querySelectorAll('a,[role="link"]');
+	const nia03f_nodes = document.querySelectorAll('a:not([href^="#"]),[role="link"]:not([href^="#"])');
 	let nia03f_flag = false;
 	let nia03f_lang = "";
 	if(nia03f_nodes && nia03f_nodes.length > 0){
@@ -1034,15 +1290,15 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	}
 	
 	// L. Le focus clavier n'est ni supprimé ni masqué.
-	const nia05l_nodes = document.querySelectorAll("summary");
-	if(nia05l_nodes && nia05l_nodes.length > 0){
-		nia05l_node[0].addEventListener("focus", (e) => {
+	const nia05l_node = document.querySelector("summary");
+	if(nia05l_node){
+		nia05l_node.addEventListener("focus", (e) => {
 			if( e.target.style.outline == 0){
-				setItemOutline(nia05l_nodes[0],"red","nia05l");
+				setItemOutline(nia05l_node,"red","nia05l");
 				result_dev += "<li><a href='#' data-destination='nia05l' class='result-focus'>05-L</a> : Le focus clavier est supprimer d'un élément accordéon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-focus-clavier-nest-ni-supprime-ni-masque' target='_blank'>Opquast 160</a>]</li>";
 			}
 		});
-		nia05l_node[0].focus();
+		nia05l_node.focus();
 	}
 	
 	// M. Les styles ne justifient pas le texte.
@@ -1096,7 +1352,6 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	
 	// Z. TODO Opquast	
 	/*
-	
 	Règle n°13 : La page des résultats de recherche indique le nombre de résultats, le nombre de pages de résultats, et le nombre de résultats par page.
 	Règle n°97 : Le titre de chaque page permet d'identifier le site.
 	*/
@@ -1299,7 +1554,7 @@ if(debug_flag) console.log("07 Titre");
 				else {nia07e_current_level = 2;}
 				if(nia07e_current_level - nia07e_previous_level > 1){
 					setItemOutline(nia07e_nodes[i],"yellow","nia07e");
-					console.log(nia07e_nodes[i].innerText+" | current : "+nia07e_current_level+" | previous :"+nia07e_previous_level);
+					if(debug_flag) console.log(nia07e_nodes[i].innerText+" | current : "+nia07e_current_level+" | previous :"+nia07e_previous_level);
 					nia07e_flag = true;
 				}
 				nia07e_previous_level = nia07e_current_level;
@@ -1355,8 +1610,8 @@ if(debug_flag) console.log("08 Tableau");
 		if(debug_flag) console.log("[nia08e] Boucle sur les "+nia08e_nodes.length + " tableaux détéctés sur cette page");
 		for(let i = 0; i < nia08e_nodes.length; i++){
 			nia08e_html = nia08e_nodes[i].innerHTML;
-			console.log(nia08e_html);
 			if(nia08e_html.indexOf('<th') < 0 && nia08e_html.indexOf(' role="columnheader"') < 0 && nia08e_html.indexOf(' role="rowheader"') < 0 ){
+				if(debug_flag) console.log(nia08e_html);
 				setItemOutline(nia08e_nodes[i],"red","nia08e");
 				nia08e_flag = true;
 			}
@@ -1494,24 +1749,44 @@ if(debug_flag) console.log("09 Navigation");
 	}
 
 	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
-	const nia09f_nodes = document.querySelectorAll('a, button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
+	const nia09f_nodes = document.querySelectorAll('a:not(.feed-item-timing), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
 	let nia09f_flag = false;
-	let nia09f_rect = "";
+	let nia09f_rect, nia09f_rect_parent;
+	let nia09f_horizontal = 0, nia09f_vertical = 0;
+	let nia09f_horizontal_parent = 0, nia09f_vertical_parent = 0;
 	if(nia09f_nodes && nia09f_nodes.length > 0){
 		if(debug_flag) console.log("[nia09f] Boucle sur les "+nia09f_nodes.length + " elements interactif détéctés sur cette page");
 		for(let i = 0; i < nia09f_nodes.length; i++){
 			if(isItemVisible(nia09f_nodes[i])){
-				nia09f_rect = nia09f_nodes[i].parentElement.getBoundingClientRect();
-				console.log(nia09f_rect);
-				if((nia09f_rect["width"] < 24 || nia09f_rect["height"] < 24) && nia09f_rect["width"] != 0 && nia09f_rect["height"] !=0 ){
-					nia09f_flag = true;
-					setItemOutline(nia09f_nodes[i],"red","nia09f");
+				nia09f_rect = nia09f_nodes[i].getBoundingClientRect();
+				nia09f_horizontal = nia09f_rect["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginRight']);
+				nia09f_vertical = nia09f_rect["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginBottom']);
+
+				if(nia09f_rect["width"] != 0 && nia09f_rect["height"] !=0){
+					if(nia09f_horizontal < 24 || nia09f_vertical < 24){
+						if(nia09f_nodes[i].parentElement.tagName == "LI"){
+							nia09f_rect_parent = nia09f_nodes[i].parentElement.getBoundingClientRect();
+							nia09f_horizontal_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginRight']);
+							nia09f_horizontal_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginBottom']);
+							if(nia09f_horizontal_parent < 24 || nia09f_vertical_parent < 24){
+						
+								if(debug_flag) console.log(nia09f_rect);
+								nia09f_flag = true;
+								setItemOutline(nia09f_nodes[i],"yellow","nia09f");
+							}
+						}
+						else if(nia09f_nodes[i].parentElement.tagName != "P" && nia09f_nodes[i].parentElement.tagName != "SPAN" && nia09f_nodes[i].parentElement.tagName != "SMALL"){
+							if(debug_flag) console.log(nia09f_rect);
+							nia09f_flag = true;
+							setItemOutline(nia09f_nodes[i],"yellow","nia09f");
+						}
+					}
 				}
 			}
 		}
 	}
-	if(nia09e2_flag == true){
-	  result_dev += "<li>09-F : Taille d'éléments interactifs minimum attendue est de 24px par 24px [<a href='https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html' target='_blank'>WCAG 2.2 SC258</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-taille-des-elements-cliquables-est-suffisante' target='_blank'>Opquast 181</a>]</li>";
+	if(nia09f_flag == true){
+	  result_man += "<li><a href='#' data-destination='nia09f' class='result-focus'>09-F</a> : Taille d'éléments interactifs minimum attendue est de 24px par 24px [<a href='https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html' target='_blank'>WCAG 2.2 SC258</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-taille-des-elements-cliquables-est-suffisante' target='_blank'>Opquast 181</a>]</li>";
 	}
 
 /*- -------------------------------------------------------------------------------- */
@@ -1782,6 +2057,8 @@ if(debug_flag) console.log("13 Animation");
 /* 14. Couleur */
 
 if(debug_flag) console.log("14 Couleur");
+
+	// A. Opacité Placeholder -- Todo
 
 	// --> test 10.5.1 color / bg/ degradé
 	// --> test 10.6.1 lien visible par rapport au texte environnemt
