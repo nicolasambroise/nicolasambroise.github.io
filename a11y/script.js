@@ -74,7 +74,6 @@ if(debug_flag) console.log("01 AEM Component");
 	const nia01a_nodes = document.querySelectorAll('button.anchor[data-destination^="#headernav"]:not(.anchor-close)');
 	let nia01a_flag = false;
 	if(nia01a_nodes && nia01a_nodes.length > 0){
-		if(debug_flag) console.log("[nia01a] Boucle sur les "+nia01a_nodes.length + " ancres detectés sur cette page");
 		for(let i = 0; i < nia01a_nodes.length; i++){
 			if(nia01a_nodes[i].parentElement.tagName != 'NAV' && nia01a_nodes[i].parentElement.parentElement.tagName != 'NAV'){
 				// --> Todo : remplacer par un .closest(nav) plus propre ici
@@ -241,7 +240,7 @@ if(debug_flag) console.log("01 AEM Component");
 			}
 		}
 		if(nia01f10_flag == true){
-			result_dev += "<li> 01-F : Faiblesse dans l'accessibilité du menu</li>";
+			result_dev += "<li> 01-F : Faiblesse dans l'accessibilité du menu Desktop</li>";
 		}
 		
 		// On resize pour voir le menu (Attention certain attributs sont ajouté en JS)
@@ -279,8 +278,8 @@ if(debug_flag) console.log("01 AEM Component");
 					}
 					
 					if(!(Boolean(nia01f30_Dest.closest('[role="dialog"]')) || Boolean(nia01f30_Dest.closest('[aria-modal="true"]')))){
-						console.log("F5.3 : Erreur dans le type d'ouverture du menu : Modal ou Disclosure ?");
-						result_dev += "<li><a href='#' data-destination='nia01f53' class='result-focus'>01-F</a> : Erreur dans le type d'ouverture du menu : Modal ou Disclosure ?</li>";
+						console.log("F5.3 : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?");
+						result_dev += "<li><a href='#' data-destination='nia01f53' class='result-focus'>01-F</a> : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?</li>";
 						setItemOutline(nia01f30_Dest,"red","nia01f53");
 					}
 				}
@@ -295,7 +294,7 @@ if(debug_flag) console.log("01 AEM Component");
 				
 				if(nia01f20_btn.innerText != nia01f20_btnText){
 					console.log("F6.1 Attention le texte du bouton d'ouverture du menu à changé cela ne devrai pas être le cas");
-					result_dev += "<li><a href='#' data-destination='nia01f61' class='result-focus'>01-F</a> : Attention le texte du bouton d'ouverture du menu à changé cela ne devrai pas être le cas</li>";
+					result_dev += "<li><a href='#' data-destination='nia01f61' class='result-focus'>01-F</a> : Attention le texte du bouton d'ouverture du menu change à l'ouverture du menu cela ne devrai pas être le cas</li>";
 					setItemOutline(nia01f20_btn,"red","nia01f61");
 				}
 				
@@ -443,14 +442,14 @@ if(debug_flag) console.log("02 Images");
 	// D. Absence de copyright/caption/légende sur une image Core V3
 	const nia02d_nodes = document.querySelectorAll('.cmp-image[data-cmp-hook-image="imageV3"] .cmp-image__title');
 	if(nia02d_nodes && nia02d_nodes.length > 0 && isItemsVisible(nia02d_nodes)){
-	  result_dev += "<li><a href='#' data-destination='nia02d' class='result-focus'>02-D</a> : Présence d'un caption non lié à son image (image v3)</li>";
+	  result_dev += "<li><a href='#' data-destination='nia02d' class='result-focus'>02-D</a> : Présence d'un caption non lié correctement à son image</li>";
 	  setItemsOutline(nia02d_nodes,"red","nia02d");
 	}
 	
-	// E. Images v1 légendés presence du aria-label sur le figure
-	const nia02e_nodes = document.querySelectorAll('figure[data-cmp-hook-image="figure"] figcaption');
+	// E. Images légendés presence du aria-label sur le figure
+	const nia02e_nodes = document.querySelectorAll('figure[data-cmp-hook-image="figure"]:not([aria-label]) figcaption');
 	if(nia02e_nodes && nia02e_nodes.length > 0 && isItemsVisible(nia02e_nodes)){
-	  result_dev += "<li><a href='#' data-destination='nia02e' class='result-focus'>02-E</a> : Les captions des images ne sont pas correctement restitué (image v1)</li>";
+	  result_dev += "<li><a href='#' data-destination='nia02e' class='result-focus'>02-E</a> : Les captions des images ne sont pas correctement restitué, il manque un attribut aria-label sur la balise figure</li>";
 	  setItemsOutline(nia02e_nodes,"red","nia02e");
 	}
 	
@@ -549,7 +548,6 @@ if(debug_flag) console.log("02 Images");
 	let nia02h_flag = false;
 	let nia02h_lang = "", nia02h_label = "";
 	if(nia02h_nodes && nia02h_nodes.length > 0){
-		if(debug_flag) console.log("[nia02h] Boucle sur les "+nia02h_nodes.length + " images informatives detectées sur cette page");
 		for(let i = 0; i < nia02h_nodes.length; i++){
 			nia02h_lang = nia02h_nodes[i].closest('[lang]').getAttribute('lang')
 			if(nia02h_nodes[i].hasAttribute("aria-labelledby")){
@@ -608,7 +606,6 @@ if(debug_flag) console.log("02 Images");
 	if(nia02j_nodes && nia02j_nodes.length > 0){
 		for(let i = 0; i < nia02j_nodes.length; i++){
 			if(isItemVisible(nia02j_nodes[i])){
-				if(debug_flag) console.log(isItemVisible(nia02j_nodes[i]));
 				
 				nia02j_css_h = nia02j_nodes[i].height;
 				nia02j_css_w = nia02j_nodes[i].width;
@@ -657,7 +654,6 @@ if(debug_flag) console.log("03 Liens");
 	let nia03a_lang;
 	let nia03a_title;
 	if(nia03a_nodes && nia03a_nodes.length > 0){
-		if(debug_flag) console.log("[nia03a] Boucle sur les "+nia03a_nodes.length + " liens detectés sur cette page");
 		for(let i = 0; i < nia03a_nodes.length; i++){
 			if(isItemVisible(nia03a_nodes[i])){
 				nia03a_lang = nia03a_nodes[i].closest('[lang]').getAttribute('lang');
@@ -699,7 +695,6 @@ if(debug_flag) console.log("03 Liens");
 	let nia03e_flag = false;
 	let nia03e_content = "", nia03e_title = "", nia03e_lang = "";
 	if(nia03e_nodes && nia03e_nodes.length > 0){
-		if(debug_flag) console.log("[nia03e] Boucle sur les "+nia03e_nodes.length + " liens detectés sur cette page");
 		for(let i = 0; i < nia03e_nodes.length; i++){
 			nia03e_lang = nia03e_nodes[i].closest('[lang]').getAttribute('lang')
 			nia03e_title = sanitizeText(nia03e_nodes[i].getAttribute("title"),nia03e_lang);
@@ -720,7 +715,6 @@ if(debug_flag) console.log("03 Liens");
 	let nia03f_flag = false;
 	let nia03f_lang = "";
 	if(nia03f_nodes && nia03f_nodes.length > 0){
-		if(debug_flag) console.log("[nia03f] Boucle sur les "+nia03f_nodes.length + " liens detectés sur cette page");
 		for(let i = 0; i < nia03f_nodes.length; i++){
 			if(isItemVisible(nia03f_nodes[i])){
 				nia03f_lang = nia03f_nodes[i].closest('[lang]').getAttribute('lang')
@@ -739,7 +733,7 @@ if(debug_flag) console.log("03 Liens");
 	// G. Présence de liens sans href
 	const nia03g_nodes = document.querySelectorAll('a:not([href])');
 	if(nia03g_nodes && nia03g_nodes.length > 0 && isItemsVisible(nia03g_nodes)){
-	  result_dev += "<li><a href='#' data-destination='nia03g' class='result-focus'>03-G</a> : Présence d'un lien sans destination</li>";
+	  result_nc += "<li><a href='#' data-destination='nia03g' class='result-focus'>03-G</a> : Présence d'un lien sans destination</li>";
 	  setItemsOutline(nia03g_nodes,"red","nia03g");
 	}
 	
@@ -864,7 +858,6 @@ if(debug_flag) console.log("04 Formulaire");
 		let nia04b_flag = false;
 		let nia04b_id = "", nia04b_desc = "", nia04b_label = "", nia04b_help = "";
 		if(nia04b_nodes && nia04b_nodes.length > 0){
-			if(debug_flag) console.log("[nia04b] Boucle sur les "+nia04b_nodes.length + " champs email detectés sur cette page");
 			for(let i = 0; i < nia04b_nodes.length; i++){
 				nia04b_id = "", nia04b_desc = "", nia04b_label = "", nia04b_help = "";
 				nia04b_id = nia04b_nodes[i].getAttribute("id");
@@ -906,7 +899,6 @@ if(debug_flag) console.log("04 Formulaire");
 	let nia04d_flag = false;
 	let nia04d_label = "", nia04d_id = "";
 	if(nia04d_nodes && nia04d_nodes.length > 0){
-		if(debug_flag) console.log("[nia04d] Boucle sur les "+nia04d_nodes.length + " champs detectés sur cette page");
 		for(let i = 0; i < nia04d_nodes.length; i++){
 			if(isItemVisible(nia04d_nodes[i])){
 				nia04d_id = nia04d_nodes[i].getAttribute("id");
@@ -932,7 +924,6 @@ if(debug_flag) console.log("04 Formulaire");
 	const nia04e_nodes = document.querySelectorAll('fieldset');
 	let nia04e_flag = false;
 	if(nia04e_nodes && nia04e_nodes.length > 0){
-		if(debug_flag) console.log("[nia04e] Boucle sur les "+nia04e_nodes.length + " fielset detectés sur cette page");
 		for(let i = 0; i < nia04e_nodes.length; i++){
 			if(isItemVisible(nia04e_nodes[i])){
 				if(nia04e_nodes[i].firstChild.tagName && nia04e_nodes[i].firstChild.tagName == "LEGEND"){
@@ -962,7 +953,6 @@ if(debug_flag) console.log("04 Formulaire");
 	let nia04f_id, nia04f_label;
 	let nia04f_fieldset, nia04f_legend;
 	if(nia04f_nodes && nia04f_nodes.length > 0){
-		if(debug_flag) console.log("[nia04f] Boucle sur les "+nia04f_nodes.length + " champs obligatoire detectés sur cette page");
 		for(let i = 0; i < nia04f_nodes.length; i++){
 			if(isItemVisible(nia04f_nodes[i])){
 				if(nia04f_nodes[i].parentElement.tagName != "LABEL"){ 
@@ -1050,7 +1040,6 @@ if(debug_flag) console.log("04 Formulaire");
 	let nia04h_id, nia04h_label;
 	let nia04h_distance;
 	if(nia04h_nodes && nia04h_nodes.length > 0){
-		if(debug_flag) console.log("[nia04h] Boucle sur les "+nia04h_nodes.length + " champs detectés sur cette page");
 		for(let i = 0; i < nia04h_nodes.length; i++){
 			if(isItemVisible(nia04h_nodes[i])){
 				nia04h_id = nia04h_nodes[i].getAttribute("id");
@@ -1086,7 +1075,6 @@ if(debug_flag) console.log("04 Formulaire");
 	let nia04i_flag = false;
 	let nia04i_desc = "", nia04i_id = "";
 	if(nia04i_nodes && nia04i_nodes.length > 0){
-		if(debug_flag) console.log("[nia04i] Boucle sur les "+nia04i_nodes.length + " champs avec desc detectés sur cette page");
 		for(let i = 0; i < nia04i_nodes.length; i++){
 			if(isItemVisible(nia04i_nodes[i])){
 				nia04i_id = nia04i_nodes[i].getAttribute("aria-describedby");
@@ -1113,7 +1101,6 @@ if(debug_flag) console.log("04 Formulaire");
 	let nia04j_flag = false;
 	let nia04j_label = "", nia04j_id = "";
 	if(nia04j_nodes && nia04j_nodes.length > 0){
-		if(debug_flag) console.log("[nia04j] Boucle sur les "+nia04j_nodes.length + " champs avec format detectés sur cette page");
 		for(let i = 0; i < nia04j_nodes.length; i++){
 			if(isItemVisible(nia04j_nodes[i])){
 				nia04j_id = nia04j_nodes[i].getAttribute("id");
@@ -1169,7 +1156,6 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	let nia05b_flag = false;
 	let nia05b_clean_node = "", nia05b_container = "", nia05b_lang = "";
 	if(nia05b_nodes && nia05b_nodes.length > 0){
-		if(debug_flag) console.log("[nia05b] Boucle sur les " + nia05b_nodes.length + " elements détéctés sur cette page");
 		for(let i = 0; i < nia05b_nodes.length; i++){
 			if(nia05b_nodes[i].childElementCount == 0){
 				nia05b_lang = nia05b_nodes[i].closest('[lang]').getAttribute('lang');
@@ -1230,7 +1216,6 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	let nia05f_ids = {};
 	let nia05f_currentId;
 	if(nia05f_nodes && nia05f_nodes.length > 0){
-		if(debug_flag) console.log("[nia05f] Boucle sur les " + nia05f_nodes.length + " id détéctés sur cette page");
 		for(let i = 0; i < nia05f_nodes.length; i++){
 			nia05f_currentId = nia05f_nodes[i].id ? nia05f_nodes[i].id : "undefined";
 			if(isNaN(nia05f_ids[nia05f_currentId])) {
@@ -1367,7 +1352,6 @@ if(debug_flag) console.log("06 Structure");
 	const nia06a_nodes = document.querySelectorAll('ul[role]:not([role="list"]):not([role="listbox"]),ol[role]:not([role="list"]):not([role="tablist"]),li[role]:not([role="listitem"]):not([role="option"]),dl[role]:not([role="listitem"])');
 	let nia06a_flag = false;
 	if(nia06a_nodes && nia06a_nodes.length > 0){
-		if(debug_flag) console.log("[nia06a] Boucle sur les " + nia05f_nodes.length + " éléments de liste détéctés sur cette page");
 		for(let i = 0; i < nia06a_nodes.length; i++){
 			if(isItemVisible(nia06a_nodes[i])){
 				// Exception sur la structure des onglet <li role="tab"> https://stackoverflow.com/questions/75955536/what-will-the-role-of-anchor-tag-in-tabs-with-ul-li-structure
@@ -1543,7 +1527,6 @@ if(debug_flag) console.log("07 Titre");
 	let nia07e_flag = false;
 	let nia07e_current_level = 0, nia07e_previous_level = 0;
 	if(nia07e_nodes && nia07e_nodes.length > 0){
-		if(debug_flag) console.log("[nia07e] Boucle sur les " + nia07e_nodes.length + " titres détéctés sur cette page");
 		for(let i = 0; i < nia07e_nodes.length; i++){
 			if(isItemVisible(nia07e_nodes[i])){
 				if(nia07e_nodes[i].tagName == 'H1' || (nia07e_nodes[i].hasAttribute('aria-level') && nia07e_nodes[i].hasAttribute('role') && nia07e_nodes[i].getAttribute('aria-level').value == "1" && nia07e_nodes[i].getAttribute('role').value == "heading")) {nia07e_current_level = 1;}
@@ -1607,7 +1590,6 @@ if(debug_flag) console.log("08 Tableau");
 	let nia08e_flag = false;
 	let nia08e_html = "";
 	if(nia08e_nodes && nia08e_nodes.length > 0){
-		if(debug_flag) console.log("[nia08e] Boucle sur les "+nia08e_nodes.length + " tableaux détéctés sur cette page");
 		for(let i = 0; i < nia08e_nodes.length; i++){
 			nia08e_html = nia08e_nodes[i].innerHTML;
 			if(nia08e_html.indexOf('<th') < 0 && nia08e_html.indexOf(' role="columnheader"') < 0 && nia08e_html.indexOf(' role="rowheader"') < 0 ){
@@ -1730,7 +1712,6 @@ if(debug_flag) console.log("09 Navigation");
 	let nia09e2_flag = false;
 	let nia09e2_dest = "";
 	if(nia09e2_nodes && nia09e2_nodes.length > 0){
-		if(debug_flag) console.log("[nia09e2] Boucle sur les "+nia09e2_nodes.length + " skiplinks détéctés sur cette page");
 		for(let i = 0; i < nia09e2_nodes.length; i++){
 			nia09e2_dest = document.querySelector(nia09e2_nodes[i].getAttribute("href"))
 			if(nia09e2_dest == null){
@@ -1755,7 +1736,6 @@ if(debug_flag) console.log("09 Navigation");
 	let nia09f_horizontal = 0, nia09f_vertical = 0;
 	let nia09f_horizontal_parent = 0, nia09f_vertical_parent = 0;
 	if(nia09f_nodes && nia09f_nodes.length > 0){
-		if(debug_flag) console.log("[nia09f] Boucle sur les "+nia09f_nodes.length + " elements interactif détéctés sur cette page");
 		for(let i = 0; i < nia09f_nodes.length; i++){
 			if(isItemVisible(nia09f_nodes[i])){
 				nia09f_rect = nia09f_nodes[i].getBoundingClientRect();
@@ -1922,7 +1902,6 @@ if(debug_flag) console.log("11 Langue");
 	const nia11b_nodes = document.querySelectorAll('.cmp-text');
 	let nia11b_flag = false;
 	if(nia11b_nodes && nia11b_nodes.length > 0){
-		if(debug_flag) console.log("[nia11b] Boucle sur les "+nia11b_nodes.length + " textes détéctés sur cette page");
 		for(let i = 0; i < nia11b_nodes.length; i++){
 			if(nia11b_nodes[i].textContent.includes('Lorem ipsum')){
 				setItemOutline(nia11b_nodes[i],"orange","nia11b");
@@ -1967,7 +1946,6 @@ if(debug_flag) console.log("12 Boutons");
 	let nia12c_title = "", nia12c_content = "", nia12c_lang = "";
 	let nia12c1_flag = false,nia12c2_flag = false,nia12c3_flag = false;
 	if(nia12c_nodes && nia12c_nodes.length > 0){
-		if(debug_flag) console.log("[nia12c] Boucle sur les " + nia12c_nodes.length + " buttons anchor détéctés sur cette page");
 		if(nia12c_nodes && nia12c_nodes.length > 0 ){
 			for(let i = 0; i < nia12c_nodes.length; i++){
 				nia12c_lang = nia12c_nodes[i].closest('[lang]').getAttribute('lang');
@@ -2016,7 +1994,6 @@ if(debug_flag) console.log("13 Animation");
 	const nia13a_nodes = document.querySelectorAll('lottie-player');
 	let nia13a_autoplay, nia13a_totalFrames,nia13a_frameRate, nia13a_loop, nia13a_counter, nia13a_controls, nia13a_duration;
 	if(nia13a_nodes && nia13a_nodes.length > 0){
-		if(debug_flag) console.log("[nia13a] Boucle sur les " + nia13a_nodes.length + " animations Lottie détéctés sur cette page");
 		if(nia13a_nodes && nia13a_nodes.length > 0 ){
 			for(let i = 0; i < nia13a_nodes.length; i++){
 				nia13a_autoplay = nia13a_nodes[i].getAttribute("autoplay");
@@ -2174,7 +2151,6 @@ NIAmodalA11Ybtn.addEventListener('click', () => {openNIAmodalA11Y();});
 
 // Fonction Focus on Element
 const result_focus = document.querySelectorAll('.result-focus');
-if(debug_flag) console.log("[result] Boucle sur les "+result_focus.length + " points relevés sur cette page");
 let targetElement, targetElementOffset;
 for(let i = 0; i < result_focus.length; i++){
   result_focus[i].addEventListener('click', (e) => {
@@ -2213,7 +2189,7 @@ valid()
     console.log(data);
 	
 	// Filter data result
-	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed"].join("|");
+	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute"].join("|");
 	const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
 	let msg_html5 = "";
 	
