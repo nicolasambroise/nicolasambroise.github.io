@@ -398,11 +398,11 @@ if(debug_flag) console.log("02 Images");
 	const nia02b1_nodes = document.querySelectorAll('svg:not([aria-hidden="true"]):not(.iconset)'); 
 	const nia02b2_nodes = document.querySelectorAll('svg:not([focusable="false"]):not(.iconset)');
 	if(nia02b1_nodes && nia02b1_nodes.length > 0 && isItemsVisible(nia02b1_nodes)){
-	  result_nc += "<li><a href='#' data-destination='nia02b1' class='result-focus'>02-B</a> : Absence de certains attributs sur des SVG (aria-hidden=true)</li>";
+	  result_nc += "<li><a href='#' data-destination='nia02b1' class='result-focus'>02-B</a> : Absence de certains attributs sur des SVG (aria-hidden=true) [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>";
 	  setItemsOutline(nia02b1_nodes,"red","nia02b1");
 	}
 	if(nia02b2_nodes && nia02b2_nodes.length > 0 && isItemsVisible(nia02b2_nodes)){
-	  result_nth += "<li><a href='#' data-destination='nia02b2' class='result-focus'>02-B</a> : Absence de certains attributs sur des SVG (focusable=false)</li>";
+	  result_nth += "<li><a href='#' data-destination='nia02b2' class='result-focus'>02-B</a> : Absence de certains attributs sur des SVG (focusable=false) [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>";
 	  setItemsOutline(nia02b2_nodes,"orange","nia02b2");
 	}
 	
@@ -414,7 +414,7 @@ if(debug_flag) console.log("02 Images");
 	
 	const nia02b4_nodes = document.querySelectorAll('svg[aria-hidden="true"][aria-label], svg[aria-hidden="true"][aria-labelledby]');
 	if(nia02b4_nodes && nia02b4_nodes.length > 0 && isItemsVisible(nia02b4_nodes)){
-	  result_nc += "<li><a href='#' data-destination='nia02b4' class='result-focus'>02-B</a> : Les images vectorielle de décoration ne doivent pas posséder une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-4' target='_blank'>RGAA 1.2.4</a>]</li>";
+	  result_nc += "<li><a href='#' data-destination='nia02b4' class='result-focus'>02-B</a> : Les images vectorielle de décoration ne doivent pas posséder une alternative textuelle [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-1-2-4' target='_blank'>RGAA 1.2.4</a> - [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>";
 	  setItemsOutline(nia02b4_nodes,"red","nia02b4");
 	}
 	
@@ -1278,7 +1278,8 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	const nia05l_node = document.querySelector("summary");
 	if(nia05l_node){
 		nia05l_node.addEventListener("focus", (e) => {
-			if( e.target.style.outline == 0){
+			//console.log(window.getComputedStyle(e.target, null).outline);
+			if(window.getComputedStyle(e.target, null).outline == 0){
 				setItemOutline(nia05l_node,"red","nia05l");
 				result_dev += "<li><a href='#' data-destination='nia05l' class='result-focus'>05-L</a> : Le focus clavier est supprimer d'un élément accordéon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-focus-clavier-nest-ni-supprime-ni-masque' target='_blank'>Opquast 160</a>]</li>";
 			}
@@ -1328,18 +1329,20 @@ if(debug_flag) console.log("05 Element Obligatoire");
 		result_nth += "<li><a href='#' data-destination='nia05n6' class='result-focus'>05-N</a> : Présence de titre H6 en majuscule [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-mises-en-majuscules-a-des-fins-decoratives-sont-effectuees-a-laide-des-styles' target='_blank'>Opquast 187</a>]</li>";
 	}
 
+	// O. La page des résultats de recherche indique le nombre de résultats
+	const nia05o_isSearch = document.getElementById("mainSearch");
+	if(nia05o_isSearch){
+		const nia05o_searchCount = document.querySelector(".search-meta-count");
+		if(!nia05o_searchCount || !isItemVisible(nia05o_searchCount)){
+			result_nc += "<li><a href='#' data-destination='nia05o' class='result-focus'>05-O</a> : La page des résultats de recherche indique le nombre de résultats [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-page-des-resultats-de-recherche-indique-le-nombre-de-resultats-le-nombre-de-pages-de-resultats-et-le-nombre-de-resultats-par-page' target='_blank'>Opquast 13</a>]</li>";
+			setItemsOutline(nia05o_isSearch,"red","nia05o");
+		}
+	}
 	
 	// Y. TODO -->  Detect Overflow
 	// https://stackoverflow.com/questions/143815/determine-if-an-html-elements-content-overflows
 	// https://webtips.dev/webtips/javascript/find-overflowing-elements-with-javascript
 	// https://www.stevefenton.co.uk/blog/2022/12/detect-overflowing-elements/
-	
-	
-	// Z. TODO Opquast	
-	/*
-	Règle n°13 : La page des résultats de recherche indique le nombre de résultats, le nombre de pages de résultats, et le nombre de résultats par page.
-	Règle n°97 : Le titre de chaque page permet d'identifier le site.
-	*/
 
 /*- -------------------------------------------------------------------------------- */
 /* 🗸 NIA-06 Structure de l'information - Thématique RGAA 9 
@@ -1730,7 +1733,7 @@ if(debug_flag) console.log("09 Navigation");
 	}
 
 	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
-	const nia09f_nodes = document.querySelectorAll('a:not(.feed-item-timing), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
+	const nia09f_nodes = document.querySelectorAll('a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
 	let nia09f_flag = false;
 	let nia09f_rect, nia09f_rect_parent;
 	let nia09f_horizontal = 0, nia09f_vertical = 0;
@@ -2047,16 +2050,28 @@ if(debug_flag) console.log("14 Couleur");
 
 if(debug_flag) console.log("15 Sécurité");
 
+	// A. Les liens externes qui ouvrent une nouvelle fenêtre ne partagent pas d'information de contexte.
+	const nia15a_nodes = document.querySelectorAll('a[target="_blank"]:not([rel="noreferrer"]),a[target="_blank"]:not([rel="noopener"])');
+	if(nia15a_nodes && nia15a_nodes.length > 0 && isItemsVisible(nia15a_nodes)){
+	  result_dev += "<li><a href='#' data-destination='nia15a' class='result-focus'>15-A</a> : Doter chaque lien ayant un attribut target='_blank' d'un attribut rel='noreferrer noopener'. [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-liens-externes-qui-ouvrent-une-nouvelle-fenetre-ne-partagent-pas-dinformation-de-contexte' target='_blank'>Opquast 25</a>]</li>";
+	  setItemsOutline(nia15a_nodes,"yellow","nia15a");
+	}
+
+	// B. Règle n°195 : Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP.
+	const nia15b_nodes = document.querySelectorAll('a[target="_blank"][href^="http://"]');
+	if(nia15b_nodes && nia15b_nodes.length > 0 && isItemsVisible(nia15b_nodes)){
+	  result_nth += "<li><a href='#' data-destination='nia15b' class='result-focus'>15-B</a> : Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-pages-utilisant-le-protocole-https-ne-proposent-pas-de-ressources-http' target='_blank'>Opquast 195</a>]</li>";
+	  setItemsOutline(nia15b_nodes,"yellow","nia15b");
+	}
+
 /*
 Règle n°24 : Les en-têtes envoyés par le serveur spécifient la politique de communication des referrers.
-Règle n°25 : Les liens externes qui ouvrent une nouvelle fenêtre ne partagent pas d'information de contexte.
 Règle n°185 : Une famille générique de police est indiquée comme dernier élément de substitution.
 Règle n°188 : Le site ne bloque pas les fonctionnalités de zoom du navigateur.
 Règle n°190 : Le site propose des styles dédiés à l'impression.
 Règle n°191 : Le contenu de chaque page est disponible à l'impression sans blocs de navigation.
 Règle n°192 : Toutes les pages utilisent le protocole HTTPS.
 Règle n°194 : Les pages utilisant HTTPS ont un en-tête de transport strict.
-Règle n°195 : Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP.
 Règle n°201 : Les en-têtes envoyés par le serveur désactivent la détection automatique du type MIME de chaque ressource.
 Règle n°202 : Le serveur indique le type MIME de chaque ressource.
 Règle n°206 : Le serveur envoie les informations indiquant les domaines autorisés à intégrer ses pages dans des cadres.
