@@ -33,7 +33,7 @@ let isHomepage = false;
 if(homepage) {isHomepage = true;}
 
 
-if(!currentUrl.includes(".public.lu") && !currentUrl.includes(".gouvernement.lu") && !currentUrl.includes(".etat.lu")){
+if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu")){
   alert("Ce Bookmarklet est à utiliser seulement sur les sites étatiques luxembourgeois");
 }
 // Init result message
@@ -117,7 +117,7 @@ if(debug_flag) console.log("01 AEM Component");
 	// F. Menu
 	
 	/* F1. Check si le menu existe */
-	const nia01f_menu = document.querySelector('nav.topnav > .page-headernav > .navigation-container > ul.nav ,nav.page-headernav > .navigation-container > ul.nav');
+	const nia01f_menu = document.querySelector('nav.topnav > .page-headernav .navigation-container > ul.nav ,nav.page-headernav .navigation-container > ul.nav');
 	let nia01f_hasPasserelle = false; 
 	let nia01f_isModal = false; 
 	if(nia01f_menu){
@@ -160,22 +160,22 @@ if(debug_flag) console.log("01 AEM Component");
 							if(!nia01f11_nodes || nia01f11_nodes.length != 1){
 								console.log("F2.1 Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f21' class='result-focus'>01-F</a> Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f21"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f21"); nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
 								console.log("F2.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f22' class='result-focus'>01-F</a> : Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f22"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f22"); nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
 								console.log("F2.3 Un problème a été detecté pour l'élement n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f23' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f23"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f23"); nia01f10_flag = true;
 							}
 							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expended")){
 								console.log("F2.4 Un problème a été detecté pour l'élement n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f24' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f24"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f24"); nia01f10_flag = true;
 							}
 							else{
 								console.log("L'item de menu "+i+" avec page passerelles et sous-menu est OK")
@@ -188,22 +188,22 @@ if(debug_flag) console.log("01 AEM Component");
 							if(nia01f11_nodes && nia01f11_nodes.length > 0){
 								console.log("F3.1 Un problème a été detecté pour l'élement n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f31' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f31"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f31"); nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
 								console.log("F3.2 Un problème a été detecté pour l'élement n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f32' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f32"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f32"); nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
 								console.log("F3.3 Un problème a été detecté pour l'élement n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f33' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f33"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f33"); nia01f10_flag = true;
 							}
 							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expended")){
 								console.log("F3.4 Un problème a été detecté pour l'élement n°"+i);
 								result_dev += "<li><a href='#' data-destination='nia01f34' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-								setItemOutline(nia01f10_nodes[i],"red","nia01f34"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f34"); nia01f10_flag = true;
 							}
 							else{
 								console.log("L'item de menu "+i+" sans page passerelles et sous-menu est OK")
@@ -215,22 +215,22 @@ if(debug_flag) console.log("01 AEM Component");
 						if(!nia01f11_nodes || nia01f11_nodes.length != 1){
 							console.log("F4.1 Un problème a été detecté pour l'élement n°"+i);
 							result_dev += "<li><a href='#' data-destination='nia01f41' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-							setItemOutline(nia01f10_nodes[i],"red","nia01f41"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f41"); nia01f10_flag = true;
 						}
 						else if(nia01f12_nodes && nia01f12_nodes.length > 0){
 							console.log("F4.2 Un problème a été detecté pour l'élement n°"+i);
 							result_dev += "<li><a href='#' data-destination='nia01f42' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-							setItemOutline(nia01f10_nodes[i],"red","nia01f42"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f42"); nia01f10_flag = true;
 						}
 						else if(nia01f13_nodes && nia01f13_nodes.length > 0){
 							console.log("F4.3 Un problème a été detecté pour l'élement n°"+i);
 							result_dev += "<li><a href='#' data-destination='nia01f43' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-							setItemOutline(nia01f10_nodes[i],"red","nia01f43"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f43"); nia01f10_flag = true;
 						}
 						else if(nia01f11_nodes && (nia01f11_nodes[0].hasAttribute("aria-expended") || nia01f11_nodes[0].hasAttribute("aria-haspopup"))){
 							console.log("F4.4 Un problème a été detecté pour l'élement n°"+i);
 							result_dev += "<li><a href='#' data-destination='nia01f44' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
-							setItemOutline(nia01f10_nodes[i],"red","nia01f44"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f44"); nia01f10_flag = true;
 						}
 						else{
 							console.log("L'item de menu "+i+" sans sous-menu est OK")
@@ -253,7 +253,7 @@ if(debug_flag) console.log("01 AEM Component");
 		
 			// Check si le menu mobile s'ouvre en disclosure ou en modale
 			const nia01f20_btn = document.querySelector('.topnav > button.anchor.anchor-scroll, .page-headernav > button.anchor.anchor-scroll, .page-headernavmobile > button.anchor.anchor-scroll');
-			if(nia01f20_btn){
+			if(nia01f20_btn && isItemVisible(nia01f20_btn)){
 				const nia01f20_btnText = nia01f20_btn.innerText;
 				const nia01f20_btnDest = nia01f20_btn.getAttribute("data-destination");
 				const nia01f30_Dest = document.querySelector(nia01f20_btnDest);
@@ -292,22 +292,30 @@ if(debug_flag) console.log("01 AEM Component");
 				// On click sur le bouton pour ouvrir le menu
 				nia01f20_btn.click();
 				
-				if(nia01f20_btn.innerText != nia01f20_btnText){
+				const lang = nia01f20_btn.closest('[lang]').getAttribute('lang');
+				
+				if(sanitizeText(nia01f20_btn.innerText) != sanitizeText(nia01f20_btnText)){
 					console.log("F6.1 Attention le texte du bouton d'ouverture du menu à changé cela ne devrai pas être le cas");
+					console.log(nia01f20_btn.innerText);
+					console.log(nia01f20_btnText);
 					result_dev += "<li><a href='#' data-destination='nia01f61' class='result-focus'>01-F</a> : Attention le texte du bouton d'ouverture du menu change à l'ouverture du menu cela ne devrai pas être le cas</li>";
 					setItemOutline(nia01f20_btn,"red","nia01f61");
 				}
 				
 				if(nia01f_isModal){
 					// une fois ouvert, #headernav-mobile possède un attribut aria-hidden="false" aria-modal="true" role="dialog" aria-label="Menu principal"
-					if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") != false){
+					if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") != "false"){
 						console.log("F6.2 Erreur dans la valeur de l'attribut aria-hidden du menu modal ouvert");
+						console.log(nia01f30_Dest.getAttribute("aria-hidden"));
+						console.log(nia01f30_Dest.getAttribute("aria-hidden") != "false");
 						result_dev += "<li><a href='#' data-destination='nia01f62' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut aria-hidden du menu modal ouvert</li>";
 						setItemOutline(nia01f30_Dest,"red","nia01f62");
 					}
 					
-					if(!nia01f30_Dest.hasAttribute("aria-modal") || nia01f30_Dest.getAttribute("aria-modal") != true){
+					if(!nia01f30_Dest.hasAttribute("aria-modal") || nia01f30_Dest.getAttribute("aria-modal") != "true"){
 						console.log("F6.3 Erreur dans la valeur de l'attribut aria-modal du menu modal ouvert");
+						console.log(!nia01f30_Dest.hasAttribute("aria-modal"));
+						console.log(nia01f30_Dest.getAttribute("aria-modal") != "true");
 						result_dev += "<li><a href='#' data-destination='nia01f63' class='result-focus'>01-F</a> : Erreur dans la valeur de l'attribut aria-modal du menu modal ouvert</li>";
 						setItemOutline(nia01f30_Dest,"red","nia01f63");
 					}
@@ -2051,7 +2059,7 @@ if(debug_flag) console.log("14 Couleur");
 if(debug_flag) console.log("15 Sécurité");
 
 	// A. Les liens externes qui ouvrent une nouvelle fenêtre ne partagent pas d'information de contexte.
-	const nia15a_nodes = document.querySelectorAll('a[target="_blank"]:not([rel="noreferrer"]),a[target="_blank"]:not([rel="noopener"])');
+	const nia15a_nodes = document.querySelectorAll('a[target="_blank"]:not([rel="noreferrer"]):not([rel="noopener"])');
 	if(nia15a_nodes && nia15a_nodes.length > 0 && isItemsVisible(nia15a_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia15a' class='result-focus'>15-A</a> : Doter chaque lien ayant un attribut target='_blank' d'un attribut rel='noreferrer noopener'. [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-liens-externes-qui-ouvrent-une-nouvelle-fenetre-ne-partagent-pas-dinformation-de-contexte' target='_blank'>Opquast 25</a>]</li>";
 	  setItemsOutline(nia15a_nodes,"yellow","nia15a");
