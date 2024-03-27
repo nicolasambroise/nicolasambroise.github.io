@@ -151,34 +151,34 @@ if(debug_flag) console.log("01 AEM Component");
 					let nia01f11_nodes = nia01f10_nodes[i].querySelectorAll(':scope > a');
 					let nia01f12_nodes = nia01f10_nodes[i].querySelectorAll(':scope > button');
 					let nia01f13_nodes = nia01f10_nodes[i].querySelectorAll(':scope > ul');
-					
+					let iplusun = i+1; 
 					if(nia01f10_nodes[i].classList.contains("has-subnav")){
 						
 						/* F2. Avec accès aux pages passerelles depuis la navigation: 
 						Sur l'item de rubrique vérifier existance de (li.has-subnav > a) et de (li.has-subnav > button) + le button doit avoir l'attribut aria-expanded */
 						if(nia01f_hasPasserelle){
 							if(!nia01f11_nodes || nia01f11_nodes.length != 1){
-								console.log("F2.1 Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f21' class='result-focus'>01-F</a> Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+i+"</li>";
+								console.log("F2.1 Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+iplusun);
+								result_dev += "<li><a href='#' data-destination='nia01f21' class='result-focus'>01-F</a> Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+iplusun+"</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f21"); nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
-								console.log("F2.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f22' class='result-focus'>01-F</a> : Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+i+"</li>";
+								console.log("F2.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+iplusun);
+								result_dev += "<li><a href='#' data-destination='nia01f22' class='result-focus'>01-F</a> : Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+iplusun+"</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f22"); nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
-								console.log("F2.3 Un problème a été detecté pour l'élement n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f23' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								console.log("F2.3 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de sous-menu alors que la classe has-subnav est présente)");
+								result_dev += "<li><a href='#' data-destination='nia01f23' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de sous-menu alors que la classe has-subnav est présente)</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f23"); nia01f10_flag = true;
 							}
-							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expended")){
-								console.log("F2.4 Un problème a été detecté pour l'élement n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f24' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expanded")){
+								console.log("F2.4 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de l'attribut aria-expanded)");
+								result_dev += "<li><a href='#' data-destination='nia01f24' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de l'attribut aria-expanded)</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f24"); nia01f10_flag = true;
 							}
 							else{
-								console.log("L'item de menu "+i+" avec page passerelles et sous-menu est OK")
+								console.log("L'item de menu "+iplusun+" avec page passerelles et sous-menu est OK")
 							}
 						}
 
@@ -186,54 +186,54 @@ if(debug_flag) console.log("01 AEM Component");
 						Sur l'item de rubrique vérifier existance de (li.has-subnav > button) + cette item doit avoir l'attribut aria-expanded */
 						else{
 							if(nia01f11_nodes && nia01f11_nodes.length > 0){
-								console.log("F3.1 Un problème a été detecté pour l'élement n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f31' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								console.log("F3.1 Un problème a été detecté pour l'élement n°"+iplusun);
+								result_dev += "<li><a href='#' data-destination='nia01f31' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f31"); nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
-								console.log("F3.2 Un problème a été detecté pour l'élement n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f32' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								console.log("F3.2 Un problème a été detecté pour l'élement n°"+iplusun);
+								result_dev += "<li><a href='#' data-destination='nia01f32' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f32"); nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
-								console.log("F3.3 Un problème a été detecté pour l'élement n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f33' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								console.log("F3.3 Un problème a été detecté pour l'élement n°"+iplusun);
+								result_dev += "<li><a href='#' data-destination='nia01f33' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f33"); nia01f10_flag = true;
 							}
 							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expended")){
-								console.log("F3.4 Un problème a été detecté pour l'élement n°"+i);
-								result_dev += "<li><a href='#' data-destination='nia01f34' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+								console.log("F3.4 Un problème a été detecté pour l'élement n°"+iplusun);
+								result_dev += "<li><a href='#' data-destination='nia01f34' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f34"); nia01f10_flag = true;
 							}
 							else{
-								console.log("L'item de menu "+i+" sans page passerelles et sous-menu est OK")
+								console.log("L'item de menu "+iplusun+" sans page passerelles et sous-menu est OK")
 							}
 						}
 					}
 					else {
 						/* F4 Vérifier que les élements (li:not(.has-subnav) > a) n'ont pas d'attribut aria-expended ni aria-haspopup ni est suivi d'un élément ul */
 						if(!nia01f11_nodes || nia01f11_nodes.length != 1){
-							console.log("F4.1 Un problème a été detecté pour l'élement n°"+i);
-							result_dev += "<li><a href='#' data-destination='nia01f41' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							console.log("F4.1 Un problème a été detecté pour l'élement n°"+iplusun);
+							result_dev += "<li><a href='#' data-destination='nia01f41' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f41"); nia01f10_flag = true;
 						}
 						else if(nia01f12_nodes && nia01f12_nodes.length > 0){
-							console.log("F4.2 Un problème a été detecté pour l'élement n°"+i);
-							result_dev += "<li><a href='#' data-destination='nia01f42' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							console.log("F4.2 Un problème a été detecté pour l'élement n°"+iplusun);
+							result_dev += "<li><a href='#' data-destination='nia01f42' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f42"); nia01f10_flag = true;
 						}
 						else if(nia01f13_nodes && nia01f13_nodes.length > 0){
-							console.log("F4.3 Un problème a été detecté pour l'élement n°"+i);
-							result_dev += "<li><a href='#' data-destination='nia01f43' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							console.log("F4.3 Un problème a été detecté pour l'élement n°"+iplusun);
+							result_dev += "<li><a href='#' data-destination='nia01f43' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f43"); nia01f10_flag = true;
 						}
 						else if(nia01f11_nodes && (nia01f11_nodes[0].hasAttribute("aria-expended") || nia01f11_nodes[0].hasAttribute("aria-haspopup"))){
-							console.log("F4.4 Un problème a été detecté pour l'élement n°"+i);
-							result_dev += "<li><a href='#' data-destination='nia01f44' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+i+"</li>";
+							console.log("F4.4 Un problème a été detecté pour l'élement n°"+iplusun);
+							result_dev += "<li><a href='#' data-destination='nia01f44' class='result-focus'>01-F</a> : Un problème a été detecté pour l'élement n°"+iplusun+"</li>";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f44"); nia01f10_flag = true;
 						}
 						else{
-							console.log("L'item de menu "+i+" sans sous-menu est OK")
+							console.log("L'item de menu "+iplusun+" sans sous-menu est OK")
 						}
 					}
 				}
@@ -358,11 +358,9 @@ if(debug_flag) console.log("01 AEM Component");
 						setItemOutline(nia01f30_Dest,"red","nia01f69");
 					}
 				}
+				
+				nia01f20_btn.click();
 			}
-			else {
-				result_man += "<li>01-F : Absence de menu mobile</li>";
-			}
-
 		//window.resizeTo(currentWidth, currentHeight);
 	}
 	else {
@@ -646,7 +644,7 @@ if(debug_flag) console.log("02 Images");
 		}
 	}
 	if(nia02j_flag == true) {
-	  result_nth += "<li><a href='#' data-destination='nia02j' class='result-focus'>02-J</a> : Présence d'image redimentionnées côté Client [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-vignettes-et-apercus-ne-sont-pas-des-images-de-taille-superieure-redimensionnees-cote-client' target='_blank'> Opquast 114</a>]</li>";
+	  result_nth += "<li><a href='#' data-destination='nia02j' class='result-focus'>02-J</a> : Présence d'image redimentionnées côté Client [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-vignettes-et-apercus-ne-sont-pas-des-images-de-taille-superieure-redimensionnees-cote-client' target='_blank'>Opquast 114</a>]</li>";
 	}
 	
 	
@@ -1223,6 +1221,7 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	let nia05f_flag = false;
 	let nia05f_ids = {};
 	let nia05f_currentId;
+	let nia05f_duplicateId = "";
 	if(nia05f_nodes && nia05f_nodes.length > 0){
 		for(let i = 0; i < nia05f_nodes.length; i++){
 			nia05f_currentId = nia05f_nodes[i].id ? nia05f_nodes[i].id : "undefined";
@@ -1232,13 +1231,14 @@ if(debug_flag) console.log("05 Element Obligatoire");
 			else{
 				nia05f_flag = true;
 				setItemOutline(nia05f_nodes[i],"red","nia05f");
+				nia05f_duplicateId += "\""+nia05f_currentId+"\",";
 			}
 			nia05f_ids[nia05f_currentId]++;
 		}
 	}
 	if(nia05f_flag == true){
-	  console.log(nia05f_ids);
-	  result_dev += "<li><a href='#' data-destination='nia05f' class='result-focus'>05-F</a> : Présence d'Id dupliqué [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-2-1' target='_blank'>RGAA 8.2.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-identifiant-html-nest-utilise-quune-seule-fois-par-page' target='_blank'>Opquast 229</a>]</li>";
+	  //console.log(nia05f_ids);
+	  result_dev += "<li><a href='#' data-destination='nia05f' class='result-focus'>05-F</a> : Présence d'Id dupliqué ("+nia05f_duplicateId+") [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-8-2-1' target='_blank'>RGAA 8.2.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-identifiant-html-nest-utilise-quune-seule-fois-par-page' target='_blank'>Opquast 229</a>]</li>";
 	}
 	
 	// G. Présence de la Govbar
@@ -1548,7 +1548,7 @@ if(debug_flag) console.log("07 Titre");
 				else {nia07e_current_level = 2;}
 				if(nia07e_current_level - nia07e_previous_level > 1){
 					setItemOutline(nia07e_nodes[i],"yellow","nia07e");
-					if(debug_flag) console.log(nia07e_nodes[i].innerText+" | current : "+nia07e_current_level+" | previous :"+nia07e_previous_level);
+					if(debug_flag) console.log("  > "+nia07e_nodes[i].innerText+" | current : "+nia07e_current_level+" | previous :"+nia07e_previous_level);
 					nia07e_flag = true;
 				}
 				nia07e_previous_level = nia07e_current_level;
@@ -1755,21 +1755,27 @@ if(debug_flag) console.log("09 Navigation");
 
 				if(nia09f_rect["width"] != 0 && nia09f_rect["height"] !=0){
 					if(nia09f_horizontal < 24 || nia09f_vertical < 24){
-						if(nia09f_nodes[i].parentElement.tagName == "LI"){
+						
+						if(nia09f_nodes[i].parentElement.tagName == "LI" || nia09f_nodes[i].parentElement.childElementCount == 1){
 							nia09f_rect_parent = nia09f_nodes[i].parentElement.getBoundingClientRect();
 							nia09f_horizontal_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginRight']);
-							nia09f_horizontal_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginBottom']);
+							nia09f_vertical_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginBottom']);
 							if(nia09f_horizontal_parent < 24 || nia09f_vertical_parent < 24){
 						
 								if(debug_flag) console.log(nia09f_rect);
+								if(debug_flag) console.log("09f1 : "+nia09f_horizontal+" "+nia09f_vertical);
+								if(debug_flag) console.log("09f2 : "+nia09f_horizontal_parent+" "+nia09f_vertical_parent);
+								
 								nia09f_flag = true;
 								setItemOutline(nia09f_nodes[i],"yellow","nia09f");
+								setItemOutline(nia09f_nodes[i].parentElement,"yellow","nia09f");
 							}
 						}
 						else if(nia09f_nodes[i].parentElement.tagName != "P" && nia09f_nodes[i].parentElement.tagName != "SPAN" && nia09f_nodes[i].parentElement.tagName != "SMALL"){
 							if(debug_flag) console.log(nia09f_rect);
 							nia09f_flag = true;
 							setItemOutline(nia09f_nodes[i],"yellow","nia09f");
+							setItemOutline(nia09f_nodes[i].parentElement,"yellow","nia09f");
 						}
 					}
 				}
@@ -1888,7 +1894,7 @@ if(debug_flag) console.log("10 Old tag");
 	}
 	
 	// D. Presentation attribut
-	const nia10d_nodes = document.querySelectorAll('[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [color], [compact], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), *:not(symbol) > *:not(g) > [width]:not(img):not(object):not(embed):not(canvas):not(svg),*:not(symbol) > *:not(g) > [height]:not(img):not(object):not(embed):not(canvas):not(svg)'); 
+	const nia10d_nodes = document.querySelectorAll('[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [color], [compact], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), *:not(symbol) > *:not(g) > [width]:not(img):not(object):not(embed):not(canvas):not(svg):not(rect),*:not(symbol) > *:not(g) > [height]:not(img):not(object):not(embed):not(canvas):not(svg):not(rect)'); 
 	if(nia10d_nodes && nia10d_nodes.length > 0 && isItemsVisible(nia10d_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia10d' class='result-focus'>10-D</a> : Présence d'attributs HTML servant à la présentation de l'information [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-10-1-2' target='_blank'>RGAA 10.1.2</a>]</li>";
 	  setItemsOutline(nia10d_nodes,"red","nia10d");
@@ -1921,7 +1927,7 @@ if(debug_flag) console.log("11 Langue");
 		}
 	}
 	if(nia11b_flag == true) {
-	  result_nth += "<li><a href='#' data-destination='nia11b' class='result-focus'>11-B</a> : Présence de Lorem ipsum sur la page</li>";
+	  result_nth += "<li><a href='#' data-destination='nia11b' class='result-focus'>11-B</a> : Présence de \"Lorem ipsum\" sur la page</li>";
 	}
 	
 /*- -------------------------------------------------------------------------------- */
@@ -2059,7 +2065,7 @@ if(debug_flag) console.log("14 Couleur");
 if(debug_flag) console.log("15 Sécurité");
 
 	// A. Les liens externes qui ouvrent une nouvelle fenêtre ne partagent pas d'information de contexte.
-	const nia15a_nodes = document.querySelectorAll('a[target="_blank"]:not([rel="noreferrer"]):not([rel="noopener"])');
+	const nia15a_nodes = document.querySelectorAll('a[target="_blank"]:not([rel="noreferrer"]):not([rel="noopener"]):not([rel="noreferrer noopener"])');
 	if(nia15a_nodes && nia15a_nodes.length > 0 && isItemsVisible(nia15a_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia15a' class='result-focus'>15-A</a> : Doter chaque lien ayant un attribut target='_blank' d'un attribut rel='noreferrer noopener'. [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-liens-externes-qui-ouvrent-une-nouvelle-fenetre-ne-partagent-pas-dinformation-de-contexte' target='_blank'>Opquast 25</a>]</li>";
 	  setItemsOutline(nia15a_nodes,"yellow","nia15a");
@@ -2068,7 +2074,7 @@ if(debug_flag) console.log("15 Sécurité");
 	// B. Règle n°195 : Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP.
 	const nia15b_nodes = document.querySelectorAll('a[target="_blank"][href^="http://"]');
 	if(nia15b_nodes && nia15b_nodes.length > 0 && isItemsVisible(nia15b_nodes)){
-	  result_nth += "<li><a href='#' data-destination='nia15b' class='result-focus'>15-B</a> : Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-pages-utilisant-le-protocole-https-ne-proposent-pas-de-ressources-http' target='_blank'>Opquast 195</a>]</li>";
+	  result_nth += "<li><a href='#' data-destination='nia15b' class='result-focus'>15-B</a> : Les pages utilisant le protocole HTTPS ne doivent pas proposer de ressources HTTP [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-pages-utilisant-le-protocole-https-ne-proposent-pas-de-ressources-http' target='_blank'>Opquast 195</a>]</li>";
 	  setItemsOutline(nia15b_nodes,"yellow","nia15b");
 	}
 
@@ -2130,7 +2136,7 @@ function isItemsVisible(items){
 	return false
 }
 
-function isItemVisible(item){
+function isItemVisible_old(item){
 	const lang = item.closest('[lang]').getAttribute('lang');
 	// textContent : recup les elements cachés et les <script><style>
 	// innerText : ne recupère pas les élements cachés
@@ -2138,6 +2144,19 @@ function isItemVisible(item){
 	const style = window.getComputedStyle(item);
 	if(style.width !== "0" && style.height !== "0" && style.opacity !== "0" && style.display!=='none' && style.visibility!== 'hidden' && (item.offsetParent || item.offsetWidth || item.offsetHeight)) return true;
 	return false
+}
+
+function isItemVisible(item) {
+    // Start with the element itself and move up the DOM tree
+    for (let el = item; el && el !== document; el = el.parentNode) {
+        let style = window.getComputedStyle(el);
+        if(style.display === "none"){return false;}
+        if(style.visibility === "hidden"){return false;}
+		if(style.opacity  === "0"){return false;}
+		if(style.width === "0" && style.height === "0"){return false;}
+		if(item.offsetWidth === "0" && item.offsetHeight === "0"){return false;}
+    }
+    return true;
 }
 
 function isItemSROnly(item){
@@ -2209,7 +2228,7 @@ async function valid(url = checkerUrl) {
 
 valid()
   .then(data => {
-    console.log(data);
+    //console.log(data);
 	
 	// Filter data result
 	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute"].join("|");
@@ -2226,7 +2245,7 @@ valid()
 	  })
 	  console.groupEnd();
 	  if(msg_html5  != ""){
-		console.log("ok" + msg_html5)
+		//console.log("ok" + msg_html5)
 		let elem = document.getElementById("result_html5");
 		elem.innerHTML += "<ul>"+msg_html5+"</ul>";
 	  }
