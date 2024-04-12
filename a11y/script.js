@@ -3,6 +3,7 @@
 
 // Variables config globale
 const debug_flag = true; // true -> affiche les logs
+const wave_allow_credit = false; // autorise les credits wave
 
 // Add JS & CSS files for custom dialog modal
 // - double sécurité pour que ce sript puisse également être appelé par l'extention chrome
@@ -30,12 +31,18 @@ const currentUrl = window.location.href;
 if(debug_flag) console.log(currentUrl);
 const homepage = document.querySelector('h1.logo.logo--homepage');
 let isHomepage = false;
+let isPreview = false;
 if(homepage) {isHomepage = true;}
-
+if((currentUrl.includes("preview-") || currentUrl.includes("wcm")) && currentUrl.includes(".etat.lu")){isPreview = true;}
 
 if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu")){
   alert("Ce Bookmarklet est à utiliser seulement sur les sites étatiques luxembourgeois");
 }
+
+// Current Size
+const currentWidth = window.innerWidth;
+const currentHeight = window.innerHeight;
+
 // Init result message
 let result_crit = "";
 let result_nc = "";
@@ -245,8 +252,6 @@ if(debug_flag) console.log("01 AEM Component");
 		
 		// On resize pour voir le menu (Attention certain attributs sont ajouté en JS)
 		/*
-		const currentWidth = window.innerWidth;
-		const currentHeight = window.innerHeight;
 		window.resizeTo(320, 500);
 		document.body.style.zoom = "400%";
 		*/
@@ -1692,8 +1697,8 @@ if(debug_flag) console.log("09 Navigation");
 
 	// D. 2 systemes de navigation (plan du site, recherche, menu)
 	const nia09d_nav = document.querySelector('nav #headernav, nav#headernav');
-	const nia09d_search = document.querySelector('div.topsearch[role="search"]');
-	const nia09d_plan = document.querySelector('.page-footernav a[href*="plan"][href$=".html"]');
+	const nia09d_search = document.querySelector('div.topsearch[role="search"],div.topsearch-desk[role="search"]');
+	const nia09d_plan = document.querySelector('.page-footernav ul.nav--support > li.nav-item > a[href*="plan"][href$=".html"]');
 	const nia09d_nav_btn = document.querySelector('[class^=page-headernav] button.anchor');
 	const nia09d_search_btn = document.querySelector('div.topsearch[role="search"] button.anchor');
 	const nia09d_footer_links = document.querySelectorAll('footer .nav-item > a:not([target="_blank"])');
@@ -1771,7 +1776,7 @@ if(debug_flag) console.log("09 Navigation");
 								setItemOutline(nia09f_nodes[i].parentElement,"yellow","nia09f");
 							}
 						}
-						else if(nia09f_nodes[i].parentElement.tagName != "P" && nia09f_nodes[i].parentElement.tagName != "SPAN" && nia09f_nodes[i].parentElement.tagName != "SMALL"){
+						else if(nia09f_nodes[i].parentElement.tagName != "P" && nia09f_nodes[i].parentElement.tagName != "SPAN" && nia09f_nodes[i].parentElement.tagName != "SMALL" && nia09f_nodes[i].parentElement.tagName != "DD" && nia09f_nodes[i].parentElement.tagName != "STRONG"){
 							if(debug_flag) console.log(nia09f_rect);
 							nia09f_flag = true;
 							setItemOutline(nia09f_nodes[i],"yellow","nia09f");
@@ -2057,6 +2062,62 @@ if(debug_flag) console.log("14 Couleur");
 	// --> test 10.5.1 color / bg/ degradé
 	// --> test 10.6.1 lien visible par rapport au texte environnemt
 	// --> test 10.7.1 prise de focus visible
+	// --> Contenu avec un linear-gradiant sans couleur de backup
+	
+
+	const nia14a_nodes = document.querySelectorAll('p, span, li, strong, h1, h2, h3, h4, h5, small, a, button, blockquote, q');
+	let nia14a_flag = false;
+	let color1,color2,color1rbg, color2rbg,color1luminance, color2luminance, nia14a_ratio, nia14a_bold, nia14a_large, nia14a_isbold;
+	if(nia14a_nodes && nia14a_nodes.length > 0){
+		for(let i = 0; i < nia14a_nodes.length; i++){
+			if(isItemVisible(nia14a_nodes[i]) && !isItemSROnly(nia14a_nodes[i]) && isItemHasVisibleContent(nia14a_nodes[i])){
+				color1 = window.getComputedStyle(nia14a_nodes[i],null).getPropertyValue('color');  // Text Color
+				color2 = getInheritedBackgroundColor(nia14a_nodes[i]) // Bg Color
+				if(color1.indexOf("#") >= 0){ color1rgb = hexToRgbArray(color1);} else {color1rgb = rgbToRgbArray(color1);}
+				if(color2.indexOf("#") >= 0){ color2rgb = hexToRgbArray(color2);} else {color2rgb = rgbToRgbArray(color2);}
+				color1luminance = luminance(color1rgb.r, color1rgb.g, color1rgb.b);
+				color2luminance = luminance(color2rgb.r, color2rgb.g, color2rgb.b);
+				nia14a_ratio = color1luminance > color2luminance ? ((color2luminance + 0.05) / (color1luminance + 0.05)) : ((color1luminance + 0.05) / (color2luminance + 0.05));
+				nia14a_ratio_inv = 1/nia14a_ratio;
+				//console.log(color1+" vs "+color2+" = "+ nia14a_ratio_inv)
+				
+				nia14a_large = parseFloat(window.getComputedStyle(nia14a_nodes[i],null).getPropertyValue('font-size'));
+				nia14a_bold = window.getComputedStyle(nia14a_nodes[i],null).getPropertyValue('font-weight');
+				nia14a_isbold = false;
+				if(nia14a_bold == "bold" || nia14a_bold == "bolder" || nia14a_bold >= 500) {nia14a_isbold = true;}
+				//console.log("font-size : "+nia14a_large+" / font-weight "+nia14a_bold)
+				
+				if(nia14a_isbold == false && nia14a_large < 24 && nia14a_ratio_inv < 4.5){
+					if(debug_flag) console.log("14A - FAIL 3.2.1 Standard ratio : "+nia14a_ratio_inv+" ("+color1+" vs "+color2+")");
+					setItemOutline(nia14a_nodes[i],"orange","nia14a");
+					nia14a_flag = true;
+				}
+				else if(nia14a_isbold == true && nia14a_large < 18.5 && nia14a_ratio_inv < 4.5){
+					if(debug_flag) console.log("14A - FAIL 3.2.2 Standard ratio : "+nia14a_ratio_inv+" ("+color1+" vs "+color2+")");
+					setItemOutline(nia14a_nodes[i],"orange","nia14a");
+					nia14a_flag = true;
+				}
+				else if(nia14a_isbold == false && nia14a_large >= 24 && nia14a_ratio_inv < 3){
+					if(debug_flag) console.log("14A - FAIL 3.2.3 Standard ratio : "+nia14a_ratio_inv+" ("+color1+" vs "+color2+")");
+					setItemOutline(nia14a_nodes[i],"orange","nia14a");
+					nia14a_flag = true;
+				}
+				else if(nia14a_isbold == true && nia14a_large >= 18.5 && nia14a_ratio_inv < 3){
+					if(debug_flag) console.log("14A - FAIL 3.2.4 Standard ratio : "+nia14a_ratio_inv+" ("+color1+" vs "+color2+")");
+					setItemOutline(nia14a_nodes[i],"orange","nia14a");
+					nia14a_flag = true;
+				}
+				
+				else if(nia14a_nodes[i].tagName == "A" || nia14a_nodes[i].tagName == "BUTTON"){
+					// On check au focus
+					
+				}
+			}
+		}
+	}
+	if(nia14a_flag == true) {
+	  result_dev += "<li><a href='#' data-destination='nia14a' class='result-focus'>14-A</a> : Présence d'élément insuffisament contrasté</li>";
+	}
 	
 
 /*- -------------------------------------------------------------------------------- */
@@ -2071,31 +2132,28 @@ if(debug_flag) console.log("15 Sécurité");
 	  setItemsOutline(nia15a_nodes,"yellow","nia15a");
 	}
 
-	// B. Règle n°195 : Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP.
+	// B. Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP.
 	const nia15b_nodes = document.querySelectorAll('a[target="_blank"][href^="http://"]');
 	if(nia15b_nodes && nia15b_nodes.length > 0 && isItemsVisible(nia15b_nodes)){
 	  result_nth += "<li><a href='#' data-destination='nia15b' class='result-focus'>15-B</a> : Les pages utilisant le protocole HTTPS ne doivent pas proposer de ressources HTTP [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-pages-utilisant-le-protocole-https-ne-proposent-pas-de-ressources-http' target='_blank'>Opquast 195</a>]</li>";
 	  setItemsOutline(nia15b_nodes,"yellow","nia15b");
 	}
-
-/*
-Règle n°24 : Les en-têtes envoyés par le serveur spécifient la politique de communication des referrers.
+	
+	// C. Toutes les pages utilisent le protocole HTTPS.
+	if (window.location.protocol != "https:") {
+		result_dev += "<li>15-C : Les pages doivent utiliser le protocole HTTPS [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/toutes-les-pages-utilisent-le-protocole-https' target='_blank'>Opquast 192</a>]</li>";
+	}
+	
+	// D. Le code source de chaque page contient une métadonnée qui définit le jeu de caractères UTF-8
+	const nia15d_node = document.querySelector('meta[charset="UTF-8"]');
+	if(nia15d_node == null){
+		result_dev += "<li>15-D : Le code source de chaque page contient une métadonnée qui définit le jeu de caractères UTF-8 [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-de-chaque-page-contient-une-metadonnee-qui-definit-le-jeu-de-caracteres' target='_blank'>Opquast 225</a>, <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-codage-de-caracteres-utilise-est-utf-8' target='_blank'>226</a>]</li>";
+	}
+	
+	
+/* TODO
 Règle n°185 : Une famille générique de police est indiquée comme dernier élément de substitution.
-Règle n°188 : Le site ne bloque pas les fonctionnalités de zoom du navigateur.
-Règle n°190 : Le site propose des styles dédiés à l'impression.
-Règle n°191 : Le contenu de chaque page est disponible à l'impression sans blocs de navigation.
-Règle n°192 : Toutes les pages utilisent le protocole HTTPS.
-Règle n°194 : Les pages utilisant HTTPS ont un en-tête de transport strict.
-Règle n°201 : Les en-têtes envoyés par le serveur désactivent la détection automatique du type MIME de chaque ressource.
-Règle n°202 : Le serveur indique le type MIME de chaque ressource.
-Règle n°206 : Le serveur envoie les informations indiquant les domaines autorisés à intégrer ses pages dans des cadres.
-Règle n°207 : Le site propose un mécanisme de sécurité permettant de restreindre l'origine des contenus.
 Règle n°208 : Le serveur ne communique pas d'informations sur les logiciels et langages utilisés.
-Règle n°209 : Le contrôle d'intégrité des ressources tierces est présent et valide
-Règle n°225 : Le code source de chaque page contient une métadonnée qui définit le jeu de caractères.
-Règle n°226 : Le codage de caractères utilisé est UTF-8.
-Règle n°230 : Le site ne bloque pas la copie de contenu
-Règle n°231 : Le site ne bloque pas l'accès au menu contextuel
 */
 
 /*- -------------------------------------------------------------------------------- */
@@ -2136,16 +2194,6 @@ function isItemsVisible(items){
 	return false
 }
 
-function isItemVisible_old(item){
-	const lang = item.closest('[lang]').getAttribute('lang');
-	// textContent : recup les elements cachés et les <script><style>
-	// innerText : ne recupère pas les élements cachés
-	if(item.innerText && sanitizeText(item.textContent,lang) == sanitizeText(item.innerText,lang)) return true;
-	const style = window.getComputedStyle(item);
-	if(style.width !== "0" && style.height !== "0" && style.opacity !== "0" && style.display!=='none' && style.visibility!== 'hidden' && (item.offsetParent || item.offsetWidth || item.offsetHeight)) return true;
-	return false
-}
-
 function isItemVisible(item) {
     // Start with the element itself and move up the DOM tree
     for (let el = item; el && el !== document; el = el.parentNode) {
@@ -2160,15 +2208,55 @@ function isItemVisible(item) {
 }
 
 function isItemSROnly(item){
-	const style = window.getComputedStyle(item);
-	if(style.width == "1px" && style.height == "1px" && style.clip == "rect(1px, 1px, 1px, 1px)" && style.display!=='none' && style.visibility!== 'hidden' && style.overflow == "hidden") return true;
+	let style;
+	while (item.parentElement) {
+	  style = window.getComputedStyle(item);
+	  if(style.width == "1px" && style.height == "1px" && style.clip == "rect(1px, 1px, 1px, 1px)" && style.display!=='none' && style.visibility!== 'hidden' && style.overflow == "hidden") return true;
+	  item = item.parentElement;
+	}
 	return false
 }
 
 function isItemDisplayNone(item){
-	const style = window.getComputedStyle(item);
-	if(style.display =='none') return true;
+	while (item.parentElement) {
+	  if(window.getComputedStyle(item).display =='none') return true;
+	  item = item.parentElement;
+	}
 	return false
+}
+
+function isItemHasVisibleContent(item){
+	if(!item.innerText) return false;
+	const lang = item.closest('[lang]').getAttribute('lang');
+	// textContent : recup les elements cachés et les <script><style>
+	// innerText : ne recupère pas les élements cachés
+	if(item.innerText && sanitizeText(item.innerText,lang) == "") return false;
+	let style_i,style_j;
+	// A remplacer par un while
+	//console.log(item.childNodes)
+	for(let i = 0; i < item.childNodes.length; i++){
+		if(item.childNodes[i].nodeName != "#text"){
+			//console.log(item.childNodes[i])
+			style_i = window.getComputedStyle(item.childNodes[i]);
+			if(style_i.display =='none' || (style_i.width == "1px" && style_i.height == "1px" && style_i.clip == "rect(1px, 1px, 1px, 1px)" && style_i.display!=='none' && style_i.visibility!== 'hidden' && style_i.overflow == "hidden")){
+				// L'enfant n'est pas visible
+			 }
+			 else{
+				for(let j = 0; j < item.childNodes[i].childNodes.length; j++){
+					if(item.childNodes[i].childNodes[j].nodeName != "#text"){
+						style_j = window.getComputedStyle(item.childNodes[i].childNodes[j]);
+						if(style_j.display =='none' || (style_j.width == "1px" && style_j.height == "1px" && style_j.clip == "rect(1px, 1px, 1px, 1px)" && style_j.display!=='none' && style_j.visibility!== 'hidden' && style_j.overflow == "hidden")){
+							// L'enfant n'est pas visible
+						}
+						else{
+							return true
+						}
+					}
+				}
+			}
+		}
+	}
+	return true;
 }
 
 // Fonction Sanitize Text = No extra space, trimmed 
@@ -2176,13 +2264,44 @@ function sanitizeText(txt, locale) {
 	return txt.toLowerCase().toLocaleLowerCase(locale).replaceAll(/\n|\r/g, ' ').replaceAll(/[.:;,?!{}$()|'"-]/g, ' ').replaceAll(/\s+/g, ' ').trim();
 }
 
+// Fonction Calculate Contrast (https://dev.to/alvaromontoro/building-your-own-color-contrast-checker-4j7o)
+function hexToRgbArray(hex) {
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function(m, r, g, b) {return r + r + g + g + b + b;});
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {r: parseInt(result[1], 16),g: parseInt(result[2], 16),b: parseInt(result[3], 16)} : null;
+}
+
+function rgbToRgbArray(rgbStr) {
+  const [r, g, b] = rgbStr.match(/\d+/g).map(Number);
+  return { r, g, b};
+}
+
+function luminance(r, g, b) {
+    var a = [r, g, b].map(function (v) {v /= 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow( (v + 0.055) / 1.055, 2.4 );
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+}
+
+function getInheritedBackgroundColor(item) {
+  var backgroundColor = window.getComputedStyle(item).getPropertyValue('background-color');
+  if (backgroundColor != "rgba(0, 0, 0, 0)") return backgroundColor
+  if (!item.parentElement) return "rgba(0, 0, 0, 0)";
+  return getInheritedBackgroundColor(item.parentElement)
+}
 
 // Create the dialog Modal
 let NIAmodalA11Y = document.createElement('div');
 NIAmodalA11Y.setAttribute("id", "NIAmodalA11Y");
-NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel"><ul><li id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div></details></div>';
 
-/*<h2>Tests automatiques</h2><ul><li>W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li>Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul></div>';*/
+let ThirdPart = '<p id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></p>';
+if(!isPreview){
+	ThirdPart ='<ul><li id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_wave">WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_lighthouse">Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul>';
+}
+
+NIAmodalA11Y.innerHTML = '<div class="modal-header"><h1>A11Y Review</h1></div><div class="modal-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel">'+ThirdPart+'</div></details></div>';
+
 document.body.appendChild(NIAmodalA11Y);
 
 let NIAmodalA11Ybtn = document.createElement('button');
@@ -2211,8 +2330,8 @@ for(let i = 0; i < result_focus.length; i++){
 }
 
 // Fonction Validator HTML5 async 
-const checkerUrl = "https://validator.nu/?out=json"
-async function valid(url = checkerUrl) {
+const validatorUrl = "https://validator.nu/?out=json"
+async function validator(url = validatorUrl) {
   const response = await fetch(url, {
     method: 'POST',
     mode: 'cors',
@@ -2226,12 +2345,11 @@ async function valid(url = checkerUrl) {
   return response.json();
 }
 
-valid()
-  .then(data => {
+validator().then(data => {
     //console.log(data);
 	
 	// Filter data result
-	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute"].join("|");
+	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”"].join("|");
 	const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
 	let msg_html5 = "";
 	
@@ -2250,7 +2368,86 @@ valid()
 		elem.innerHTML += "<ul>"+msg_html5+"</ul>";
 	  }
 	}
-  })
+})
+  
+// Fonction LightHouse
+
+if(!isPreview){
+	const lighthouseUrl = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+	// "https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" 
+	let lighthouseOptions = "locale=fr-FR&category=accessibility&category=best-practices&category=seo";
+	
+	if(currentWidth > 500) { lighthouseOptions += "&strategy=desktop";}
+	else {lighthouseOptions += "&strategy=mobile";}
+	
+	async function lighthouse(url = lighthouseUrl) {
+	  const response = await fetch(url+'?'+lighthouseOptions+'&url='+encodeURIComponent(currentUrl), {
+		method: 'GET',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+		redirect: 'follow',
+		referrerPolicy: 'no-referrer'
+	  });
+	  return response.json();
+	}
+
+	lighthouse().then(data => {
+      console.log(data.lighthouseResult.categories);
+	  
+	  // Filter data result
+	  const lighthouse_access_score = data.lighthouseResult.categories["accessibility"].score * 100;
+	  const lighthouse_bp_score = data.lighthouseResult.categories["best-practices"].score * 100;
+	  const lighthouse_seo_score = data.lighthouseResult.categories["seo"].score * 100;
+	
+	  const lighthouse_msg = "<li>Accessibility : "+lighthouse_access_score+"/100</li><li>Best practices : "+lighthouse_bp_score+"/100</li><li>SEO : "+lighthouse_seo_score+"/100</li>";
+	  
+	  let elem = document.getElementById("result_lighthouse");
+		elem.innerHTML += "<ul>"+lighthouse_msg+"</ul>";
+	})
+	
+	if(wave_allow_credit){
+		/*target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li>*/
+		// https://wave.webaim.org/api/request?key={yourAPIkey}&url=https://google.com/ --> APIKey payante ??
+		
+		const waveUrl = "https://wave.webaim.org/api/request?&url=https://google.com/";
+		// https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)
+		let waveOptions = "key={yourAPIkey}&format=json&reporttype=1";
+		
+		async function wave(url = waveUrl) {
+		  const response = await fetch(url+'?'+lighthouseOptions+'&url='+encodeURIComponent(currentUrl), {
+			method: 'GET',
+			mode: 'cors',
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+			redirect: 'follow',
+			referrerPolicy: 'no-referrer'
+		  });
+		  return response.json();
+		}
+
+		wave().then(data => {
+		  console.log(data);
+		  
+		  // Filter data result
+		  const creditsremaining = data.statistics.creditsremaining;
+		  const wave_error = data.categories.error.count;
+		  const wave_contrast = data.categories.contrast.count;
+		  const wave_alert = data.categories.alert.count;
+		  const wave_feature = data.categories.feature.count;
+		  const wave_structure = data.categories.structure.count;
+		  const wave_aria = data.categories.aria.count;
+		
+		  const wave_msg = "<li>Error : "+wave_error+"</li><li>Contrast : "+wave_contrast+"</li><li>Alert : "+wave_alert+"</li><li>Feature : "+wave_feature+"</li><li>Structure : "+wave_structure+"</li><li>Aria : "+wave_aria+"</li>";
+		  
+		  let elem = document.getElementById("result_wave");
+			elem.innerHTML += "<ul>"+wave_msg+"</ul>";
+		})
+	}
+}
+
 
 // Fonction open modal 
 function openNIAmodalA11Y(){

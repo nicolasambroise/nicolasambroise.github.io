@@ -158,7 +158,9 @@
 	content: none;
 }
 
-#NIAmodalA11Y.modal #result_html5 li{
+#NIAmodalA11Y.modal #result_html5 li,
+#NIAmodalA11Y.modal #result_lighthouse li,
+#NIAmodalA11Y.modal #result_wave li{
   font-size: small;
   line-height: normal;
 }
