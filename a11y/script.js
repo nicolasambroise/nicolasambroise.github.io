@@ -2070,7 +2070,7 @@ if(debug_flag) console.log("14 Couleur");
 	let color1,color2,color1rbg, color2rbg,color1luminance, color2luminance, nia14a_ratio, nia14a_bold, nia14a_large, nia14a_isbold;
 	if(nia14a_nodes && nia14a_nodes.length > 0){
 		for(let i = 0; i < nia14a_nodes.length; i++){
-			if(isItemVisible(nia14a_nodes[i]) && !isItemSROnly(nia14a_nodes[i]) && isItemHasVisibleContent(nia14a_nodes[i])){
+			if(isItemVisible(nia14a_nodes[i]) && !isItemSROnly(nia14a_nodes[i]) && isItemHasVisibleContent(nia14a_nodes[i]) && isItemHasDirectContent(nia14a_nodes[i])){
 				color1 = window.getComputedStyle(nia14a_nodes[i],null).getPropertyValue('color');  // Text Color
 				color2 = getInheritedBackgroundColor(nia14a_nodes[i]) // Bg Color
 				if(color1.indexOf("#") >= 0){ color1rgb = hexToRgbArray(color1);} else {color1rgb = rgbToRgbArray(color1);}
@@ -2249,7 +2249,7 @@ function isItemHasVisibleContent(item){
 							// L'enfant n'est pas visible
 						}
 						else{
-							return true
+							return true;
 						}
 					}
 				}
@@ -2257,6 +2257,14 @@ function isItemHasVisibleContent(item){
 		}
 	}
 	return true;
+}
+
+function isItemHasDirectContent(item){
+	const lang = item.closest('[lang]').getAttribute('lang');
+	let tempElement = item.cloneNode(true);
+	tempElement.querySelectorAll("*").forEach(function(el){el.remove();});
+	if(tempElement.textContent && sanitizeText(tempElement.textContent, lang) != ""){return true;}
+	return false;
 }
 
 // Fonction Sanitize Text = No extra space, trimmed 
