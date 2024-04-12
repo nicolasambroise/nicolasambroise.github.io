@@ -609,7 +609,7 @@ if(debug_flag) console.log("02 Images");
 	}
 	
 	// J.Les vignettes et aperçus ne sont pas des images de taille supérieure redimensionnées côté client.
-	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header) > img');
+	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header):not(.ol-full-screen-false) > img');
 	let nia02j_css_h ="", nia02j_css_w ="",nia02j_html_h ="", nia02j_html_w ="",nia02j_natural_h ="", nia02j_natural_w ="";
 	let nia02j_flag = false;
 	let nia02j_ratio_max = 2;
@@ -1423,7 +1423,7 @@ if(debug_flag) console.log("06 Structure");
 	Menu contextuel ;
 	Table des matières concernant un ensemble de pages.
 	*/
-	const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs):not(.right-part) > nav:not(.page-headernav):not(.page-headernavmobile):not(.page-headernav-desk):not(.automaticnav):not(.cmp-breadcrumb):not(.page-localnav):not(.cmp-backtonav):not(.cmp-breadcrumb-demarches)');
+	const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs):not(.right-part):not(.cmp-directory) > nav:not(.page-headernav):not(.page-headernavmobile):not(.page-headernav-desk):not(.automaticnav):not(.cmp-breadcrumb):not(.page-localnav):not(.cmp-backtonav):not(.cmp-breadcrumb-demarches)');
 	if(nia06e2_nodes && nia06e2_nodes.length > 0&& isItemsVisible(nia06e2_nodes)){
 	  result_nc += "<li><a href='#' data-destination='nia06e2' class='result-focus'>06-E</a> : Présence d'une balise nav utilisé en dehors d'une zone de navigation [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>";
 	  setItemsOutline(nia06e2_nodes,"red","nia06e2");
@@ -1746,7 +1746,7 @@ if(debug_flag) console.log("09 Navigation");
 	}
 
 	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
-	const nia09f_nodes = document.querySelectorAll('a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
+	const nia09f_nodes = document.querySelectorAll('a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link):not(.geoportail-skip), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
 	let nia09f_flag = false;
 	let nia09f_rect, nia09f_rect_parent;
 	let nia09f_horizontal = 0, nia09f_vertical = 0;
@@ -2126,7 +2126,7 @@ if(debug_flag) console.log("14 Couleur");
 if(debug_flag) console.log("15 Sécurité");
 
 	// A. Les liens externes qui ouvrent une nouvelle fenêtre ne partagent pas d'information de contexte.
-	const nia15a_nodes = document.querySelectorAll('a[target="_blank"]:not([rel="noreferrer"]):not([rel="noopener"]):not([rel="noreferrer noopener"])');
+	const nia15a_nodes = document.querySelectorAll('a[target="_blank"]:not([rel~="noreferrer"]):not([rel~="noopener"])');
 	if(nia15a_nodes && nia15a_nodes.length > 0 && isItemsVisible(nia15a_nodes)){
 	  result_dev += "<li><a href='#' data-destination='nia15a' class='result-focus'>15-A</a> : Doter chaque lien ayant un attribut target='_blank' d'un attribut rel='noreferrer noopener'. [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-liens-externes-qui-ouvrent-une-nouvelle-fenetre-ne-partagent-pas-dinformation-de-contexte' target='_blank'>Opquast 25</a>]</li>";
 	  setItemsOutline(nia15a_nodes,"yellow","nia15a");
@@ -2243,7 +2243,7 @@ function isItemHasVisibleContent(item){
 			 }
 			 else{
 				for(let j = 0; j < item.childNodes[i].childNodes.length; j++){
-					if(item.childNodes[i].childNodes[j].nodeName != "#text"){
+					if(item.childNodes[i].childNodes[j] && item.childNodes[i].childNodes[j].nodeName != "#text" && item.childNodes[i].childNodes[j].nodeName != "#comment"){
 						style_j = window.getComputedStyle(item.childNodes[i].childNodes[j]);
 						if(style_j.display =='none' || (style_j.width == "1px" && style_j.height == "1px" && style_j.clip == "rect(1px, 1px, 1px, 1px)" && style_j.display!=='none' && style_j.visibility!== 'hidden' && style_j.overflow == "hidden")){
 							// L'enfant n'est pas visible
@@ -2357,7 +2357,7 @@ validator().then(data => {
     //console.log(data);
 	
 	// Filter data result
-	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”"].join("|");
+	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”","Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)","CSS: Parse Error."].join("|");
 	const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
 	let msg_html5 = "";
 	
@@ -2405,9 +2405,13 @@ if(!isPreview){
       console.log(data.lighthouseResult.categories);
 	  
 	  // Filter data result
-	  const lighthouse_access_score = data.lighthouseResult.categories["accessibility"].score * 100;
-	  const lighthouse_bp_score = data.lighthouseResult.categories["best-practices"].score * 100;
-	  const lighthouse_seo_score = data.lighthouseResult.categories["seo"].score * 100;
+	  let lighthouse_access_score = data.lighthouseResult.categories["accessibility"].score * 100;
+	  let lighthouse_bp_score = data.lighthouseResult.categories["best-practices"].score * 100;
+	  let lighthouse_seo_score = data.lighthouseResult.categories["seo"].score * 100;
+	
+	  if(lighthouse_access_score < 80) lighthouse_access_score = "<span style='color:red;'>"+lighthouse_access_score+"</span>";
+	  if(lighthouse_bp_score < 80) lighthouse_bp_score = "<span style='color:red;'>"+lighthouse_bp_score+"</span>";
+	  if(lighthouse_seo_score < 80) lighthouse_seo_score = "<span style='color:red;'>"+lighthouse_seo_score+"</span>";
 	
 	  const lighthouse_msg = "<li>Accessibility : "+lighthouse_access_score+"/100</li><li>Best practices : "+lighthouse_bp_score+"/100</li><li>SEO : "+lighthouse_seo_score+"/100</li>";
 	  
