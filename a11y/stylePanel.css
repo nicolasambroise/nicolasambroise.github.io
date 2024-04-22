@@ -1,0 +1,185 @@
+#checkA11YPanel{
+	display:none;
+}
+
+#checkA11YPanel.active{
+    position: fixed !important;
+    top: 0px !important;
+    height: 100% !important;
+    z-index: 70000 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    direction: ltr !important;
+    border-style: none !important;
+    margin: 0px !important;
+    border-right: 3px solid darkblue !important;
+}
+
+#checkA11YPanel.active > div{
+    width: 330px;
+    left: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    right: auto;
+}
+
+#checkA11YPanel.active + body{
+    position: relative;
+    margin-left: 360px !important;
+}
+
+#checkA11YPanelBtn,
+#checkA11YPanelBtn:focus,
+#checkA11YPanelBtn:hover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70001;
+  border: none;
+  background-color:darkblue;
+  padding: 10px 15px;
+  margin: 0;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: normal;
+  height: 3.6rem;
+}
+
+#checkA11YPanelBtn:focus,
+#checkA11YPanelBtn:hover{
+  background-color:#fff;
+  color: darkblue;
+  outline: 1px solid darkblue;
+  outline-offset : -1px;
+}
+
+#checkA11YPanelBtn:before,
+#checkA11YPanelBtn:after{
+	content: none;
+}
+
+#checkA11YPanel.active .panel-header{margin-bottom: 10px;}
+
+#checkA11YPanel.active .panel-header h1{
+    font-size: 2.4rem !important;
+    line-height: 3.6rem !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-transform: uppercase !important;
+    position: relative !important;
+    display: block !important;
+    color: darkblue !important;
+    font-weight: bold !important;
+    font-family: source-sans-pro, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif !important;
+}
+
+#checkA11YPanel.active .panel-body{
+    overflow-y: scroll !important;
+    height: calc(100% - 2.4rem) !important;
+}
+
+#checkA11YPanel.active .panel-body h2{
+    font-size: 1.8rem !important;
+    line-height: 2.4rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-transform: capitalize !important;
+    position: relative !important;
+    display: block !important;
+    color: darkblue !important;
+    font-weight: bold !important;
+    font-family: source-sans-pro, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif !important;
+}
+
+#checkA11YPanel.active .panel-body ul{
+    margin: 0.5rem 0 1rem 0 !important;
+    line-height: 1.7 !important;
+    list-style-type: disc !important;
+    padding-left: 0 !important;
+}
+
+#checkA11YPanel.active .panel-body ul > li{
+  font-size: 1.4rem !important;
+  line-height: normal !important;
+  list-style-type: none !important;
+  padding-left: 2.8rem !important;
+  position: relative !important;
+  color: black !important;
+}
+
+#checkA11YPanel.active .panel-body ul>li:before {
+    border: solid darkblue !important;
+    border-width: .2rem .2rem 0 0 !important;
+    content: "" !important;
+    height: .5rem !important;
+    left: .8rem !important;
+    position: absolute !important;
+    top: 1rem !important;
+    transform: rotate(45deg) !important;
+    width: .5rem !important;
+}
+
+#checkA11YPanel.active .panel-body ul>li a,
+#checkA11YPanel.active .panel-body ul>li a:active,
+#checkA11YPanel.active .panel-body ul>li a:visited {
+    color: darkblue !important;
+    text-decoration: underline !important;
+}
+
+#checkA11YPanel.active .panel-body ul>li a:hover,
+#checkA11YPanel.active .panel-body ul>li a:focus{
+	text-decoration: none !important;
+}
+
+#checkA11YPanel.active .panel-body ul>li a:focus{
+	outline: 1px dotted darkblue !important;
+}
+
+#checkA11YPanel.active .panel-body ul>li a.result-focus{
+    font-size: 1.8rem !important;
+}
+
+
+#checkA11YPanel.active .cmp-accordion{margin: 0 !important;}
+
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary{
+	padding : 1rem !important;
+	margin : 0 !important;
+}
+
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:after{content: none !important;}
+
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary .cmp-accordion__header svg{float :right}
+
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:hover{background-color:#F5F5F5 !important;}
+
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:focus{outline: 1px dotted darkblue !important;}
+
+.checkA11YSpan{
+    display: inline !important;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace !important;
+    font-size: 13px !important;
+    line-height: 15px !important;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    border-radius: 3px !important;
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
+    margin: 1px !important;
+    margin-right: 7px !important;
+    padding: 1px !important;
+    border: none !important;
+    clear: none !important;
+    float: none !important;
+    opacity: 1 !important;
+    z-index: 70000 !important;
+    position: static !important;
+    text-align: left !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    text-transform: none !important;
+}
