@@ -369,7 +369,7 @@ if(debug_flag) console.log("01 AEM Component");
 		//window.resizeTo(currentWidth, currentHeight);
 	}
 	else {
-		  setItemToResultList("man","<li>01-F : Absence de barre de navigation</li>");
+		  setItemToResultList("man","<li><span class='result-focus label-yellow'>01-F</span> : Absence de barre de navigation</li>");
 	}
 
 
@@ -1000,7 +1000,7 @@ if(debug_flag) console.log("04 Formulaire");
 			}
 		}
 		if(nia04f_desc.length == 0){
-			setItemToResultList("nc","<li>04-F : Absence d'indication de la signification de l'astrisque sur un champ obligatoire [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-1' target='_blank'>RGAA 11.10.1</a>]</li>");
+			setItemToResultList("nc","<li><span class='result-focus label-red'>04-F</span> : Absence d'indication de la signification de l'astrisque sur un champ obligatoire [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-11-10-1' target='_blank'>RGAA 11.10.1</a>]</li>");
 		}
 	}
 	if(nia04f_flag == true) {
@@ -1241,7 +1241,7 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	// G. Présence de la Govbar
 	const nia05g_govbar = document.querySelector('#govbar.govbar');
 	if(nia05g_govbar == null || !isItemVisible(nia05g_govbar)){
-		setItemToResultList("nth","<li>05-G : Absence de la govbar</li>");
+		setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-G</span> : Absence de la govbar</li>");
 	}
 	
 	// H. Detect double <br>
@@ -1262,20 +1262,20 @@ if(debug_flag) console.log("05 Element Obligatoire");
 	// I. Le code source de chaque page contient une métadonnée qui en décrit le contenu. ==> Présence de meta name=description 
 	const nia05i_node = document.querySelector('meta[name="description"]');
 	if(nia05i_node == null || nia05i_node.content == null || nia05i_node.content == "" ){
-		setItemToResultList("nth","<li>05-I : Absence de métadonnée qui en décrit le contenu [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-de-chaque-page-contient-une-metadonnee-qui-en-decrit-le-contenu' target='_blank'>Opquast 3</a>]</li>");
+		setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-I</span> : Absence de métadonnée qui en décrit le contenu [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-de-chaque-page-contient-une-metadonnee-qui-en-decrit-le-contenu' target='_blank'>Opquast 3</a>]</li>");
 	}
 	
 	// J. Le code source des pages contient un appel valide à une icône de favori.
 	const nia05j_node = document.querySelector("link[rel*='icon']");
 	if(nia05j_node == null || nia05j_node.getAttribute("href") == null || nia05j_node.getAttribute("href") == "" ){
-		setItemToResultList("nth","<li>05-J : Absence de Favicon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-des-pages-contient-un-appel-valide-a-un-icone-de-favori' target='_blank'>Opquast 99</a>]</li>");
+		setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-J</span> : Absence de Favicon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-des-pages-contient-un-appel-valide-a-un-icone-de-favori' target='_blank'>Opquast 99</a>]</li>");
 	}
 
 	// K. Chaque page affiche une information permettant de connaître son emplacement dans l'arborescence du site.
 	if(isHomepage == false){
 		const nia05k_node = document.querySelector(".cmp-breadcrumb");
 		if(!nia05k_node){
-			setItemToResultList("nth","<li>05-K : Absence de Fils d'Ariane [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-affiche-une-information-permettant-de-connaitre-son-emplacement-dans-larborescence-du-site' target='_blank'>Opquast 151</a>]</li>");
+			setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-K</span> : Absence de Fils d'Ariane [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-affiche-une-information-permettant-de-connaitre-son-emplacement-dans-larborescence-du-site' target='_blank'>Opquast 151</a>]</li>");
 		}
 	}
 	
@@ -1375,7 +1375,7 @@ if(debug_flag) console.log("06 Structure");
 	}
 	
 	// B. Vérifier que le liste <ul> et <ol> ne contienne que des <li> ou [role="listitem"]
-	const nia06b_nodes = document.querySelectorAll(':where(ul,ol,[role="list"]) > *:not(li):not([role="listitem"])');
+	const nia06b_nodes = document.querySelectorAll(':where(ul,ol,[role="list"]) > *:not(li):not([role="listitem"]):not(.checkA11YSpan)');
 	if(nia06b_nodes && nia06b_nodes.length > 0){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia06b' class='result-focus label-red'>06-B</a> : Présence d'un élement non autorisé dans une liste [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-3-1' target='_blank'>RGAA 9.3.1</a>]</li>");
 	  setItemsOutline(nia06b_nodes,"red","nia06b","06-B");
@@ -1385,14 +1385,14 @@ if(debug_flag) console.log("06 Structure");
 	// <header class="page-header" role="banner">
 	const nia06c_nodes = document.querySelector('header.page-header[role="banner"]');
 	if(nia06c_nodes == null){
-		setItemToResultList("dev","<li>06-C : Il y a un problème avec la structuration du header [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>");
+		setItemToResultList("dev","<li><span class='result-focus label-yellow'>06-C</span> : Il y a un problème avec la structuration du header [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>");
 	}
 	
 	// D. Vérifier que les zones de navigation principales et secondaires sont structurées au moyen d’un élément <nav> ;
 	// <nav class="page-headernav" role="navigation" aria-label="Menu principal" id="headernav">
 	const nia06d_nodes = document.querySelectorAll('nav.page-headernav[role="navigation"]');
 	if(nia06d_nodes == null){
-		setItemToResultList("dev","<li>06-D : Il y a un problème avec la structuration de la navigation [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>");
+		setItemToResultList("dev","<li><span class='result-focus label-yellow'>06-D</span> : Il y a un problème avec la structuration de la navigation [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>");
 	}
 	
 	// E. Vérifier que l’élément <nav> n’est pas utilisé en dehors de la structuration des zones de navigation principales et secondaires ;
@@ -1455,7 +1455,7 @@ if(debug_flag) console.log("06 Structure");
 
 	const nia06g2_nodes = document.querySelector('footer.page-footer[role="contentinfo"]');
 	if(nia06g2_nodes == null){
-		setItemToResultList("dev","<li>06-G : Il y a un problème avec la structuration du footer [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>");
+		setItemToResultList("dev","<li><span class='result-focus label-yellow'>06-G</span> : Il y a un problème avec la structuration du footer [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-9-2-1' target='_blank'>RGAA 9.2.1</a>]</li>");
 	}
 	
 	// H. Cadres avec un titre
@@ -1703,17 +1703,17 @@ if(debug_flag) console.log("09 Navigation");
 	if(nia09d_plan && isItemVisible(nia09d_plan)){nia09d_counter++;}
 	if(nia09d_counter < 2){
 		if(nia09d_footer_links && nia09d_footer_links.length <= 3){
-			setItemToResultList("man","<li>09-D : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>");
+			setItemToResultList("man","<li><span class='result-focus label-yellow'>09-D</span> : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>");
 		}
 		else {
-			setItemToResultList("nc","<li>09-D : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>");
+			setItemToResultList("nc","<li><span class='result-focus label-red'>09-D</span> : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-1-1' target='_blank'>RGAA 12.1.1</a>]</li>");
 		}
 	}
 	
 	// G. Skiplinks
 	const nia09e_main = document.querySelector('.skiplinks a[href="#main"]');
 	if(nia09e_main == null){
-		setItemToResultList("nc","<li>09-E : Absence de skiplinks pour aller à la zone de contenu principale [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-contient-des-liens-dacces-rapide-places-au-debut-du-code-source' target='_blank'>Opquast 159</a>]</li>");
+		setItemToResultList("nc","<li><span class='result-focus label-red'>09-E</span> : Absence de skiplinks pour aller à la zone de contenu principale [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-contient-des-liens-dacces-rapide-places-au-debut-du-code-source' target='_blank'>Opquast 159</a>]</li>");
 	}
 	
 	const nia09e2_nodes = document.querySelectorAll('.skiplinks a[href]');
@@ -1725,7 +1725,7 @@ if(debug_flag) console.log("09 Navigation");
 			if(nia09e2_dest == null){
 				if(debug_flag) console.log(nia09e2_nodes[i]);
 				if(isItemDisplayNone(nia09e2_nodes[i])){
-					setItemToResultList("man","<li>09-E : Un skiplinks non visible (display:none) n'a pas de destination [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>");
+					setItemToResultList("man","<li><span class='result-focus label-yellow'>09-E</span> : Un skiplinks non visible (display:none) n'a pas de destination [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>");
 				}
 				else{
 					nia09e2_flag = true;
@@ -1734,7 +1734,7 @@ if(debug_flag) console.log("09 Navigation");
 		}
 	}
 	if(nia09e2_flag == true){
-	  setItemToResultList("dev","<li>09-E : Un skiplinks n'est pas correctement lié à sa destination [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>");
+	  setItemToResultList("dev","<li><span class='result-focus label-red'>09-E</span> : Un skiplinks n'est pas correctement lié à sa destination [<a href='https://accessibilite.public.lu/fr/rgaa4.1.2/criteres.html#test-12-7-1' target='_blank'>RGAA 12.7.1</a>]</li>");
 	}
 
 	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
@@ -1763,12 +1763,24 @@ if(debug_flag) console.log("09 Navigation");
 								if(debug_flag) console.log("09f1 : "+nia09f_horizontal+" "+nia09f_vertical);
 								if(debug_flag) console.log("09f2 : "+nia09f_horizontal_parent+" "+nia09f_vertical_parent);
 								
-								nia09f_flag = true;
-								setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+								if(nia09f_vertical_parent > 18 && nia09f_horizontal_parent > 50){
+									// Exception In-line : Par exemple un lien dans un texte
+								}
+								else {
+									nia09f_flag = true;
+									setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+								}
 							}
 						}
 						else if(nia09f_nodes[i].parentElement.tagName != "P" && nia09f_nodes[i].parentElement.tagName != "SPAN" && nia09f_nodes[i].parentElement.tagName != "SMALL" && nia09f_nodes[i].parentElement.tagName != "DD" && nia09f_nodes[i].parentElement.tagName != "STRONG"){
 							if(debug_flag) console.log(nia09f_rect);
+							nia09f_flag = true;
+							setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+						}
+						else if(nia09f_vertical > 18 && nia09f_horizontal > 50){
+							// Exception In-line : Par exemple un lien dans un texte
+						}
+						else {
 							nia09f_flag = true;
 							setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
 						}
@@ -2131,13 +2143,13 @@ if(debug_flag) console.log("15 Sécurité");
 	
 	// C. Toutes les pages utilisent le protocole HTTPS.
 	if (window.location.protocol != "https:") {
-		setItemToResultList("dev","<li>15-C : Les pages doivent utiliser le protocole HTTPS [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/toutes-les-pages-utilisent-le-protocole-https' target='_blank'>Opquast 192</a>]</li>");
+		setItemToResultList("dev","<li><span class='result-focus label-yellow'>15-C</span> : Les pages doivent utiliser le protocole HTTPS [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/toutes-les-pages-utilisent-le-protocole-https' target='_blank'>Opquast 192</a>]</li>");
 	}
 	
 	// D. Le code source de chaque page contient une métadonnée qui définit le jeu de caractères UTF-8
 	const nia15d_node = document.querySelector('meta[charset="UTF-8"]');
 	if(nia15d_node == null){
-		setItemToResultList("dev","<li>15-D : Le code source de chaque page contient une métadonnée qui définit le jeu de caractères UTF-8 [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-de-chaque-page-contient-une-metadonnee-qui-definit-le-jeu-de-caracteres' target='_blank'>Opquast 225</a>, <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-codage-de-caracteres-utilise-est-utf-8' target='_blank'>226</a>]</li>");
+		setItemToResultList("dev","<li><span class='result-focus label-yellow'>15-D</span> : Le code source de chaque page contient une métadonnée qui définit le jeu de caractères UTF-8 [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-code-source-de-chaque-page-contient-une-metadonnee-qui-definit-le-jeu-de-caracteres' target='_blank'>Opquast 225</a>, <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-codage-de-caracteres-utilise-est-utf-8' target='_blank'>226</a>]</li>");
 	}
 	
 	

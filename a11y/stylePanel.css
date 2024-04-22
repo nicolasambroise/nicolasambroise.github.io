@@ -141,8 +141,8 @@
 }
 
 #checkA11YPanel.active .panel-body ul>li .result-focus{
-    color: white !important;
-    background-color: darkblue !important;
+    color: white;
+    background-color: darkblue;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace !important;
     font-size: 1.3rem !important;
@@ -153,24 +153,24 @@
     padding: 1px !important;
 }
 
-#checkA11YPanel.active .panel-body ul>li .result-focus:hover,
-#checkA11YPanel.active .panel-body ul>li .result-focus:focus{
+#checkA11YPanel.active .panel-body ul>li a.result-focus:hover,
+#checkA11YPanel.active .panel-body ul>li a.result-focus:focus{
     color: darkblue !important;
     background-color: #F5F5F5 !important;
     text-decoration: none !important;
 }
 
 #checkA11YPanel.active .panel-body ul>li .result-focus.label-yellow{
-    color: black !important;
-    background-color: yellow !important;
+    color: black;
+    background-color: yellow;
 }
 #checkA11YPanel.active .panel-body ul>li .result-focus.label-orange{
-    color: black !important;
-    background-color: orange !important;
+    color: black;
+    background-color: orange;
 }
 #checkA11YPanel.active .panel-body ul>li .result-focus.label-red{
-    color: white !important;
-    background-color: #ea0202 !important;
+    color: white;
+    background-color: #ea0202;
 }
 
 #checkA11YPanel.active .cmp-accordion{margin: 0 !important;}
@@ -178,6 +178,7 @@
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary{
 	padding : 1rem !important;
 	margin : 0 !important;
+    display: block !important;
 }
 
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:after{content: none !important;}
