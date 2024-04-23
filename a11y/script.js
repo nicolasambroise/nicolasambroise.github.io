@@ -701,7 +701,15 @@ if(debug_flag) console.log("03 Liens");
 		for(let i = 0; i < nia03e_nodes.length; i++){
 			nia03e_lang = nia03e_nodes[i].closest('[lang]').getAttribute('lang')
 			nia03e_title = sanitizeText(nia03e_nodes[i].getAttribute("title"),nia03e_lang);
-			nia03e_content = sanitizeText(nia03e_nodes[i].innerText,nia03e_lang);
+			nia03e_innerText = nia03e_nodes[i].innerText;
+			//console.log(nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length);
+			if(nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length > 0){
+				for(let j = 0; j < nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length; j++){
+					//console.log(nia03e_nodes[i].getElementsByClassName('checkA11YSpan')[j]);
+					nia03e_innerText = nia03e_innerText.replace(nia03e_nodes[i].getElementsByClassName('checkA11YSpan')[j].textContent,'')
+				}
+			}
+			nia03e_content = sanitizeText(nia03e_innerText,nia03e_lang);
 			if(!nia03e_title.includes(nia03e_content)){
 				if(debug_flag) console.log("%cERROR","font-weight:700;color:darkred","["+nia03e_title+"] VS ["+nia03e_content+"] ");
 				setItemOutline(nia03e_nodes[i],"red","nia03e","03-E");
@@ -2118,7 +2126,7 @@ if(debug_flag) console.log("14 Couleur");
 		}
 	}
 	if(nia14a_flag == true) {
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia14a' class='result-focus label-yellow'>14-A</a> : Présence d'élément insuffisament contrasté</li>");
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia14a' class='result-focus label-orange'>14-A</a> : Présence d'élément insuffisament contrasté</li>");
 	}
 	
 
@@ -2250,8 +2258,8 @@ function isItemHasVisibleContent(item){
 	// A remplacer par un while
 	//console.log(item.childNodes)
 	for(let i = 0; i < item.childNodes.length; i++){
-		if(item.childNodes[i].nodeName != "#text"){
-			//console.log(item.childNodes[i])
+		if(item.childNodes[i].nodeName != "#text" && item.childNodes[i].nodeName != "#comment"){
+			// console.log(item.childNodes[i])
 			style_i = window.getComputedStyle(item.childNodes[i]);
 			if(style_i.display =='none' || (style_i.width == "1px" && style_i.height == "1px" && style_i.clip == "rect(1px, 1px, 1px, 1px)" && style_i.display!=='none' && style_i.visibility!== 'hidden' && style_i.overflow == "hidden")){
 				// L'enfant n'est pas visible
