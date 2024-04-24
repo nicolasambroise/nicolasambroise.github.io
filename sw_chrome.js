@@ -14,19 +14,18 @@
 
 
 function addClassToBody() {
-  document.body.classList.add("modal-injected");
+  document.body.classList.add("panel-injected");
 }
 
 // When the user clicks on the extension action
 chrome.action.onClicked.addListener(async (tab) => {
   if(tab.url.includes(".public.lu") || tab.url.includes(".gouvernement.lu") || tab.url.includes(".etat.lu")) {
 	const p1 = chrome.scripting.executeScript({
-		//files: ['https://nicolasambroise.github.io/a11y/script.js?t='+Math.floor(Math.random() * (Math.floor(10000) - Math.ceil(1000)) + Math.ceil(1000))],
-		files: ['a11y/js-modal.js'],
+		files: ['a11y/parts/test.js'],
 		target: { tabId: tab.id }
 	});
 	const p2 = chrome.scripting.insertCSS({
-		files: ['a11y/js-modal.css'],
+		files: ['a11y/stylePanel.css'],
 		target: { tabId: tab.id }
 	});
 	const p3 = chrome.scripting.executeScript({

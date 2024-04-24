@@ -14,19 +14,24 @@
     border-style: none !important;
     margin: 0px !important;
     border-right: 3px solid darkblue !important;
-	background-color: white !important;	
+	background-color: white !important;
+	margin-left : -360px !important;
 }
 
 #checkA11YPanel.active > div{
-    width: 330px;
+    width: 345px;
     left: 0px;
     padding-left: 5px;
     padding-right: 5px;
     right: auto;
 }
 
-#checkA11YPanel.active + body{
+body.check-panel-active{
     position: relative;
+    margin-left: 360px !important;
+}
+
+body.check-panel-active [role="dialog"]{
     margin-left: 360px !important;
 }
 
@@ -219,4 +224,5 @@
     text-decoration: none !important;
     text-shadow: none !important;
     text-transform: none !important;
+    height: 17px !important;
 }

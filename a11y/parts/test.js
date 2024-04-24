@@ -1,3 +1,7 @@
-console.log("test.js");
+alert("test.js");
 
-setItemToResultList("crit","TEST"); 
+
+function check_part_1(){
+	setItemToResultList("crit","TEST"); 
+}
+
