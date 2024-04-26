@@ -643,7 +643,7 @@ if(debug_flag) console.log("02 Images");
 	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header):not(.ol-full-screen-false) > img');
 	let nia02j_css_h ="", nia02j_css_w ="",nia02j_html_h ="", nia02j_html_w ="",nia02j_natural_h ="", nia02j_natural_w ="";
 	let nia02j_flag = false;
-	let nia02j_ratio_max = 2;
+	let nia02j_ratio_max = 2.5;
 	let nia02j_ratio_min = 0.5;
 	if(nia02j_nodes && nia02j_nodes.length > 0){
 		for(let i = 0; i < nia02j_nodes.length; i++){
@@ -749,7 +749,7 @@ if(debug_flag) console.log("03 Liens");
 				}
 			}
 			nia03e_content = sanitizeText(nia03e_innerText,nia03e_lang);
-			if(!nia03e_title.includes(nia03e_content)){
+			if(!nia03e_title.includes(nia03e_content) && !nia03e_title.includes(nia03e_content.replace(" pdf"," pdf "))){
 				if(debug_flag) console.log("%cERROR","font-weight:700;color:darkred","["+nia03e_title+"] VS ["+nia03e_content+"] ");
 				setItemOutline(nia03e_nodes[i],"red","nia03e","03-E");
 				nia03e_flag = true;
@@ -1339,7 +1339,7 @@ if(debug_flag) console.log("05 Element Obligatoire");
 
 	// K. Chaque page affiche une information permettant de connaître son emplacement dans l'arborescence du site.
 	if(isHomepage == false){
-		const nia05k_node = document.querySelector(".cmp-breadcrumb");
+		const nia05k_node = document.querySelector(".cmp-breadcrumb,.cmp-breadcrumb-demarches");
 		if(!nia05k_node){
 			setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-K</span> : Absence de Fils d'Ariane [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-affiche-une-information-permettant-de-connaitre-son-emplacement-dans-larborescence-du-site' target='_blank'>Opquast 151</a>]</li>");
 		}
@@ -1811,7 +1811,7 @@ if(debug_flag) console.log("09 Navigation");
 	let nia09f_horizontal_parent = 0, nia09f_vertical_parent = 0;
 	if(nia09f_nodes && nia09f_nodes.length > 0){
 		for(let i = 0; i < nia09f_nodes.length; i++){
-			if(isItemVisible(nia09f_nodes[i])){
+			if(isItemVisible(nia09f_nodes[i]) && !isItemSROnly(nia09f_nodes[i])){
 				nia09f_rect = nia09f_nodes[i].getBoundingClientRect();
 				nia09f_horizontal = nia09f_rect["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginRight']);
 				nia09f_vertical = nia09f_rect["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginBottom']);
@@ -2133,7 +2133,7 @@ if(debug_flag) console.log("14 Couleur");
 	// --> Contenu avec un linear-gradiant sans couleur de backup
 	
 
-	const nia14a_nodes = document.querySelectorAll('p, span:not(.checkA11YSpan), li, strong, h1, h2, h3, h4, h5, small, a, button, blockquote, q');
+	const nia14a_nodes = document.querySelectorAll('p, span:not(.checkA11YSpan), li, strong, h1, h2, h3, h4, h5, small, a:not([disabled]), button:not([disabled]), blockquote, q, dd, dt');
 	let nia14a_flag = false;
 	let color1,color2,color1rbg, color2rbg,color1luminance, color2luminance, nia14a_ratio, nia14a_bold, nia14a_large, nia14a_isbold;
 	if(nia14a_nodes && nia14a_nodes.length > 0){
