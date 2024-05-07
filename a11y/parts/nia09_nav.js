@@ -146,8 +146,8 @@ function check_part_09(){
 							if(nia09f_horizontal_parent < 24 || nia09f_vertical_parent < 24){
 						
 								if(debug_flag) console.log(nia09f_rect);
-								if(debug_flag) console.log("09f1 : "+nia09f_horizontal+" "+nia09f_vertical);
-								if(debug_flag) console.log("09f2 : "+nia09f_horizontal_parent+" "+nia09f_vertical_parent);
+								// console.log("09f1 : "+nia09f_horizontal+" "+nia09f_vertical);
+								// console.log("09f2 : "+nia09f_horizontal_parent+" "+nia09f_vertical_parent);
 								
 								if(nia09f_vertical_parent > 18 && nia09f_horizontal_parent > 50){
 									// Exception In-line : Par exemple un lien dans un texte

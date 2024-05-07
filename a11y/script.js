@@ -15,7 +15,7 @@ if(!document.body.classList.contains('panel-injected')){
 	  cssPanel.href = 'https://nicolasambroise.github.io/a11y/stylePanel.css?v=' + Date.now();
 	  document.getElementsByTagName('head')[0].appendChild(cssPanel);
 	}
-	
+	/*
 	if (document.getElementById('injected-js-part01') === null) {
 	  let jsPart1 = document.createElement('script');
 	  jsPart1.id = 'injected-js-part01';
@@ -120,8 +120,9 @@ if(!document.body.classList.contains('panel-injected')){
 	  jsPart15.src = 'https://nicolasambroise.github.io/a11y/parts/nia15_secu.js?v=' + Date.now();
 	  document.getElementsByTagName('head')[0].appendChild(jsPart15);
 	}
-	
+	*/
 }
+
 
 // Current URL
 const currentUrl = window.location.href;
@@ -175,9 +176,15 @@ function seeMoreAddress(){
 /*- -------------------------------------------------------------------------------- */
 // Split
 
+import("https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=1' + Date.now()").then((part1) => {
+  alert("toto");
+});
+
+
 setTimeout(function() {
 	seeMoreAccordion();
 	check_part_01();
+	/*
 	check_part_02();
 	check_part_03();
 	check_part_04();
@@ -191,7 +198,7 @@ setTimeout(function() {
 	check_part_12();
 	check_part_13();
 	check_part_14();
-	check_part_15();
+	check_part_15();*/
 	createResultPanel();
 },100);
 
@@ -215,7 +222,10 @@ function setItemsOutline(items,color,classname,label){
 function setItemOutline(item,color,classname,label){
 	if(debug_flag) console.log(item);
 	if(color == "red"){ item.setAttribute("style","outline: 3px solid #ea0202 !important");}
-	else {item.style.outline = "3px solid "+color;}
+	else if(item.style.outlineColor != "#ea0202" && item.style.outlineColor != "rgb(234, 2, 2)") {
+		console.log(item.style.outlineColor);
+		item.setAttribute("style","outline: 3px solid "+color+" !important");
+	}
 	item.style.outlineOffset = "1px";
 	item.classList.add(classname);
 	const spanLabel = document.createElement('span');
@@ -340,10 +350,8 @@ function rgbToRgbArray(rgbStr) {
 }
 
 function luminance(r, g, b) {
-    var a = [r, g, b].map(function (v) {v /= 255;
-        return v <= 0.03928 ? v / 12.92 : Math.pow( (v + 0.055) / 1.055, 2.4 );
-    });
-    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+  var a = [r, g, b].map(function (v) {v /= 255;return v <= 0.03928 ? v / 12.92 : Math.pow( (v + 0.055) / 1.055, 2.4 );});
+  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
 }
 
 function getInheritedBackgroundColor(item) {
@@ -448,7 +456,6 @@ validator().then(data => {
 	  })
 	  console.groupEnd();
 	  if(msg_html5  != ""){
-		//console.log("ok" + msg_html5)
 		elem.innerHTML += "<ul>"+msg_html5+"</ul>";
 	  }
 	}

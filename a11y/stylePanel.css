@@ -225,4 +225,5 @@ body.check-panel-active [role="dialog"]{
     text-shadow: none !important;
     text-transform: none !important;
     height: 17px !important;
+    min-width: 30px !important;
 }
