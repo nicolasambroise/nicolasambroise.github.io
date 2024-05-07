@@ -190,30 +190,29 @@ if(!document.body.classList.contains('panel-injected')){
 	var p13 = new Promise(function(resolve) {jsPart13.addEventListener('load', () => {if(typeof check_part_13 == "function") check_part_13();})})
 	var p14 = new Promise(function(resolve) {jsPart14.addEventListener('load', () => {if(typeof check_part_14 == "function") check_part_14();})})
 	var p15 = new Promise(function(resolve) {jsPart15.addEventListener('load', () => {if(typeof check_part_15 == "function") check_part_15();})})
-		
-	Promise.all([p01,p02,p03,p04,p05,p06,p07,p08,p09,p10,p11,p12,p13,p14,p15])
-	.then(function() {createResultPanel();})
-	.then(function() {thirdPartValidation();});
 }
 else{
-	check_part_01();
-	check_part_02();
-	check_part_03();
-	check_part_04();
-	check_part_05();
-	check_part_06();
-	check_part_07();
-	check_part_08();
-	check_part_09();
-	check_part_10();
-	check_part_11();
-	check_part_12();
-	check_part_13();
-	check_part_14();
-	check_part_15();
-	createResultPanel();
-	thirdPartValidation();
+	var p01 = new Promise(function(resolve) {check_part_01();setTimeout(resolve, 100, 'p01');})
+	var p02 = new Promise(function(resolve) {check_part_02();setTimeout(resolve, 100, 'p02');})
+	var p03 = new Promise(function(resolve) {check_part_03();setTimeout(resolve, 100, 'p03');})
+	var p04 = new Promise(function(resolve) {check_part_04();setTimeout(resolve, 100, 'p04');})
+	var p05 = new Promise(function(resolve) {check_part_05();setTimeout(resolve, 100, 'p05');})
+	var p06 = new Promise(function(resolve) {check_part_06();setTimeout(resolve, 100, 'p06');})
+	var p07 = new Promise(function(resolve) {check_part_07();setTimeout(resolve, 100, 'p07');})
+	var p08 = new Promise(function(resolve) {check_part_08();setTimeout(resolve, 100, 'p08');})
+	var p09 = new Promise(function(resolve) {check_part_09();setTimeout(resolve, 100, 'p09');})
+	var p10 = new Promise(function(resolve) {check_part_10();setTimeout(resolve, 100, 'p10');})
+	var p11 = new Promise(function(resolve) {check_part_11();setTimeout(resolve, 100, 'p11');})
+	var p12 = new Promise(function(resolve) {check_part_12();setTimeout(resolve, 100, 'p12');})
+	var p13 = new Promise(function(resolve) {check_part_13();setTimeout(resolve, 100, 'p13');})
+	var p14 = new Promise(function(resolve) {check_part_14();setTimeout(resolve, 100, 'p14');})
+	var p15 = new Promise(function(resolve) {check_part_15();setTimeout(resolve, 100, 'p15');})
 }
+
+Promise.all([p01,p02,p03,p04,p05,p06,p07,p08,p09,p10,p11,p12,p13,p14,p15])
+.then(function() {createResultPanel();})
+.then(function() {thirdPartValidation();})
+.then(function() {activateCheckA11YPanel();});
 
 // END
 /*- -------------------------------------------------------------------------------- */
@@ -558,23 +557,24 @@ function thirdPartValidation(){
 	}
 }
 
-// Fonction open/close Panel 
-function openCheckA11YPanel(){
-	document.getElementById("checkA11YPanel").classList.add("active");
-	document.body.classList.add("check-panel-active");
-}
+// Fonction Check A11Y Panel
+function activateCheckA11YPanel(){
+	// Fonction open/close Panel 
+	function openCheckA11YPanel(){
+		document.getElementById("checkA11YPanel").classList.add("active");
+		document.body.classList.add("check-panel-active");
+	}
 
-function closeCheckA11YPanel(){
-	document.getElementById("checkA11YPanel").classList.remove("active");
-	document.body.classList.remove("check-panel-active");
-}
+	function closeCheckA11YPanel(){
+		document.getElementById("checkA11YPanel").classList.remove("active");
+		document.body.classList.remove("check-panel-active");
+	}
 
-function toggleCheckA11YPanel(){
-	if(document.getElementById("checkA11YPanel").classList.contains("active")){closeCheckA11YPanel();}
-	else {openCheckA11YPanel();}
-}
+	function toggleCheckA11YPanel(){
+		if(document.getElementById("checkA11YPanel").classList.contains("active")){closeCheckA11YPanel();}
+		else {openCheckA11YPanel();}
+	}
 
-setTimeout(() => {
 	openCheckA11YPanel();
 	document.body.classList.add("panel-injected");
-}, 500);
+}
