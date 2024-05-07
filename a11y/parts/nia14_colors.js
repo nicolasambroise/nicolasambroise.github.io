@@ -65,4 +65,3 @@ function check_part_14(){
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia14a' class='result-focus label-orange'>14-A</a> : Présence d'élément insuffisament contrasté</li>");
 	}
 }
-module.exports = {check_part_14};

@@ -33,4 +33,3 @@ function check_part_15(){
 	Règle n°208 : Le serveur ne communique pas d'informations sur les logiciels et langages utilisés.
 	*/
 }
-module.exports = {check_part_15};

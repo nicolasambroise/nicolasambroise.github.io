@@ -337,4 +337,3 @@ function check_part_01(){
 		  setItemToResultList("man","<li><span class='result-focus label-yellow'>01-F</span> : Absence de barre de navigation</li>");
 	}
 }
-module.exports = {check_part_01};

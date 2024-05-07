@@ -15,7 +15,7 @@ if(!document.body.classList.contains('panel-injected')){
 	  cssPanel.href = 'https://nicolasambroise.github.io/a11y/stylePanel.css?v=' + Date.now();
 	  document.getElementsByTagName('head')[0].appendChild(cssPanel);
 	}
-	/*
+
 	if (document.getElementById('injected-js-part01') === null) {
 	  let jsPart1 = document.createElement('script');
 	  jsPart1.id = 'injected-js-part01';
@@ -120,7 +120,7 @@ if(!document.body.classList.contains('panel-injected')){
 	  jsPart15.src = 'https://nicolasambroise.github.io/a11y/parts/nia15_secu.js?v=' + Date.now();
 	  document.getElementsByTagName('head')[0].appendChild(jsPart15);
 	}
-	*/
+
 }
 
 
@@ -176,33 +176,25 @@ function seeMoreAddress(){
 /*- -------------------------------------------------------------------------------- */
 // Split
 
-if(document.body.classList.contains('panel-injected')){
-	setTimeout(function() {
-		seeMoreAccordion();
-		check_part_01();
-		check_part_02();
-		check_part_03();
-		check_part_04();
-		check_part_05();
-		check_part_06();
-		check_part_07();
-		check_part_08();
-		check_part_09();
-		check_part_10();
-		check_part_11();
-		check_part_12();
-		check_part_13();
-		check_part_14();
-		check_part_15();
-		createResultPanel();
-	},100);
-}
-else{
-	import check_part_01 from 'https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=' + Date.now();
+setTimeout(function() {
 	seeMoreAccordion();
 	check_part_01();
+	check_part_02();
+	check_part_03();
+	check_part_04();
+	check_part_05();
+	check_part_06();
+	check_part_07();
+	check_part_08();
+	check_part_09();
+	check_part_10();
+	check_part_11();
+	check_part_12();
+	check_part_13();
+	check_part_14();
+	check_part_15();
 	createResultPanel();
-}
+},100);
 
 
 setTimeout(function() {
