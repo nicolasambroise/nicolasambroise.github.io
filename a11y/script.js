@@ -198,9 +198,9 @@ if(document.body.classList.contains('panel-injected')){
 	},100);
 }
 else{
-	var part1 = require("https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=1' + Date.now()");
+	import check_part_01 from 'https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=' + Date.now();
 	seeMoreAccordion();
-	part1.check_part_01();
+	check_part_01();
 	createResultPanel();
 }
 
