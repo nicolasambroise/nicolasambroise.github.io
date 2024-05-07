@@ -5,128 +5,8 @@
 const debug_flag = true; // true -> affiche les logs
 const wave_allow_credit = false; // autorise les credits wave
 
-// Add JS
-// - double sécurité pour que ce sript puisse également être appelé par l'extention chrome
-if(!document.body.classList.contains('panel-injected')){
-	if (document.getElementById('injected-css') === null) {
-	  let cssPanel = document.createElement('link');
-	  cssPanel.id = 'injected-css';
-	  cssPanel.rel = 'stylesheet';
-	  cssPanel.href = 'https://nicolasambroise.github.io/a11y/stylePanel.css?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(cssPanel);
-	}
-
-	if (document.getElementById('injected-js-part01') === null) {
-	  let jsPart1 = document.createElement('script');
-	  jsPart1.id = 'injected-js-part01';
-	  jsPart1.src = 'https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart1);
-	}
-	
-	if (document.getElementById('injected-js-part02') === null) {
-	  let jsPart2 = document.createElement('script');
-	  jsPart2.id = 'injected-js-part02';
-	  jsPart2.src = 'https://nicolasambroise.github.io/a11y/parts/nia02_images.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart2);
-	}
-	
-	if (document.getElementById('injected-js-part03') === null) {
-	  let jsPart3 = document.createElement('script');
-	  jsPart3.id = 'injected-js-part03';
-	  jsPart3.src = 'https://nicolasambroise.github.io/a11y/parts/nia03_links.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart3);
-	}
-	
-	if (document.getElementById('injected-js-part04') === null) {
-	  let jsPart4 = document.createElement('script');
-	  jsPart4.id = 'injected-js-part04';
-	  jsPart4.src = 'https://nicolasambroise.github.io/a11y/parts/nia04_form.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart4);
-	}
-	
-	if (document.getElementById('injected-js-part05') === null) {
-	  let jsPart5 = document.createElement('script');
-	  jsPart5.id = 'injected-js-part05';
-	  jsPart5.src = 'https://nicolasambroise.github.io/a11y/parts/nia05_obligatoire.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart5);
-	}
-	
-	if (document.getElementById('injected-js-part06') === null) {
-	  let jsPart6 = document.createElement('script');
-	  jsPart6.id = 'injected-js-part06';
-	  jsPart6.src = 'https://nicolasambroise.github.io/a11y/parts/nia06_structure.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart6);
-	}
-	
-	if (document.getElementById('injected-js-part07') === null) {
-	  let jsPart7 = document.createElement('script');
-	  jsPart7.id = 'injected-js-part07';
-	  jsPart7.src = 'https://nicolasambroise.github.io/a11y/parts/nia07_title.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart7);
-	}
-	
-	if (document.getElementById('injected-js-part08') === null) {
-	  let jsPart8 = document.createElement('script');
-	  jsPart8.id = 'injected-js-part08';
-	  jsPart8.src = 'https://nicolasambroise.github.io/a11y/parts/nia08_table.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart8);
-	}
-	
-	if (document.getElementById('injected-js-part09') === null) {
-	  let jsPart9 = document.createElement('script');
-	  jsPart9.id = 'injected-js-part09';
-	  jsPart9.src = 'https://nicolasambroise.github.io/a11y/parts/nia09_nav.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart9);
-	}
-	
-	if (document.getElementById('injected-js-part10') === null) {
-	  let jsPart10 = document.createElement('script');
-	  jsPart10.id = 'injected-js-part10';
-	  jsPart10.src = 'https://nicolasambroise.github.io/a11y/parts/nia10_oldtag.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart10);
-	}
-	
-	if (document.getElementById('injected-js-part11') === null) {
-	  let jsPart11 = document.createElement('script');
-	  jsPart11.id = 'injected-js-part11';
-	  jsPart11.src = 'https://nicolasambroise.github.io/a11y/parts/nia11_lang.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart11);
-	}
-	
-	if (document.getElementById('injected-js-part12') === null) {
-	  let jsPart12 = document.createElement('script');
-	  jsPart12.id = 'injected-js-part12';
-	  jsPart12.src = 'https://nicolasambroise.github.io/a11y/parts/nia12_button.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart12);
-	}
-	
-	if (document.getElementById('injected-js-part13') === null) {
-	  let jsPart13 = document.createElement('script');
-	  jsPart13.id = 'injected-js-part13';
-	  jsPart13.src = 'https://nicolasambroise.github.io/a11y/parts/nia13_lottie.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart13);
-	}
-	
-	if (document.getElementById('injected-js-part14') === null) {
-	  let jsPart14 = document.createElement('script');
-	  jsPart14.id = 'injected-js-part14';
-	  jsPart14.src = 'https://nicolasambroise.github.io/a11y/parts/nia14_colors.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart14);
-	}
-	
-	if (document.getElementById('injected-js-part15') === null) {
-	  let jsPart15 = document.createElement('script');
-	  jsPart15.id = 'injected-js-part15';
-	  jsPart15.src = 'https://nicolasambroise.github.io/a11y/parts/nia15_secu.js?v=' + Date.now();
-	  document.getElementsByTagName('head')[0].appendChild(jsPart15);
-	}
-
-}
-
-
 // Current URL
 const currentUrl = window.location.href;
-if(debug_flag) console.log(currentUrl);
 const homepage = document.querySelector('h1.logo.logo--homepage');
 const homepageException = ["https://guichet.public.lu/fr/citoyens.html", "https://guichet.public.lu/fr/entreprises.html","https://guichet.public.lu/fr/leichte-sprache.html", "https://guichet.public.lu/en/citoyens.html", "https://guichet.public.lu/en/entreprises.html","https://guichet.public.lu/en/leichte-sprache.html","https://guichet.public.lu/de/citoyens.html", "https://guichet.public.lu/de/entreprises.html","https://guichet.public.lu/de/leichte-sprache.html"]
 let isHomepage = false;
@@ -172,12 +52,147 @@ function seeMoreAddress(){
 	}
 }
 
+seeMoreAccordion();
+setTimeout(function() {
+	seeMoreAddress();
+},5000); // --> Todo : remplacer par un wait for geoportail data-loaded = true;
+
 
 /*- -------------------------------------------------------------------------------- */
-// Split
+// Add JS
+// - double sécurité pour que ce sript puisse également être appelé par l'extention chrome
+if(!document.body.classList.contains('panel-injected')){
+	if (document.getElementById('injected-css') === null) {
+	  let cssPanel = document.createElement('link');
+	  cssPanel.id = 'injected-css';
+	  cssPanel.rel = 'stylesheet';
+	  cssPanel.href = 'https://nicolasambroise.github.io/a11y/stylePanel.css?v=' + Date.now();
+	  document.head.appendChild(cssPanel);
+	}
 
-setTimeout(function() {
-	seeMoreAccordion();
+	if (document.getElementById('injected-js-part01') === null) {
+	  let jsPart01 = document.createElement('script');
+	  jsPart01.id = 'injected-js-part01';
+	  jsPart01.src = 'https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=' + Date.now();
+	  document.head.appendChild(jsPart01);
+	}
+	
+	if (document.getElementById('injected-js-part02') === null) {
+	  let jsPart02 = document.createElement('script');
+	  jsPart02.id = 'injected-js-part02';
+	  jsPart02.src = 'https://nicolasambroise.github.io/a11y/parts/nia02_images.js?v=' + Date.now();
+	  document.head.appendChild(jsPart02);
+	}
+	
+	if (document.getElementById('injected-js-part03') === null) {
+	  let jsPart03 = document.createElement('script');
+	  jsPart03.id = 'injected-js-part03';
+	  jsPart03.src = 'https://nicolasambroise.github.io/a11y/parts/nia03_links.js?v=' + Date.now();
+	  document.head.appendChild(jsPart03);
+	}
+	
+	if (document.getElementById('injected-js-part04') === null) {
+	  let jsPart04 = document.createElement('script');
+	  jsPart04.id = 'injected-js-part04';
+	  jsPart04.src = 'https://nicolasambroise.github.io/a11y/parts/nia04_form.js?v=' + Date.now();
+	  document.head.appendChild(jsPart04);
+	}
+	
+	if (document.getElementById('injected-js-part05') === null) {
+	  let jsPart05 = document.createElement('script');
+	  jsPart05.id = 'injected-js-part05';
+	  jsPart05.src = 'https://nicolasambroise.github.io/a11y/parts/nia05_obligatoire.js?v=' + Date.now();
+	  document.head.appendChild(jsPart05);
+	}
+	
+	if (document.getElementById('injected-js-part06') === null) {
+	  let jsPart06 = document.createElement('script');
+	  jsPart06.id = 'injected-js-part06';
+	  jsPart06.src = 'https://nicolasambroise.github.io/a11y/parts/nia06_structure.js?v=' + Date.now();
+	  document.head.appendChild(jsPart06);
+	}
+	
+	if (document.getElementById('injected-js-part07') === null) {
+	  let jsPart07 = document.createElement('script');
+	  jsPart07.id = 'injected-js-part07';
+	  jsPart07.src = 'https://nicolasambroise.github.io/a11y/parts/nia07_title.js?v=' + Date.now();
+	  document.head.appendChild(jsPart07);
+	}
+	
+	if (document.getElementById('injected-js-part08') === null) {
+	  let jsPart08 = document.createElement('script');
+	  jsPart08.id = 'injected-js-part08';
+	  jsPart08.src = 'https://nicolasambroise.github.io/a11y/parts/nia08_table.js?v=' + Date.now();
+	  document.head.appendChild(jsPart08);
+	}
+	
+	if (document.getElementById('injected-js-part09') === null) {
+	  let jsPart09 = document.createElement('script');
+	  jsPart09.id = 'injected-js-part09';
+	  jsPart09.src = 'https://nicolasambroise.github.io/a11y/parts/nia09_nav.js?v=' + Date.now();
+	  document.head.appendChild(jsPart09);
+	}
+	
+	if (document.getElementById('injected-js-part10') === null) {
+	  let jsPart10 = document.createElement('script');
+	  jsPart10.id = 'injected-js-part10';
+	  jsPart10.src = 'https://nicolasambroise.github.io/a11y/parts/nia10_oldtag.js?v=' + Date.now();
+	  document.head.appendChild(jsPart10);
+	}
+	
+	if (document.getElementById('injected-js-part11') === null) {
+	  let jsPart11 = document.createElement('script');
+	  jsPart11.id = 'injected-js-part11';
+	  jsPart11.src = 'https://nicolasambroise.github.io/a11y/parts/nia11_lang.js?v=' + Date.now();
+	  document.head.appendChild(jsPart11);
+	}
+	
+	if (document.getElementById('injected-js-part12') === null) {
+	  let jsPart12 = document.createElement('script');
+	  jsPart12.id = 'injected-js-part12';
+	  jsPart12.src = 'https://nicolasambroise.github.io/a11y/parts/nia12_button.js?v=' + Date.now();
+	  document.head.appendChild(jsPart12);
+	}
+	
+	if (document.getElementById('injected-js-part13') === null) {
+	  let jsPart13 = document.createElement('script');
+	  jsPart13.id = 'injected-js-part13';
+	  jsPart13.src = 'https://nicolasambroise.github.io/a11y/parts/nia13_lottie.js?v=' + Date.now();
+	  document.head.appendChild(jsPart13);
+	}
+	
+	if (document.getElementById('injected-js-part14') === null) {
+	  let jsPart14 = document.createElement('script');
+	  jsPart14.id = 'injected-js-part14';
+	  jsPart14.src = 'https://nicolasambroise.github.io/a11y/parts/nia14_colors.js?v=' + Date.now();
+	  document.head.appendChild(jsPart14);
+	}
+	
+	if (document.getElementById('injected-js-part15') === null) {
+	  let jsPart15 = document.createElement('script');
+	  jsPart15.id = 'injected-js-part15';
+	  jsPart15.src = 'https://nicolasambroise.github.io/a11y/parts/nia15_secu.js?v=' + Date.now();
+	  document.head.appendChild(jsPart15);
+	}
+
+	jsPart01.addEventListener('load', () => {check_part_01()})
+	jsPart02.addEventListener('load', () => {check_part_02()})
+	jsPart03.addEventListener('load', () => {check_part_03()})
+	jsPart04.addEventListener('load', () => {check_part_04()})
+	jsPart05.addEventListener('load', () => {check_part_05()})
+	jsPart06.addEventListener('load', () => {check_part_06()})
+	jsPart07.addEventListener('load', () => {check_part_07()})
+	jsPart08.addEventListener('load', () => {check_part_08()})
+	jsPart09.addEventListener('load', () => {check_part_09()})
+	jsPart10.addEventListener('load', () => {check_part_10()})
+	jsPart11.addEventListener('load', () => {check_part_11()})
+	jsPart12.addEventListener('load', () => {check_part_12()})
+	jsPart13.addEventListener('load', () => {check_part_13()})
+	jsPart14.addEventListener('load', () => {check_part_14()})
+	jsPart15.addEventListener('load', () => {check_part_15()})
+	createResultPanel();
+}
+else{
 	check_part_01();
 	check_part_02();
 	check_part_03();
@@ -194,16 +209,11 @@ setTimeout(function() {
 	check_part_14();
 	check_part_15();
 	createResultPanel();
-},100);
-
-
-setTimeout(function() {
-	seeMoreAddress();
-},5000); // --> Todo : remplacer par un wait for geoportail data-loaded = true;
-
+}
 
 // END
 /*- -------------------------------------------------------------------------------- */
+
 
 // Fonction mise en coleur des erreurs
 function setItemsOutline(items,color,classname,label){
@@ -218,7 +228,6 @@ function setItemOutline(item,color,classname,label){
 	if(debug_flag) console.log(item);
 	if(color == "red"){ item.setAttribute("style","outline: 3px solid #ea0202 !important");}
 	else if(item.style.outlineColor != "#ea0202" && item.style.outlineColor != "rgb(234, 2, 2)") {
-		console.log(item.style.outlineColor);
 		item.setAttribute("style","outline: 3px solid "+color+" !important");
 	}
 	item.style.outlineOffset = "1px";

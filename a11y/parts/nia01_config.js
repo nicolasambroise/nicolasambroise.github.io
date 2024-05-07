@@ -70,10 +70,10 @@ function check_part_01(){
 		const nia01f03_node = nia01f_menu.querySelector(':scope > li.has-subnav > a');
 		if(nia01f03_node){
 			nia01f_hasPasserelle = true;
-			console.log("Le menu utilise des pages passerelles");
+			if(debug_flag) console.log(" - Le menu utilise des pages passerelles");
 		}
 		else{
-			console.log("Le menu n'utilise pas de pages passerelles");
+			if(debug_flag) console.log(" - Le menu n'utilise pas de pages passerelles");
 		}
 		
 		// Itération sur les items du menu
@@ -93,27 +93,27 @@ function check_part_01(){
 						Sur l'item de rubrique vérifier existance de (li.has-subnav > a) et de (li.has-subnav > button) + le button doit avoir l'attribut aria-expanded */
 						if(nia01f_hasPasserelle){
 							if(!nia01f11_nodes || nia01f11_nodes.length != 1){
-								console.log("F2.1 Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+iplusun);
+								if(debug_flag) console.log(" - F2.1 Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+iplusun);
 								nia01f_list21 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f21","01-F"); nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
-								console.log("F2.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+iplusun);
+								if(debug_flag) console.log(" - F2.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+iplusun);
 								nia01f_list22 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f22","01-F"); nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
-								console.log("F2.3 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de sous-menu alors que la classe has-subnav est présente)");
+								if(debug_flag) console.log(" - F2.3 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de sous-menu alors que la classe has-subnav est présente)");
 								nia01f_list23 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f23","01-F"); nia01f10_flag = true;
 							}
 							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expanded")){
-								console.log("F2.4 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de l'attribut aria-expanded)");
+								if(debug_flag) console.log(" - F2.4 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de l'attribut aria-expanded)");
 								nia01f_list24 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f24","01-F"); nia01f10_flag = true;
 							}
 							else{
-								console.log("L'item de menu "+iplusun+" avec page passerelles et sous-menu est OK")
+								if(debug_flag) console.log(" - L'item de menu "+iplusun+" avec page passerelles et sous-menu est OK")
 							}
 						}
 
@@ -121,54 +121,54 @@ function check_part_01(){
 						Sur l'item de rubrique vérifier existance de (li.has-subnav > button) + cette item doit avoir l'attribut aria-expanded */
 						else{
 							if(nia01f11_nodes && nia01f11_nodes.length > 0){
-								console.log("F3.1 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.1 Un problème a été detecté pour l'élement n°"+iplusun);
 								nia01f_list31 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f31","01-F"); nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
-								console.log("F3.2 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.2 Un problème a été detecté pour l'élement n°"+iplusun);
 								nia01f_list32 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f32","01-F"); nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
-								console.log("F3.3 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.3 Un problème a été detecté pour l'élement n°"+iplusun);
 								nia01f_list33 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f33","01-F"); nia01f10_flag = true;
 							}
 							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expanded")){
-								console.log("F3.4 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.4 Un problème a été detecté pour l'élement n°"+iplusun);
 								nia01f_list34 += iplusun+",";
 								setItemOutline(nia01f10_nodes[i],"orange","nia01f34","01-F"); nia01f10_flag = true;
 							}
 							else{
-								console.log("L'item de menu "+iplusun+" sans page passerelles et sous-menu est OK")
+								if(debug_flag) console.log(" - L'item de menu "+iplusun+" sans page passerelles et sous-menu est OK")
 							}
 						}
 					}
 					else {
 						/* F4 Vérifier que les élements (li:not(.has-subnav) > a) n'ont pas d'attribut aria-expanded ni aria-haspopup ni est suivi d'un élément ul */
 						if(!nia01f11_nodes || nia01f11_nodes.length != 1){
-							console.log("F4.1 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.1 Un problème a été detecté pour l'élement n°"+iplusun);
 							nia01f_list41 += iplusun+",";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f41","01-F"); nia01f10_flag = true;
 						}
 						else if(nia01f12_nodes && nia01f12_nodes.length > 0){
-							console.log("F4.2 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.2 Un problème a été detecté pour l'élement n°"+iplusun);
 							nia01f_list42 += iplusun+",";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f42","01-F"); nia01f10_flag = true;
 						}
 						else if(nia01f13_nodes && nia01f13_nodes.length > 0){
-							console.log("F4.3 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.3 Un problème a été detecté pour l'élement n°"+iplusun);
 							nia01f_list43 += iplusun+",";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f43","01-F"); nia01f10_flag = true;
 						}
 						else if(nia01f11_nodes && (nia01f11_nodes[0].hasAttribute("aria-expanded") || nia01f11_nodes[0].hasAttribute("aria-haspopup"))){
-							console.log("F4.4 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.4 Un problème a été detecté pour l'élement n°"+iplusun);
 							nia01f_list44 += iplusun+",";
 							setItemOutline(nia01f10_nodes[i],"orange","nia01f44","01-F"); nia01f10_flag = true;
 						}
 						else{
-							console.log("L'item de menu "+iplusun+" sans sous-menu est OK")
+							if(debug_flag) console.log(" - L'item de menu "+iplusun+" sans sous-menu est OK")
 						}
 					}
 				}
@@ -230,31 +230,31 @@ function check_part_01(){
 				
 				if(!nia01f20_btn.hasAttribute("aria-expanded")){
 					nia01f_isModal = true;
-					console.log("Le menu mobile s'ouvre dans une modale");
+					if(debug_flag) console.log(" - Le menu mobile s'ouvre dans une modale");
 					
 					if(!nia01f20_btn.hasAttribute("aria-haspopup")){
-						console.log("F5.1 : Absence de l'attribut aria-haspopup=dialog du bouton d'ouverture du menu");
+						if(debug_flag) console.log(" - F5.1 : Absence de l'attribut aria-haspopup=dialog du bouton d'ouverture du menu");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f51' class='result-focus label-yellow'>01-F</a> : Absence de l'attribut aria-haspopup=dialog du bouton d'ouverture du menu</li>");
 						setItemOutline(nia01f20_btn,"yellow","nia01f51","01-F");
 					}
 				}
 				else{
-					console.log("Le menu mobile s'ouvre dans un disclosure");
+					if(debug_flag) console.log(" - Le menu mobile s'ouvre dans un disclosure");
 					
 					if(nia01f20_btn.getAttribute("aria-expanded") == true){
-						console.log("F5.2 : Erreur dans la valeur de l'attribut aria-expanded du bouton d'ouverture du menu");
+						if(debug_flag) console.log(" - F5.2 : Erreur dans la valeur de l'attribut aria-expanded du bouton d'ouverture du menu");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f52' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut aria-expanded du bouton d'ouverture du menu</li>");
 						setItemOutline(nia01f20_btn,"red","nia01f52","01-F");
 					}
 					
 					if(!(Boolean(nia01f30_Dest.closest('[role="dialog"]')) || Boolean(nia01f30_Dest.closest('[aria-modal="true"]')))){
-						console.log("F5.3 : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?");
+						if(debug_flag) console.log(" - F5.3 : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f53' class='result-focus label-red'>01-F</a> : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f53","01-F");
 					}
 				}
 				if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") == false){
-					console.log("F5.4 : Vocalisation du menu caché en mobile");
+					if(debug_flag) console.log(" - F5.4 : Vocalisation du menu caché en mobile");
 					setItemToResultList("dev","<li><a href='#' data-destination='nia01f54' class='result-focus label-red'>01-F</a> : Vocalisation du menu caché en mobile</li>");
 					setItemOutline(nia01f30_Dest,"red","nia01f54","01-F");
 				}
@@ -265,9 +265,9 @@ function check_part_01(){
 				const lang = nia01f20_btn.closest('[lang]').getAttribute('lang');
 				
 				if(sanitizeText(nia01f20_btn.innerText) != sanitizeText(nia01f20_btnText)){
-					console.log("F6.1 Attention le texte du bouton d'ouverture du menu à changé cela ne devrai pas être le cas");
-					console.log(nia01f20_btn.innerText);
-					console.log(nia01f20_btnText);
+					if(debug_flag) console.log(" - F6.1 Attention le texte du bouton d'ouverture du menu à changé cela ne devrai pas être le cas");
+					if(debug_flag) console.log(nia01f20_btn.innerText);
+					if(debug_flag) console.log(nia01f20_btnText);
 					setItemToResultList("dev","<li><a href='#' data-destination='nia01f61' class='result-focus label-red'>01-F</a> : Attention le texte du bouton d'ouverture du menu change à l'ouverture du menu cela ne devrai pas être le cas</li>");
 					setItemOutline(nia01f20_btn,"red","nia01f61","01-F");
 				}
@@ -275,35 +275,35 @@ function check_part_01(){
 				if(nia01f_isModal){
 					// une fois ouvert, #headernav-mobile possède un attribut aria-hidden="false" aria-modal="true" role="dialog" aria-label="Menu principal"
 					if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") != "false"){
-						console.log("F6.2 Erreur dans la valeur de l'attribut aria-hidden du menu modal ouvert");
-						console.log(nia01f30_Dest.getAttribute("aria-hidden"));
-						console.log(nia01f30_Dest.getAttribute("aria-hidden") != "false");
+						if(debug_flag) console.log(" - F6.2 Erreur dans la valeur de l'attribut aria-hidden du menu modal ouvert");
+						if(debug_flag) console.log(nia01f30_Dest.getAttribute("aria-hidden"));
+						if(debug_flag) console.log(nia01f30_Dest.getAttribute("aria-hidden") != "false");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f62' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut aria-hidden du menu modal ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f62","01-F");
 					}
 					
 					if(!nia01f30_Dest.hasAttribute("aria-modal") || nia01f30_Dest.getAttribute("aria-modal") != "true"){
-						console.log("F6.3 Erreur dans la valeur de l'attribut aria-modal du menu modal ouvert");
-						console.log(!nia01f30_Dest.hasAttribute("aria-modal"));
-						console.log(nia01f30_Dest.getAttribute("aria-modal") != "true");
+						if(debug_flag) console.log(" - F6.3 Erreur dans la valeur de l'attribut aria-modal du menu modal ouvert");
+						if(debug_flag) console.log(!nia01f30_Dest.hasAttribute("aria-modal"));
+						if(debug_flag) console.log(nia01f30_Dest.getAttribute("aria-modal") != "true");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f63' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut aria-modal du menu modal ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f63","01-F");
 					}
 					
 					if(!nia01f30_Dest.hasAttribute("role") || nia01f30_Dest.getAttribute("role") != "dialog"){
-						console.log("F6.4 Erreur dans la valeur de l'attribut role du menu modal ouvert");
+						if(debug_flag) console.log(" - F6.4 Erreur dans la valeur de l'attribut role du menu modal ouvert");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f64' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut role du menu modal ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f64","01-F");
 					}
 					
 					if(!(nia01f30_Dest.hasAttribute("aria-label") || nia01f30_Dest.hasAttribute("aria-labelledby"))){
-						console.log("F6.5 Erreur dans la valeur de l'attribut aria-label du menu modal ouvert");
+						if(debug_flag) console.log(" - F6.5 Erreur dans la valeur de l'attribut aria-label du menu modal ouvert");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f65' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut aria-label du menu modal ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f65","01-F");
 					}
 					// le premier élément de cette modale est un button.anchor-close
 					if(nia01f30_Dest.firstChild.tagName == 'BUTTON' && nia01f30_Dest.firstChild.className.contains("anchor-close")){
-						console.log("F6.6 Erreur au niveau du bouton close du menu modal ouvert");
+						if(debug_flag) console.log(" - F6.6 Erreur au niveau du bouton close du menu modal ouvert");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f66' class='result-focus label-red'>01-F</a> : Erreur au niveau du bouton close du menu modal ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f66","01-F");
 					}
@@ -311,19 +311,19 @@ function check_part_01(){
 				else{
 					// une fois ouvert, #headernav-mobile possède un attribut aria-hidden="false" - Absence de aria-modal="true" role="dialog"
 					if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") != false){
-						console.log("F6.7 Erreur dans la valeur de l'attribut aria-hidden du menu disclosure ouvert");
+						if(debug_flag) console.log(" - F6.7 Erreur dans la valeur de l'attribut aria-hidden du menu disclosure ouvert");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f67' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut aria-hidden du menu disclosure ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f67","01-F");
 					}
 					
 					if(nia01f30_Dest.hasAttribute("aria-modal") && nia01f30_Dest.getAttribute("aria-modal") == true){
-						console.log("F6.8 Erreur dans la valeur de l'attribut aria-modal du menu disclosure ouvert");
+						if(debug_flag) console.log(" - F6.8 Erreur dans la valeur de l'attribut aria-modal du menu disclosure ouvert");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f68' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut aria-modal du menu disclosure ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f68","01-F");
 					}
 					
 					if(nia01f30_Dest.hasAttribute("role") && nia01f30_Dest.getAttribute("role") == "dialog"){
-						console.log("F6.9 Erreur dans la valeur de l'attribut role du menu disclosure ouvert");
+						if(debug_flag) console.log(" - F6.9 Erreur dans la valeur de l'attribut role du menu disclosure ouvert");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f69' class='result-focus label-red'>01-F</a> : Erreur dans la valeur de l'attribut role du menu disclosure ouvert</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f69","01-F");
 					}
