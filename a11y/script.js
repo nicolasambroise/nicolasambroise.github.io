@@ -175,22 +175,25 @@ if(!document.body.classList.contains('panel-injected')){
 	  document.head.appendChild(jsPart15);
 	}
 
-	jsPart01.addEventListener('load', () => {if(typeof check_part_01 == "function") check_part_01();})
-	jsPart02.addEventListener('load', () => {if(typeof check_part_02 == "function") check_part_02();})
-	jsPart03.addEventListener('load', () => {if(typeof check_part_03 == "function") check_part_03();})
-	jsPart04.addEventListener('load', () => {if(typeof check_part_04 == "function") check_part_04();})
-	jsPart05.addEventListener('load', () => {if(typeof check_part_05 == "function") check_part_05();})
-	jsPart06.addEventListener('load', () => {if(typeof check_part_06 == "function") check_part_06();})
-	jsPart07.addEventListener('load', () => {if(typeof check_part_07 == "function") check_part_07();})
-	jsPart08.addEventListener('load', () => {if(typeof check_part_08 == "function") check_part_08();})
-	jsPart09.addEventListener('load', () => {if(typeof check_part_09 == "function") check_part_09();})
-	jsPart10.addEventListener('load', () => {if(typeof check_part_10 == "function") check_part_10();})
-	jsPart11.addEventListener('load', () => {if(typeof check_part_11 == "function") check_part_11();})
-	jsPart12.addEventListener('load', () => {if(typeof check_part_12 == "function") check_part_12();})
-	jsPart13.addEventListener('load', () => {if(typeof check_part_13 == "function") check_part_13();})
-	jsPart14.addEventListener('load', () => {if(typeof check_part_14 == "function") check_part_14();})
-	jsPart15.addEventListener('load', () => {if(typeof check_part_15 == "function") check_part_15();})
-	createResultPanel();
+	var p01 = new Promise(function(resolve) {jsPart01.addEventListener('load', () => {if(typeof check_part_01 == "function") check_part_01();})})
+	var p02 = new Promise(function(resolve) {jsPart02.addEventListener('load', () => {if(typeof check_part_02 == "function") check_part_02();})})
+	var p03 = new Promise(function(resolve) {jsPart03.addEventListener('load', () => {if(typeof check_part_03 == "function") check_part_03();})})
+	var p04 = new Promise(function(resolve) {jsPart04.addEventListener('load', () => {if(typeof check_part_04 == "function") check_part_04();})})
+	var p05 = new Promise(function(resolve) {jsPart05.addEventListener('load', () => {if(typeof check_part_05 == "function") check_part_05();})})
+	var p06 = new Promise(function(resolve) {jsPart06.addEventListener('load', () => {if(typeof check_part_06 == "function") check_part_06();})})
+	var p07 = new Promise(function(resolve) {jsPart07.addEventListener('load', () => {if(typeof check_part_07 == "function") check_part_07();})})
+	var p08 = new Promise(function(resolve) {jsPart08.addEventListener('load', () => {if(typeof check_part_08 == "function") check_part_08();})})
+	var p09 = new Promise(function(resolve) {jsPart09.addEventListener('load', () => {if(typeof check_part_09 == "function") check_part_09();})})
+	var p10 = new Promise(function(resolve) {jsPart10.addEventListener('load', () => {if(typeof check_part_10 == "function") check_part_10();})})
+	var p11 = new Promise(function(resolve) {jsPart11.addEventListener('load', () => {if(typeof check_part_11 == "function") check_part_11();})})
+	var p12 = new Promise(function(resolve) {jsPart12.addEventListener('load', () => {if(typeof check_part_12 == "function") check_part_12();})})
+	var p13 = new Promise(function(resolve) {jsPart13.addEventListener('load', () => {if(typeof check_part_13 == "function") check_part_13();})})
+	var p14 = new Promise(function(resolve) {jsPart14.addEventListener('load', () => {if(typeof check_part_14 == "function") check_part_14();})})
+	var p15 = new Promise(function(resolve) {jsPart15.addEventListener('load', () => {if(typeof check_part_15 == "function") check_part_15();})})
+		
+	Promise.all([p01,p02,p03,p04,p05,p06,p07,p08,p09,p10,p11,p12,p13,p14,p15])
+	.then(function() {createResultPanel();})
+	.then(function() {thirdPartValidation();});
 }
 else{
 	check_part_01();
@@ -209,6 +212,7 @@ else{
 	check_part_14();
 	check_part_15();
 	createResultPanel();
+	thirdPartValidation();
 }
 
 // END
@@ -426,97 +430,61 @@ function createResultPanel(){
 	}
 }
 
-// Fonction Validator HTML5 async 
-const validatorUrl = "https://validator.nu/?out=json"
-async function validator(url = validatorUrl) {
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'text/html;charset=UTF-8' },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: new XMLSerializer().serializeToString(document)
-  });
-  return response.json();
-}
+// Fonction Validation Third-part : HTML5 Wave Lighthouse
+function thirdPartValidation(){
 
-validator().then(data => {
-    //console.log(data);
-	let elem = document.getElementById("result_html5");
-	// Filter data result
-	const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”","Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)","CSS: Parse Error."].join("|");
-	const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
-	let msg_html5 = "";
-	
-	if (error.length) {
-	  console.group(`%c${error.length} validation errors`, "background-color:#D93025;color:#FFF;padding:1px 4px");
-	  error.forEach(msg => {
-		console.groupCollapsed(`%c${msg.message} (line: ${msg.lastLine})`, "color:#D93025");
-		console.table(msg);
-		msg_html5 += "<li>"+msg.message+" (line: "+msg.lastLine+")</li>";
-		console.groupEnd();
-	  })
-	  console.groupEnd();
-	  if(msg_html5  != ""){
-		elem.innerHTML += "<ul>"+msg_html5+"</ul>";
-	  }
-	}
-	else{
-		elem.innerHTML += " Aucune erreur détéctée"
-	}
-})
-  
-// Fonction LightHouse
-if(!isPreview){
-	const lighthouseUrl = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
-	// "https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" 
-	let lighthouseOptions = "locale=fr-FR&category=accessibility&category=best-practices&category=seo";
-	
-	if(currentWidth > 500) { lighthouseOptions += "&strategy=desktop";}
-	else {lighthouseOptions += "&strategy=mobile";}
-	
-	async function lighthouse(url = lighthouseUrl) {
-	  const response = await fetch(url+'?'+lighthouseOptions+'&url='+encodeURIComponent(currentUrl), {
-		method: 'GET',
+	// Fonction Validator HTML5 async 
+	const validatorUrl = "https://validator.nu/?out=json"
+	async function validator(url = validatorUrl) {
+	  const response = await fetch(url, {
+		method: 'POST',
 		mode: 'cors',
 		cache: 'no-cache',
 		credentials: 'same-origin',
 		headers: { 'Content-Type': 'text/html;charset=UTF-8' },
 		redirect: 'follow',
-		referrerPolicy: 'no-referrer'
+		referrerPolicy: 'no-referrer',
+		body: new XMLSerializer().serializeToString(document)
 	  });
 	  return response.json();
 	}
 
-	lighthouse().then(data => {
-      console.log(data.lighthouseResult.categories);
-	  
-	  // Filter data result
-	  let lighthouse_access_score = data.lighthouseResult.categories["accessibility"].score * 100;
-	  let lighthouse_bp_score = data.lighthouseResult.categories["best-practices"].score * 100;
-	  let lighthouse_seo_score = data.lighthouseResult.categories["seo"].score * 100;
-	
-	  if(lighthouse_access_score < 80) lighthouse_access_score = "<span style='color:red;'>"+lighthouse_access_score+"</span>";
-	  if(lighthouse_bp_score < 80) lighthouse_bp_score = "<span style='color:red;'>"+lighthouse_bp_score+"</span>";
-	  if(lighthouse_seo_score < 80) lighthouse_seo_score = "<span style='color:red;'>"+lighthouse_seo_score+"</span>";
-	
-	  const lighthouse_msg = "<li>Accessibility : "+lighthouse_access_score+"/100</li><li>Best practices : "+lighthouse_bp_score+"/100</li><li>SEO : "+lighthouse_seo_score+"/100</li>";
-	  
-	  let elem = document.getElementById("result_lighthouse");
-		elem.innerHTML += "<ul>"+lighthouse_msg+"</ul>";
+	validator().then(data => {
+		//console.log(data);
+		let elem = document.getElementById("result_html5");
+		// Filter data result
+		const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”","Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)","CSS: Parse Error."].join("|");
+		const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
+		let msg_html5 = "";
+		
+		if (error.length) {
+		  console.group(`%c${error.length} validation errors`, "background-color:#D93025;color:#FFF;padding:1px 4px");
+		  error.forEach(msg => {
+			console.groupCollapsed(`%c${msg.message} (line: ${msg.lastLine})`, "color:#D93025");
+			console.table(msg);
+			msg_html5 += "<li>"+msg.message+" (line: "+msg.lastLine+")</li>";
+			console.groupEnd();
+		  })
+		  console.groupEnd();
+		  if(msg_html5  != ""){
+			elem.innerHTML += "<ul>"+msg_html5+"</ul>";
+		  }
+		}
+		else{
+			elem.innerHTML += " Aucune erreur détéctée"
+		}
 	})
-	
-	if(wave_allow_credit){
-		/*target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li>*/
-		// https://wave.webaim.org/api/request?key={yourAPIkey}&url=https://google.com/ --> APIKey payante ??
+	  
+	// Fonction LightHouse
+	if(!isPreview){
+		const lighthouseUrl = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+		// "https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" 
+		let lighthouseOptions = "locale=fr-FR&category=accessibility&category=best-practices&category=seo";
 		
-		const waveUrl = "https://wave.webaim.org/api/request?&url=https://google.com/";
-		// https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)
-		let waveOptions = "key={yourAPIkey}&format=json&reporttype=1";
+		if(currentWidth > 500) { lighthouseOptions += "&strategy=desktop";}
+		else {lighthouseOptions += "&strategy=mobile";}
 		
-		async function wave(url = waveUrl) {
+		async function lighthouse(url = lighthouseUrl) {
 		  const response = await fetch(url+'?'+lighthouseOptions+'&url='+encodeURIComponent(currentUrl), {
 			method: 'GET',
 			mode: 'cors',
@@ -529,23 +497,64 @@ if(!isPreview){
 		  return response.json();
 		}
 
-		wave().then(data => {
-		  console.log(data);
+		lighthouse().then(data => {
+		  console.log(data.lighthouseResult.categories);
 		  
 		  // Filter data result
-		  const creditsremaining = data.statistics.creditsremaining;
-		  const wave_error = data.categories.error.count;
-		  const wave_contrast = data.categories.contrast.count;
-		  const wave_alert = data.categories.alert.count;
-		  const wave_feature = data.categories.feature.count;
-		  const wave_structure = data.categories.structure.count;
-		  const wave_aria = data.categories.aria.count;
+		  let lighthouse_access_score = data.lighthouseResult.categories["accessibility"].score * 100;
+		  let lighthouse_bp_score = data.lighthouseResult.categories["best-practices"].score * 100;
+		  let lighthouse_seo_score = data.lighthouseResult.categories["seo"].score * 100;
 		
-		  const wave_msg = "<li>Error : "+wave_error+"</li><li>Contrast : "+wave_contrast+"</li><li>Alert : "+wave_alert+"</li><li>Feature : "+wave_feature+"</li><li>Structure : "+wave_structure+"</li><li>Aria : "+wave_aria+"</li>";
+		  if(lighthouse_access_score < 80) lighthouse_access_score = "<span style='color:red;'>"+lighthouse_access_score+"</span>";
+		  if(lighthouse_bp_score < 80) lighthouse_bp_score = "<span style='color:red;'>"+lighthouse_bp_score+"</span>";
+		  if(lighthouse_seo_score < 80) lighthouse_seo_score = "<span style='color:red;'>"+lighthouse_seo_score+"</span>";
+		
+		  const lighthouse_msg = "<li>Accessibility : "+lighthouse_access_score+"/100</li><li>Best practices : "+lighthouse_bp_score+"/100</li><li>SEO : "+lighthouse_seo_score+"/100</li>";
 		  
-		  let elem = document.getElementById("result_wave");
-			elem.innerHTML += "<ul>"+wave_msg+"</ul>";
+		  let elem = document.getElementById("result_lighthouse");
+			elem.innerHTML += "<ul>"+lighthouse_msg+"</ul>";
 		})
+		
+		// Fonction Wave
+		if(wave_allow_credit){
+			/*target="_blank">lien</a></li><li>WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li>*/
+			// https://wave.webaim.org/api/request?key={yourAPIkey}&url=https://google.com/ --> APIKey payante ??
+			
+			const waveUrl = "https://wave.webaim.org/api/request?&url=https://google.com/";
+			// https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)
+			let waveOptions = "key={yourAPIkey}&format=json&reporttype=1";
+			
+			async function wave(url = waveUrl) {
+			  const response = await fetch(url+'?'+lighthouseOptions+'&url='+encodeURIComponent(currentUrl), {
+				method: 'GET',
+				mode: 'cors',
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+				redirect: 'follow',
+				referrerPolicy: 'no-referrer'
+			  });
+			  return response.json();
+			}
+
+			wave().then(data => {
+			  console.log(data);
+			  
+			  // Filter data result
+			  const creditsremaining = data.statistics.creditsremaining;
+			  const wave_error = data.categories.error.count;
+			  const wave_contrast = data.categories.contrast.count;
+			  const wave_alert = data.categories.alert.count;
+			  const wave_feature = data.categories.feature.count;
+			  const wave_structure = data.categories.structure.count;
+			  const wave_aria = data.categories.aria.count;
+			
+			  const wave_msg = "<li>Error : "+wave_error+"</li><li>Contrast : "+wave_contrast+"</li><li>Alert : "+wave_alert+"</li><li>Feature : "+wave_feature+"</li><li>Structure : "+wave_structure+"</li><li>Aria : "+wave_aria+"</li>";
+			  
+			  let elem = document.getElementById("result_wave");
+				elem.innerHTML += "<ul>"+wave_msg+"</ul>";
+			})
+		}
 	}
 }
 
