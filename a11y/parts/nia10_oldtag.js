@@ -112,3 +112,4 @@ function check_part_10(){
 	  setItemsOutline(nia10d_nodes,"red","nia10d","10-D");
 	}
 }
+module.exports = {check_part_10};

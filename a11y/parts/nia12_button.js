@@ -70,3 +70,4 @@ function check_part_12(){
 	  setItemsOutline(nia12d_nodes,"yellow","nia12d","12-D");
 	}
 }
+module.exports = {check_part_12};

@@ -53,3 +53,4 @@ function check_part_08(){
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia08e' class='result-focus label-red'>08-E</a> : Présence d'un tableau de données sans en-tête [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-5-6-1' target='_blank'>RAWeb 5.6.1</a>]</li>");
 	}
 }
+module.exports = {check_part_08};

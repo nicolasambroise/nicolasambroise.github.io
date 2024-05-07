@@ -135,3 +135,4 @@ function check_part_06(){
 	  setItemsOutline(nia06i_nodes,"yellow","nia06i","06-I");
 	}
 }
+module.exports = {check_part_06};

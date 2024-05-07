@@ -28,3 +28,4 @@ function check_part_11(){
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia11b' class='result-focus label-orange'>11-B</a> : Présence de \"Lorem ipsum\" sur la page</li>");
 	}
 }
+module.exports = {check_part_11};

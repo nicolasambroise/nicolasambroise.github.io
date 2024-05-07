@@ -43,3 +43,4 @@ function check_part_13(){
 		}
 	}
 }
+module.exports = {check_part_13};

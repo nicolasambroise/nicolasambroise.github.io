@@ -176,48 +176,34 @@ function seeMoreAddress(){
 /*- -------------------------------------------------------------------------------- */
 // Split
 
-import("https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=1' + Date.now()").then((part1) => {
+if(document.body.classList.contains('panel-injected')){
+	setTimeout(function() {
+		seeMoreAccordion();
+		check_part_01();
+		check_part_02();
+		check_part_03();
+		check_part_04();
+		check_part_05();
+		check_part_06();
+		check_part_07();
+		check_part_08();
+		check_part_09();
+		check_part_10();
+		check_part_11();
+		check_part_12();
+		check_part_13();
+		check_part_14();
+		check_part_15();
+		createResultPanel();
+	},100);
+}
+else{
+	var part1 = require("https://nicolasambroise.github.io/a11y/parts/nia01_config.js?v=1' + Date.now()");
 	seeMoreAccordion();
-	check_part_01();
-	/*
-	check_part_02();
-	check_part_03();
-	check_part_04();
-	check_part_05();
-	check_part_06();
-	check_part_07();
-	check_part_08();
-	check_part_09();
-	check_part_10();
-	check_part_11();
-	check_part_12();
-	check_part_13();
-	check_part_14();
-	check_part_15();*/
+	part1.check_part_01();
 	createResultPanel();
-});
+}
 
-/*
-setTimeout(function() {
-	seeMoreAccordion();
-	check_part_01();
-	check_part_02();
-	check_part_03();
-	check_part_04();
-	check_part_05();
-	check_part_06();
-	check_part_07();
-	check_part_08();
-	check_part_09();
-	check_part_10();
-	check_part_11();
-	check_part_12();
-	check_part_13();
-	check_part_14();
-	check_part_15();
-	createResultPanel();
-},100);
-*/
 
 setTimeout(function() {
 	seeMoreAddress();

@@ -237,3 +237,5 @@ function check_part_05(){
 	// https://webtips.dev/webtips/javascript/find-overflowing-elements-with-javascript
 	// https://www.stevefenton.co.uk/blog/2022/12/detect-overflowing-elements/
 }
+
+module.exports = {check_part_05};

@@ -69,3 +69,4 @@ function check_part_07(){
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia07e' class='result-focus label-yellow'>07-E</a> : Présence de sauts de titres [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-9-1-1' target='_blank'>RAWeb 9.1.1</a>]</li>");
 	}
 }
+module.exports = {check_part_07};
