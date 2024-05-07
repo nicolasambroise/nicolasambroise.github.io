@@ -156,9 +156,11 @@ let result_man = "";
 console.clear();
 
 // Ouverture des Accordéons
-const accordion = document.querySelectorAll('.cmp-accordion details');
-for(let i = 0; i < accordion.length; i++){
-	accordion[i].open = true;
+function seeMoreAccordion(){
+	const accordion = document.querySelectorAll('.cmp-accordion details');
+	for(let i = 0; i < accordion.length; i++){
+		accordion[i].open = true;
+	}
 }
 
 // Ouverture des Adresses du Geoportail
@@ -168,40 +170,40 @@ function seeMoreAddress(){
 		address[i].style.display = "block";
 	}
 }
-setTimeout(seeMoreAddress(),5000); // --> Todo : remplacer par un wait for geoportail data-loaded = true;
+
 
 /*- -------------------------------------------------------------------------------- */
 // Split
-check_part_01();
-check_part_02();
-check_part_03();
-check_part_04();
-check_part_05();
-check_part_06();
-check_part_07();
-check_part_08();
-check_part_09();
-check_part_10();
-check_part_11();
-check_part_12();
-check_part_13();
-check_part_14();
-check_part_15();
 
-/*- -------------------------------------------------------------------------------- */
+setTimeout(function() {
+	seeMoreAccordion();
+	check_part_01();
+	check_part_02();
+	check_part_03();
+	check_part_04();
+	check_part_05();
+	check_part_06();
+	check_part_07();
+	check_part_08();
+	check_part_09();
+	check_part_10();
+	check_part_11();
+	check_part_12();
+	check_part_13();
+	check_part_14();
+	check_part_15();
+	createResultPanel();
+},100);
+
+setTimeout(function() {
+	seeMoreAddress();
+},5000); // --> Todo : remplacer par un wait for geoportail data-loaded = true;
+
+
 // END
-let result_global = "";
-if (result_crit != ""){result_crit = "<h2>Points critiques</h2><ul>"+result_crit+"</ul>";}
-if (result_nc != ""){result_nc = "<h2>Points non-conforme</h2><ul>"+result_nc+"</ul>";}
-if (result_nth != ""){result_nth = "<h2>Nice-to-have</h2><ul>"+result_nth+"</ul>";}
-if (result_dev != ""){result_dev = "<h2>Problèmes dev</h2><ul>"+result_dev+"</ul>";}
-if (result_man != ""){result_man = "<h2>A vérifier manuellement</h2><ul>"+result_man+"</ul>";}
-if (result_crit == "" && result_nc == "" && result_nth == "" && result_dev == "" && result_man == ""  ){
-  result_global = "Pas de points remontés !"; 
-}
-else { result_global = result_crit + result_nc + result_nth + result_man + result_dev;}
+/*- -------------------------------------------------------------------------------- */
 
-// Fonction color error
+// Fonction mise en coleur des erreurs
 function setItemsOutline(items,color,classname,label){
 	if(debug_flag) console.log("["+classname+"] Problème detecté sur "+items.length+" éléments");
 	let item;
@@ -255,6 +257,7 @@ function isItemVisible(item) {
     return true;
 }
 
+// Fonction SR Only : Renvoi TRUE si l'item est visuellement masqué (classe .at)
 function isItemSROnly(item){
 	let style;
 	while (item.parentElement) {
@@ -265,6 +268,7 @@ function isItemSROnly(item){
 	return false
 }
 
+// Fonction Display None : Renvoi TRUE si l'item est masqué (display:none)
 function isItemDisplayNone(item){
 	while (item.parentElement) {
 	  if(window.getComputedStyle(item).display =='none') return true;
@@ -273,6 +277,7 @@ function isItemDisplayNone(item){
 	return false
 }
 
+// Fonction Has Content : Renvoi TRUE si l'item possède un contenu textuel visible
 function isItemHasVisibleContent(item){
 	if(!item.innerText) return false;
 	const lang = item.closest('[lang]').getAttribute('lang');
@@ -307,6 +312,7 @@ function isItemHasVisibleContent(item){
 	return true;
 }
 
+// Fonction Has Direct Content : Renvoi TRUE si l'item possède un contenu direct
 function isItemHasDirectContent(item){
 	const lang = item.closest('[lang]').getAttribute('lang');
 	let tempElement = item.cloneNode(true);
@@ -347,6 +353,7 @@ function getInheritedBackgroundColor(item) {
   return getInheritedBackgroundColor(item.parentElement)
 }
 
+// Fonction d'ajout à la liste des résultats 
 function setItemToResultList(list,item){
 	if(list=="crit"){ result_crit += item;}
 	else if(list=="nc"){ result_nc += item;}
@@ -356,44 +363,55 @@ function setItemToResultList(list,item){
 	else { alert("erreur setItemToResultList");}
 }
 
-
 // Create the result Panel
-let checkA11YPanel = document.createElement('div');
-checkA11YPanel.setAttribute("id", "checkA11YPanel");
-
-let ThirdPart = '<p id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></p>';
-if(!isPreview){
-	ThirdPart ='<ul><li id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_wave">WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_lighthouse">Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul>';
-}
-
-checkA11YPanel.innerHTML = '<div class="panel-header"><h1>A11Y Review</h1></div><div class="panel-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel">'+ThirdPart+'</div></details></div>';
-
-document.body.appendChild(checkA11YPanel);
-//document.body.before(checkA11YPanel);
-
-let checkA11YPanelBtn = document.createElement('button');
-checkA11YPanelBtn.setAttribute("id", "checkA11YPanelBtn");
-checkA11YPanelBtn.textContent = 'A11Y';
-document.body.appendChild(checkA11YPanelBtn);
-checkA11YPanelBtn.addEventListener('click', () => {toggleCheckA11YPanel();});
-
-// Fonction Focus on Element
-const result_focus = document.querySelectorAll('a.result-focus');
-let targetElement, targetElementOffset;
-for(let i = 0; i < result_focus.length; i++){
-  result_focus[i].addEventListener('click', (e) => {
-    e.preventDefault();
-	targetElement = document.querySelector("."+result_focus[i].getAttribute('data-destination'));
-	if(targetElement && isItemVisible(targetElement)){
-		targetElementOffset = targetElement.getBoundingClientRect().top - document.body.getBoundingClientRect().top
-		window.scroll({ top: targetElementOffset, left: 0, behavior: 'smooth' });
-		targetElement.style.outlineWidth = "10px";
-		setTimeout(() => {targetElement.style.outlineWidth = "3px";}, 3000);
+function createResultPanel(){
+	let result_global = "";
+	if (result_crit != ""){result_crit = "<h2>Points critiques</h2><ul>"+result_crit+"</ul>";}
+	if (result_nc != ""){result_nc = "<h2>Points non-conforme</h2><ul>"+result_nc+"</ul>";}
+	if (result_nth != ""){result_nth = "<h2>Nice-to-have</h2><ul>"+result_nth+"</ul>";}
+	if (result_dev != ""){result_dev = "<h2>Problèmes dev</h2><ul>"+result_dev+"</ul>";}
+	if (result_man != ""){result_man = "<h2>A vérifier manuellement</h2><ul>"+result_man+"</ul>";}
+	if (result_crit == "" && result_nc == "" && result_nth == "" && result_dev == "" && result_man == ""  ){
+	  result_global = "Pas de points remontés !"; 
 	}
-	else{
-		alert("Element non visible actuellement, essayez de redimentionner votre fenêtre pour le faire apparaîte ( ."+result_focus[i].getAttribute('data-destination')+")");
+	else { result_global = result_crit + result_nc + result_nth + result_man + result_dev;}
+
+	let checkA11YPanel = document.createElement('div');
+	checkA11YPanel.setAttribute("id", "checkA11YPanel");
+
+	let ThirdPart = '<p id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></p>';
+	if(!isPreview){
+		ThirdPart ='<ul><li id="result_html5">W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_wave">WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_lighthouse">Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul>';
 	}
-  });
+
+	checkA11YPanel.innerHTML = '<div class="panel-header"><h1>A11Y Review</h1></div><div class="panel-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel">'+ThirdPart+'</div></details></div>';
+
+	document.body.appendChild(checkA11YPanel);
+
+	let checkA11YPanelBtn = document.createElement('button');
+	checkA11YPanelBtn.setAttribute("id", "checkA11YPanelBtn");
+	checkA11YPanelBtn.textContent = 'A11Y';
+	document.body.appendChild(checkA11YPanelBtn);
+	checkA11YPanelBtn.addEventListener('click', () => {toggleCheckA11YPanel();});
+
+	// Fonction Focus on Element
+	const result_focus = document.querySelectorAll('a.result-focus');
+	let targetElement, targetElementOffset;
+	for(let i = 0; i < result_focus.length; i++){
+		result_focus[i].addEventListener('click', (e) => {
+			e.preventDefault();
+			targetElement = document.querySelector("."+result_focus[i].getAttribute('data-destination'));
+			if(targetElement && isItemVisible(targetElement)){
+				targetElementOffset = targetElement.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
+				window.scroll({ top: targetElementOffset, left: 0, behavior: 'smooth' });
+				targetElement.style.outlineWidth = "10px";
+				setTimeout(() => {targetElement.style.outlineWidth = "3px";}, 3000);
+			}
+			else{
+				alert("Element non visible actuellement, essayez de redimentionner votre fenêtre pour le faire apparaîte ( ."+result_focus[i].getAttribute('data-destination')+")");
+			}
+		});
+	}
 }
 
 // Fonction Validator HTML5 async 
@@ -440,7 +458,6 @@ validator().then(data => {
 })
   
 // Fonction LightHouse
-
 if(!isPreview){
 	const lighthouseUrl = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
 	// "https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" 
@@ -520,7 +537,6 @@ if(!isPreview){
 		})
 	}
 }
-
 
 // Fonction open/close Panel 
 function openCheckA11YPanel(){
