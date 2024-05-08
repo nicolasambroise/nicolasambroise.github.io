@@ -175,21 +175,21 @@ if(!document.body.classList.contains('panel-injected')){
 	  document.head.appendChild(jsPart15);
 	}
 
-	var p01 = new Promise(function(resolve) {jsPart01.addEventListener('load', () => {if(typeof check_part_01 == "function") check_part_01();})});
-	var p02 = new Promise(function(resolve) {jsPart02.addEventListener('load', () => {if(typeof check_part_02 == "function") check_part_02();})});
-	var p03 = new Promise(function(resolve) {jsPart03.addEventListener('load', () => {if(typeof check_part_03 == "function") check_part_03();})});
-	var p04 = new Promise(function(resolve) {jsPart04.addEventListener('load', () => {if(typeof check_part_04 == "function") check_part_04();})});
-	var p05 = new Promise(function(resolve) {jsPart05.addEventListener('load', () => {if(typeof check_part_05 == "function") check_part_05();})});
-	var p06 = new Promise(function(resolve) {jsPart06.addEventListener('load', () => {if(typeof check_part_06 == "function") check_part_06();})});
-	var p07 = new Promise(function(resolve) {jsPart07.addEventListener('load', () => {if(typeof check_part_07 == "function") check_part_07();})});
-	var p08 = new Promise(function(resolve) {jsPart08.addEventListener('load', () => {if(typeof check_part_08 == "function") check_part_08();})});
-	var p09 = new Promise(function(resolve) {jsPart09.addEventListener('load', () => {if(typeof check_part_09 == "function") check_part_09();})});
-	var p10 = new Promise(function(resolve) {jsPart10.addEventListener('load', () => {if(typeof check_part_10 == "function") check_part_10();})});
-	var p11 = new Promise(function(resolve) {jsPart11.addEventListener('load', () => {if(typeof check_part_11 == "function") check_part_11();})});
-	var p12 = new Promise(function(resolve) {jsPart12.addEventListener('load', () => {if(typeof check_part_12 == "function") check_part_12();})});
-	var p13 = new Promise(function(resolve) {jsPart13.addEventListener('load', () => {if(typeof check_part_13 == "function") check_part_13();})});
-	var p14 = new Promise(function(resolve) {jsPart14.addEventListener('load', () => {if(typeof check_part_14 == "function") check_part_14();})});
-	var p15 = new Promise(function(resolve) {jsPart15.addEventListener('load', () => {if(typeof check_part_15 == "function") check_part_15();})});
+	var p01 = new Promise(function(resolve) {jsPart01.addEventListener('load', () => {if(typeof check_part_01 == "function") check_part_01();setTimeout(resolve, 100);})});
+	var p02 = new Promise(function(resolve) {jsPart02.addEventListener('load', () => {if(typeof check_part_02 == "function") check_part_02();setTimeout(resolve, 100);})});
+	var p03 = new Promise(function(resolve) {jsPart03.addEventListener('load', () => {if(typeof check_part_03 == "function") check_part_03();setTimeout(resolve, 100);})});
+	var p04 = new Promise(function(resolve) {jsPart04.addEventListener('load', () => {if(typeof check_part_04 == "function") check_part_04();setTimeout(resolve, 100);})});
+	var p05 = new Promise(function(resolve) {jsPart05.addEventListener('load', () => {if(typeof check_part_05 == "function") check_part_05();setTimeout(resolve, 100);})});
+	var p06 = new Promise(function(resolve) {jsPart06.addEventListener('load', () => {if(typeof check_part_06 == "function") check_part_06();setTimeout(resolve, 100);})});
+	var p07 = new Promise(function(resolve) {jsPart07.addEventListener('load', () => {if(typeof check_part_07 == "function") check_part_07();setTimeout(resolve, 100);})});
+	var p08 = new Promise(function(resolve) {jsPart08.addEventListener('load', () => {if(typeof check_part_08 == "function") check_part_08();setTimeout(resolve, 100);})});
+	var p09 = new Promise(function(resolve) {jsPart09.addEventListener('load', () => {if(typeof check_part_09 == "function") check_part_09();setTimeout(resolve, 100);})});
+	var p10 = new Promise(function(resolve) {jsPart10.addEventListener('load', () => {if(typeof check_part_10 == "function") check_part_10();setTimeout(resolve, 100);})});
+	var p11 = new Promise(function(resolve) {jsPart11.addEventListener('load', () => {if(typeof check_part_11 == "function") check_part_11();setTimeout(resolve, 100);})});
+	var p12 = new Promise(function(resolve) {jsPart12.addEventListener('load', () => {if(typeof check_part_12 == "function") check_part_12();setTimeout(resolve, 100);})});
+	var p13 = new Promise(function(resolve) {jsPart13.addEventListener('load', () => {if(typeof check_part_13 == "function") check_part_13();setTimeout(resolve, 100);})});
+	var p14 = new Promise(function(resolve) {jsPart14.addEventListener('load', () => {if(typeof check_part_14 == "function") check_part_14();setTimeout(resolve, 100);})});
+	var p15 = new Promise(function(resolve) {jsPart15.addEventListener('load', () => {if(typeof check_part_15 == "function") check_part_15();setTimeout(resolve, 100);})});
 }
 else{
 	var p01 = new Promise(function(resolve) {check_part_01();setTimeout(resolve, 100);});
