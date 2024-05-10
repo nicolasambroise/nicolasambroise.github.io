@@ -364,11 +364,20 @@ function luminance(r, g, b) {
   return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
 }
 
+// Fonction chercher la couleur de background d'un élément parent
 function getInheritedBackgroundColor(item) {
-  var backgroundColor = window.getComputedStyle(item).getPropertyValue('background-color');
-  if (backgroundColor != "rgba(0, 0, 0, 0)") return backgroundColor
+  let backgroundColor = window.getComputedStyle(item).getPropertyValue('background-color');
+  if (backgroundColor != "rgba(0, 0, 0, 0)") return backgroundColor;
   if (!item.parentElement) return "rgba(0, 0, 0, 0)";
-  return getInheritedBackgroundColor(item.parentElement)
+  return getInheritedBackgroundColor(item.parentElement);
+}
+
+// Fonction chercher la position absolute/fixed d'un élément parent
+function getInheritedPosition(item) {
+  let position = window.getComputedStyle(item).getPropertyValue('position');
+  if (position == "absolute" || position == "fixed") return position;
+  if (!item.parentElement) return "relative";
+  return getInheritedPosition(item.parentElement);
 }
 
 // Fonction d'ajout à la liste des résultats 
@@ -406,11 +415,6 @@ function createResultPanel(){
 
 	document.body.appendChild(checkA11YPanel);
 
-	let checkA11YPanelBtn = document.createElement('button');
-	checkA11YPanelBtn.setAttribute("id", "checkA11YPanelBtn");
-	checkA11YPanelBtn.textContent = 'A11Y';
-	document.body.appendChild(checkA11YPanelBtn);
-	checkA11YPanelBtn.addEventListener('click', () => {toggleCheckA11YPanel();});
 
 	// Fonction Focus on Element
 	const result_focus = document.querySelectorAll('a.result-focus');
@@ -577,6 +581,12 @@ function activateCheckA11YPanel(){
 		if(document.getElementById("checkA11YPanel").classList.contains("active")){closeCheckA11YPanel();}
 		else {openCheckA11YPanel();}
 	}
+
+	let checkA11YPanelBtn = document.createElement('button');
+	checkA11YPanelBtn.setAttribute("id", "checkA11YPanelBtn");
+	checkA11YPanelBtn.textContent = 'A11Y';
+	document.body.appendChild(checkA11YPanelBtn);
+	checkA11YPanelBtn.addEventListener('click', () => {toggleCheckA11YPanel();});
 
 	openCheckA11YPanel();
 	document.body.classList.add("panel-injected");

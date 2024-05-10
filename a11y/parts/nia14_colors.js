@@ -11,13 +11,17 @@ function check_part_14(){
 
 	// A Check All text
 	const nia14a_nodes = document.querySelectorAll('p, span:not(.checkA11YSpan), li, strong, h1, h2, h3, h4, h5, small, a:not([disabled]), button:not([disabled]), blockquote, q, dd, dt, label');
-	let nia14a_flag = false;
+	let nia14a_flag1 = false;
+	let nia14a_flag2 = false;
 	let nia14a_color1,nia14a_color2,nia14a_color1rbg, nia14a_color2rbg,nia14a_color1luminance, nia14a_color2luminance, nia14a_ratio,nia14a_ratio_inv, nia14a_bold, nia14a_large, nia14a_isbold;
 	if(nia14a_nodes && nia14a_nodes.length > 0){
 		for(let i = 0; i < nia14a_nodes.length; i++){
 			if(isItemVisible(nia14a_nodes[i]) && !isItemSROnly(nia14a_nodes[i]) && isItemHasVisibleContent(nia14a_nodes[i]) && isItemHasDirectContent(nia14a_nodes[i])){
 				nia14a_color1 = window.getComputedStyle(nia14a_nodes[i],null).getPropertyValue('color');  // Text Color
 				nia14a_color2 = getInheritedBackgroundColor(nia14a_nodes[i]) // Bg Color
+				
+				nia14a_position = getInheritedPosition(nia14a_nodes[i]);  // Text Position
+				
 				// Convert hexa
 				if(nia14a_color1.indexOf("#") >= 0){ nia14a_color1rgb = hexToRgbArray(nia14a_color1);} else {nia14a_color1rgb = rgbToRgbArray(nia14a_color1);}
 				if(nia14a_color2.indexOf("#") >= 0){ nia14a_color2rgb = hexToRgbArray(nia14a_color2);} else {nia14a_color2rgb = rgbToRgbArray(nia14a_color2);}
@@ -35,26 +39,49 @@ function check_part_14(){
 				
 				if(nia14a_isbold == false && nia14a_large < 24 && nia14a_ratio_inv < 4.5){
 					if(debug_flag) console.log("14A - FAIL 3.2.1 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-					setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-					nia14a_flag = true;
+					if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+						nia14a_flag1 = true;
+					}
+					else{
+						setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+						nia14a_flag2 = true;
+					}
 				}
 				else if(nia14a_isbold == true && nia14a_large < 18.5 && nia14a_ratio_inv < 4.5){
 					if(debug_flag) console.log("14A - FAIL 3.2.2 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-					setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-					nia14a_flag = true;
+					if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+						nia14a_flag1 = true;
+					}
+					else{
+						setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+						nia14a_flag2 = true;
+					}
 				}
 				else if(nia14a_isbold == false && nia14a_large >= 24 && nia14a_ratio_inv < 3){
 					if(debug_flag) console.log("14A - FAIL 3.2.3 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-					setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-					nia14a_flag = true;
+					if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+						nia14a_flag1 = true;
+					}
+					else{
+						setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+						nia14a_flag2 = true;
+					}
 				}
 				else if(nia14a_isbold == true && nia14a_large >= 18.5 && nia14a_ratio_inv < 3){
 					if(debug_flag) console.log("14A - FAIL 3.2.4 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-					setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-					nia14a_flag = true;
+					if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+						nia14a_flag1 = true;
+					}
+					else{
+						setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+						nia14a_flag2 = true;
+					}
 				}
-				
-				if(nia14a_nodes[i].tagName == "A" || nia14a_nodes[i].tagName == "BUTTON"){
+				else if(nia14a_nodes[i].tagName == "A" || nia14a_nodes[i].tagName == "BUTTON"){
 					// TODO On check au focus
 					nia14a_nodes[i].focus();
 					
@@ -78,30 +105,57 @@ function check_part_14(){
 					
 					if(nia14a_isbold == false && nia14a_large < 24 && nia14a_ratio_inv < 4.5){
 						if(debug_flag) console.log("14A - FAIL 3.2.1 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-						nia14a_flag = true;
+						if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+							setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+							nia14a_flag1 = true;
+						}
+						else{
+							setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+							nia14a_flag2 = true;
+						}
 					}
 					else if(nia14a_isbold == true && nia14a_large < 18.5 && nia14a_ratio_inv < 4.5){
 						if(debug_flag) console.log("14A - FAIL 3.2.2 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-						nia14a_flag = true;
+						if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+							setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+							nia14a_flag1 = true;
+						}
+						else{
+							setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+							nia14a_flag2 = true;
+						}
 					}
 					else if(nia14a_isbold == false && nia14a_large >= 24 && nia14a_ratio_inv < 3){
 						if(debug_flag) console.log("14A - FAIL 3.2.3 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-						nia14a_flag = true;
+						if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+							setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+							nia14a_flag1 = true;
+						}
+						else{
+							setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+							nia14a_flag2 = true;
+						}
 					}
 					else if(nia14a_isbold == true && nia14a_large >= 18.5 && nia14a_ratio_inv < 3){
 						if(debug_flag) console.log("14A - FAIL 3.2.4 Standard ratio : "+nia14a_ratio_inv+" ("+nia14a_color1+" vs "+nia14a_color2+")");
-						setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
-						nia14a_flag = true;
+						if(nia14a_position != "absolute" && nia14a_position != "fixed"){
+							setItemOutline(nia14a_nodes[i],"orange","nia14a","14-A");
+							nia14a_flag1 = true;
+						}
+						else{
+							setItemOutline(nia14a_nodes[i],"yellow","nia14a","14-A");
+							nia14a_flag2 = true;
+						}
 					}
 				}
 			}
 		}
 	}
-	if(nia14a_flag == true) {
+	if(nia14a_flag1 == true) {
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia14a' class='result-focus label-orange'>14-A</a> : Présence d'élément insuffisament contrasté</li>");
+	}
+	if(nia14a_flag2 == true) {
+	  setItemToResultList("man","<li><a href='#' data-destination='nia14a' class='result-focus label-yellow'>14-A</a> : Vérifier le contraste de certains éléments textuels</li>");
 	}
 
 	// B. Opacité Form Field Border
@@ -198,7 +252,7 @@ function check_part_14(){
 		}
 	}
 	if(nia14c_flag1 == true) {
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia14c' class='result-focus label-orange'>14-C</a> : Présence d'élément placeholder insuffisament contrasté</li>");
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia14c' class='result-focus label-orange'>14-C</a> : Présence d'élément placeholder insuffisament contrasté</li>");
 	}
 	if(nia14c_flag2 == true) {
 	  setItemToResultList("man","<li><a href='#' data-destination='nia14c' class='result-focus label-yellow'>14-C</a> : Vérifier si l'élément placeholder est suffisament contrasté</li>");
@@ -286,9 +340,9 @@ function check_part_14(){
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia14d' class='result-focus label-orange'>14-D</a> : Présence d'élément dont l'outline est insuffisament contrasté</li>");
 	}
 	if(nia14d_flag1b == true) {
-	  setItemToResultList("man","<li><a href='#' data-destination='nia14d' class='result-focus label-yellow'>14-D</a> : Vérifier l'apparence de l'outline de certain éléments</li>");
+	  setItemToResultList("man","<li><a href='#' data-destination='nia14d' class='result-focus label-yellow'>14-D</a> : Vérifier l'apparence de l'outline de certains éléments</li>");
 	}
 	if(nia14d_flag2 == true) {
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia14d' class='result-focus label-orange'>14-D</a> : Présence d'élément dont l'outline est à none</li>");
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia14d' class='result-focus label-orange'>14-D</a> : Présence d'élément dont l'outline est masqué</li>");
 	}
 }
