@@ -34,7 +34,7 @@ function check_part_03(){
 	}
 
 	// C. Probleme de lang
-	const nia03c_nodes = document.querySelectorAll('html:not([lang="fr"]) a[title$="- Nouvelle fenêtre"]:not([lang="fr"]), html:not([lang="en"]) a[title$="- New window"]:not([lang="en"]), html:not([lang="de"]) a[title$="- Neues Fenster"]:not([lang="de"]), html:not([lang="lb"]) a[title$="- Nei Fënster"]:not([lang="lb"])');
+	const nia03c_nodes = document.querySelectorAll('html:not([lang="fr"]) *:not(.book-download) > a[title$="- Nouvelle fenêtre"]:not([lang="fr"]), html:not([lang="en"]) *:not(.book-download) > a[title$="- New window"]:not([lang="en"]), html:not([lang="de"]) *:not(.book-download) > a[title$="- Neues Fenster"]:not([lang="de"]), html:not([lang="lb"]) *:not(.book-download) > a[title$="- Nei Fënster"]:not([lang="lb"])');
 	if(nia03c_nodes && nia03c_nodes.length > 0 && isItemsVisible(nia03c_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia03c' class='result-focus label-orange'>03-C</a> : Présence du suffixe 'Nouvelle fenêtre' sur une page non rédiger en français (de même pour les autres langues)</li>");
 	  setItemsOutline(nia03c_nodes,"orange","nia03c","03-C");
@@ -92,13 +92,13 @@ function check_part_03(){
 		}
 	}
 	if(nia03f_flag == true) {
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia03f' class='result-focus label-red'>03-F</a> : Présence de liens dont le contenu est vide [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6-1-5' target='_blank'>RAWeb 6.1.5</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-libelle-de-chaque-lien-decrit-sa-fonction-ou-la-nature-du-contenu-vers-lequel-il-pointe' target='_blank'>Opquast 131</a>]</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia03f' class='result-focus label-red'>03-F</a> : Présence de liens dont le contenu est vide [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6-2-1' target='_blank'>RAWeb 6.2.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-libelle-de-chaque-lien-decrit-sa-fonction-ou-la-nature-du-contenu-vers-lequel-il-pointe' target='_blank'>Opquast 131</a>]</li>");
 	}
 	
 	// G. Présence de liens sans href
 	const nia03g_nodes = document.querySelectorAll('a:not([href])');
 	if(nia03g_nodes && nia03g_nodes.length > 0 && isItemsVisible(nia03g_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia03g' class='result-focus label-red'>03-G</a> : Présence d'un lien sans destination</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia03g' class='result-focus label-red'>03-G</a> : Présence d'un lien sans destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6-1-1' target='_blank'>RAWeb 6.1.1</a>]</li>");
 	  setItemsOutline(nia03g_nodes,"red","nia03g","03-G");
 	}
 	

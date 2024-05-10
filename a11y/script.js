@@ -11,9 +11,12 @@ const homepage = document.querySelector('h1.logo.logo--homepage');
 const homepageException = ["https://guichet.public.lu/fr/citoyens.html", "https://guichet.public.lu/fr/entreprises.html","https://guichet.public.lu/fr/leichte-sprache.html", "https://guichet.public.lu/en/citoyens.html", "https://guichet.public.lu/en/entreprises.html","https://guichet.public.lu/en/leichte-sprache.html","https://guichet.public.lu/de/citoyens.html", "https://guichet.public.lu/de/entreprises.html","https://guichet.public.lu/de/leichte-sprache.html"]
 let isHomepage = false;
 let isPreview = false;
+let isPrototype = false;
 if(homepage || homepageException.includes(currentUrl)) {isHomepage = true;}
 if((currentUrl.includes("preview-") || currentUrl.includes("wcm")) && currentUrl.includes(".etat.lu")){isPreview = true;}
 else if(currentUrl.includes("aem-test-")){isPreview = true;}
+if(currentUrl.includes("/prototype/")){isPrototype = true;}
+
 
 if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu") && !currentUrl.includes("sig-gr.eu")){
   alert("Ce Bookmarklet est à utiliser seulement sur les sites étatiques luxembourgeois");

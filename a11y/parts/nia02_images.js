@@ -27,7 +27,7 @@ function check_part_02(){
 	const nia02b1_nodes = document.querySelectorAll('svg:not([aria-hidden="true"]):not(.iconset)'); 
 	const nia02b2_nodes = document.querySelectorAll('svg:not([focusable="false"]):not(.iconset)');
 	if(nia02b1_nodes && nia02b1_nodes.length > 0 && isItemsVisible(nia02b1_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02b1' class='result-focus label-red'>02-B</a> : Absence de certains attributs sur des SVG (aria-hidden=true) [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia02b1' class='result-focus label-red'>02-B</a> : Absence de certains attributs sur des SVG (aria-hidden=true) [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-4' target='_blank'>RAWeb 1.2.4</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>");
 	  setItemsOutline(nia02b1_nodes,"red","nia02b1","02-B");
 	}
 	if(nia02b2_nodes && nia02b2_nodes.length > 0 && isItemsVisible(nia02b2_nodes)){
