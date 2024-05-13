@@ -122,7 +122,7 @@ function check_part_06(){
 	if(nia06i_nodes && nia06i_nodes.length > 0){
 		for(let i = 0; i < nia06i_nodes.length; i++){
 			if(isItemVisible(nia06i_nodes[i])){
-				const nia06i_result = nia06i_nodes[i].innerText.match(/   +/g);
+				nia06i_result = nia06i_nodes[i].innerText.match(/   +/g);
 				if(nia06i_result && nia06i_result.length > 0) {
 					setItemOutline(nia06i_nodes[i],"yellow","nia06i","06-I");
 					nia06i_flag = true;
@@ -132,6 +132,25 @@ function check_part_06(){
 	}	
 	if(nia06i_flag == true) {
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia06i' class='result-focus label-yellow'>06-I</a> : Présence d'espace pour créer des effets de marges ou d'alignement [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-10-1-3' target='_blank'>RAWeb 10.1.3</a>]</li>");
-	  setItemsOutline(nia06i_nodes,"yellow","nia06i","06-I");
+	}
+	
+	// J. Vérifier que le liste <ul> et <ol> contiennent plusieurs éléments
+	const nia06j_nodes = document.querySelectorAll('ul,ol,[role="list"]');
+	let nia06j_flag = false;
+	let nia06j_result;
+	if(nia06j_nodes && nia06j_nodes.length > 0){
+		for(let i = 0; i < nia06j_nodes.length; i++){
+			if(isItemVisible(nia06j_nodes[i])){
+				nia06j_result = nia06j_nodes[i].getElementsByTagName("li");
+				if(nia06j_result && nia06j_result.length < 2) {
+					console.log(nia06j_result);
+					setItemOutline(nia06j_nodes[i],"orange","nia06j","06-J");
+					nia06j_flag = true;
+				}
+			}
+		}
+	}	
+	if(nia06j_flag == true) {
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia06j' class='result-focus label-orange'>06-J</a> : Présence d'une liste à un seul élément [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-9-3-1' target='_blank'>RAWeb 9.3.1</a>]</li>");
 	}
 }
