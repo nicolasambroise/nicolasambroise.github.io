@@ -262,7 +262,7 @@ function check_part_14(){
 	}
 
 	// D. Opacité de l'outline
-	const nia14d_nodes = document.querySelectorAll('*:not(.skiplinks) > a, input, select, textarea, button, [tabindex], summary');
+	const nia14d_nodes = document.querySelectorAll('*:not(.skiplinks) > a:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([disabled]), summary');
 	let nia14d_flag1 = false;
 	let nia14d_flag1b = false;
 	let nia14d_flag2 = false;
@@ -272,7 +272,10 @@ function check_part_14(){
 	if(nia14d_nodes && nia14d_nodes.length > 0){
 		for(let i = 0; i < nia14d_nodes.length; i++){
 			if(isItemVisible(nia14d_nodes[i])){
+				
+				//nia14d_nodes[i].contentEditable = true;
 				nia14d_nodes[i].focus();
+				//nia14d_nodes[i].contentEditable = false;
 				
 				nia14d_outline = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline-style');
 				if(nia14d_outline && nia14d_outline != "none"){
@@ -328,10 +331,15 @@ function check_part_14(){
 						}
 					}
 				}
-				else{
+				else if(nia14d_outline && nia14d_outline == "none"){
 					if(debug_flag) console.log("14D - Outline = none ");
 					setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
 					nia14d_flag1 = true;
+				}
+				else{
+					if(debug_flag) console.log("14D - Outline = unknown ");
+					setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
+					nia14d_flag1b = true;
 				}
 			}
 		}

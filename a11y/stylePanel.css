@@ -85,6 +85,7 @@ body.check-panel-active [role="dialog"]{
 #checkA11YPanel.active .panel-body{
     overflow-y: scroll !important;
     height: calc(100% - 2.4rem) !important;
+	color: black;
 }
 
 #checkA11YPanel.active .panel-body h2{
@@ -131,17 +132,23 @@ body.check-panel-active [role="dialog"]{
 
 #checkA11YPanel.active .panel-body ul>li a,
 #checkA11YPanel.active .panel-body ul>li a:active,
-#checkA11YPanel.active .panel-body ul>li a:visited {
+#checkA11YPanel.active .panel-body ul>li a:visited,
+#checkA11YPanel.active .panel-body .cmp-accordion__panel a,
+#checkA11YPanel.active .panel-body .cmp-accordion__panel a:active,
+#checkA11YPanel.active .panel-body .cmp-accordion__panel a:visited{
     color: darkblue !important;
     text-decoration: underline !important;
 }
 
 #checkA11YPanel.active .panel-body ul>li a:hover,
-#checkA11YPanel.active .panel-body ul>li a:focus{
+#checkA11YPanel.active .panel-body ul>li a:focus,
+#checkA11YPanel.active .panel-body .cmp-accordion__panel a:hover,
+#checkA11YPanel.active .panel-body .cmp-accordion__panel a:focus{
 	text-decoration: none !important;
 }
 
-#checkA11YPanel.active .panel-body ul>li a:focus{
+#checkA11YPanel.active .panel-body ul>li a:focus,
+#checkA11YPanel.active .panel-body .cmp-accordion__panel a:focus{
 	outline: 1px dotted darkblue !important;
 }
 
@@ -184,7 +191,10 @@ body.check-panel-active [role="dialog"]{
     background-color: #ea0202 !important;
 }
 
-#checkA11YPanel.active .cmp-accordion{margin: 0 !important;}
+#checkA11YPanel.active .cmp-accordion{
+	margin: 0 !important;
+	background-color:white !important;
+}
 
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary{
 	padding : 1rem !important;
