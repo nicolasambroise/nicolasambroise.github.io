@@ -266,6 +266,7 @@ function check_part_14(){
 	let nia14d_flag1 = false;
 	let nia14d_flag1b = false;
 	let nia14d_flag2 = false;
+	let nia14d_has_pseudo = false;
 	let nia14d_outline;
 	let nia14d_color1,nia14d_color2,nia14d_color3,nia14d_color1rbg, nia14d_color2rbg, nia14d_color3rbg,nia14d_color1luminance, nia14d_color2luminance,nia14d_color3luminance ;
 	let nia14d_ratio12, nia14d_ratio12_inv,nia14d_ratio13, nia14d_ratio13_inv,nia14d_ratio23, nia14d_ratio23_inv;
@@ -277,11 +278,56 @@ function check_part_14(){
 				nia14d_nodes[i].focus();
 				//nia14d_nodes[i].contentEditable = false;
 				
-				nia14d_outline = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline-style');
-				if(nia14d_outline && nia14d_outline != "none"){
+				nia14d_outline = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline');
+				nia14d_outline_style = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline-style');
+				nia14d_outline_width = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline-width');
+				
+				nia14d_has_pseudo = false;
+				if((window.getComputedStyle(nia14d_nodes[i],'::after').getPropertyValue('background') && window.getComputedStyle(nia14d_nodes[i],'::after').getPropertyValue('background') != "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box") || (window.getComputedStyle(nia14d_nodes[i],'::before').getPropertyValue('background') && window.getComputedStyle(nia14d_nodes[i],'::before').getPropertyValue('background') != "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box")){
+					nia14d_has_pseudo = true;
+					//console.log("HAS PSEUDO");
+					//console.log(window.getComputedStyle(nia14d_nodes[i],'::after').getPropertyValue('background'))
+					//console.log(window.getComputedStyle(nia14d_nodes[i],'::before').getPropertyValue('background'))
+				}
+
+				if((nia14d_outline && nia14d_outline == "0") || (nia14d_outline_style && nia14d_outline_style == "none")){
+					if(debug_flag){
+						console.log("Outline :"+nia14d_outline);
+						console.log("Outline style :"+nia14d_outline_style);
+						console.log("Outline width :"+nia14d_outline_width);
+					}
+					
+					if(nia14d_outline && nia14d_outline == "0"){
+						if(debug_flag) console.log("14D - Outline = 0 ");
+						if(!nia14d_has_pseudo){
+							setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
+							nia14d_flag1 = true;
+						} else {
+							setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
+							nia14d_flag1b = true;
+						}
+					}
+					else if(nia14d_outline_style && nia14d_outline_style == "none"){
+						if(debug_flag) console.log("14D - Outline = none ");
+						if(!nia14d_has_pseudo){
+							setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
+							nia14d_flag1 = true;
+						} else {
+							setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
+							nia14d_flag1b = true;
+						}
+					}
+					else{
+						if(debug_flag) console.log("14D - Outline = unknown ");
+						setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
+						nia14d_flag1b = true;
+					}
+				}
+				else{
 					nia14d_color1 = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline-color');  // Outline Color
 					nia14d_color2 = getInheritedBackgroundColor(nia14d_nodes[i])  // In BG Color
 					nia14d_color3 = getInheritedBackgroundColor(nia14d_nodes[i].parentElement) // Out BG Color
+					
 					// Convert hexa
 					if(nia14d_color1 && nia14d_color2 && nia14d_color3){
 						
@@ -303,12 +349,26 @@ function check_part_14(){
 							nia14d_ratio23_inv = 1/nia14d_ratio23;
 
 							if(nia14d_ratio12_inv < 3 && nia14d_ratio13_inv < 3 && nia14d_ratio23_inv < 3){
-								if(debug_flag && nia14d_ratio12_inv < 3) console.log("14D - FAIL 10.7 Standard ratio : "+nia14d_ratio12_inv+" ("+nia14d_color1+" vs "+nia14d_color2+")");
-								else if(debug_flag && nia14d_ratio13_inv < 3) console.log("14D - FAIL 10.7 Standard ratio : "+nia14d_ratio13_inv+" ("+nia14d_color1+" vs "+nia14d_color3+")");
-								else if(debug_flag && nia14d_ratio23_inv < 3) console.log("14D - FAIL 10.7 Standard ratio: "+nia14d_ratio23_inv+" ("+nia14d_color2+" vs "+nia14d_color3+")");
+								
+								if(debug_flag){
+									console.log("Outline style :"+nia14d_outline_style);
+									console.log("Outline width :"+nia14d_outline_width);
+									console.log("Outline color :"+nia14d_color1);
+									console.log("Outline InBG :"+nia14d_color2);
+									console.log("Outline Out BG :"+nia14d_color3);
+								}
+								
+								if(debug_flag && nia14d_ratio12_inv < 3) console.log("14D - FAIL 10.7 Standard ratio (Outline VS InBG) : "+nia14d_ratio12_inv+" ("+nia14d_color1+" vs "+nia14d_color2+")");
+								else if(debug_flag && nia14d_ratio13_inv < 3) console.log("14D - FAIL 10.7 Standard ratio (Outline VS OutBG) : "+nia14d_ratio13_inv+" ("+nia14d_color1+" vs "+nia14d_color3+")");
+								else if(debug_flag && nia14d_ratio23_inv < 3) console.log("14D - FAIL 10.7 Standard ratio (InBG VS OutBG): "+nia14d_ratio23_inv+" ("+nia14d_color2+" vs "+nia14d_color3+")");
 								if(!Array.from(nia14d_nodes[i].classList).some(c => c.startsWith('nia'))){
-									setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
-									nia14d_flag1 = true;
+									if(!nia14d_has_pseudo){
+										setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
+										nia14d_flag1 = true;
+									} else {
+										setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
+										nia14d_flag1b = true;
+									}
 								}
 								else { // Probabilité de conflit
 									setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
@@ -318,10 +378,23 @@ function check_part_14(){
 						}
 						else{
 							if(nia14d_ratio12_inv < 3){
+								
+								if(debug_flag){
+									console.log("Outline style :"+nia14d_outline_style);
+									console.log("Outline width :"+nia14d_outline_width);
+									console.log("Outline color :"+nia14d_color1);
+									console.log("Outline InBG :"+nia14d_color2);
+								}
+								
 								if(debug_flag) console.log("14D - FAIL 10.7 Standard ratio : "+nia14d_ratio12_inv+" ("+nia14d_color1+" vs "+nia14d_color2+")");
 								if(!Array.from(nia14d_nodes[i].classList).some(c => c.startsWith('nia'))){
-									setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
-									nia14d_flag1 = true;
+									if(!nia14d_has_pseudo){
+										setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
+										nia14d_flag1 = true;
+									} else {
+										setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
+										nia14d_flag1b = true;
+									}
 								}
 								else { // Probabilité de conflit
 									setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
@@ -330,16 +403,6 @@ function check_part_14(){
 							}
 						}
 					}
-				}
-				else if(nia14d_outline && nia14d_outline == "none"){
-					if(debug_flag) console.log("14D - Outline = none ");
-					setItemOutline(nia14d_nodes[i],"orange","nia14d","14-D");
-					nia14d_flag1 = true;
-				}
-				else{
-					if(debug_flag) console.log("14D - Outline = unknown ");
-					setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
-					nia14d_flag1b = true;
 				}
 			}
 		}

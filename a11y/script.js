@@ -459,7 +459,7 @@ function thirdPartValidation(){
 		//console.log(data);
 		let elem = document.getElementById("result_html5");
 		// Filter data result
-		const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”","Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)","CSS: Parse Error."].join("|");
+		const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”","Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)","CSS: Parse Error.","Attribute “value” not allowed on element “meta” at this point."].join("|");
 		const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
 		let msg_html5 = "";
 		

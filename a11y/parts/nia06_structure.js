@@ -135,7 +135,7 @@ function check_part_06(){
 	}
 	
 	// J. Vérifier que le liste <ul> et <ol> contiennent plusieurs éléments
-	const nia06j_nodes = document.querySelectorAll('ul,ol,[role="list"]');
+	const nia06j_nodes = document.querySelectorAll('ul:not(.cmp-focus-list),ol,[role="list"]');
 	let nia06j_flag = false;
 	let nia06j_result;
 	if(nia06j_nodes && nia06j_nodes.length > 0){
