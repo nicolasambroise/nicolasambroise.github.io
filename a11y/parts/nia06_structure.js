@@ -65,7 +65,7 @@ function check_part_06(){
 	Menu contextuel ;
 	Table des matières concernant un ensemble de pages.
 	*/
-	const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs):not(.right-part):not(.cmp-directory) > nav:not(.page-headernav):not(.page-headernavmobile):not(.page-headernav-desk):not(.automaticnav):not(.cmp-breadcrumb):not(.page-localnav):not(.cmp-backtonav):not(.cmp-breadcrumb-demarches)');
+	const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs):not(.right-part):not(.cmp-directory) > nav:not(.page-headernav):not(.page-headernavmobile):not(.page-headernav-desk):not(.automaticnav):not(.cmp-breadcrumb):not(.page-localnav):not(.cmp-backtonav):not(.cmp-breadcrumb-demarches):not(.topnav):not(.page-bloub)');
 	if(nia06e2_nodes && nia06e2_nodes.length > 0&& isItemsVisible(nia06e2_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia06e2' class='result-focus label-red'>06-E</a> : Présence d'une balise nav utilisé en dehors d'une zone de navigation [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-9-2-1' target='_blank'>RAWeb 9.2.1</a>]</li>");
 	  setItemsOutline(nia06e2_nodes,"red","nia06e2","06-E");
@@ -77,8 +77,8 @@ function check_part_06(){
 	
 	const nia06f1_nodes = document.querySelectorAll('main:not([role="main"])');
 	if(nia06f1_nodes && nia06f1_nodes.length > 0 && isItemsVisible(nia06f1_nodes)){
-	  setItemToResultList("nth","<li><a href='#' data-destination='nia06f1' class='result-focus label-red'>06-F</a> : Présence d'une zone de contenu principal sans attribut role</li>");
-	  setItemsOutline(nia06f1_nodes,"red","nia06f1","06-F");
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia06f1' class='result-focus label-orange'>06-F</a> : Présence d'une zone de contenu principal sans attribut role</li>");
+	  setItemsOutline(nia06f1_nodes,"orange","nia06f1","06-F");
 	}
 	
 	const nia06f2_nodes = document.querySelectorAll('main');
@@ -135,13 +135,13 @@ function check_part_06(){
 	}
 	
 	// J. Vérifier que le liste <ul> et <ol> contiennent plusieurs éléments
-	const nia06j_nodes = document.querySelectorAll('ul:not(.cmp-focus-list),ol,[role="list"]');
+	const nia06j_nodes = document.querySelectorAll('ul:not(.cmp-focus-list):not(.article-metas),ol,[role="list"]');
 	let nia06j_flag = false;
 	let nia06j_result;
 	if(nia06j_nodes && nia06j_nodes.length > 0){
 		for(let i = 0; i < nia06j_nodes.length; i++){
 			if(isItemVisible(nia06j_nodes[i])){
-				nia06j_result = nia06j_nodes[i].getElementsByTagName("li");
+				nia06j_result = nia06j_nodes[i].querySelectorAll('li,[role="listitem"]');
 				if(nia06j_result && nia06j_result.length < 2) {
 					console.log(nia06j_result);
 					setItemOutline(nia06j_nodes[i],"orange","nia06j","06-J");

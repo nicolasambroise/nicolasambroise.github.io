@@ -434,6 +434,9 @@ function createResultPanel(){
 			}
 		});
 	}
+	
+	// Déplacer le focus en haut de page 
+	window.scroll({ top: 0, left: 0, behavior: 'smooth' });
 }
 
 // Fonction Validation Third-part : HTML5 Wave Lighthouse

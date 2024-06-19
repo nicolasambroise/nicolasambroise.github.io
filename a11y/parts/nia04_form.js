@@ -93,7 +93,7 @@ function check_part_04(){
 			}
 		}
 		if(nia04b_flag == true) {
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia04b' class='result-focus label-yellow'>04-B</a> : Présence de champs email sans exemple de format [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-11-10-5' target='_blank'>RAWeb 11.10.5</a>]</li>");
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia04b' class='result-focus label-red'>04-B</a> : Présence de champs email sans exemple de format [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-11-10-5' target='_blank'>RAWeb 11.10.5</a>]</li>");
 		}
 		
 		// C. Check intitulé bouton envoi 

@@ -152,7 +152,7 @@ function check_part_14(){
 		}
 	}
 	if(nia14a_flag1 == true) {
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia14a' class='result-focus label-orange'>14-A</a> : Présence d'élément insuffisament contrasté</li>");
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia14a' class='result-focus label-orange'>14-A</a> : Présence d'éléments textuels insuffisament contrasté</li>");
 	}
 	if(nia14a_flag2 == true) {
 	  setItemToResultList("man","<li><a href='#' data-destination='nia14a' class='result-focus label-yellow'>14-A</a> : Vérifier le contraste de certains éléments textuels</li>");
@@ -160,7 +160,9 @@ function check_part_14(){
 
 	// B. Opacité Form Field Border
 	const nia14b_nodes = document.querySelectorAll('input, select, textarea, button');
-	let nia14b_flag = false;
+	let nia14b_flag1 = false;
+	let nia14b_flag2 = false;
+	let nia14b_flag3 = false;
 	let nia14b_color1, nia14b_color2, nia14b_color3, nia14b_color1rbg, nia14b_color2rbg, nia14b_color3rgb, nia14b_color1luminance, nia14b_color2luminance, nia14b_color3luminance;
 	let nia14b_ratio12, nia14b_ratio12_inv,nia14b_ratio13, nia14b_ratio13_inv,nia14b_ratio23, nia14b_ratio23_inv;
 	if(nia14b_nodes && nia14b_nodes.length > 0){
@@ -169,8 +171,57 @@ function check_part_14(){
 				nia14b_color1 = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('border-color');  // Border Color
 				nia14b_color2 = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('background-color');  // In BG Color
 				nia14b_color3 = getInheritedBackgroundColor(nia14b_nodes[i].parentElement) // Out BG Color
+				nia14b_border = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('border-width');  // Border
+				nia14b_position = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('position');  // Border
+
+				if(nia14b_color1.length >20) nia14b_color1 = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('border-bottom-color');
+				if(nia14b_color1 == "rgba(0, 0, 0, 0)") nia14b_color1 = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('border-bottom-color');
+
+				if(nia14b_color2 == "rgba(0, 0, 0, 0)" && (nia14b_position == "absolute" || nia14b_position == "fixed")){
+					setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
+					nia14b_flag1 = true;
+				}
+				else if(nia14b_color2 == "rgba(0, 0, 0, 0)" && nia14b_color3 == "rgba(0, 0, 0, 0)"){
+					setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
+					nia14b_flag2 = true;
+				}
+				else if(nia14b_color1 == "rgba(0, 0, 0, 0)" && nia14b_color2 == "rgba(0, 0, 0, 0)"){
+					setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
+					nia14b_flag2 = true;
+				}
+				else if(nia14b_border == "0px" && nia14b_color2 == "rgba(0, 0, 0, 0)"){
+					setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
+					nia14b_flag2 = true;
+				}
+				else if((nia14b_border == "0px" || nia14b_color1 == "rgba(0, 0, 0, 0)") && nia14b_color2 && nia14b_color3){
+					
+					if(nia14b_color2.indexOf("#") >= 0){ nia14b_color2rgb = hexToRgbArray(nia14b_color2);} else {nia14b_color2rgb = rgbToRgbArray(nia14b_color2);}
+					if(nia14b_color3.indexOf("#") >= 0){ nia14b_color3rgb = hexToRgbArray(nia14b_color3);} else {nia14b_color3rgb = rgbToRgbArray(nia14b_color3);}
+					
+					
+					
+					nia14b_color2luminance = luminance(nia14b_color2rgb.r, nia14b_color2rgb.g, nia14b_color2rgb.b);
+					nia14b_color3luminance = luminance(nia14b_color3rgb.r, nia14b_color3rgb.g, nia14b_color3rgb.b);
+					// Calcul ratio
+					nia14b_ratio23 = nia14b_color2luminance > nia14b_color3luminance ? ((nia14b_color2luminance + 0.05) / (nia14b_color3luminance + 0.05)) : ((nia14b_color3luminance + 0.05) / (nia14b_color2luminance + 0.05));
+					
+					nia14b_ratio23_inv = 1/nia14b_ratio23;
+
+					
+					if(nia14b_ratio23 < 3 && nia14b_ratio23_inv <3){
+						console.log(nia14b_color2)
+						console.log(nia14b_color3)
+						console.log(nia14b_ratio23)
+						console.log(nia14b_ratio23_inv)
+						
+						console.log("14B - FAIL 3.3.3 Standard ratio : "+nia14b_ratio23_inv+" ("+nia14b_color2+" vs "+nia14b_color3+")");
+						setItemOutline(nia14b_nodes[i],"orange","nia14b2","14-B");
+						nia14b_flag3 = true;
+					}
+				}
+				
 				// Convert hexa
-				if(nia14b_color1 && nia14b_color2 && nia14b_color3){
+				else if(nia14b_color1 && nia14b_color2 && nia14b_color3){
 					if(nia14b_color1.indexOf("#") >= 0){ nia14b_color1rgb = hexToRgbArray(nia14b_color1);} else {nia14b_color1rgb = rgbToRgbArray(nia14b_color1);}
 					if(nia14b_color2.indexOf("#") >= 0){ nia14b_color2rgb = hexToRgbArray(nia14b_color2);} else {nia14b_color2rgb = rgbToRgbArray(nia14b_color2);}
 					if(nia14b_color3.indexOf("#") >= 0){ nia14b_color3rgb = hexToRgbArray(nia14b_color3);} else {nia14b_color3rgb = rgbToRgbArray(nia14b_color3);}
@@ -186,11 +237,20 @@ function check_part_14(){
 					nia14b_ratio23_inv = 1/nia14b_ratio23;
 					
 					if( nia14b_ratio12_inv < 3 && nia14b_ratio13_inv < 3 && nia14b_ratio23_inv < 3){
+						
+						console.log(nia14b_color1)
+						console.log(nia14b_color2)
+						console.log(nia14b_color3)
+						console.log(nia14b_ratio12_inv)
+						console.log(nia14b_ratio13_inv)
+						console.log(nia14b_ratio23_inv)
+						
+						
 						if(debug_flag && nia14b_ratio12_inv < 3) console.log("14B - FAIL 3.3.3 Standard ratio : "+nia14b_ratio12_inv+" ("+nia14b_color1+" vs "+nia14b_color2+")");
 						else if(debug_flag && nia14b_ratio13_inv < 3) console.log("14B - FAIL 3.3.3 Standard ratio : "+nia14b_ratio13_inv+" ("+nia14b_color1+" vs "+nia14b_color3+")");
 						else if(debug_flag && nia14b_ratio23_inv < 3) console.log("14B - FAIL 3.3.3 Standard ratio : "+nia14b_ratio23_inv+" ("+nia14b_color2+" vs "+nia14b_color3+")");
-						setItemOutline(nia14b_nodes[i],"orange","nia14b","14-B");
-						nia14b_flag = true;
+						setItemOutline(nia14b_nodes[i],"orange","nia14b2","14-B");
+						nia14b_flag3 = true;
 					}
 				}
 				else{
@@ -199,8 +259,14 @@ function check_part_14(){
 			}
 		}
 	}
-	if(nia14b_flag == true) {
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia14b' class='result-focus label-orange'>14-B</a> : Présence d'élément graphique insuffisament contrasté</li>");
+	if(nia14b_flag1 == true) {
+	  setItemToResultList("man","<li><a href='#' data-destination='nia14b1' class='result-focus label-yellow'>14-B</a> : Présence d'élément graphique avec background transparent sur un élément en position absolute - Contraste à vérifier manuellement</li>");
+	}
+	if(nia14b_flag2 == true) {
+	  setItemToResultList("man","<li><a href='#' data-destination='nia14b1' class='result-focus label-yellow'>14-B</a> : Présence d'élément graphique avec background transparent - Contraste à vérifier manuellement</li>");
+	}
+	if(nia14b_flag3 == true) {
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia14b2' class='result-focus label-orange'>14-B</a> : Présence d'élément graphique insuffisament contrasté</li>");
 	}
 	
 	// C. Opacité Placeholder 
@@ -261,6 +327,7 @@ function check_part_14(){
 	  setItemToResultList("man","<li><a href='#' data-destination='nia14c' class='result-focus label-yellow'>14-C</a> : Vérifier si l'élément placeholder possède une opacité suffisante</li>");
 	}
 
+	/*
 	// D. Opacité de l'outline
 	const nia14d_nodes = document.querySelectorAll('*:not(.skiplinks) > a:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([disabled]), summary');
 	let nia14d_flag1 = false;
@@ -416,4 +483,5 @@ function check_part_14(){
 	if(nia14d_flag2 == true) {
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia14d' class='result-focus label-orange'>14-D</a> : Présence d'élément dont l'outline est masqué</li>");
 	}
+	*/
 }

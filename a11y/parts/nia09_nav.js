@@ -5,7 +5,7 @@
 function check_part_09(){
 	if(debug_flag) console.log("09 Navigation");
 
-	if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html")){
+	if(currentUrl.includes("plan-du-site.html") || currentUrl.includes("plan.html") || currentUrl.includes("plan-site.html")){
 		console.log("Page plan du site ");
 		
 		const nia09a1_footer = document.querySelectorAll('.page-footernav a[href*="contact"][href$=".html"]');
@@ -20,11 +20,19 @@ function check_part_09(){
 		const nia09a4_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="a-propos"][href$=".html"]');
 		const nia09a5_sitemap = document.querySelectorAll('.cmp-sitemap a[href*="aide"][href$=".html"]');
 		
+		const nia09a5_support = document.querySelectorAll('.cmp-sitemap a[href$="support.html"]');
+		
 		// Erreur si le lien existe dans le footer mais pas dans la map ou inversement
 		
 		if(nia09a1_footer && nia09a1_footer.length > 0 && (!nia09a1_sitemap || nia09a1_sitemap.length == 0)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a1' class='result-focus label-red'>09-A</a> : Il manque la page contact dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
-		  setItemsOutline(nia09a1_footer,"red","nia09a1","09-A");
+			if(nia09a5_support && nia09a5_support.length > 0){
+				setItemToResultList("man","<li><a href='#' data-destination='nia09a1' class='result-focus label-yellow'>09-A</a> : Présence de la page support mais il manque la page contact dans le plan du site, vérifier si c'est volontaire [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a1_footer,"yellow","nia09a1","09-A");
+			}
+			else {
+				setItemToResultList("nc","<li><a href='#' data-destination='nia09a1' class='result-focus label-red'>09-A</a> : Il manque la page contact dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a1_footer,"red","nia09a1","09-A");
+			}
 		}
 		else if(nia09a1_sitemap && nia09a1_sitemap.length > 0 && (!nia09a1_footer || nia09a1_footer.length == 0)){
 		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a1' class='result-focus label-red'>09-A</a> : Il manque la page contact dans le footer [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
@@ -32,34 +40,52 @@ function check_part_09(){
 		}
 
 		if(nia09a2_footer && nia09a2_footer.length > 0 && (!nia09a2_sitemap || nia09a2_sitemap.length == 0)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a2' class='result-focus label-red'>09-A</a> : Il manque la page Accessibilité dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
-		  setItemsOutline(nia09a2_footer,"red","nia09a2","09-A");
+			if(nia09a5_support && nia09a5_support.length > 0){
+				setItemToResultList("man","<li><a href='#' data-destination='nia09a2' class='result-focus label-yellow'>09-A</a> : Présence de la page support mais il manque la page Accessibilté dans le plan du site, vérifier si c'est volontaire [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a2_footer,"yellow","nia09a2","09-A");
+			}
+			else {
+				setItemToResultList("nc","<li><a href='#' data-destination='nia09a2' class='result-focus label-red'>09-A</a> : Il manque la page Accessibilité dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a2_footer,"red","nia09a2","09-A");
+			}
 		}
 		else if(nia09a2_sitemap && nia09a2_sitemap.length > 0 && (!nia09a2_footer || nia09a2_footer.length == 0)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a2' class='result-focus label-red'>09-A</a> : Il manque la page Accessibilité dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a2' class='result-focus label-red'>09-A</a> : Il manque la page Accessibilité dans le footer [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
 		  setItemsOutline(nia09a2_sitemap,"red","nia09a2","09-A");
 		}
 		
 		if(nia09a3_footer && nia09a3_footer.length > 0 && (!nia09a3_sitemap || nia09a3_sitemap.length == 0)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a3' class='result-focus label-red'>09-A</a> : Il manque la page aspect légaux dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
-		  setItemsOutline(nia09a3_footer,"red","nia09a3","09-A");
+			if(nia09a5_support && nia09a5_support.length > 0){
+				setItemToResultList("man","<li><a href='#' data-destination='nia09a3' class='result-focus label-yellow'>09-A</a> : Présence de la page support mais il manque la page Aspect légaux dans le plan du site, vérifier si c'est volontaire [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a3_footer,"yellow","nia09a3","09-A");
+			}
+			else {
+				setItemToResultList("nc","<li><a href='#' data-destination='nia09a3' class='result-focus label-red'>09-A</a> : Il manque la page aspect légaux dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a3_footer,"red","nia09a3","09-A");
+			}
 		}
 		else if(nia09a3_sitemap && nia09a3_sitemap.length > 0 && (!nia09a3_footer || nia09a3_footer.length == 0)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a3' class='result-focus label-red'>09-A</a> : Il manque la page aspect légaux dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a3' class='result-focus label-red'>09-A</a> : Il manque la page aspect légaux dans le footer [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
 		  setItemsOutline(nia09a3_sitemap,"red","nia09a3","09-A");
 		}
 		
 		if(nia09a4_footer && nia09a4_footer.length > 0 && (!nia09a4_sitemap || nia09a4_sitemap.length == 0)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a4' class='result-focus label-red'>09-A</a> : Il manque la page A propos dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
-		  setItemsOutline(nia09a4_footer,"red","nia09a4","09-A");
+			if(nia09a5_support && nia09a5_support.length > 0){
+				setItemToResultList("man","<li><a href='#' data-destination='nia09a4' class='result-focus label-yellow'>09-A</a> : Présence de la page support mais il manque la page A propos dans le plan du site, vérifier si c'est volontaire [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a4_footer,"yellow","nia09a4","09-A");
+			}
+			else{
+				setItemToResultList("nc","<li><a href='#' data-destination='nia09a4' class='result-focus label-red'>09-A</a> : Il manque la page A propos dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+				setItemsOutline(nia09a4_footer,"red","nia09a4","09-A");
+			}
 		}
 		else if(nia09a4_sitemap && nia09a4_sitemap.length > 0 && (!nia09a4_footer || nia09a4_footer.length == 0)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a4' class='result-focus label-red'>09-A</a> : Il manque la page A propos dans le footer ou dans le plan du site [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia09a4' class='result-focus label-red'>09-A</a> : Il manque la page A propos dans le footer [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-3-1' target='_blank'>RAWeb 12.3.1</a>]</li>");
 		  setItemsOutline(nia09a4_sitemap,"red","nia09a4","09-A");
 		}
 		
 		// Page indésirable dans le plan du site
-		const nia09b_nodes = document.querySelector('.cmp-sitemap a[href$="error.html"]');
+		const nia09b_nodes = document.querySelector('.cmp-sitemap a[href*="error.html"]');
 		if(nia09b_nodes && isItemVisible(nia09b_nodes)){
 		  setItemToResultList("nth","<li><a href='#' data-destination='nia09b' class='result-focus label-orange'>09-B</a> : Presence de la page Error dans le plan du site</li>");
 		  setItemsOutline(nia09b_nodes.parentElement,"orange","nia09b","09-B");
@@ -124,7 +150,7 @@ function check_part_09(){
 	}
 
 	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
-	const nia09f_nodes = document.querySelectorAll('*:not(.cmp-text) > *:not(p) > a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link):not(.geoportail-skip), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
+	const nia09f_nodes = document.querySelectorAll('*:not(.cmp-text) > *:not(p) > a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link):not(.geoportail-skip):not(.cmp-image__link), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
 	let nia09f_flag = false;
 	let nia09f_rect, nia09f_rect_parent;
 	let nia09f_horizontal = 0, nia09f_vertical = 0;

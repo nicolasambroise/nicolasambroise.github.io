@@ -23,7 +23,7 @@ function check_part_01(){
 	// B. Breadcrumb
 	const nia01b_nodes = document.querySelectorAll('nav[id^=breadcrumb-] .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child');
 	if(nia01b_nodes && nia01b_nodes.length > 0 && isItemsVisible(nia01b_nodes)){
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b' class='result-focus label-yellow'>01-B</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane --> Vérifier dans les propriétés de la page que celle-ci n'est pas cachée dans la navigation.</li>");
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b' class='result-focus label-red'>01-B</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane --> Vérifier dans les propriétés de la page que celle-ci n'est pas cachée dans la navigation.</li>");
 	  setItemsOutline(nia01b_nodes,"red","nia01b","01-B");
 	}
 
