@@ -81,8 +81,6 @@ function check_part_10(){
 	clear	br
 	compact	dl, menu, ol and ul.
 	frame	table
-	compact	dl, menu, ol and ul.
-	frame	table
 	frameborder	iframe
 	hspace	img and object.
 	vspace	img and object.

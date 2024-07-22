@@ -4,6 +4,10 @@
  */
 function check_part_03(){
 	if(debug_flag) console.log("03 Liens");
+	var url = window.location.host;
+	if (!url) {
+		return('');
+	}
 
 	// A. Verification de la présence du suffix sur les liens externe
 	const nia03a_nodes = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="- Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo), html[lang="fr"] a[title$="- Nouvelle fenêtre"]:not([target="_blank"]), html[lang="en"] a[target="_blank"]:not([title$="- New window"]):not(.mapboxgl-ctrl-logo),html[lang="en"] a[title$="- New window"]:not([target="_blank"]), html[lang="de"] a[target="_blank"]:not([title$="- Neues Fenster"]):not(.mapboxgl-ctrl-logo),html[lang="de"] a[title$="- Neues Fenster"]:not([target="_blank"]),html[lang="lb"] a[target="_blank"]:not([title$="- Nei Fënster"]):not(.mapboxgl-ctrl-logo),html[lang="lb"] a[title$="- Nei Fënster"]:not([target="_blank"])');
@@ -76,7 +80,7 @@ function check_part_03(){
 	}
 	
 	// F. Chaque lien a t'il un intitulé
-	const nia03f_nodes = document.querySelectorAll('a:not([href^="#"]),[role="link"]:not([href^="#"])');
+const nia03f_nodes = document.querySelectorAll('a[href]:not([href^="#"]),[role="link"][href]:not([href^="#"])');
 	let nia03f_flag = false;
 	let nia03f_lang = "";
 	if(nia03f_nodes && nia03f_nodes.length > 0){
@@ -96,7 +100,7 @@ function check_part_03(){
 	}
 	
 	// G. Présence de liens sans href
-	const nia03g_nodes = document.querySelectorAll('a:not([href])');
+	const nia03g_nodes = document.querySelectorAll('a:not([href]),[role="link"]:not([href])');
 	if(nia03g_nodes && nia03g_nodes.length > 0 && isItemsVisible(nia03g_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia03g' class='result-focus label-red'>03-G</a> : Présence d'un lien sans destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6-1-1' target='_blank'>RAWeb 6.1.1</a>]</li>");
 	  setItemsOutline(nia03g_nodes,"red","nia03g","03-G");
@@ -153,4 +157,42 @@ function check_part_03(){
 	if(nia03i_flag == true) {
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia03i' class='result-focus label-yellow'>03-I</a> : Présence de liens non pertinent [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-libelle-de-chaque-lien-decrit-sa-fonction-ou-la-nature-du-contenu-vers-lequel-il-pointe' target='_blank'> Opquast 132</a>]</li>");
 	}
+	
+	// J Vérifie la présence de l'attribut target_blank sur les liens externe
+	const nia03j_nodes = document.querySelectorAll('a[href^="http"]:not([href*="'+url+'"]):not([target="_blank"])');
+	let nia03j_flag = false;
+	if(nia03j_nodes && nia03j_nodes.length > 0 && isItemsVisible(nia03j_nodes)){	
+		for(let i = 0; i < nia03j_nodes.length; i++){
+			if(isItemVisible(nia03j_nodes[i])){
+				setItemOutline(nia03j_nodes[i],"orange","nia03j","03-J");
+				nia03j_flag = true;
+			}
+		}
+	}
+	if(nia03j_flag == true) {
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia03i' class='result-focus label-orange'>03-J</a> : Présence de liens externes qui s'ouvrent dans la fenêtre courante</li>");
+	}
+	
+	//K Liens Pour en savoir plus
+	const nia03k_nodes = document.querySelectorAll('.cmp-focus .focus-more.btn, .cmp-contentbox a.btn');
+	if(nia03k_nodes && nia03k_nodes.length > 15 && isItemsVisible(nia03k_nodes)){
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia03k' class='result-focus label-yellow'>03-K</a> : Trop de liens Pour en savoir plus (" + nia03k_nodes.length + ")</li>");
+	  setItemsOutline(nia03k_nodes,"yellow","nia03k","03-K");
+	}
+	
+	// L Présence de soulignement en dehors de lien
+	const nia03l_nodes = document.querySelectorAll("body *:not(a)");
+	let nia03l_flag = false;
+	if(nia03l_nodes && nia03l_nodes.length > 0 && isItemsVisible(nia03l_nodes)){	
+		for(let i = 0; i < nia03l_nodes.length; i++){
+			if(isItemVisible(nia03l_nodes[i]) && nia03l_nodes[i].style.textDecoration == "underline"){
+				setItemOutline(nia03l_nodes[i],"yellow","nia03l","03-L");
+				nia03l_flag = true;
+			}
+		}
+	}
+	if(nia03l_flag == true) {
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia03l' class='result-focus label-yellow'>03-L</a> : Réservez le soulignement aux liens</li>");
+	}
+	
 }

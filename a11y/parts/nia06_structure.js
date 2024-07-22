@@ -108,12 +108,36 @@ function check_part_06(){
 		setItemToResultList("dev","<li><span class='result-focus label-yellow'>06-G</span> : Il y a un problème avec la structuration du footer [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-9-2-1' target='_blank'>RAWeb 9.2.1</a>]</li>");
 	}
 	
-	// H. Cadres avec un titre
-	const nia06h_nodes = document.querySelectorAll('frame:not([title]),iframe:not([title])');
-	if(nia06h_nodes && nia06h_nodes.length > 0 && isItemsVisible(nia06h_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia06h' class='result-focus label-red'>06-H</a> : Chaque cadre doit avoir un titre  [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-2-1-1' target='_blank'>RAWeb 2.1.1</a>]</li>");
-	  setItemsOutline(nia06h_nodes,"red","nia06h","06-H");
+	// H. Cadres iframe
+	// H1 Présence de titre
+	const nia06h1_nodes = document.querySelectorAll('frame:not([title]),iframe:not([title])');
+	if(nia06h1_nodes && nia06h1_nodes.length > 0 && isItemsVisible(nia06h1_nodes)){
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia06h1' class='result-focus label-red'>06-H</a> : Chaque cadre doit avoir un titre  [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-2-1-1' target='_blank'>RAWeb 2.1.1</a>]</li>");
+	  setItemsOutline(nia06h1_nodes,"red","nia06h1","06-H");
 	}
+	
+	// H2 iframe Has Noresize
+	const nia06h2_nodes = document.querySelectorAll('iframe[noresize]');
+	if(nia06h2_nodes && nia06h2_nodes.length > 0 && isItemsVisible(nia06h2_nodes)){
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia06h2' class='result-focus label-red'>06-H</a> : Présence de cadre avec attribut noresize</li>");
+	  setItemsOutline(nia06h2_nodes,"yellow","nia06h2","06-H");
+	}
+	
+	// H3 iframe Has No Scroll
+	const nia06h3_nodes = document.querySelectorAll('iframe[scrolling=no]');
+	if(nia06h3_nodes && nia06h3_nodes.length > 0 && isItemsVisible(nia06h3_nodes)){
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia06h3' class='result-focus label-red'>06-H</a> : Présence de cadre avec attribut scrolling désactivé</li>");
+	  setItemsOutline(nia06h3_nodes,"yellow","nia06h3","06-H");
+	}
+	
+	// H4 iframe vide
+	const nia06h4_nodes = document.querySelectorAll('iframe:empty');
+	if(nia06h4_nodes && nia06h4_nodes.length > 0 && isItemsVisible(nia06h4_nodes)){
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia06h4' class='result-focus label-red'>06-H</a> : Présence de cadre vide</li>");
+	  setItemsOutline(nia06h4_nodes,"yellow","nia06h4","06-H");
+	}
+	
+	
 
 	// I. Presence de triple espace (double concidéré comme erreur d'inattention)
 	const nia06i_nodes = document.querySelectorAll('.cmp-text');
@@ -153,4 +177,12 @@ function check_part_06(){
 	if(nia06j_flag == true) {
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia06j' class='result-focus label-orange'>06-J</a> : Présence d'une liste à un seul élément [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-9-3-1' target='_blank'>RAWeb 9.3.1</a>]</li>");
 	}
+	
+	// K Abréviations : mise en évidence
+	const nia06k_nodes = document.querySelectorAll('abbr:not([title])');
+	if(nia06k_nodes && nia06k_nodes.length > 0 && isItemsVisible(nia06k_nodes)){
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia06k' class='result-focus label-yellow'>06-K</a> : Présence d'abréviation non explicitée</li>");
+	  setItemsOutline(nia06k_nodes,"yellow","nia06k","06-K");
+	}
+	
 }

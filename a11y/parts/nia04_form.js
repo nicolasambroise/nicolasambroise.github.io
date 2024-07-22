@@ -104,7 +104,8 @@ function check_part_04(){
 		}
 	}
 
-	// C. Vérifier si les champs ont bien un label
+
+	// D. Vérifier si les champs ont bien un label
 	const nia04d_nodes = document.querySelectorAll("input:not([aria-label]):not([aria-labelledby]):not([type='hidden']):not([type='submit']):not([type='reset']):not([type='button']), select:not([aria-label]):not([aria-labelledby]), textarea:not([aria-label]):not([aria-labelledby])");
 	let nia04d_flag1 = false;
 	let nia04d_flag2 = false;
@@ -222,7 +223,7 @@ function check_part_04(){
 	const nia04g_nodes = document.querySelectorAll('input[type="checkbox"][autocomplete]:not([autocomplete="off"]),input[type="radio"][autocomplete]:not([autocomplete="off"])');
 	if(nia04g_nodes && nia04g_nodes.length > 0 && isItemsVisible(nia04g_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia04g' class='result-focus label-red'>04-G</a> : Présence d'autocomplete sur un champ de type 'checkbox' ou 'Radiobutton' [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-11-13-1' target='_blank'>RAWeb 11.13.1</a>]</li>");
-	  setItemsOutline(nia04g_btn,"red","nia04g","04-G");
+	  setItemsOutline(nia04g_nodes,"red","nia04g","04-G");
 	}
 
 	// H. Champ et étiquette accolé en recupérant les positions des centres : Estimé à max 100px pour une distance correcte
@@ -283,7 +284,7 @@ function check_part_04(){
 	if(nia04h_flag == true){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia04h' class='result-focus label-red'>04-H</a> : Le Champ et l'étiquette doivent être accolé [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-11-5-1' target='_blank'>RAWeb 11.5.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-etiquette-de-formulaire-est-visuellement-rattachee-au-champ-quelle-decrit' target='_blank'>Opquast 75</a>]</li>");
 	}
-	
+
 	// I Les informations complétant l'étiquette d'un champ sont associées à celui-ci dans le code source
 	const nia04i_nodes = document.querySelectorAll("input[aria-describedby]");
 	let nia04i_flag = false;
@@ -307,7 +308,7 @@ function check_part_04(){
 		}
 	}
 	if(nia04i_flag == true) {
-		setItemToResultList("nc","<li><a href='#' data-destination='nia04i' class='result-focus label-red'>04-I</a> : Présence d'attribut aria-describedby non lié à un texte d'aide <a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-informations-completant-letiquette-dun-champ-sont-associees-a-celui-ci-dans-le-code-source' target='_blank'>Opquast 68</a>]</li>");
+		setItemToResultList("nc","<li><a href='#' data-destination='nia04i' class='result-focus label-red'>04-I</a> : Présence d'attribut aria-describedby non lié à un texte d'aide [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-informations-completant-letiquette-dun-champ-sont-associees-a-celui-ci-dans-le-code-source' target='_blank'>Opquast 68</a>]</li>");
 	}
 	
 	// J Le format de saisie des champs de formulaire qui le nécessitent est indiqué (soit un aria-descibedby, soit des paranthèses dans le label)
@@ -337,6 +338,48 @@ function check_part_04(){
 		}
 	}
 	if(nia04j_flag == true) {
-		setItemToResultList("nc","<li><a href='#' data-destination='nia04j' class='result-focus label-red'>04-J</a> : Absence du format de saisie dans un texte d'aide <a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-format-de-saisie-des-champs-de-formulaire-qui-le-necessitent-est-indique' target='_blank'>Opquast 70</a>]</li>");
+		setItemToResultList("nc","<li><a href='#' data-destination='nia04j' class='result-focus label-red'>04-J</a> : Absence du format de saisie dans un texte d'aide [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-format-de-saisie-des-champs-de-formulaire-qui-le-necessitent-est-indique' target='_blank'>Opquast 70</a>]</li>");
+	}
+
+	// K Présence de label de bouton insuffisament pertinent 
+	const nia04k_nodes = document.querySelectorAll("input[type='submit'], input[type='reset'], input[type='button']");
+	let nia04k_array = ["envoyer", "effacer", "annuler", "confirmer", "valider", "poursuivre", "rechercher"];
+	let nia04k_flag = false;
+	let nia04k_label = "";
+	if(nia04k_nodes && nia04k_nodes.length > 0){
+		for(let i = 0; i < nia04k_nodes.length; i++){
+			if(isItemVisible(nia04k_nodes[i])){
+				nia04k_label = nia04k_nodes[i].attr('value');
+				if (nia04k_label && nia04k_array.includes(nia04k_label)) {
+						setItemOutline(nia04k_nodes[i],"yellow","nia04k","04-K");
+						nia04k_flag = true;
+				}
+			}
+		}
+	}
+	if(nia04k_flag == true) {
+		setItemToResultList("nth","<li><a href='#' data-destination='nia04k' class='result-focus label-yellow'>04-K</a> : Présence de label de bouton insuffisament pertinent  </li>");
+	}
+
+
+	// L Formulaire : bouton avant la fin du formulaire
+	const nia04l_nodes = document.querySelectorAll('form');
+	let nia04l_flag = false;
+	let nia04l_childs, nia04l_lastchilds;
+	if(nia04l_nodes && nia04l_nodes.length > 0){
+		for(let i = 0; i < nia04l_nodes.length; i++){
+			nia04l_childs = nia04l_nodes[i].querySelectorAll('input , button');
+			nia04l_lastchilds = nia04l_childs[nia04l_childs.length - 1]
+			if(nia04l_lastchilds.tagName == "BUTTON" || (nia04l_lastchilds.tagName == "INPUT" && (nia04l_lastchilds.type == "SUBMIT" || nia04l_lastchilds.type == "RESET" || nia04l_lastchilds.type == "BUTTON"))){
+					// OK
+			}
+			else{
+				setItemOutline(nia04l_nodes[i],"yellow","nia04l","04-L");
+				nia04l_flag = true;
+			}
+		}
+	}
+	if(nia04l_flag == true) {
+		setItemToResultList("nth","<li><a href='#' data-destination='nia04l' class='result-focus label-yellow'>04-L</a> : Formulaire avec bouton de soumission mal placé </li>");
 	}
 }

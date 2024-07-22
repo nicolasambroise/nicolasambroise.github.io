@@ -227,7 +227,7 @@ function check_part_02(){
 	}
 	
 	// J.Les vignettes et aperçus ne sont pas des images de taille supérieure redimensionnées côté client.
-	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header):not(.ol-full-screen-false) > img');
+	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header):not(.ol-full-screen-false) > img:not([src$=".svg"])');
 	let nia02j_css_h ="", nia02j_css_w ="",nia02j_html_h ="", nia02j_html_w ="",nia02j_natural_h ="", nia02j_natural_w ="";
 	let nia02j_flag = false;
 	let nia02j_ratio_max = 2.5;
@@ -258,12 +258,12 @@ function check_part_02(){
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j","02-J");
 					nia02j_flag = true;
 				}
-				else if(Math.abs(nia02j_natural_h/nia02j_css_h) < nia02j_ratio_min || Math.abs(nia02j_natural_h/nia02j_css_h) > nia02j_ratio_max){
+				else if((Math.abs(nia02j_natural_h/nia02j_css_h) < nia02j_ratio_min || Math.abs(nia02j_natural_h/nia02j_css_h) > nia02j_ratio_max) && nia02j_natural_h > 1){
 					if(debug_flag) console.log("Natural Height : "+ nia02j_natural_h+" vs "+nia02j_css_h);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j","02-J");
 					nia02j_flag = true;
 				}
-				else if(Math.abs(nia02j_natural_w/nia02j_css_w) < nia02j_ratio_min || Math.abs(nia02j_natural_w/nia02j_css_w) > nia02j_ratio_max){
+				else if((Math.abs(nia02j_natural_w/nia02j_css_w) < nia02j_ratio_min || Math.abs(nia02j_natural_w/nia02j_css_w) > nia02j_ratio_max) && nia02j_natural_w > 1){
 					if(debug_flag) console.log("Natural Width : "+ nia02j_natural_w+" vs "+nia02j_css_w);
 					setItemOutline(nia02j_nodes[i],"yellow","nia02j","02-J");
 					nia02j_flag = true;

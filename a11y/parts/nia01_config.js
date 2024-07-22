@@ -78,7 +78,7 @@ function check_part_01(){
 		
 		// Itération sur les items du menu
 		const nia01f10_nodes = nia01f_menu.querySelectorAll(':scope > li');
-		let nia01f10_flag = false;
+		//let nia01f10_flag = false;
 		let nia01f_list21 = "", nia01f_list22 = "",nia01f_list23 = "",nia01f_list24 = "",nia01f_list31 = "", nia01f_list32 = "",nia01f_list33 = "",nia01f_list34 = "",nia01f_list41 = "", nia01f_list42 = "",nia01f_list43 = "",nia01f_list44 = "";
 		if(nia01f10_nodes && nia01f10_nodes.length > 0){
 			for(let i = 0; i < nia01f10_nodes.length; i++){
@@ -95,22 +95,22 @@ function check_part_01(){
 							if(!nia01f11_nodes || nia01f11_nodes.length != 1){
 								if(debug_flag) console.log(" - F2.1 Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+iplusun);
 								nia01f_list21 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f21","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f21","01-F"); //nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
 								if(debug_flag) console.log(" - F2.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+iplusun);
 								nia01f_list22 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f22","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f22","01-F"); //nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
 								if(debug_flag) console.log(" - F2.3 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de sous-menu alors que la classe has-subnav est présente)");
 								nia01f_list23 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f23","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f23","01-F"); //nia01f10_flag = true;
 							}
 							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expanded")){
 								if(debug_flag) console.log(" - F2.4 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de l'attribut aria-expanded)");
 								nia01f_list24 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f24","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f24","01-F"); //nia01f10_flag = true;
 							}
 							else{
 								if(debug_flag) console.log(" - L'item de menu "+iplusun+" avec page passerelles et sous-menu est OK")
@@ -121,24 +121,24 @@ function check_part_01(){
 						Sur l'item de rubrique vérifier existance de (li.has-subnav > button) + cette item doit avoir l'attribut aria-expanded */
 						else{
 							if(nia01f11_nodes && nia01f11_nodes.length > 0){
-								if(debug_flag) console.log(" - F3.1 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.1 Présence d'un lien pour se rendre à une page passerelle sur l'élement de menu n°"+iplusun);
 								nia01f_list31 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f31","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f31","01-F"); //nia01f10_flag = true;
 							}
 							else if(!nia01f12_nodes || nia01f12_nodes.length != 1){
-								if(debug_flag) console.log(" - F3.2 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.2 Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+iplusun);
 								nia01f_list32 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f32","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f32","01-F"); //nia01f10_flag = true;
 							}
 							else if(!nia01f13_nodes || nia01f13_nodes.length !=1){
-								if(debug_flag) console.log(" - F3.3 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.3 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de sous-menu alors que la classe has-subnav est présente)");
 								nia01f_list33 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f33","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f33","01-F"); //nia01f10_flag = true;
 							}
 							else if(nia01f12_nodes && !nia01f12_nodes[0].hasAttribute("aria-expanded")){
-								if(debug_flag) console.log(" - F3.4 Un problème a été detecté pour l'élement n°"+iplusun);
+								if(debug_flag) console.log(" - F3.4 Un problème a été detecté pour l'élement de menu n°"+iplusun+" (absence de l'attribut aria-expanded)");
 								nia01f_list34 += iplusun+",";
-								setItemOutline(nia01f10_nodes[i],"orange","nia01f34","01-F"); nia01f10_flag = true;
+								setItemOutline(nia01f10_nodes[i],"orange","nia01f34","01-F"); //nia01f10_flag = true;
 							}
 							else{
 								if(debug_flag) console.log(" - L'item de menu "+iplusun+" sans page passerelles et sous-menu est OK")
@@ -148,24 +148,24 @@ function check_part_01(){
 					else {
 						/* F4 Vérifier que les élements (li:not(.has-subnav) > a) n'ont pas d'attribut aria-expanded ni aria-haspopup ni est suivi d'un élément ul */
 						if(!nia01f11_nodes || nia01f11_nodes.length != 1){
-							if(debug_flag) console.log(" - F4.1 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.1 Un problème a été detecté pour l'élement de menu n°"+iplusun);
 							nia01f_list41 += iplusun+",";
-							setItemOutline(nia01f10_nodes[i],"orange","nia01f41","01-F"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f41","01-F"); //nia01f10_flag = true;
 						}
 						else if(nia01f12_nodes && nia01f12_nodes.length > 0){
-							if(debug_flag) console.log(" - F4.2 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.2 Un problème a été detecté pour l'élement de menu n°"+iplusun);
 							nia01f_list42 += iplusun+",";
-							setItemOutline(nia01f10_nodes[i],"orange","nia01f42","01-F"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f42","01-F"); //nia01f10_flag = true;
 						}
 						else if(nia01f13_nodes && nia01f13_nodes.length > 0){
-							if(debug_flag) console.log(" - F4.3 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.3 Un problème a été detecté pour l'élement de menu n°"+iplusun);
 							nia01f_list43 += iplusun+",";
-							setItemOutline(nia01f10_nodes[i],"orange","nia01f43","01-F"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f43","01-F"); //nia01f10_flag = true;
 						}
 						else if(nia01f11_nodes && (nia01f11_nodes[0].hasAttribute("aria-expanded") || nia01f11_nodes[0].hasAttribute("aria-haspopup"))){
-							if(debug_flag) console.log(" - F4.4 Un problème a été detecté pour l'élement n°"+iplusun);
+							if(debug_flag) console.log(" - F4.4 Un problème a été detecté pour l'élement de menu n°"+iplusun);
 							nia01f_list44 += iplusun+",";
-							setItemOutline(nia01f10_nodes[i],"orange","nia01f44","01-F"); nia01f10_flag = true;
+							setItemOutline(nia01f10_nodes[i],"orange","nia01f44","01-F"); //nia01f10_flag = true;
 						}
 						else{
 							if(debug_flag) console.log(" - L'item de menu "+iplusun+" sans sous-menu est OK")
@@ -187,34 +187,35 @@ function check_part_01(){
 				setItemToResultList("dev","<li><a href='#' data-destination='nia01f24' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list24.slice(0,-1)+" (absence de l'attribut aria-expanded)</li>");
 			}
 			if(nia01f_list31 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f31' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list31.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f31' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list31.slice(0,-1)+"</li>");
 			}
 			if(nia01f_list32 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f32' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list32.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f32' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list32.slice(0,-1)+"</li>");
 			}
 			if(nia01f_list33 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f33' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list33.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f33' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list33.slice(0,-1)+" (absence de sous-menu alors que la classe has-subnav est présente)</li>");
 			}
 			if(nia01f_list34 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f34' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list34.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f34' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list34.slice(0,-1)+" (absence de l'attribut aria-expanded)</li>");
 			}
 			if(nia01f_list41 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f41' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list41.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f41' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list41.slice(0,-1)+"</li>");
 			}
 			if(nia01f_list42 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f42' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list42.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f42' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list42.slice(0,-1)+"</li>");
 			}
 			if(nia01f_list43 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f43' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list43.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f43' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list43.slice(0,-1)+"</li>");
 			}
 			if(nia01f_list44 != ""){
-				setItemToResultList("dev","<li><a href='#' data-destination='nia01f44' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement n°"+nia01f_list44.slice(0,-1)+"</li>");
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01f44' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list44.slice(0,-1)+"</li>");
 			}
 		}
+		/*
 		if(nia01f10_flag == true){
 			setItemToResultList("dev","<li><span class='result-focus label-orange'>01-F</span> : Faiblesse dans l'accessibilité du menu Desktop</li>");
 		}
-		
+		*/
 		// On resize pour voir le menu (Attention certain attributs sont ajouté en JS)
 		/*
 		window.resizeTo(320, 500);
@@ -331,7 +332,7 @@ function check_part_01(){
 				
 				nia01f20_btn.click();
 			}
-		//window.resizeTo(currentWidth, currentHeight);
+		//window.resizeTo(currentWidth, currentHeight);		
 	}
 	else {
 		  setItemToResultList("man","<li><span class='result-focus label-yellow'>01-F</span> : Absence de barre de navigation</li>");

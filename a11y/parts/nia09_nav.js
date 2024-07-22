@@ -171,7 +171,6 @@ function check_part_09(){
 							nia09f_vertical_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginBottom']);
 							if(nia09f_horizontal_parent < 24 || nia09f_vertical_parent < 24){
 						
-								if(debug_flag) console.log(nia09f_rect);
 								// console.log("09f1 : "+nia09f_horizontal+" "+nia09f_vertical);
 								// console.log("09f2 : "+nia09f_horizontal_parent+" "+nia09f_vertical_parent);
 								
@@ -179,6 +178,7 @@ function check_part_09(){
 									// Exception In-line : Par exemple un lien dans un texte
 								}
 								else {
+									if(debug_flag) console.log(nia09f_rect);
 									nia09f_flag = true;
 									setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
 								}

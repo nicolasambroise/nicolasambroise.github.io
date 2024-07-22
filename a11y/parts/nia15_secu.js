@@ -12,9 +12,9 @@ function check_part_15(){
 
 	// B. Les pages utilisant le protocole HTTPS ne proposent pas de ressources HTTP.
 	let nia15b_nodes = document.querySelectorAll('a[target="_blank"][href^="http://"]');
-	if(isPrototype){
+	/*if(isPrototype){
 		nia15b_nodes = document.querySelectorAll('a[target="_blank"][href^="http://"]:not([href^="http://google"]):not([href^="http://www.google"]):not([href^="http://www.renow.public.lu"])');
-	}
+	}*/
 	if(nia15b_nodes && nia15b_nodes.length > 0 && isItemsVisible(nia15b_nodes)){
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia15b' class='result-focus label-yellow'>15-B</a> : Les pages utilisant le protocole HTTPS ne doivent pas proposer de ressources HTTP [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-pages-utilisant-le-protocole-https-ne-proposent-pas-de-ressources-http' target='_blank'>Opquast 195</a>]</li>");
 	  setItemsOutline(nia15b_nodes,"yellow","nia15b","15-B");
@@ -35,4 +35,12 @@ function check_part_15(){
 	Règle n°185 : Une famille générique de police est indiquée comme dernier élément de substitution.
 	Règle n°208 : Le serveur ne communique pas d'informations sur les logiciels et langages utilisés.
 	*/
+	
+	// E Liens vers des documents en téléchargement
+	const nia15e_nodes = document.querySelectorAll('a[href$=".doc"], a[href$=".docx"], a[href$=".xls"], a[href$=".xlsx"], a[href$=".ppt"], a[href$=".pptx"], a[href$=".txt"]');
+	if(nia15e_nodes && nia15e_nodes.length > 0 && isItemsVisible(nia15e_nodes)){
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia15e' class='result-focus label-yellow'>15-E</a> : Vérifiez si ce document ne peut pas être fourni au formt PDF</li>");
+	  setItemsOutline(nia15e_nodes,"yellow","nia15e","15-E");
+	}
+
 }

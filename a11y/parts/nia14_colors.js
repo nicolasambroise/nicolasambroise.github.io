@@ -167,7 +167,7 @@ function check_part_14(){
 	let nia14b_ratio12, nia14b_ratio12_inv,nia14b_ratio13, nia14b_ratio13_inv,nia14b_ratio23, nia14b_ratio23_inv;
 	if(nia14b_nodes && nia14b_nodes.length > 0){
 		for(let i = 0; i < nia14b_nodes.length; i++){
-			if(isItemVisible(nia14b_nodes[i])){
+			if(isItemVisible(nia14b_nodes[i]) && !isItemSROnly(nia14b_nodes[i]) && !isItemDisplayNone(nia14b_nodes[i])){
 				nia14b_color1 = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('border-color');  // Border Color
 				nia14b_color2 = window.getComputedStyle(nia14b_nodes[i],null).getPropertyValue('background-color');  // In BG Color
 				nia14b_color3 = getInheritedBackgroundColor(nia14b_nodes[i].parentElement) // Out BG Color

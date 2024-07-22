@@ -8,7 +8,7 @@ function check_part_08(){
 	if(debug_flag) console.log("08 Tableau");
 
 	// A. Attribut de tableau
-	const nia08a_nodes = document.querySelectorAll(':where([role="table"],table:not([role="presentation"])) th:not([scope="row"]):not([scope="col"]):not([id]):not([headers]):not([role="rowheader"]):not([role="columnheader"])');
+	const nia08a_nodes = document.querySelectorAll(':where([role="table"],table:not([role="presentation"])) th:not([scope="row"]):not([scope="col"]):not([id]):not([headers]):not([role="rowheader"]):not([role="columnheader"]):not(:only-child)');
 	if(nia08a_nodes && nia08a_nodes.length > 0 && isItemsVisible(nia08a_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia08a' class='result-focus label-red'>08-A</a> : Absence de l'attribut scope sur les en-tete de tableau [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-5-7-1' target='_blank'>RAWeb 5.7.1</a>]</li>");
 	  setItemsOutline(nia08a_nodes,"red","nia08a","08-A");
@@ -52,4 +52,22 @@ function check_part_08(){
 	if(nia08e_flag == true) {
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia08e' class='result-focus label-red'>08-E</a> : Présence d'un tableau de données sans en-tête [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-5-6-1' target='_blank'>RAWeb 5.6.1</a>]</li>");
 	}
+	
+	// F Chaque tableau possède un Caption() {
+	const nia08f_nodes = document.querySelectorAll('table:not([summary]):not([role="presentation"])');
+	let nia08f_flag = false;
+	let nia08f_caption = "";
+	if(nia08f_nodes && nia08f_nodes.length > 0 && isItemsVisible(nia08f_nodes)){
+		for(let i = 0; i < nia08f_nodes.length; i++){
+			nia08f_caption = nia08f_nodes[i].querySelector(':scope > caption')
+			if(nia08f_caption.length != 1 || nia08f_caption.textContent == ""){
+				if(debug_flag) console.log(nia08f_nodes[i]);
+				setItemOutline(nia08f_nodes[i],"orange","nia08f","08-F");
+				nia08f_flag = true;
+			}
+		}
+	}
+	if(nia08f_flag == true) {
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia08f' class='result-focus label-red'>08-F</a> : Présence d'un tableau de données sans résumé</li>");
+	}	
 }
