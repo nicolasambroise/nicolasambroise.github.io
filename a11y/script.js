@@ -32,6 +32,14 @@ let result_nc = "";
 let result_nth = "";
 let result_dev = "";
 let result_man = "";
+let result_crit_nb = "";
+let result_nc_nb = "";
+let result_nth_nb = "";
+let result_dev_nb = "";
+let result_man_nb = "";
+let result_html5 = "";
+let result_wave = "";
+let result_lighthouse = "";
 
 /*- -------------------------------------------------------------------------------- */
 /* Pre-processing */
@@ -215,7 +223,8 @@ else{
 Promise.all([p01,p02,p03,p04,p05,p06,p07,p08,p09,p10,p11,p12,p13,p14,p15])
 .then(function() {setTimeout(createResultPanel(), 100);})
 .then(function() {setTimeout(thirdPartValidation(), 100);})
-.then(function() {setTimeout(activateCheckA11YPanel(), 100);});
+.then(function() {setTimeout(activateCheckA11YPanel(), 100);})
+.then(function() {setTimeout(saveInBdd(), 10000);});
 
 // END
 /*- -------------------------------------------------------------------------------- */
@@ -382,11 +391,11 @@ function getInheritedPosition(item) {
 
 // Fonction d'ajout à la liste des résultats 
 function setItemToResultList(list,item){
-	if(list=="crit"){ result_crit += item;}
-	else if(list=="nc"){ result_nc += item;}
-	else if(list=="nth"){ result_nth += item;}
-	else if(list=="man"){ result_man += item;}
-	else if(list=="dev"){ result_dev += item;}
+	if(list=="crit"){ result_crit += item;result_crit_nb++}
+	else if(list=="nc"){ result_nc += item;result_nc_nb++}
+	else if(list=="nth"){ result_nth += item;result_nth_nb++}
+	else if(list=="man"){ result_man += item;result_man_nb++}
+	else if(list=="dev"){ result_dev += item;result_dev_nb++}
 	else { alert("erreur setItemToResultList");}
 }
 
@@ -411,7 +420,7 @@ function createResultPanel(){
 		ThirdPart ='<ul><li id="result_html5">Validator W3C : <a href="https://validator.w3.org/nu/?doc='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_wave">WAVE : <a href="https://wave.webaim.org/report#/'+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li><li id="result_lighthouse">Lighthouse : <a href="https://pagespeed.web.dev/analysis?url='+encodeURIComponent(currentUrl)+'" target="_blank">lien</a></li></ul>';
 	}
 
-	checkA11YPanel.innerHTML = '<div class="panel-header"><h1>A11Y Review</h1></div><div class="panel-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel">'+ThirdPart+'</div></details></div>';
+	checkA11YPanel.innerHTML = '<div class="panel-header"><h1>Check Access</h1></div><div class="panel-body">'+result_global+'<hr><details class="cmp-accordion"><summary class="cmp-accordion__summary"><h2 class="cmp-accordion__header">Tests automatiques <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter" x="0" y="0"></use></svg></h2></summary><div class="cmp-accordion__panel">'+ThirdPart+'</div></details></div>';
 
 	document.body.appendChild(checkA11YPanel);
 
@@ -477,11 +486,14 @@ function thirdPartValidation(){
 		  console.groupEnd();
 		  if(msg_html5  != ""){
 			elem.innerHTML += "<ul>"+msg_html5+"</ul>";
+			result_html5 = "{details : "+msg_html5+"}";
 		  }
 		}
 		else{
 			elem.innerHTML += " Aucune erreur détéctée"
+			result_html5 = "{}";
 		}
+		
 	})
 	  
 	// Fonction LightHouse
@@ -521,7 +533,8 @@ function thirdPartValidation(){
 		  const lighthouse_msg = "<li>Accessibility : "+lighthouse_access_score+"/100</li><li>Best practices : "+lighthouse_bp_score+"/100</li><li>SEO : "+lighthouse_seo_score+"/100</li>";
 		  
 		  let elem = document.getElementById("result_lighthouse");
-			elem.innerHTML += "<ul>"+lighthouse_msg+"</ul>";
+		  elem.innerHTML += "<ul>"+lighthouse_msg+"</ul>";
+		  result_lighthouse = "{Accessibility : "+lighthouse_access_score+",\"Best practices\" : "+lighthouse_bp_score+",Seo : "+lighthouse_seo_score+"}";
 		})
 		
 		// Fonction Wave
@@ -558,13 +571,47 @@ function thirdPartValidation(){
 			  const wave_structure = data.categories.structure.count;
 			  const wave_aria = data.categories.aria.count;
 			
-			  const wave_msg = "<li>Error : "+wave_error+"</li><li>Contrast : "+wave_contrast+"</li><li>Alert : "+wave_alert+"</li><li>Feature : "+wave_feature+"</li><li>Structure : "+wave_structure+"</li><li>Aria : "+wave_aria+"</li>";
+			  let wave_msg = "<li>Error : "+wave_error+"</li><li>Contrast : "+wave_contrast+"</li><li>Alert : "+wave_alert+"</li><li>Feature : "+wave_feature+"</li><li>Structure : "+wave_structure+"</li><li>Aria : "+wave_aria+"</li>";
 			  
 			  let elem = document.getElementById("result_wave");
-				elem.innerHTML += "<ul>"+wave_msg+"</ul>";
+			  elem.innerHTML += "<ul>"+wave_msg+"</ul>";
+			  
+			  result_wave = "{Error : "+wave_error+",Contrast : "+wave_contrast+",Alert : "+wave_alert+",Feature : "+wave_feature+",Structure : "+wave_structure+",Aria : "+wave_aria+"}";
 			})
 		}
 	}
+}
+
+// Fonction Save result to db
+function saveInBdd(){	
+	
+	let data = {
+		"url":  currentUrl,
+		"nc": result_nc_nb,
+		"nc_details" :  result_nc,
+		"nth" : result_nth_nb,
+		"nth_details" : result_nth,
+		"man" : result_man_nb,
+		"man_details" : result_man,
+		"dev" : result_dev_nb,
+		"dev_details" : result_dev,
+		"crit" : result_crit_nb,
+		"crit_details" : result_crit,
+		"w3c" : result_html5,
+		"wave" : result_wave,
+		"lighthouse" : result_lighthouse
+	};
+
+	console.log(data);
+	/*
+	fetch("https://webux.gouv.etat.lu/a11y/a11y_bookmarklet/backend/save_result.php", {
+	  method: "POST",
+	  headers: {'Content-Type': 'application/json'}, 
+	  body: JSON.stringify(data)
+	}).then(res => {
+	  console.log("Request complete! response:", res);
+	});	
+	*/
 }
 
 // Fonction Check A11Y Panel

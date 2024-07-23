@@ -60,7 +60,7 @@ function check_part_01(){
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia01f01' class='result-focus label-orange'>01-F</a> : Role navigation absent de la barre de navigation</li>");
 		  setItemsOutline(nia01f01_node,"orange","nia01f01","01-F");
 		}
-		const nia01f02_node = document.querySelector('nav#headernav:not([aria-label])');
+		const nia01f02_node = document.querySelector('nav#headernav:not([aria-label]):not([aria-labelledby])');
 		if(nia01f02_node && isItemVisible(nia01f02_node)){
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia01f02' class='result-focus label-yellow'>01-F</a> : Attribut Aria-label absent de la barre de navigation</li>");
 		  setItemsOutline(nia01f02_node,"yellow","nia01f02","01-F");

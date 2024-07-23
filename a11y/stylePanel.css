@@ -1,5 +1,6 @@
 #checkA11YPanel{
 	display:none;
+	font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
 }
 
 #checkA11YPanel.active{
@@ -13,7 +14,7 @@
     direction: ltr !important;
     border-style: none !important;
     margin: 0px !important;
-    border-right: 3px solid darkblue !important;
+    border-right: 3px solid #035384 !important;
 	background-color: white !important;
 	margin-left : -360px !important;
 }
@@ -41,7 +42,7 @@ body.check-panel-active [role="dialog"]{
   left: 0;
   z-index: 70001;
   border: none;
-  background-color:darkblue;
+  background-color:#035384;
   padding: 10px 15px;
   margin: 0;
   color: #fff;
@@ -49,16 +50,25 @@ body.check-panel-active [role="dialog"]{
   font-weight: 300;
   line-height: normal;
   height: 3.6rem;
-  border-radius: 3px;
-  font-family: source-sans-pro, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif;
+  border-radius: 0 3px 5px 3px;
+  font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+  box-shadow: none;
+  outline:none;
 }
 
 #checkA11YPanelBtn:focus,
 #checkA11YPanelBtn:hover{
   background-color:#fff;
-  color: darkblue;
-  outline: 1px solid darkblue;
+  color: #035384;
+  outline: 1px solid #035384;
   outline-offset : -1px;
+}
+
+#checkA11YPanelBtn:focus{
+  background-color:#fff;
+  color: #035384;
+  outline: 3px solid #035384;
+  outline-offset : -3px;
 }
 
 #checkA11YPanelBtn:before,
@@ -77,9 +87,10 @@ body.check-panel-active [role="dialog"]{
     text-transform: uppercase !important;
     position: relative !important;
     display: block !important;
-    color: darkblue !important;
+    color: #035384 !important;
     font-weight: bold !important;
-    font-family: source-sans-pro, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif !important;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif !important;
+	letter-spacing: 0 !important;
 }
 
 #checkA11YPanel.active .panel-body{
@@ -96,9 +107,10 @@ body.check-panel-active [role="dialog"]{
     text-transform: capitalize !important;
     position: relative !important;
     display: block !important;
-    color: darkblue !important;
+    color: #035384 !important;
     font-weight: bold !important;
-    font-family: source-sans-pro, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif !important;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif !important;
+	letter-spacing: 0 !important;
 }
 
 #checkA11YPanel.active .panel-body ul{
@@ -119,15 +131,17 @@ body.check-panel-active [role="dialog"]{
 }
 
 #checkA11YPanel.active .panel-body ul>li:before {
-    border: solid darkblue !important;
+    border: solid #035384 !important;
     border-width: .2rem .2rem 0 0 !important;
+	margin: 0 !important;
     content: "" !important;
     height: .5rem !important;
     left: .2rem !important;
     position: absolute !important;
-    top: 1rem !important;
+    top: .4rem !important;
     transform: rotate(45deg) !important;
     width: .5rem !important;
+	background: none !important;
 }
 
 #checkA11YPanel.active .panel-body ul>li a,
@@ -136,7 +150,7 @@ body.check-panel-active [role="dialog"]{
 #checkA11YPanel.active .panel-body .cmp-accordion__panel a,
 #checkA11YPanel.active .panel-body .cmp-accordion__panel a:active,
 #checkA11YPanel.active .panel-body .cmp-accordion__panel a:visited{
-    color: darkblue !important;
+    color: #0a5874 !important;
     text-decoration: underline !important;
 }
 
@@ -144,17 +158,18 @@ body.check-panel-active [role="dialog"]{
 #checkA11YPanel.active .panel-body ul>li a:focus,
 #checkA11YPanel.active .panel-body .cmp-accordion__panel a:hover,
 #checkA11YPanel.active .panel-body .cmp-accordion__panel a:focus{
+	color: #157a95 !important;
 	text-decoration: none !important;
 }
 
 #checkA11YPanel.active .panel-body ul>li a:focus,
 #checkA11YPanel.active .panel-body .cmp-accordion__panel a:focus{
-	outline: 1px dotted darkblue !important;
+	outline: 1px dotted #035384 !important;
 }
 
 #checkA11YPanel.active .panel-body ul>li .result-focus{
     color: white;
-    background-color: darkblue;
+    background-color: #035384;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace !important;
     font-size: 1.3rem !important;
@@ -173,7 +188,7 @@ body.check-panel-active [role="dialog"]{
 #checkA11YPanel.active .panel-body ul>li a.result-focus.label-orange:focus,
 #checkA11YPanel.active .panel-body ul>li a.result-focus.label-red:hover,
 #checkA11YPanel.active .panel-body ul>li a.result-focus.label-red:focus{
-    color: darkblue !important;
+    color: #157a95 !important;
     background-color: #F5F5F5 !important;
     text-decoration: none !important;
 }
@@ -208,7 +223,11 @@ body.check-panel-active [role="dialog"]{
 
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:hover{background-color:#F5F5F5 !important;}
 
-#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:focus{outline: 1px dotted darkblue !important;}
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:focus{
+	outline: 1px dotted #035384 !important;
+	background-color:#FFF !important;}
+
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__panel{background-color:#FFF !important;}
 
 .checkA11YSpan{
     display: inline !important;
