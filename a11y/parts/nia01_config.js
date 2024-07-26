@@ -248,7 +248,7 @@ function check_part_01(){
 						setItemOutline(nia01f20_btn,"red","nia01f52","01-F");
 					}
 					
-					if(!(Boolean(nia01f30_Dest.closest('[role="dialog"]')) || Boolean(nia01f30_Dest.closest('[aria-modal="true"]')))){
+					if(Boolean(nia01f30_Dest.closest('[role="dialog"]')) || Boolean(nia01f30_Dest.closest('[aria-modal="true"]'))){
 						if(debug_flag) console.log(" - F5.3 : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?");
 						setItemToResultList("dev","<li><a href='#' data-destination='nia01f53' class='result-focus label-red'>01-F</a> : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?</li>");
 						setItemOutline(nia01f30_Dest,"red","nia01f53","01-F");
@@ -260,8 +260,8 @@ function check_part_01(){
 					setItemOutline(nia01f30_Dest,"red","nia01f54","01-F");
 				}
 			
-				// On click sur le bouton pour ouvrir le menu
-				nia01f20_btn.click();
+				// On click sur le bouton pour ouvrir le menu (s'il n'est pas déjà ouvert)
+				if(!isItemVisible(nia01f30_Dest)) nia01f20_btn.click();
 				
 				const lang = nia01f20_btn.closest('[lang]').getAttribute('lang');
 				

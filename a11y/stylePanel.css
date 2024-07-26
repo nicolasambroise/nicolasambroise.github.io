@@ -1,6 +1,7 @@
 #checkA11YPanel{
 	display:none;
 	font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	letter-spacing: normal !important;
 }
 
 #checkA11YPanel.active{
@@ -54,6 +55,7 @@ body.check-panel-active [role="dialog"]{
   font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
   box-shadow: none;
   outline:none;
+  text-transform: capitalize;
 }
 
 #checkA11YPanelBtn:focus,
@@ -81,10 +83,11 @@ body.check-panel-active [role="dialog"]{
 #checkA11YPanel.active .panel-header h1{
     font-size: 2.4rem !important;
     line-height: 3.6rem !important;
-    text-align: center !important;
-    margin: 0 !important;
+    text-align: right !important;
+    margin: 0 1.5rem 0 0 !important;
     padding: 0 !important;
-    text-transform: uppercase !important;
+    /*text-transform: uppercase !important;*/
+	text-transform: capitalize !important;
     position: relative !important;
     display: block !important;
     color: #035384 !important;
@@ -94,7 +97,7 @@ body.check-panel-active [role="dialog"]{
 }
 
 #checkA11YPanel.active .panel-body{
-    overflow-y: scroll !important;
+    overflow-y: auto !important;
     height: calc(100% - 2.4rem) !important;
 	color: black;
 }
@@ -111,6 +114,10 @@ body.check-panel-active [role="dialog"]{
     font-weight: bold !important;
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif !important;
 	letter-spacing: 0 !important;
+}
+
+#checkA11YPanel.active .panel-body h2:before{
+	content:none !important;
 }
 
 #checkA11YPanel.active .panel-body ul{

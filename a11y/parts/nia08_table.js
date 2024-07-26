@@ -60,7 +60,7 @@ function check_part_08(){
 	if(nia08f_nodes && nia08f_nodes.length > 0 && isItemsVisible(nia08f_nodes)){
 		for(let i = 0; i < nia08f_nodes.length; i++){
 			nia08f_caption = nia08f_nodes[i].querySelector(':scope > caption')
-			if(nia08f_caption.length != 1 || nia08f_caption.textContent == ""){
+			if(nia08f_caption == null || nia08f_caption.textContent == ""){
 				if(debug_flag) console.log(nia08f_nodes[i]);
 				setItemOutline(nia08f_nodes[i],"orange","nia08f","08-F");
 				nia08f_flag = true;
@@ -68,6 +68,6 @@ function check_part_08(){
 		}
 	}
 	if(nia08f_flag == true) {
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia08f' class='result-focus label-red'>08-F</a> : Présence d'un tableau de données sans résumé</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia08f' class='result-focus label-orange'>08-F</a> : Présence d'un tableau de données sans résumé</li>");
 	}	
 }

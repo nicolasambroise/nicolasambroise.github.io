@@ -1,6 +1,8 @@
 <?php
 
-if(isset($_POST['url'])){
+if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+	header('Content-Type: application/json');
+	header('Access-Control-Allow-Headers: *');
 
 	require '../backend/config.php';
 	$conn = new mysqli($sql_details["host"],$sql_details["user"],$sql_details["pass"],$sql_details["db"]);
@@ -8,31 +10,40 @@ if(isset($_POST['url'])){
 		die("Connection failed: ".$conn->connect_error);
 	}
 
-	$url =  $_POST['url'];
-	$nc = $_POST['nc'];
-	$nc_details =  $_POST['nc_details'];
-	$nth = $_POST['nth'];
-	$nth_details = $_POST['nth_details'];
-	$man = $_POST['man'];
-	$man_details = $_POST['man_details'];
-	$dev = $_POST['dev'];
-	$dev_details = $_POST['dev_details'];
-	$crit = $_POST['crit'];
-	$crit_details = $_POST['crit_details'];
-	$w3c = $_POST['w3c'];
-	$wave = $_POST['wave'];
-	$lighthouse = $_POST['lighthouse'];
+	$POSTvalues = json_decode($_POST, true);
+
+	$url =  $POSTvalues['url'];
+	$nc = $POSTvalues['nc'];
+	$nc_details =  $POSTvalues['nc_details'];
+	$nth = $POSTvalues['nth'];
+	$nth_details = $POSTvalues['nth_details'];
+	$man = $POSTvalues['man'];
+	$man_details = $POSTvalues['man_details'];
+	$dev = $POSTvalues['dev'];
+	$dev_details = $POSTvalues['dev_details'];
+	$crit = $POSTvalues['crit'];
+	$crit_details = $POSTvalues['crit_details'];
+	$w3c = $POSTvalues['w3c'];
+	$wave = $POSTvalues['wave'];
+	$lighthouse = $POSTvalues['lighthouse'];
 	
 
-	echo "Start Save<br>";
-
-	// vider la table
-	$sql = "INSERT INTO `result` (`id`, `url`, `date`, `nc`, `nc_details`, `nth`, `nth_details`, `man`, `man_details`, `dev`, `dev_details`, `crit`, `crit_details`, `w3c`, `wave`, `lighthouse`) VALUES (NULL, 'test', 'current_timestamp()', '', '', '', '', '', '', '', '', '', '', '', '', '');";
+	$sql = "INSERT INTO `result` (`id`, `url`,  `nc`, `nc_details`, `nth`, `nth_details`, `man`, `man_details`, `dev`, `dev_details`, `crit`, `crit_details`, `w3c`, `wave`, `lighthouse`) VALUES (NULL, '".$url."', '".$nc."', '".$nc_details."', '".$nth."', '".$nth_details."', '".$man."', '".$man_details."', '".$dev."', '".$dev_details."', '".$crit."', '".$crit_details."', '".$w3c."', '".$wave."', '".$lighthouse."');";
+	
 	if ($conn->query($sql) === TRUE) {
-      echo "record inserted successfully";
+      $result = array(
+        'ok' => true,
+        'status' => 200
+		);
+		// sending response
+		http_response_code(200);
+		echo json_encode($result);
 	}else{
-	  echo "Error in ".$sql."<br>".$conn->error;
+	  http_response_code(503);
 	}
-	echo "<br><br>You can now close this windows<br>";
+}
+else{
+	echo "<h1>Toto</h1>";
+	http_response_code(503);
 }
 ?>

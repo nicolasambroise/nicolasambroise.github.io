@@ -163,6 +163,7 @@ function check_part_14(){
 	let nia14b_flag1 = false;
 	let nia14b_flag2 = false;
 	let nia14b_flag3 = false;
+	let nia14b_flag4 = false;
 	let nia14b_color1, nia14b_color2, nia14b_color3, nia14b_color1rbg, nia14b_color2rbg, nia14b_color3rgb, nia14b_color1luminance, nia14b_color2luminance, nia14b_color3luminance;
 	let nia14b_ratio12, nia14b_ratio12_inv,nia14b_ratio13, nia14b_ratio13_inv,nia14b_ratio23, nia14b_ratio23_inv;
 	if(nia14b_nodes && nia14b_nodes.length > 0){
@@ -192,6 +193,10 @@ function check_part_14(){
 				else if(nia14b_border == "0px" && nia14b_color2 == "rgba(0, 0, 0, 0)"){
 					setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
 					nia14b_flag2 = true;
+				}
+				else if((nia14b_border == "0px" || nia14b_color1 == "rgba(0, 0, 0, 0)") && nia14b_color2 == nia14b_color3){
+					setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
+					nia14b_flag4 = true;
 				}
 				else if((nia14b_border == "0px" || nia14b_color1 == "rgba(0, 0, 0, 0)") && nia14b_color2 && nia14b_color3){
 					
@@ -267,6 +272,9 @@ function check_part_14(){
 	}
 	if(nia14b_flag3 == true) {
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia14b2' class='result-focus label-orange'>14-B</a> : Présence d'élément graphique insuffisament contrasté</li>");
+	}
+	if(nia14b_flag4 == true) {
+	  setItemToResultList("man","<li><a href='#' data-destination='nia14b1' class='result-focus label-yellow'>14-B</a> : Présence d'élément graphique avec background identique au fond de page - Contraste à vérifier manuellement</li>");
 	}
 	
 	// C. Opacité Placeholder 

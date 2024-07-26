@@ -19,6 +19,11 @@ function addClassToBody() {
 
 // When the user clicks on the extension action
 chrome.action.onClicked.addListener(async (tab) => {
+	
+  const localUrl = "a11y/parts"
+  const prodUrl = "src/parts"
+  const pluginUrl = localUrl;
+	
   if(tab.url.includes(".public.lu") || tab.url.includes(".gouvernement.lu") || tab.url.includes(".etat.lu") || tab.url.includes("sig-gr.eu")) {
 	const p1 = chrome.scripting.executeScript({
 		files: ['a11y/parts/nia01_config.js','a11y/parts/nia02_images.js','a11y/parts/nia03_links.js','a11y/parts/nia04_form.js','a11y/parts/nia05_obligatoire.js','a11y/parts/nia06_structure.js','a11y/parts/nia07_title.js','a11y/parts/nia08_table.js','a11y/parts/nia09_nav.js','a11y/parts/nia10_oldtag.js','a11y/parts/nia11_lang.js','a11y/parts/nia12_button.js','a11y/parts/nia13_lottie.js','a11y/parts/nia14_colors.js','a11y/parts/nia15_secu.js'],

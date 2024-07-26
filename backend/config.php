@@ -5,7 +5,7 @@ $sql_details = array(
 	"pass" => "",
 	"host" => "localhost",
 	"port" => "3306",
-	"db"   => "webux",
+	"db"   => "bookmarklet",
 	"dsn"  => "charset=utf8"
 );
 ?>

@@ -65,7 +65,7 @@ function check_part_06(){
 	Menu contextuel ;
 	Table des matières concernant un ensemble de pages.
 	*/
-	const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs):not(.right-part):not(.cmp-directory) > nav:not(.page-headernav):not(.page-headernavmobile):not(.page-headernav-desk):not(.automaticnav):not(.cmp-breadcrumb):not(.page-localnav):not(.cmp-backtonav):not(.cmp-breadcrumb-demarches):not(.topnav):not(.page-bloub)');
+	const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs):not(.right-part):not(.cmp-directory) > nav:not(.page-headernav):not(.page-headernavmobile):not(.page-headernav-desk):not(.automaticnav):not(.cmp-breadcrumb):not(.page-localnav):not(.cmp-backtonav):not(.cmp-breadcrumb-demarches):not(.topnav):not(.page-bloub):not(#headernav):not(.headernav-detached):not(.headernav)');
 	if(nia06e2_nodes && nia06e2_nodes.length > 0&& isItemsVisible(nia06e2_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia06e2' class='result-focus label-red'>06-E</a> : Présence d'une balise nav utilisé en dehors d'une zone de navigation [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-9-2-1' target='_blank'>RAWeb 9.2.1</a>]</li>");
 	  setItemsOutline(nia06e2_nodes,"red","nia06e2","06-E");
