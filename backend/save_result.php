@@ -1,45 +1,74 @@
 <?php
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
-	header('Content-Type: application/json');
-	header('Access-Control-Allow-Headers: *');
+/* Le fetch s'effectue en 2 temps :
+- Première requete "preflight response" avec OPTIONS recupère les Headers et un status 200
+- Seconde requete en POST qui envoi les données.
+*/
 
-	require '../backend/config.php';
-	$conn = new mysqli($sql_details["host"],$sql_details["user"],$sql_details["pass"],$sql_details["db"]);
-	if($conn->connect_error){
-		die("Connection failed: ".$conn->connect_error);
+if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+	
+	if($_SERVER['HTTP_ORIGIN']){
+	$http_origin = $_SERVER['HTTP_ORIGIN'];
+
+		if(str_contains($http_origin, ".public.lu") || str_contains($http_origin, "gouvernement.lu") || str_contains($http_origin, ".etat.lu") || str_contains($http_origin, "sig-gr.eu"))
+		{  
+			header("Access-Control-Allow-Origin: $http_origin");
+			header("Access-Control-Request-Headers: Content-Type");
+			header("Access-Control-Allow-Headers: Content-Type");
+			header("Access-Control-Allow-Methods: OPTIONS,POST");
+		}
 	}
 
-	$POSTvalues = json_decode($_POST, true);
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-	$url =  $POSTvalues['url'];
-	$nc = $POSTvalues['nc'];
-	$nc_details =  $POSTvalues['nc_details'];
-	$nth = $POSTvalues['nth'];
-	$nth_details = $POSTvalues['nth_details'];
-	$man = $POSTvalues['man'];
-	$man_details = $POSTvalues['man_details'];
-	$dev = $POSTvalues['dev'];
-	$dev_details = $POSTvalues['dev_details'];
-	$crit = $POSTvalues['crit'];
-	$crit_details = $POSTvalues['crit_details'];
-	$w3c = $POSTvalues['w3c'];
-	$wave = $POSTvalues['wave'];
-	$lighthouse = $POSTvalues['lighthouse'];
-	
+		require '../backend/config.php';
+		$conn = new mysqli($sql_details["host"],$sql_details["user"],$sql_details["pass"],$sql_details["db"]);
+		if($conn->connect_error){
+			die("Connection failed: ".$conn->connect_error);
+		}
 
-	$sql = "INSERT INTO `result` (`id`, `url`,  `nc`, `nc_details`, `nth`, `nth_details`, `man`, `man_details`, `dev`, `dev_details`, `crit`, `crit_details`, `w3c`, `wave`, `lighthouse`) VALUES (NULL, '".$url."', '".$nc."', '".$nc_details."', '".$nth."', '".$nth_details."', '".$man."', '".$man_details."', '".$dev."', '".$dev_details."', '".$crit."', '".$crit_details."', '".$w3c."', '".$wave."', '".$lighthouse."');";
-	
-	if ($conn->query($sql) === TRUE) {
-      $result = array(
-        'ok' => true,
-        'status' => 200
-		);
-		// sending response
-		http_response_code(200);
-		echo json_encode($result);
-	}else{
-	  http_response_code(503);
+		$request_raw = file_get_contents('php://input');
+        $request = json_decode($request_raw);
+        foreach ($request as $key => $value) {
+                //echo "{$key}: {$value}\n";
+				switch ($key) {
+					case "url":	$url = $value;	break;
+					case "nc":	$nc = $value;	break;
+					case "nc_details":	$nc_details = $value;	break;
+					case "nth":	$nth = $value;	break;
+					case "nth_details":	$nth_details = $value;	break;
+					case "man":	$man = $value;	break;
+					case "man_details":	$man_details = $value;	break;
+					case "dev":	$dev = $value;	break;
+					case "dev_details":	$dev_details = $value;	break;
+					case "crit":	$crit = $value;	break;
+					case "crit_details":	$crit_details = $value;	break;
+					case "w3c":	$w3c = $value;	break;
+					case "wave":	$wave = $value;	break;
+					case "lighthouse":	$lighthouse = $value;	break;
+					case "url":	$url = $value;	break;
+				}
+        }
+		
+		$ip = isset($_SERVER['HTTP_CLIENT_IP']) 
+			? $_SERVER['HTTP_CLIENT_IP'] 
+			: (isset($_SERVER['HTTP_X_FORWARDED_FOR']) 
+			  ? $_SERVER['HTTP_X_FORWARDED_FOR'] 
+			  : $_SERVER['REMOTE_ADDR']);
+
+		$sql = "INSERT INTO `result` (`id`, `url`, `ip`,  `nc`, `nc_details`, `nth`, `nth_details`, `man`, `man_details`, `dev`, `dev_details`, `crit`, `crit_details`, `w3c`, `wave`, `lighthouse`) VALUES (NULL, '".$url."', '".$ip."', '".$nc."', \"".$nc_details."\", '".$nth."', \"".$nth_details."\", '".$man."', \"".$man_details."\", '".$dev."', \"".$dev_details."\", '".$crit."', \"".$crit_details."\", '".$w3c."', '".$wave."', '".$lighthouse."');";
+		
+		if ($url != "" && $conn->query($sql) === TRUE) {
+		  $result = array(
+			'ok' => true,
+			'status' => 200
+			);
+			// sending response
+			http_response_code(200);
+		}else{
+		  echo "Error: " . $sql . "<br>" . $conn->error;
+		  http_response_code(503);
+		}
 	}
 }
 else{

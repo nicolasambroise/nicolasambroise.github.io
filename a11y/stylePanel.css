@@ -114,6 +114,7 @@ body.check-panel-active [role="dialog"]{
     font-weight: bold !important;
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif !important;
 	letter-spacing: 0 !important;
+	border: none !important;
 }
 
 #checkA11YPanel.active .panel-body h2:before{
@@ -222,6 +223,7 @@ body.check-panel-active [role="dialog"]{
 	padding : 1rem !important;
 	margin : 0 !important;
     display: block !important;
+	background-color: transparent !important;
 }
 
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:after{content: none !important;}

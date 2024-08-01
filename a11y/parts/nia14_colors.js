@@ -159,7 +159,7 @@ function check_part_14(){
 	}
 
 	// B. Opacité Form Field Border
-	const nia14b_nodes = document.querySelectorAll('input, select, textarea, button');
+	const nia14b_nodes = document.querySelectorAll('input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])');
 	let nia14b_flag1 = false;
 	let nia14b_flag2 = false;
 	let nia14b_flag3 = false;
@@ -281,7 +281,7 @@ function check_part_14(){
 	// Open si topsearch ancre présent
 	const nia14c_btn = document.querySelector('button.anchor[data-destination="#topsearch"][aria-expanded="false"]');
 	if(nia14c_btn){nia14c_btn.click();}
-	const nia14c_nodes = document.querySelectorAll('input[placeholder]');
+	const nia14c_nodes = document.querySelectorAll('input[placeholder]:not([disabled])');
 	let nia14c_flag1 = false;
 	let nia14c_flag2 = false;
 	let nia14c_flag3 = false;

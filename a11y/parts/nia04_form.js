@@ -104,6 +104,7 @@ function check_part_04(){
 		}
 	}
 
+	
 
 	// D. Vérifier si les champs ont bien un label
 	const nia04d_nodes = document.querySelectorAll("input:not([aria-label]):not([aria-labelledby]):not([type='hidden']):not([type='submit']):not([type='reset']):not([type='button']), select:not([aria-label]):not([aria-labelledby]), textarea:not([aria-label]):not([aria-labelledby])");
@@ -349,7 +350,7 @@ function check_part_04(){
 	if(nia04k_nodes && nia04k_nodes.length > 0){
 		for(let i = 0; i < nia04k_nodes.length; i++){
 			if(isItemVisible(nia04k_nodes[i])){
-				nia04k_label = nia04k_nodes[i].attr('value');
+				nia04k_label = nia04k_nodes[i].value;
 				if (nia04k_label && nia04k_array.includes(nia04k_label)) {
 						setItemOutline(nia04k_nodes[i],"yellow","nia04k","04-K");
 						nia04k_flag = true;
@@ -384,4 +385,5 @@ function check_part_04(){
 	if(nia04l_flag == true) {
 		setItemToResultList("nth","<li><a href='#' data-destination='nia04l' class='result-focus label-yellow'>04-L</a> : Formulaire avec bouton de soumission mal placé </li>");
 	}
+	
 }

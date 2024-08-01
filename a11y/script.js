@@ -80,6 +80,7 @@ setTimeout(function() {
 // Add JS
 // - double sécurité pour que ce sript puisse également être appelé par l'extention chrome
 if(!document.body.classList.contains('panel-injected')){
+	/* Pour le bookmarklet */
 	if (document.getElementById('injected-css') === null) {
 	  let cssPanel = document.createElement('link');
 	  cssPanel.id = 'injected-css';
@@ -210,6 +211,7 @@ if(!document.body.classList.contains('panel-injected')){
 	var p15 = new Promise(function(resolve) {jsPart15.addEventListener('load', () => {if(typeof check_part_15 == "function") check_part_15();setTimeout(resolve, 100);})});
 }
 else{
+	/* Pour le Plugin */ 
 	var p01 = new Promise(function(resolve) {check_part_01();setTimeout(resolve, 100);});
 	var p02 = new Promise(function(resolve) {check_part_02();setTimeout(resolve, 100);});
 	var p03 = new Promise(function(resolve) {check_part_03();setTimeout(resolve, 100);});
@@ -455,6 +457,12 @@ function createResultPanel(){
 	window.scroll({ top: 0, left: 0, behavior: 'smooth' });
 }
 
+// Fonction pour enlever les crochets et leur contenu à l'interieur de ceux-ci
+function removeBracket(data){
+	return data ? data.replaceAll(/(\r\n|\n|\r)/g, "").replaceAll(/\[.+?\]/g, "").replaceAll(/"/g, "'") : "";	
+}
+
+
 // Fonction Validation Third-part : HTML5 Wave Lighthouse
 function thirdPartValidation(){
 	
@@ -603,15 +611,15 @@ function saveInBdd(){
 	let dataToSave = {
 		"url":  currentUrl,
 		"nc": result_nc_nb,
-		"nc_details" :  result_nc,
+		"nc_details" :  removeBracket(result_nc),
 		"nth" : result_nth_nb,
-		"nth_details" : result_nth,
+		"nth_details" : removeBracket(result_nth),
 		"man" : result_man_nb,
-		"man_details" : result_man,
+		"man_details" : removeBracket(result_man),
 		"dev" : result_dev_nb,
-		"dev_details" : result_dev,
+		"dev_details" : removeBracket(result_dev),
 		"crit" : result_crit_nb,
-		"crit_details" : result_crit,
+		"crit_details" : removeBracket(result_crit),
 		"w3c" : result_html5,
 		"wave" : result_wave,
 		"lighthouse" : result_lighthouse
@@ -619,49 +627,16 @@ function saveInBdd(){
 
 	console.log(dataToSave);
 	if(!isPreview && save_to_db){
-		/*
+		
 		// Problème CORE POLICY
 		const db_api_url = "https://webux.gouv.etat.lu/a11y/a11y_bookmarklet/backend/save_result.php"; 
-		console.log("START SAVE");
+		console.log("START Save Bdd");
 		const response = fetch(db_api_url, {
 				method: "POST",
-				//mode: 'no-cors', // nécessaire sinon "has been blocked by CORS policy"
-				headers: {'Content-Type': 'application/json'}, 
-				//headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
-				//headers: {'Content-Type': 'text/html;charset=UTF-8'}, 
+				headers: {'Content-Type': 'text/html;charset=UTF-8'}, 
 				body: JSON.stringify(dataToSave)
-				//body: Object.entries(dataToSave).map(([k,v])=>{return k+'='+v}).join('&')
 			})
 			.then(response => console.log(response.status) || response) // output the status and return response
-			.then(response => response.text()) // send response body to next then chain
-			.then(body => console.log(body)) // you can use response body here
-
-		/*
-		try {
-			async function save(url = db_api_url) {
-				console.log(typeof(JSON.stringify(dataToSave)))
-			
-				const response = await fetch(url, {
-					method: "POST",
-					mode: 'no-cors', // nécessaire sinon "has been blocked by CORS policy"
-					//headers: {'Content-Type': 'application/json'}, 
-					headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
-					//headers: {'Content-Type': 'text/html;charset=UTF-8'}, 
-					//body: JSON.stringify(dataToSave)
-					body: Object.entries(data).map(([k,v])=>{return k+'='+v}).join('&')
-				});
-				console.log(response);
-				return response;
-			}
-		
-			save().then(data => {
-				console.log(data);
-				console.log("END SAVE");
-			});   		  
-		} catch (error) {
-			console.log(`Erreur lors de la sauvegarde : ${error.message}`);
-		}
-		*/
 	}
 }
 

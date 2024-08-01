@@ -20,17 +20,17 @@ function addClassToBody() {
 // When the user clicks on the extension action
 chrome.action.onClicked.addListener(async (tab) => {
 	
-  const localUrl = "a11y/parts"
-  const prodUrl = "src/parts"
+  const localUrl = "a11y"
+  const prodUrl = "src"
   const pluginUrl = localUrl;
 	
   if(tab.url.includes(".public.lu") || tab.url.includes(".gouvernement.lu") || tab.url.includes(".etat.lu") || tab.url.includes("sig-gr.eu")) {
 	const p1 = chrome.scripting.executeScript({
-		files: ['a11y/parts/nia01_config.js','a11y/parts/nia02_images.js','a11y/parts/nia03_links.js','a11y/parts/nia04_form.js','a11y/parts/nia05_obligatoire.js','a11y/parts/nia06_structure.js','a11y/parts/nia07_title.js','a11y/parts/nia08_table.js','a11y/parts/nia09_nav.js','a11y/parts/nia10_oldtag.js','a11y/parts/nia11_lang.js','a11y/parts/nia12_button.js','a11y/parts/nia13_lottie.js','a11y/parts/nia14_colors.js','a11y/parts/nia15_secu.js'],
+		files: [pluginUrl+'/parts/nia01_config.js',pluginUrl+'/parts/nia02_images.js',pluginUrl+'/parts/nia03_links.js',pluginUrl+'/parts/nia04_form.js',pluginUrl+'/parts/nia05_obligatoire.js',pluginUrl+'/parts/nia06_structure.js',pluginUrl+'/parts/nia07_title.js',pluginUrl+'/parts/nia08_table.js',pluginUrl+'/parts/nia09_nav.js',pluginUrl+'/parts/nia10_oldtag.js',pluginUrl+'/parts/nia11_lang.js',pluginUrl+'/parts/nia12_button.js',pluginUrl+'/parts/nia13_lottie.js',pluginUrl+'/parts/nia14_colors.js',pluginUrl+'/parts/nia15_secu.js'],
 		target: { tabId: tab.id }
 	});
 	const p2 = chrome.scripting.insertCSS({
-		files: ['a11y/stylePanel.css'],
+		files: [pluginUrl+'/stylePanel.css'],
 		target: { tabId: tab.id }
 	});
 	const p3 = chrome.scripting.executeScript({
@@ -42,7 +42,7 @@ chrome.action.onClicked.addListener(async (tab) => {
       text: 'ON'
     });
 	const p5 = chrome.scripting.executeScript({
-		files: ['a11y/script.js'],
+		files: [pluginUrl+'/script.js'],
 		target: { tabId: tab.id }
 	});
 	
