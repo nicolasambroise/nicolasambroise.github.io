@@ -54,7 +54,7 @@ function check_part_08(){
 	}
 	
 	// F Chaque tableau possède un Caption() {
-	const nia08f_nodes = document.querySelectorAll('table:not([summary]):not([role="presentation"])');
+	const nia08f_nodes = document.querySelectorAll('table:not([summary]):not([aria-describedby]):not([role="presentation"])');
 	let nia08f_flag = false;
 	let nia08f_caption = "";
 	if(nia08f_nodes && nia08f_nodes.length > 0 && isItemsVisible(nia08f_nodes)){

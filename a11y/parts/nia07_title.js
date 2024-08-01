@@ -22,7 +22,7 @@ function check_part_07(){
 	// C. Heading caché au outil d'assistance 
 	const nia07c_nodes = document.querySelectorAll('h1[aria-hidden],h2[aria-hidden],h3[aria-hidden],h4[aria-hidden],h5[aria-hidden],h6[aria-hidden]');
 	if(nia07c_nodes && nia07c_nodes.length > 0 && isItemsVisible(nia07c_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia07c' class='result-focus label-red'>07-C</a> : Présence de titre caché au outil d'assistance</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia07c' class='result-focus label-red'>07-C</a> : Présence de titre caché aux outils d'assistance</li>");
 	  setItemsOutline(nia07c_nodes,"red","nia07c","07-C");
 	}
 

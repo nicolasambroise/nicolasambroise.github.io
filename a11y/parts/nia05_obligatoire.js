@@ -45,9 +45,11 @@ function check_part_05(){
 	}
 	
 	// C. Doctype
-	const nia05c_doctype = new XMLSerializer().serializeToString(document.doctype);
-	if(nia05c_doctype != "<!DOCTYPE html>"){
-		setItemToResultList("dev","<li><a href='#' data-destination='nia05c' class='result-focus label-yellow'>05-C</a> : Vérifier qu'un doctype est correctement déclaré [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-8-1-1' target='_blank'>RAWeb 8.1.1</a>]</li>");
+	if(!only_redactor){
+		const nia05c_doctype = new XMLSerializer().serializeToString(document.doctype);
+		if(nia05c_doctype != "<!DOCTYPE html>"){
+			setItemToResultList("dev","<li><a href='#' data-destination='nia05c' class='result-focus label-yellow'>05-C</a> : Vérifier qu'un doctype est correctement déclaré [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-8-1-1' target='_blank'>RAWeb 8.1.1</a>]</li>");
+		}
 	}
 	
 	// D. Page title
@@ -59,7 +61,7 @@ function check_part_05(){
 	// E. Changement de sens de lecture
 	const nia05e1_nodes = document.querySelectorAll('[dir]:not([dir="rtl"]):not([dir="ltr"])');
 	if(nia05e1_nodes && nia05e1_nodes.length > 0 && isItemsVisible(nia05e1_nodes)){
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia05e1' class='result-focus label-red'>05-E</a> : Vérifier la valeur de définition du sens de lecture [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-8-10-2' target='_blank'>RAWeb 8.10.2</a>]</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia05e1' class='result-focus label-red'>05-E</a> : Vérifier la valeur de définition du sens de lecture [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-8-10-2' target='_blank'>RAWeb 8.10.2</a>]</li>");
 	  setItemsOutline(nia05e1_nodes,"red","nia05e1","05-E");
 	}
 	
@@ -81,28 +83,30 @@ function check_part_05(){
 	}
 	
 	// F. Id dupliqué
-	const nia05f_nodes = document.querySelectorAll('[id]:not(script):not(link)');
-	let nia05f_flag = false;
-	let nia05f_ids = {};
-	let nia05f_currentId;
-	let nia05f_duplicateId = "";
-	if(nia05f_nodes && nia05f_nodes.length > 0){
-		for(let i = 0; i < nia05f_nodes.length; i++){
-			nia05f_currentId = nia05f_nodes[i].id ? nia05f_nodes[i].id : "undefined";
-			if(isNaN(nia05f_ids[nia05f_currentId])) {
-				nia05f_ids[nia05f_currentId] = 0;
+	if(!only_redactor){
+		const nia05f_nodes = document.querySelectorAll('[id]:not(script):not(link)');
+		let nia05f_flag = false;
+		let nia05f_ids = {};
+		let nia05f_currentId;
+		let nia05f_duplicateId = "";
+		if(nia05f_nodes && nia05f_nodes.length > 0){
+			for(let i = 0; i < nia05f_nodes.length; i++){
+				nia05f_currentId = nia05f_nodes[i].id ? nia05f_nodes[i].id : "undefined";
+				if(isNaN(nia05f_ids[nia05f_currentId])) {
+					nia05f_ids[nia05f_currentId] = 0;
+				}
+				else{
+					nia05f_flag = true;
+					setItemOutline(nia05f_nodes[i],"red","nia05f","05-F");
+					nia05f_duplicateId += "\""+nia05f_currentId+"\",";
+				}
+				nia05f_ids[nia05f_currentId]++;
 			}
-			else{
-				nia05f_flag = true;
-				setItemOutline(nia05f_nodes[i],"red","nia05f","05-F");
-				nia05f_duplicateId += "\""+nia05f_currentId+"\",";
-			}
-			nia05f_ids[nia05f_currentId]++;
 		}
-	}
-	if(nia05f_flag == true){
-	  //console.log(nia05f_ids);
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia05f' class='result-focus label-red'>05-F</a> : Présence d'Id dupliqué ("+nia05f_duplicateId+") [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-8-2-1' target='_blank'>RAWeb 8.2.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-identifiant-html-nest-utilise-quune-seule-fois-par-page' target='_blank'>Opquast 229</a>]</li>");
+		if(nia05f_flag == true){
+		  //console.log(nia05f_ids);
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia05f' class='result-focus label-red'>05-F</a> : Présence d'Id dupliqué ("+nia05f_duplicateId+") [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-8-2-1' target='_blank'>RAWeb 8.2.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-identifiant-html-nest-utilise-quune-seule-fois-par-page' target='_blank'>Opquast 229</a>]</li>");
+		}
 	}
 	
 	// G. Présence de la Govbar
@@ -160,7 +164,7 @@ function check_part_05(){
 	}
 
 	// K. Chaque page affiche une information permettant de connaître son emplacement dans l'arborescence du site.
-	if(isHomepage == false){
+	if(isHomepage == false && !only_redactor){
 		const nia05k_node = document.querySelector(".cmp-breadcrumb,.cmp-breadcrumb-demarches");
 		if(!nia05k_node){
 			setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-K</span> : Absence de Fils d'Ariane [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-affiche-une-information-permettant-de-connaitre-son-emplacement-dans-larborescence-du-site' target='_blank'>Opquast 151</a>]</li>");
@@ -168,16 +172,18 @@ function check_part_05(){
 	}
 	
 	// L. Le focus clavier n'est ni supprimé ni masqué.
-	const nia05l_node = document.querySelector("summary");
-	if(nia05l_node){
-		nia05l_node.addEventListener("focus", (e) => {
-			//console.log(window.getComputedStyle(e.target, null).outline);
-			if(window.getComputedStyle(e.target, null).outline == 0){
-				setItemOutline(nia05l_node,"red","nia05l","05-L");
-				setItemToResultList("dev","<li><a href='#' data-destination='nia05l' class='result-focus label-red'>05-L</a> : Le focus clavier est supprimer d'un élément accordéon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-focus-clavier-nest-ni-supprime-ni-masque' target='_blank'>Opquast 160</a>]</li>");
-			}
-		});
-		nia05l_node.focus();
+	if(!only_redactor){
+		const nia05l_node = document.querySelector("summary");
+		if(nia05l_node){
+			nia05l_node.addEventListener("focus", (e) => {
+				//console.log(window.getComputedStyle(e.target, null).outline);
+				if(window.getComputedStyle(e.target, null).outline == 0){
+					setItemOutline(nia05l_node,"red","nia05l","05-L");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia05l' class='result-focus label-red'>05-L</a> : Le focus clavier est supprimer d'un élément accordéon [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-focus-clavier-nest-ni-supprime-ni-masque' target='_blank'>Opquast 160</a>]</li>");
+				}
+			});
+			nia05l_node.focus();
+		}
 	}
 	
 	// M. Les styles ne justifient pas le texte.
@@ -223,12 +229,14 @@ function check_part_05(){
 	}
 
 	// O. La page des résultats de recherche indique le nombre de résultats
-	const nia05o_isSearch = document.getElementById("mainSearch");
-	if(nia05o_isSearch){
-		const nia05o_searchCount = document.querySelector(".search-meta-count");
-		if(!nia05o_searchCount || !isItemVisible(nia05o_searchCount)){
-			setItemToResultList("nc","<li><a href='#' data-destination='nia05o' class='result-focus label-red'>05-O</a> : La page des résultats de recherche indique le nombre de résultats [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-page-des-resultats-de-recherche-indique-le-nombre-de-resultats-le-nombre-de-pages-de-resultats-et-le-nombre-de-resultats-par-page' target='_blank'>Opquast 13</a>]</li>");
-			setItemsOutline(nia05o_isSearch,"red","nia05o","05-O");
+	if(!only_redactor){
+		const nia05o_isSearch = document.getElementById("mainSearch");
+		if(nia05o_isSearch){
+			const nia05o_searchCount = document.querySelector(".search-meta-count");
+			if(!nia05o_searchCount || !isItemVisible(nia05o_searchCount)){
+				setItemToResultList("nc","<li><a href='#' data-destination='nia05o' class='result-focus label-red'>05-O</a> : La page des résultats de recherche indique le nombre de résultats [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-page-des-resultats-de-recherche-indique-le-nombre-de-resultats-le-nombre-de-pages-de-resultats-et-le-nombre-de-resultats-par-page' target='_blank'>Opquast 13</a>]</li>");
+				setItemsOutline(nia05o_isSearch,"red","nia05o","05-O");
+			}
 		}
 	}
 	

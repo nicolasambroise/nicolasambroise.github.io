@@ -93,10 +93,12 @@ function check_part_09(){
 	}
 
 	// C. Presence d'attibut tabindex positif
-	const nia09c_nodes = document.querySelectorAll('[tabindex]:not([tabindex="0"]):not([tabindex="-1"])');
-	if(nia09c_nodes && nia09c_nodes.length > 0 && isItemsVisible(nia09c_nodes)){
-	  setItemToResultList("nth","<li><a href='#' data-destination='nia09c' class='result-focus label-orange'>09-C</a> : Presence d'attibut tabindex positif [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-8-1' target='_blank'>RAWeb 12.8.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-navigation-au-clavier-seffectue-dans-un-ordre-previsible' target='_blank'>Opquast 162</a>]</li>");
-	  setItemsOutline(nia09c_nodes,"orange","nia09c","09-C");
+	if(!only_redactor){
+		const nia09c_nodes = document.querySelectorAll('[tabindex]:not([tabindex="0"]):not([tabindex="-1"])');
+		if(nia09c_nodes && nia09c_nodes.length > 0 && isItemsVisible(nia09c_nodes)){
+		  setItemToResultList("nth","<li><a href='#' data-destination='nia09c' class='result-focus label-orange'>09-C</a> : Presence d'attibut tabindex positif [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-8-1' target='_blank'>RAWeb 12.8.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-navigation-au-clavier-seffectue-dans-un-ordre-previsible' target='_blank'>Opquast 162</a>]</li>");
+		  setItemsOutline(nia09c_nodes,"orange","nia09c","09-C");
+		}
 	}
 
 	// D. 2 systemes de navigation (plan du site, recherche, menu)
@@ -123,85 +125,89 @@ function check_part_09(){
 	}
 	
 	// G. Skiplinks
-	const nia09e_main = document.querySelector('.skiplinks a[href="#main"]');
-	if(nia09e_main == null){
-		setItemToResultList("nc","<li><span class='result-focus label-red'>09-E</span> : Absence de skiplinks pour aller à la zone de contenu principale [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-7-1' target='_blank'>RAWeb 12.7.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-contient-des-liens-dacces-rapide-places-au-debut-du-code-source' target='_blank'>Opquast 159</a>]</li>");
-	}
-	
-	const nia09e2_nodes = document.querySelectorAll('.skiplinks a[href]');
-	let nia09e2_flag = false;
-	let nia09e2_dest = "";
-	if(nia09e2_nodes && nia09e2_nodes.length > 0){
-		for(let i = 0; i < nia09e2_nodes.length; i++){
-			nia09e2_dest = document.querySelector(nia09e2_nodes[i].getAttribute("href"))
-			if(nia09e2_dest == null){
-				if(debug_flag) console.log(nia09e2_nodes[i]);
-				if(isItemDisplayNone(nia09e2_nodes[i])){
-					setItemToResultList("man","<li><span class='result-focus label-yellow'>09-E</span> : Un skiplinks non visible (display:none) n'a pas de destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-7-1' target='_blank'>RAWeb 12.7.1</a>]</li>");
-				}
-				else{
-					nia09e2_flag = true;
+	if(!only_redactor){
+		const nia09e_main = document.querySelector('.skiplinks a[href="#main"]');
+		if(nia09e_main == null){
+			setItemToResultList("nc","<li><span class='result-focus label-red'>09-E</span> : Absence de skiplinks pour aller à la zone de contenu principale [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-7-1' target='_blank'>RAWeb 12.7.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-page-contient-des-liens-dacces-rapide-places-au-debut-du-code-source' target='_blank'>Opquast 159</a>]</li>");
+		}
+		
+		const nia09e2_nodes = document.querySelectorAll('.skiplinks a[href]');
+		let nia09e2_flag = false;
+		let nia09e2_dest = "";
+		if(nia09e2_nodes && nia09e2_nodes.length > 0){
+			for(let i = 0; i < nia09e2_nodes.length; i++){
+				nia09e2_dest = document.querySelector(nia09e2_nodes[i].getAttribute("href"))
+				if(nia09e2_dest == null){
+					if(debug_flag) console.log(nia09e2_nodes[i]);
+					if(isItemDisplayNone(nia09e2_nodes[i])){
+						setItemToResultList("man","<li><span class='result-focus label-yellow'>09-E</span> : Un skiplinks non visible (display:none) n'a pas de destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-7-1' target='_blank'>RAWeb 12.7.1</a>]</li>");
+					}
+					else{
+						nia09e2_flag = true;
+					}
 				}
 			}
 		}
-	}
-	if(nia09e2_flag == true){
-	  setItemToResultList("dev","<li><span class='result-focus label-red'>09-E</span> : Un skiplinks n'est pas correctement lié à sa destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-7-1' target='_blank'>RAWeb 12.7.1</a>]</li>");
+		if(nia09e2_flag == true){
+		  setItemToResultList("dev","<li><span class='result-focus label-red'>09-E</span> : Un skiplinks n'est pas correctement lié à sa destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-7-1' target='_blank'>RAWeb 12.7.1</a>]</li>");
+		}
 	}
 
 	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
-	const nia09f_nodes = document.querySelectorAll('*:not(.cmp-text) > *:not(p) > a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link):not(.geoportail-skip):not(.cmp-image__link), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
-	let nia09f_flag = false;
-	let nia09f_rect, nia09f_rect_parent;
-	let nia09f_horizontal = 0, nia09f_vertical = 0;
-	let nia09f_horizontal_parent = 0, nia09f_vertical_parent = 0;
-	if(nia09f_nodes && nia09f_nodes.length > 0){
-		for(let i = 0; i < nia09f_nodes.length; i++){
-			if(isItemVisible(nia09f_nodes[i]) && !isItemSROnly(nia09f_nodes[i])){
-				nia09f_rect = nia09f_nodes[i].getBoundingClientRect();
-				nia09f_horizontal = nia09f_rect["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginRight']);
-				nia09f_vertical = nia09f_rect["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginBottom']);
+	if(!only_redactor){
+		const nia09f_nodes = document.querySelectorAll('*:not(.cmp-text) > *:not(p) > a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link):not(.geoportail-skip):not(.cmp-image__link), button, input, select, details, textarea, [tabindex="0"], [tabindex="-1"]');
+		let nia09f_flag = false;
+		let nia09f_rect, nia09f_rect_parent;
+		let nia09f_horizontal = 0, nia09f_vertical = 0;
+		let nia09f_horizontal_parent = 0, nia09f_vertical_parent = 0;
+		if(nia09f_nodes && nia09f_nodes.length > 0){
+			for(let i = 0; i < nia09f_nodes.length; i++){
+				if(isItemVisible(nia09f_nodes[i]) && !isItemSROnly(nia09f_nodes[i])){
+					nia09f_rect = nia09f_nodes[i].getBoundingClientRect();
+					nia09f_horizontal = nia09f_rect["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginRight']);
+					nia09f_vertical = nia09f_rect["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i])['marginBottom']);
 
-				if(nia09f_rect["width"] != 0 && nia09f_rect["height"] !=0){
-					if(nia09f_horizontal < 24 || nia09f_vertical < 24){
-						
-						if(nia09f_nodes[i].parentElement.tagName == "LI" || nia09f_nodes[i].parentElement.childElementCount == 1){
-							nia09f_rect_parent = nia09f_nodes[i].parentElement.getBoundingClientRect();
-							nia09f_horizontal_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginRight']);
-							nia09f_vertical_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginBottom']);
-							if(nia09f_horizontal_parent < 24 || nia09f_vertical_parent < 24){
-						
-								// console.log("09f1 : "+nia09f_horizontal+" "+nia09f_vertical);
-								// console.log("09f2 : "+nia09f_horizontal_parent+" "+nia09f_vertical_parent);
-								
-								if(nia09f_vertical_parent > 18 && nia09f_horizontal_parent > 50){
-									// Exception In-line : Par exemple un lien dans un texte
-								}
-								else {
-									if(debug_flag) console.log(nia09f_rect);
-									nia09f_flag = true;
-									setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+					if(nia09f_rect["width"] != 0 && nia09f_rect["height"] !=0){
+						if(nia09f_horizontal < 24 || nia09f_vertical < 24){
+							
+							if(nia09f_nodes[i].parentElement.tagName == "LI" || nia09f_nodes[i].parentElement.childElementCount == 1){
+								nia09f_rect_parent = nia09f_nodes[i].parentElement.getBoundingClientRect();
+								nia09f_horizontal_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["width"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginLeft']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginRight']);
+								nia09f_vertical_parent = nia09f_nodes[i].parentElement.getBoundingClientRect()["height"] + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginTop']) + parseFloat(window.getComputedStyle(nia09f_nodes[i].parentElement)['marginBottom']);
+								if(nia09f_horizontal_parent < 24 || nia09f_vertical_parent < 24){
+							
+									// console.log("09f1 : "+nia09f_horizontal+" "+nia09f_vertical);
+									// console.log("09f2 : "+nia09f_horizontal_parent+" "+nia09f_vertical_parent);
+									
+									if(nia09f_vertical_parent > 18 && nia09f_horizontal_parent > 50){
+										// Exception In-line : Par exemple un lien dans un texte
+									}
+									else {
+										if(debug_flag) console.log(nia09f_rect);
+										nia09f_flag = true;
+										setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+									}
 								}
 							}
-						}
-						else if(nia09f_nodes[i].parentElement.tagName != "P" && nia09f_nodes[i].parentElement.tagName != "SPAN" && nia09f_nodes[i].parentElement.tagName != "SMALL" && nia09f_nodes[i].parentElement.tagName != "DD" && nia09f_nodes[i].parentElement.tagName != "STRONG"){
-							if(debug_flag) console.log(nia09f_rect);
-							nia09f_flag = true;
-							setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
-						}
-						else if(nia09f_vertical > 18 && nia09f_horizontal > 50){
-							// Exception In-line : Par exemple un lien dans un texte
-						}
-						else {
-							nia09f_flag = true;
-							setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+							else if(nia09f_nodes[i].parentElement.tagName != "P" && nia09f_nodes[i].parentElement.tagName != "SPAN" && nia09f_nodes[i].parentElement.tagName != "SMALL" && nia09f_nodes[i].parentElement.tagName != "DD" && nia09f_nodes[i].parentElement.tagName != "STRONG"){
+								if(debug_flag) console.log(nia09f_rect);
+								nia09f_flag = true;
+								setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+							}
+							else if(nia09f_vertical > 18 && nia09f_horizontal > 50){
+								// Exception In-line : Par exemple un lien dans un texte
+							}
+							else {
+								nia09f_flag = true;
+								setItemOutline(nia09f_nodes[i],"yellow","nia09f","09-F");
+							}
 						}
 					}
 				}
 			}
 		}
-	}
-	if(nia09f_flag == true){
-	  setItemToResultList("man","<li><a href='#' data-destination='nia09f' class='result-focus label-yellow'>09-F</a> : Taille d'éléments interactifs minimum attendue est de 24px par 24px [<a href='https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html' target='_blank'>WCAG 2.2 SC258</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-taille-des-elements-cliquables-est-suffisante' target='_blank'>Opquast 181</a>]</li>");
+		if(nia09f_flag == true){
+		  setItemToResultList("man","<li><a href='#' data-destination='nia09f' class='result-focus label-yellow'>09-F</a> : Taille d'éléments interactifs minimum attendue est de 24px par 24px [<a href='https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html' target='_blank'>WCAG 2.2 SC258</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/la-taille-des-elements-cliquables-est-suffisante' target='_blank'>Opquast 181</a>]</li>");
+		}
 	}
 }

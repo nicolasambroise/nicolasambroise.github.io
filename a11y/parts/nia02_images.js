@@ -62,55 +62,63 @@ function check_part_02(){
 	}
 	
 	// C. Alt vide sur les images de search logique. 
-	const nia02c_nodes = document.querySelectorAll('.cmp-focus img:not([alt=""])');
-	if(nia02c_nodes && nia02c_nodes.length > 0 && isItemsVisible(nia02c_nodes)){
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia02c' class='result-focus label-red'>02-C</a> : Présence de " + nia02c_nodes.length + " image de search-logic sans attribut alt vide</li>");
-	  setItemsOutline(nia02c_nodes,"red","nia02c","02-C");
+	if(!only_redactor){
+		const nia02c_nodes = document.querySelectorAll('.cmp-focus img:not([alt=""])');
+		if(nia02c_nodes && nia02c_nodes.length > 0 && isItemsVisible(nia02c_nodes)){
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia02c' class='result-focus label-red'>02-C</a> : Présence de " + nia02c_nodes.length + " image de search-logic sans attribut alt vide</li>");
+		  setItemsOutline(nia02c_nodes,"red","nia02c","02-C");
+		}
 	}
 
 	// D. Absence de copyright/caption/légende sur une image Core V3
-	const nia02d_nodes = document.querySelectorAll('.cmp-image[data-cmp-hook-image="imageV3"] .cmp-image__title');
-	if(nia02d_nodes && nia02d_nodes.length > 0 && isItemsVisible(nia02d_nodes)){
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia02d' class='result-focus label-orange'>02-D</a> : Présence d'un caption non lié correctement à son image</li>");
-	  setItemsOutline(nia02d_nodes,"orange","nia02d","02-D");
+	if(!only_redactor){
+		const nia02d_nodes = document.querySelectorAll('.cmp-image[data-cmp-hook-image="imageV3"] .cmp-image__title');
+		if(nia02d_nodes && nia02d_nodes.length > 0 && isItemsVisible(nia02d_nodes)){
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia02d' class='result-focus label-orange'>02-D</a> : Présence d'un caption non lié correctement à son image</li>");
+		  setItemsOutline(nia02d_nodes,"orange","nia02d","02-D");
+		}
 	}
 	
 	// E. Images légendés presence du aria-label sur le figure
-	const nia02e_nodes = document.querySelectorAll('figure[data-cmp-hook-image="figure"]:not([aria-label]) figcaption');
-	if(nia02e_nodes && nia02e_nodes.length > 0 && isItemsVisible(nia02e_nodes)){
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia02e' class='result-focus label-orange'>02-E</a> : Les captions des images ne sont pas correctement restitué, il manque un attribut aria-label sur la balise figure</li>");
-	  setItemsOutline(nia02e_nodes,"orange","nia02e","02-E");
+	if(!only_redactor){
+		const nia02e_nodes = document.querySelectorAll('figure[data-cmp-hook-image="figure"]:not([aria-label]) figcaption');
+		if(nia02e_nodes && nia02e_nodes.length > 0 && isItemsVisible(nia02e_nodes)){
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia02e' class='result-focus label-orange'>02-E</a> : Les captions des images ne sont pas correctement restitué, il manque un attribut aria-label sur la balise figure</li>");
+		  setItemsOutline(nia02e_nodes,"orange","nia02e","02-E");
+		}
 	}
 	
 	// F. Vérification sur les images atypique
-	const nia02f1_nodes = document.querySelectorAll('area:not([aria-label]):not([alt])');
-	if(nia02f1_nodes && nia02f1_nodes.length > 0 && isItemsVisible(nia02f1_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02f1' class='result-focus label-red'>02-F</a> : Les zones d'image réactive porteuse d'information doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-2' target='_blank'>RAWeb 1.1.2</a>]</li>");
-	  setItemsOutline(nia02f1_nodes,"red","nia02f1","02-F");
-	}
-	
-	const nia02f2_nodes = document.querySelectorAll('input[type="image"]:not([alt]):not([aria-label]):not([aria-labelledby]):not([title])');
-	if(nia02f2_nodes && nia02f2_nodes.length > 0 && isItemsVisible(nia02f2_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02f2' class='result-focus label-red'>02-F</a> : Les boutons de type image (balise input avec attribut type=image doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-3' target='_blank'>RAWeb 1.1.3</a>]</li>");
-	  setItemsOutline(nia02f2_nodes,"red","nia02f2","02-F");
-	}
-	
-	const nia02f3_nodes = document.querySelectorAll('object[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
-	if(nia02f3_nodes && nia02f3_nodes.length > 0 && isItemsVisible(nia02f3_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02f3' class='result-focus label-red'>02-F</a> : Les images objects porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-6' target='_blank'>RAWeb 1.1.6</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-porteuse-dinformation-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 113</a>]</li>");
-	  setItemsOutline(nia02f3_nodes,"red","nia02f3","02-F");
-	}
+	if(!only_redactor){
+		const nia02f1_nodes = document.querySelectorAll('area:not([aria-label]):not([alt])');
+		if(nia02f1_nodes && nia02f1_nodes.length > 0 && isItemsVisible(nia02f1_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02f1' class='result-focus label-red'>02-F</a> : Les zones d'image réactive porteuse d'information doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-2' target='_blank'>RAWeb 1.1.2</a>]</li>");
+		  setItemsOutline(nia02f1_nodes,"red","nia02f1","02-F");
+		}
+		
+		const nia02f2_nodes = document.querySelectorAll('input[type="image"]:not([alt]):not([aria-label]):not([aria-labelledby]):not([title])');
+		if(nia02f2_nodes && nia02f2_nodes.length > 0 && isItemsVisible(nia02f2_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02f2' class='result-focus label-red'>02-F</a> : Les boutons de type image (balise input avec attribut type=image doivent avoir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-3' target='_blank'>RAWeb 1.1.3</a>]</li>");
+		  setItemsOutline(nia02f2_nodes,"red","nia02f2","02-F");
+		}
+		
+		const nia02f3_nodes = document.querySelectorAll('object[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
+		if(nia02f3_nodes && nia02f3_nodes.length > 0 && isItemsVisible(nia02f3_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02f3' class='result-focus label-red'>02-F</a> : Les images objects porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-6' target='_blank'>RAWeb 1.1.6</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-porteuse-dinformation-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 113</a>]</li>");
+		  setItemsOutline(nia02f3_nodes,"red","nia02f3","02-F");
+		}
 
-	const nia02f4_nodes = document.querySelectorAll('embed[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
-	if(nia02f4_nodes && nia02f4_nodes.length > 0 && isItemsVisible(nia02f4_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02f4' class='result-focus label-red'>02-F</a> : Les images embarquée porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-7' target='_blank'>RAWeb 1.1.7</a>]</li>");
-	  setItemsOutline(nia02f4_nodes,"red","nia02f4","02-F");
-	}
+		const nia02f4_nodes = document.querySelectorAll('embed[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby]):not([title])');
+		if(nia02f4_nodes && nia02f4_nodes.length > 0 && isItemsVisible(nia02f4_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02f4' class='result-focus label-red'>02-F</a> : Les images embarquée porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-7' target='_blank'>RAWeb 1.1.7</a>]</li>");
+		  setItemsOutline(nia02f4_nodes,"red","nia02f4","02-F");
+		}
 
-	const nia02f5_nodes = document.querySelectorAll('canvas[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby])');
-	if(nia02f5_nodes && nia02f5_nodes.length > 0 && isItemsVisible(nia02f5_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02f5' class='result-focus label-red'>02-F</a> : Les images bitmap (balise canvas) porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-8' target='_blank'>RAWeb 1.1.8</a>]</li>");
-	  setItemsOutline(nia02f5_nodes,"red","nia02f5","02-F");
+		const nia02f5_nodes = document.querySelectorAll('canvas[type^="image/"]:not([role="img"]):not([aria-label]):not([aria-labelledby])');
+		if(nia02f5_nodes && nia02f5_nodes.length > 0 && isItemsVisible(nia02f5_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02f5' class='result-focus label-red'>02-F</a> : Les images bitmap (balise canvas) porteuses d'information doivent avoir une alternative textuelle - à vérifier manuellement la présence d'un mécaniseme de remplacement [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-1-8' target='_blank'>RAWeb 1.1.8</a>]</li>");
+		  setItemsOutline(nia02f5_nodes,"red","nia02f5","02-F");
+		}
 	}
 	
 	// G. Les images de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle
@@ -120,56 +128,58 @@ function check_part_02(){
 	  setItemsOutline(nia02g1_nodes,"red","nia02g1","02-G");
 	}
 	
-	const nia02g2_nodes = document.querySelectorAll('area:not([href]):where([alt=""],[aria-hidden="true"],[role="presentation"],[role="none"]):where([aria-label],[aria-labelledby],[title])');
-	if(nia02g2_nodes && nia02g2_nodes.length > 0 && isItemsVisible(nia02g2_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02g2' class='result-focus label-red'>02-G</a> : Les zone non cliquable de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-2' target='_blank'>RAWeb 1.2.2</a>] </li>");
-	  setItemsOutline(nia02g2_nodes,"red","nia02g2","02-G");
-	}
-	
-	const nia02g3_nodes = document.querySelectorAll('object[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
-	if(nia02g3_nodes && nia02g3_nodes.length > 0 && isItemsVisible(nia02g3_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02g3' class='result-focus label-red'>02-G</a> : Les images object de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-3' target='_blank'>RAWeb 1.2.3</a>] </li>");
-	  setItemsOutline(nia02g3_nodes,"red","nia02g3","02-G");
-	}
-	
-	const nia02g4_nodes = document.querySelectorAll('canvas[aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
-	if(nia02g4_nodes && nia02g4_nodes.length > 0 && isItemsVisible(nia02g4_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02g4' class='result-focus label-red'>02-G</a> : Les images bitmap de décoration (canvas) ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-5' target='_blank'>RAWeb 1.2.5</a>] </li>");
-	  setItemsOutline(nia02g4_nodes,"red","nia02g4","02-G");
-	}
-	
-	const nia02g5_nodes = document.querySelectorAll('embed[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
-	if(nia02g5_nodes && nia02g5_nodes.length > 0 && isItemsVisible(nia02g5_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia02g4' class='result-focus label-red'>02-G</a> : Les images embarquées de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-6' target='_blank'>RAWeb 1.2.6</a>] </li>");
-	  setItemsOutline(nia02g5_nodes,"red","nia02g5","02-G");
-	}
-	
-	const nia02g6_nodes = document.querySelectorAll('object[type^="image/"][aria-hidden="true"]');
-	let nia02g6_flag = false;
-	if(nia02g6_nodes && nia02g6_nodes.length > 0){
-	  for(let i = 0; i < nia02g6_nodes.length; i++){
-	    if(isItemVisible(nia02g6_nodes[i]) && nia02g6_nodes[i].textContent.length > 0){
-		  setItemOutline(nia02g6_nodes[i],"red","nia02g6","02-G");
-		  nia02g6_flag = true;
+	if(!only_redactor){
+		const nia02g2_nodes = document.querySelectorAll('area:not([href]):where([alt=""],[aria-hidden="true"],[role="presentation"],[role="none"]):where([aria-label],[aria-labelledby],[title])');
+		if(nia02g2_nodes && nia02g2_nodes.length > 0 && isItemsVisible(nia02g2_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02g2' class='result-focus label-red'>02-G</a> : Les zone non cliquable de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-2' target='_blank'>RAWeb 1.2.2</a>] </li>");
+		  setItemsOutline(nia02g2_nodes,"red","nia02g2","02-G");
 		}
-	  }
-	}
-	if(nia02g6_flag == true){
-		 setItemToResultList("nc","<li><a href='#' data-destination='nia02g6' class='result-focus label-red'>02-G</a> : Les images object de décoration ne doivent pas avoir de contenu alternatif présent entre ses balises [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-3' target='_blank'>RAWeb 1.2.3</a>] </li>");
-	}
-	
-	const nia02g7_nodes = document.querySelectorAll('canvas[aria-hidden="true"]');
-	let nia02g7_flag = false;
-	if(nia02g7_nodes && nia02g7_nodes.length > 0){
-	  for(let i = 0; i < nia02g7_nodes.length; i++){
-	    if(isItemVisible(nia02g7_nodes[i]) && nia02g7_nodes[i].textContent.length > 0){
-		  setItemOutline(nia02g7_nodes[i],"red","nia02g7","02-G");
-		  nia02g7_flag = true;
+		
+		const nia02g3_nodes = document.querySelectorAll('object[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
+		if(nia02g3_nodes && nia02g3_nodes.length > 0 && isItemsVisible(nia02g3_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02g3' class='result-focus label-red'>02-G</a> : Les images object de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-3' target='_blank'>RAWeb 1.2.3</a>] </li>");
+		  setItemsOutline(nia02g3_nodes,"red","nia02g3","02-G");
 		}
-	  }
-	}
-	if(nia02g7_flag == true){
-		 setItemToResultList("nc","<li><a href='#' data-destination='nia02g7' class='result-focus label-red'>02-G</a> : Les images bitmap de décoration (canvas) ne doivent pas avoir de contenu alternatif présent entre ses balises [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-3' target='_blank'>RAWeb 1.2.3</a>] </li>");
+		
+		const nia02g4_nodes = document.querySelectorAll('canvas[aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
+		if(nia02g4_nodes && nia02g4_nodes.length > 0 && isItemsVisible(nia02g4_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02g4' class='result-focus label-red'>02-G</a> : Les images bitmap de décoration (canvas) ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-5' target='_blank'>RAWeb 1.2.5</a>] </li>");
+		  setItemsOutline(nia02g4_nodes,"red","nia02g4","02-G");
+		}
+		
+		const nia02g5_nodes = document.querySelectorAll('embed[type^="image/"][aria-hidden="true"]:where([aria-label],[aria-labelledby],[title])');
+		if(nia02g5_nodes && nia02g5_nodes.length > 0 && isItemsVisible(nia02g5_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia02g4' class='result-focus label-red'>02-G</a> : Les images embarquées de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-6' target='_blank'>RAWeb 1.2.6</a>] </li>");
+		  setItemsOutline(nia02g5_nodes,"red","nia02g5","02-G");
+		}
+		
+		const nia02g6_nodes = document.querySelectorAll('object[type^="image/"][aria-hidden="true"]');
+		let nia02g6_flag = false;
+		if(nia02g6_nodes && nia02g6_nodes.length > 0){
+		  for(let i = 0; i < nia02g6_nodes.length; i++){
+			if(isItemVisible(nia02g6_nodes[i]) && nia02g6_nodes[i].textContent.length > 0){
+			  setItemOutline(nia02g6_nodes[i],"red","nia02g6","02-G");
+			  nia02g6_flag = true;
+			}
+		  }
+		}
+		if(nia02g6_flag == true){
+			 setItemToResultList("nc","<li><a href='#' data-destination='nia02g6' class='result-focus label-red'>02-G</a> : Les images object de décoration ne doivent pas avoir de contenu alternatif présent entre ses balises [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-3' target='_blank'>RAWeb 1.2.3</a>] </li>");
+		}
+		
+		const nia02g7_nodes = document.querySelectorAll('canvas[aria-hidden="true"]');
+		let nia02g7_flag = false;
+		if(nia02g7_nodes && nia02g7_nodes.length > 0){
+		  for(let i = 0; i < nia02g7_nodes.length; i++){
+			if(isItemVisible(nia02g7_nodes[i]) && nia02g7_nodes[i].textContent.length > 0){
+			  setItemOutline(nia02g7_nodes[i],"red","nia02g7","02-G");
+			  nia02g7_flag = true;
+			}
+		  }
+		}
+		if(nia02g7_flag == true){
+			 setItemToResultList("nc","<li><a href='#' data-destination='nia02g7' class='result-focus label-red'>02-G</a> : Les images bitmap de décoration (canvas) ne doivent pas avoir de contenu alternatif présent entre ses balises [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-3' target='_blank'>RAWeb 1.2.3</a>] </li>");
+		}
 	}
 	
 	// H. L'alternative doit être courte et concise - estimation max 150 caractères
@@ -238,7 +248,7 @@ function check_part_02(){
 				nia02j_ratio_max = 2.5;
 				if(Boolean(nia02j_nodes[i].closest(".search-result")) || Boolean(nia02j_nodes[i].closest(".cmp-focus"))){ 
 					nia02j_ratio_max = 5;
-					console.log(nia02j_ratio_max + " " + nia02j_nodes[i].getAttribute("src"));
+					if(debug_flag) console.log(nia02j_ratio_max + " " + nia02j_nodes[i].getAttribute("src"));
 				} // ratio 5 pour search-result  2.5 sinon
 					
 				nia02j_css_h = nia02j_nodes[i].height;

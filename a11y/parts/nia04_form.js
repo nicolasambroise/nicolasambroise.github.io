@@ -228,88 +228,91 @@ function check_part_04(){
 	}
 
 	// H. Champ et étiquette accolé en recupérant les positions des centres : Estimé à max 100px pour une distance correcte
-	
-	function getPositionAtTopRight(element) {
-	  const {top, left, width, height} = element.getBoundingClientRect();
-	  return {x: left + width,y: top};
-	}
-	
-	function getPositionAtTopLeft(element) {
-	  const {top, left, width, height} = element.getBoundingClientRect();
-	  return {x: left ,y: top};
-	}
+	if(!only_redactor){
+		function getPositionAtTopRight(element) {
+		  const {top, left, width, height} = element.getBoundingClientRect();
+		  return {x: left + width,y: top};
+		}
+		
+		function getPositionAtTopLeft(element) {
+		  const {top, left, width, height} = element.getBoundingClientRect();
+		  return {x: left ,y: top};
+		}
 
-	function getDistanceBetweenVerticalElements(a, b) {
-	  const inputPosition = getPositionAtTopLeft(a);
-	  const labelPosition = getPositionAtTopLeft(b);
-	  return Math.hypot(inputPosition.x - labelPosition.x, inputPosition.y - labelPosition.y);  
-	}
-	
-	function getDistanceBetweenHorizontalElements(a, b) {
-	  const inputPosition = getPositionAtTopLeft(a);
-	  const labelPosition = getPositionAtTopRight(b);
-	  return Math.hypot(inputPosition.x - labelPosition.x, inputPosition.y - labelPosition.y);  
-	}
-	
-	const nia04h_nodes = document.querySelectorAll('input[id]:not([type="button"]):not([type="reset"]):not([type="submit"]),select[id],textarea[id]');
-	let nia04h_flag = false;
-	let nia04h_id, nia04h_label;
-	let nia04h_distance;
-	if(nia04h_nodes && nia04h_nodes.length > 0){
-		for(let i = 0; i < nia04h_nodes.length; i++){
-			if(isItemVisible(nia04h_nodes[i])){
-				nia04h_id = nia04h_nodes[i].getAttribute("id");
-				if(!nia04h_id || nia04h_id == ""){
-					setItemOutline(nia04h_nodes[i],"red","nia04h","04-H");
-					nia04h_flag = true;
-				}
-				else{
-					nia04h_label = document.querySelectorAll("label[for='"+nia04h_id+"']");
-					if(!nia04h_label || nia04h_label.length == 0){
+		function getDistanceBetweenVerticalElements(a, b) {
+		  const inputPosition = getPositionAtTopLeft(a);
+		  const labelPosition = getPositionAtTopLeft(b);
+		  return Math.hypot(inputPosition.x - labelPosition.x, inputPosition.y - labelPosition.y);  
+		}
+		
+		function getDistanceBetweenHorizontalElements(a, b) {
+		  const inputPosition = getPositionAtTopLeft(a);
+		  const labelPosition = getPositionAtTopRight(b);
+		  return Math.hypot(inputPosition.x - labelPosition.x, inputPosition.y - labelPosition.y);  
+		}
+		
+		const nia04h_nodes = document.querySelectorAll('input[id]:not([type="button"]):not([type="reset"]):not([type="submit"]),select[id],textarea[id]');
+		let nia04h_flag = false;
+		let nia04h_id, nia04h_label;
+		let nia04h_distance;
+		if(nia04h_nodes && nia04h_nodes.length > 0){
+			for(let i = 0; i < nia04h_nodes.length; i++){
+				if(isItemVisible(nia04h_nodes[i])){
+					nia04h_id = nia04h_nodes[i].getAttribute("id");
+					if(!nia04h_id || nia04h_id == ""){
 						setItemOutline(nia04h_nodes[i],"red","nia04h","04-H");
 						nia04h_flag = true;
 					}
-					else if(isItemVisible(nia04h_label[0]) && !isItemSROnly(nia04h_label[0])){
-						let nia04h_distance_vertical = getDistanceBetweenVerticalElements(nia04h_nodes[i],nia04h_label[0]);
-						let nia04h_distance_horizontal = getDistanceBetweenHorizontalElements(nia04h_nodes[i],nia04h_label[0]);
-						if(nia04h_distance_vertical > 100 && nia04h_distance_horizontal > 100){
-							if(debug_flag) console.log("[nia04h] distance : "+nia04h_distance);
+					else{
+						nia04h_label = document.querySelectorAll("label[for='"+nia04h_id+"']");
+						if(!nia04h_label || nia04h_label.length == 0){
 							setItemOutline(nia04h_nodes[i],"red","nia04h","04-H");
 							nia04h_flag = true;
+						}
+						else if(isItemVisible(nia04h_label[0]) && !isItemSROnly(nia04h_label[0])){
+							let nia04h_distance_vertical = getDistanceBetweenVerticalElements(nia04h_nodes[i],nia04h_label[0]);
+							let nia04h_distance_horizontal = getDistanceBetweenHorizontalElements(nia04h_nodes[i],nia04h_label[0]);
+							if(nia04h_distance_vertical > 100 && nia04h_distance_horizontal > 100){
+								if(debug_flag) console.log("[nia04h] distance : "+nia04h_distance);
+								setItemOutline(nia04h_nodes[i],"red","nia04h","04-H");
+								nia04h_flag = true;
+							}
 						}
 					}
 				}
 			}
 		}
-	}
-	if(nia04h_flag == true){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia04h' class='result-focus label-red'>04-H</a> : Le Champ et l'étiquette doivent être accolé [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-11-5-1' target='_blank'>RAWeb 11.5.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-etiquette-de-formulaire-est-visuellement-rattachee-au-champ-quelle-decrit' target='_blank'>Opquast 75</a>]</li>");
+		if(nia04h_flag == true){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia04h' class='result-focus label-red'>04-H</a> : Le Champ et l'étiquette doivent être accolé [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-11-5-1' target='_blank'>RAWeb 11.5.1</a> - <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-etiquette-de-formulaire-est-visuellement-rattachee-au-champ-quelle-decrit' target='_blank'>Opquast 75</a>]</li>");
+		}
 	}
 
 	// I Les informations complétant l'étiquette d'un champ sont associées à celui-ci dans le code source
-	const nia04i_nodes = document.querySelectorAll("input[aria-describedby]");
-	let nia04i_flag = false;
-	let nia04i_desc = "", nia04i_id = "";
-	if(nia04i_nodes && nia04i_nodes.length > 0){
-		for(let i = 0; i < nia04i_nodes.length; i++){
-			if(isItemVisible(nia04i_nodes[i])){
-				nia04i_id = nia04i_nodes[i].getAttribute("aria-describedby");
-				if(!nia04i_id || nia04i_id == ""){
-					setItemOutline(nia04i_nodes[i],"red","nia04i","04-I");
-					nia04i_flag = true;
-				}
-				else{
-					nia04i_desc = document.querySelectorAll("[id='"+nia04i_id+"']");
-					if(!nia04i_desc || nia04i_desc.length != 1){
+	if(!only_redactor){
+		const nia04i_nodes = document.querySelectorAll("input[aria-describedby]");
+		let nia04i_flag = false;
+		let nia04i_desc = "", nia04i_id = "";
+		if(nia04i_nodes && nia04i_nodes.length > 0){
+			for(let i = 0; i < nia04i_nodes.length; i++){
+				if(isItemVisible(nia04i_nodes[i])){
+					nia04i_id = nia04i_nodes[i].getAttribute("aria-describedby");
+					if(!nia04i_id || nia04i_id == ""){
 						setItemOutline(nia04i_nodes[i],"red","nia04i","04-I");
 						nia04i_flag = true;
+					}
+					else{
+						nia04i_desc = document.querySelectorAll("[id='"+nia04i_id+"']");
+						if(!nia04i_desc || nia04i_desc.length != 1){
+							setItemOutline(nia04i_nodes[i],"red","nia04i","04-I");
+							nia04i_flag = true;
+						}
 					}
 				}
 			}
 		}
-	}
-	if(nia04i_flag == true) {
-		setItemToResultList("nc","<li><a href='#' data-destination='nia04i' class='result-focus label-red'>04-I</a> : Présence d'attribut aria-describedby non lié à un texte d'aide [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-informations-completant-letiquette-dun-champ-sont-associees-a-celui-ci-dans-le-code-source' target='_blank'>Opquast 68</a>]</li>");
+		if(nia04i_flag == true) {
+			setItemToResultList("nc","<li><a href='#' data-destination='nia04i' class='result-focus label-red'>04-I</a> : Présence d'attribut aria-describedby non lié à un texte d'aide [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/les-informations-completant-letiquette-dun-champ-sont-associees-a-celui-ci-dans-le-code-source' target='_blank'>Opquast 68</a>]</li>");
+		}
 	}
 	
 	// J Le format de saisie des champs de formulaire qui le nécessitent est indiqué (soit un aria-descibedby, soit des paranthèses dans le label)

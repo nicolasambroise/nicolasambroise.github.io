@@ -8,12 +8,14 @@ function check_part_12(){
 	if(debug_flag) console.log("12 Boutons");
 
 	/* A&B. Recherche */
-	const nia12a1_nodes = document.querySelectorAll('.topsearch:not([role="search"])');
-	const nia12a2_nodes = document.querySelectorAll('html[lang="fr"] .topsearch:not([aria-label="Globale"])');
-	if((nia12a1_nodes && nia12a1_nodes.length > 0 && isItemsVisible(nia12a1_nodes)) || (nia12a2_nodes && nia12a2_nodes.length > 0 && isItemsVisible(nia12a2_nodes))){
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia12a' class='result-focus label-red'>12-A</a> : Absence de certaines propriétés sur le champ de recherche (role=search et aria-label=Globale)</li>");
-	  setItemsOutline(nia12a1_nodes,"red","nia12a","12-A");
-	  setItemsOutline(nia12a2_nodes,"red","nia12a","12-A");
+	if(!only_redactor){
+		const nia12a1_nodes = document.querySelectorAll('.topsearch:not([role="search"])');
+		const nia12a2_nodes = document.querySelectorAll('html[lang="fr"] .topsearch:not([aria-label="Globale"])');
+		if((nia12a1_nodes && nia12a1_nodes.length > 0 && isItemsVisible(nia12a1_nodes)) || (nia12a2_nodes && nia12a2_nodes.length > 0 && isItemsVisible(nia12a2_nodes))){
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia12a' class='result-focus label-red'>12-A</a> : Absence de certaines propriétés sur le champ de recherche (role=search et aria-label=Globale)</li>");
+		  setItemsOutline(nia12a1_nodes,"red","nia12a","12-A");
+		  setItemsOutline(nia12a2_nodes,"red","nia12a","12-A");
+		}
 	}
 
 	const nia12b1_nodes = document.querySelectorAll('html[lang="fr"] #topsearch > #search-field-top:not([title^="Rechercher"])');
@@ -46,7 +48,7 @@ function check_part_12(){
 					setItemOutline(nia12c_nodes[i],"red","nia12c2","12-C");
 					nia12c2_flag = true;
 				}
-				if(nia12c_nodes[i].hasAttribute("title") && !nia12c_nodes[i].hasAttribute("aria-label") && nia12c_title != nia12c_content){
+				if(nia12c_nodes[i].hasAttribute("title") && !nia12c_nodes[i].hasAttribute("aria-label") && nia12c_title != nia12c_content && !only_redactor){
 					setItemOutline(nia12c_nodes[i],"yellow","nia12c3","12-C");
 					nia12c3_flag = true;
 				}
@@ -64,9 +66,11 @@ function check_part_12(){
 	}
 	
 	/* D. Button */
-	const nia12d_nodes = document.querySelectorAll('button[role=button]');
-	if(nia12d_nodes && nia12d_nodes.length > 0 && isItemsVisible(nia12d_nodes)){
-	  setItemToResultList("dev","<li><a href='#' data-destination='nia12d' class='result-focus label-yellow'>12-D</a> : Il n'est pas nécessaire d'ajouter un role button sur un éléments boutons</li>");
-	  setItemsOutline(nia12d_nodes,"yellow","nia12d","12-D");
+	if(!only_redactor){
+		const nia12d_nodes = document.querySelectorAll('button[role=button]');
+		if(nia12d_nodes && nia12d_nodes.length > 0 && isItemsVisible(nia12d_nodes)){
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia12d' class='result-focus label-yellow'>12-D</a> : Il n'est pas nécessaire d'ajouter un role button sur un éléments boutons</li>");
+		  setItemsOutline(nia12d_nodes,"yellow","nia12d","12-D");
+		}
 	}
 }
