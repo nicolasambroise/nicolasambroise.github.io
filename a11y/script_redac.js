@@ -1,8 +1,8 @@
 /* Script Check A11Y - Nicolas AMBROISE */
 
 // Variables config globale
-const debug_flag = true; // true -> affiche les logs
-const only_redactor = false; // true --> affiche uniquement les critères relatif au redacteur
+const debug_flag = false; // true -> affiche les logs
+const only_redactor = true; // true --> affiche uniquement les critères relatif au redacteur
 const wave_allow_credit = false; // true --> autorise les credits wave
 const save_to_db = true; // true --> autorise la sauvegarde des resultats en base de données
 

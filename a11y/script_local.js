@@ -9,7 +9,7 @@ const save_to_db = true; // true --> autorise la sauvegarde des resultats en bas
 // Environnement
 const localUrl = "https://nicolasambroise.github.io/a11y"
 const prodUrl = "https://webux.gouv.etat.lu/a11y/a11y_bookmarklet/src"
-const pluginUrl = prodUrl;
+const pluginUrl = localUrl;
 
 // Current URL
 const currentUrl = window.location.href;
