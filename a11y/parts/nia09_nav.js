@@ -104,7 +104,7 @@ function check_part_09(){
 	// D. 2 systemes de navigation (plan du site, recherche, menu)
 	const nia09d_nav = document.querySelector('nav #headernav, nav#headernav');
 	const nia09d_search = document.querySelector('div.topsearch[role="search"],div.topsearch-desk[role="search"]');
-	const nia09d_plan = document.querySelector('.page-footernav ul.nav--support > li.nav-item > a[href*="plan"][href$=".html"]');
+	const nia09d_plan = document.querySelector('.page-footernav ul.nav--support > li.nav-item a[href*="plan"][href$=".html"]');
 	const nia09d_nav_btn = document.querySelector('[class^=page-headernav] button.anchor');
 	const nia09d_search_btn = document.querySelector('div.topsearch[role="search"] button.anchor');
 	const nia09d_footer_links = document.querySelectorAll('footer .nav-item > a:not([target="_blank"])');

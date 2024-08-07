@@ -144,10 +144,10 @@ function check_part_06(){
 	}
 	
 	// H4 iframe vide
-	const nia06h4_nodes = document.querySelectorAll('iframe:empty');
+	const nia06h4_nodes = document.querySelectorAll('iframe:not([src]),iframe[src=""]');
 	if(nia06h4_nodes && nia06h4_nodes.length > 0 && isItemsVisible(nia06h4_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia06h4' class='result-focus label-red'>06-H</a> : Présence de cadre vide</li>");
-	  setItemsOutline(nia06h4_nodes,"yellow","nia06h4","06-H");
+	  setItemsOutline(nia06h4_nodes,"red","nia06h4","06-H");
 	}
 	
 	// I. Presence de triple espace (double concidéré comme erreur d'inattention)
