@@ -24,7 +24,7 @@ else if(currentUrl.includes("aem-test-")){isPreview = true;}
 if(currentUrl.includes("/prototype/")){isPrototype = true;}
 
 
-if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu") && !currentUrl.includes("sig-gr.eu")){
+if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu") && !currentUrl.includes("sig-gr.eu") && !currentUrl.includes(".mae.lu")){
   alert("Ce Bookmarklet est à utiliser seulement sur les sites étatiques luxembourgeois");
 }
 

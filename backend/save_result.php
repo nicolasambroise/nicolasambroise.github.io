@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'OPTION
 	if($_SERVER['HTTP_ORIGIN']){
 	$http_origin = $_SERVER['HTTP_ORIGIN'];
 
-		if(str_contains($http_origin, ".public.lu") || str_contains($http_origin, "gouvernement.lu") || str_contains($http_origin, ".etat.lu") || str_contains($http_origin, "sig-gr.eu"))
+		if(str_contains($http_origin, ".public.lu") || str_contains($http_origin, "gouvernement.lu") || str_contains($http_origin, ".etat.lu") || str_contains($http_origin, "sig-gr.eu") || str_contains($http_origin, ".mae.lu"))
 		{  
 			header("Access-Control-Allow-Origin: $http_origin");
 			header("Access-Control-Request-Headers: Content-Type");
