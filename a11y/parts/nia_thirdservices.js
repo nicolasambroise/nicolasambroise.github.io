@@ -79,9 +79,9 @@ function thirdPartValidation(){
 			  let lighthouse_bp_score = data.lighthouseResult.categories["best-practices"].score * 100;
 			  let lighthouse_seo_score = data.lighthouseResult.categories["seo"].score * 100;
 			
-			  if(lighthouse_access_score < 80) lighthouse_access_score = "<span style='color:red;'>"+lighthouse_access_score+"</span>";
-			  if(lighthouse_bp_score < 80) lighthouse_bp_score = "<span style='color:red;'>"+lighthouse_bp_score+"</span>";
-			  if(lighthouse_seo_score < 80) lighthouse_seo_score = "<span style='color:red;'>"+lighthouse_seo_score+"</span>";
+			  if(lighthouse_access_score < 80) lighthouse_access_score = "<span style=\"color:red;\">"+lighthouse_access_score+"</span>";
+			  if(lighthouse_bp_score < 80) lighthouse_bp_score = "<span style=\"color:red;\">"+lighthouse_bp_score+"</span>";
+			  if(lighthouse_seo_score < 80) lighthouse_seo_score = "<span style=\"color:red;\">"+lighthouse_seo_score+"</span>";
 			
 			  const lighthouse_msg = "<li>Accessibility : "+lighthouse_access_score+"/100</li><li>Best practices : "+lighthouse_bp_score+"/100</li><li>SEO : "+lighthouse_seo_score+"/100</li>";
 			  

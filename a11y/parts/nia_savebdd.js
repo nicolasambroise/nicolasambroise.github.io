@@ -18,17 +18,26 @@ function saveInBdd(){
 		"lighthouse" : result_lighthouse
 	};
 
-	console.log(dataToSave);
+	//console.log(dataToSave);
 	if(!isPreview && save_to_db){
 
 		const db_api_url = "https://webux.gouv.etat.lu/a11y/a11y_bookmarklet/backend/save_result.php"; 
 		console.log("START Save Bdd");
-		const response = fetch(db_api_url, {
+		fetch(db_api_url, {
 				method: "POST",
 				headers: {'Content-Type': 'text/html;charset=UTF-8'}, 
 				body: JSON.stringify(dataToSave)
 			})
-			.then(response => console.log(response.status) || response) // output the status and return response
+			// output the status and return response
+			.then((response) => {
+			  if (response.ok) {return response;}
+			  return Promise.reject(response); 
+			})
+			.then(response => console.log(response.status) || response)
+			.catch((response) => {
+			  console.log(JSON.stringify(dataToSave))
+			  console.log(response.status, response.statusText);
+			});
 	}
 }
 

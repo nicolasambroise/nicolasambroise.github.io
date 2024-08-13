@@ -86,7 +86,7 @@ body.check-panel-active [role="dialog"]{
     text-align: right !important;
     margin: 0 1.5rem 0 0 !important;
     padding: 0 !important;
-    /*text-transform: uppercase !important;*/
+    background-color: white !important;
 	text-transform: capitalize !important;
     position: relative !important;
     display: block !important;
@@ -94,12 +94,20 @@ body.check-panel-active [role="dialog"]{
     font-weight: bold !important;
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif !important;
 	letter-spacing: 0 !important;
+	box-shadow: none !important;
+}
+
+#checkA11YPanel.active .panel-header h1:before,
+#checkA11YPanel.active .panel-header h1:after{
+	content:none !important;
 }
 
 #checkA11YPanel.active .panel-body{
     overflow-y: auto !important;
     height: calc(100% - 2.4rem) !important;
 	color: black;
+	background-color: white !important;
+	padding-bottom: 50px !important;
 }
 
 #checkA11YPanel.active .panel-body h2{
@@ -115,9 +123,11 @@ body.check-panel-active [role="dialog"]{
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif !important;
 	letter-spacing: 0 !important;
 	border: none !important;
+	background-color: white !important;
 }
 
-#checkA11YPanel.active .panel-body h2:before{
+#checkA11YPanel.active .panel-body h2:before,
+#checkA11YPanel.active .panel-body h2:after{
 	content:none !important;
 }
 
@@ -126,6 +136,7 @@ body.check-panel-active [role="dialog"]{
     line-height: 1.7 !important;
     list-style-type: disc !important;
     padding-left: 0 !important;
+	background-color: white !important;
 }
 
 #checkA11YPanel.active .panel-body ul > li{
@@ -136,6 +147,11 @@ body.check-panel-active [role="dialog"]{
   position: relative !important;
   color: black !important;
   margin: 0.5rem 0 0 !important;
+  background-color: white !important;
+}
+
+#checkA11YPanel.active .panel-body ul > li::marker{
+	content: none !important;
 }
 
 #checkA11YPanel.active .panel-body ul>li:before {
@@ -160,6 +176,7 @@ body.check-panel-active [role="dialog"]{
 #checkA11YPanel.active .panel-body .cmp-accordion__panel a:visited{
     color: #0a5874 !important;
     text-decoration: underline !important;
+	background-color: white !important;
 }
 
 #checkA11YPanel.active .panel-body ul>li a:hover,
@@ -224,11 +241,16 @@ body.check-panel-active [role="dialog"]{
 	margin : 0 !important;
     display: block !important;
 	background-color: transparent !important;
+	border: none !important;
 }
 
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:before,
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:after{content: none !important;}
 
-#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary .cmp-accordion__header svg{float :right}
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary .cmp-accordion__header svg{
+	background-color: white !important;
+	float :right;
+}
 
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:hover{background-color:#F5F5F5 !important;}
 
