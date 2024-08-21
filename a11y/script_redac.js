@@ -17,11 +17,13 @@ const homepage = document.querySelector('h1.logo.logo--homepage');
 const homepageException = ["https://guichet.public.lu/fr/citoyens.html", "https://guichet.public.lu/fr/entreprises.html","https://guichet.public.lu/fr/leichte-sprache.html", "https://guichet.public.lu/en/citoyens.html", "https://guichet.public.lu/en/entreprises.html","https://guichet.public.lu/en/leichte-sprache.html","https://guichet.public.lu/de/citoyens.html", "https://guichet.public.lu/de/entreprises.html","https://guichet.public.lu/de/leichte-sprache.html"]
 let isHomepage = false;
 let isPreview = false;
+let isDecla = false;
 let isPrototype = false;
 if(homepage || homepageException.includes(currentUrl)) {isHomepage = true;}
 if((currentUrl.includes("preview-") || currentUrl.includes("wcm")) && currentUrl.includes(".etat.lu")){isPreview = true;}
 else if(currentUrl.includes("aem-test-")){isPreview = true;}
 if(currentUrl.includes("/prototype/")){isPrototype = true;}
+if(currentUrl.includes("/support/accessibilite.html") || currentUrl.includes("/support/accessibilite/accessibilite-guichet.html")){isDecla = true;}
 
 
 if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu") && !currentUrl.includes("sig-gr.eu") && !currentUrl.includes(".mae.lu")){
@@ -64,6 +66,7 @@ if(!document.body.classList.contains('panel-injected')){
 	var functions_loaded = loadScript('functions', '/parts/nia_functions.js');
 	var resultpanel_loaded = loadScript('resultpanel', '/parts/nia_resultpanel.js');
 	var savebdd_loaded = loadScript('savebdd', '/parts/nia_savebdd.js');
+	var savedecla_loaded = loadScript('savedecla', '/parts/nia_savedecla.js');
 	var thirdservices_loaded = loadScript('thirdservices', '/parts/nia_thirdservices.js');
 	var p01_loaded = loadScript('p01', '/parts/nia01_config.js');
 	var p02_loaded = loadScript('p02', '/parts/nia02_images.js');
@@ -81,7 +84,7 @@ if(!document.body.classList.contains('panel-injected')){
 	var p14_loaded = loadScript('p14', '/parts/nia14_colors.js');
 	var p15_loaded = loadScript('p15', '/parts/nia15_secu.js');
 	
-	Promise.all([functions_loaded,resultpanel_loaded,savebdd_loaded,thirdservices_loaded,p01_loaded,p02_loaded,p03_loaded,p04_loaded,p05_loaded,p06_loaded,p07_loaded,p08_loaded,p09_loaded,p10_loaded,p11_loaded,p12_loaded,p13_loaded,p14_loaded,p15_loaded])
+	Promise.all([functions_loaded,resultpanel_loaded,savebdd_loaded,savedecla_loaded,thirdservices_loaded,p01_loaded,p02_loaded,p03_loaded,p04_loaded,p05_loaded,p06_loaded,p07_loaded,p08_loaded,p09_loaded,p10_loaded,p11_loaded,p12_loaded,p13_loaded,p14_loaded,p15_loaded])
 	.then(function() {setTimeout(beforeCheck(), 100);})
 	.then(function() {
 		

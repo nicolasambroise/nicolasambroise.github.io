@@ -140,4 +140,9 @@ function thirdPartValidation(){
 			}
 		}
 	}
+	
+	// Sauvegarde les infos de la decla en Bdd
+	if(isDecla && !isPreview && save_to_db){
+		saveDeclaInBdd();
+	}
 }
