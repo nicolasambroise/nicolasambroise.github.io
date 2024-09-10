@@ -242,6 +242,7 @@ body.check-panel-active [role="dialog"]{
     display: block !important;
 	background-color: transparent !important;
 	border: none !important;
+	border-radius: 0 !important;
 }
 
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:before,
@@ -252,13 +253,18 @@ body.check-panel-active [role="dialog"]{
 	float :right;
 }
 
-#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:hover{background-color:#F5F5F5 !important;}
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:hover,
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:hover:not(:focus) h2,
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:hover:not(:focus) .cmp-accordion__header svg{
+	background-color:#F5F5F5 !important;
+}
 
 #checkA11YPanel.active .cmp-accordion .cmp-accordion__summary:focus{
 	outline: 1px dotted #035384 !important;
 	background-color:#FFF !important;}
 
-#checkA11YPanel.active .cmp-accordion .cmp-accordion__panel{background-color:#FFF !important;}
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__panel{background-color:#FFF !important;display:block !important}
+
 
 .checkA11YSpan{
     display: inline !important;
