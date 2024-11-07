@@ -58,7 +58,7 @@ function check_part_01(){
 
 	/* F1. Check si le menu existe */
 	if(!only_redactor){
-		const nia01f_menu = document.querySelector('nav.topnav > .page-headernav .navigation-container > ul.nav ,nav.page-headernav .navigation-container > ul.nav, nav.page-headernav-desk .navigation-container > ul.nav');
+		const nia01f_menu = document.querySelector('nav.topnav > .page-headernav .navigation-container > ul.nav ,nav.page-headernav .navigation-container > ul.nav, nav.page-headernav-desk .navigation-container > ul.nav, nav.headernav-detached .navigation-container > ul.nav');
 		let nia01f_hasPasserelle = false; 
 		let nia01f_isModal = false; 
 		if(nia01f_menu){

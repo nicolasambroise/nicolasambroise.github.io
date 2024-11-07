@@ -197,6 +197,10 @@ function check_part_14(){
 						setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
 						nia14b_flag2 = true;
 					}
+					else if(nia14b_color1 == nia14b_color3 && nia14b_color2 == nia14b_color3){
+						setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
+						nia14b_flag4 = true;
+					}
 					else if((nia14b_border == "0px" || nia14b_color1 == "rgba(0, 0, 0, 0)") && nia14b_color2 == nia14b_color3){
 						setItemOutline(nia14b_nodes[i],"yellow","nia14b1","14-B");
 						nia14b_flag4 = true;

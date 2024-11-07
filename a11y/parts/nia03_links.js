@@ -11,7 +11,7 @@ function check_part_03(){
 
 	// A. Verification de la présence du suffix sur les liens externe
 	if(!only_redactor){
-		const nia03a_nodes = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="- Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo), html[lang="fr"] a[title$="- Nouvelle fenêtre"]:not([target="_blank"]), html[lang="en"] a[target="_blank"]:not([title$="- New window"]):not(.mapboxgl-ctrl-logo),html[lang="en"] a[title$="- New window"]:not([target="_blank"]), html[lang="de"] a[target="_blank"]:not([title$="- Neues Fenster"]):not(.mapboxgl-ctrl-logo),html[lang="de"] a[title$="- Neues Fenster"]:not([target="_blank"]),html[lang="lb"] a[target="_blank"]:not([title$="- Nei Fënster"]):not(.mapboxgl-ctrl-logo),html[lang="lb"] a[title$="- Nei Fënster"]:not([target="_blank"])');
+		const nia03a_nodes = document.querySelectorAll('html[lang="fr"] a[target="_blank"]:not([title$="- Nouvelle fenêtre"]):not(.mapboxgl-ctrl-logo):not(.blocklink), html[lang="fr"] a[title$="- Nouvelle fenêtre"]:not([target="_blank"]), html[lang="en"] a[target="_blank"]:not([title$="- New window"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="en"] a[title$="- New window"]:not([target="_blank"]), html[lang="de"] a[target="_blank"]:not([title$="- Neues Fenster"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="de"] a[title$="- Neues Fenster"]:not([target="_blank"]),html[lang="lb"] a[target="_blank"]:not([title$="- Nei Fënster"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="lb"] a[title$="- Nei Fënster"]:not([target="_blank"])');
 		let nia03a_flag = false;
 		let nia03a_lang;
 		let nia03a_title;

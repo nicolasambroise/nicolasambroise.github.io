@@ -112,9 +112,12 @@ function check_part_09(){
 	let nia09d_counter = 0;
 	if(nia09d_nav && isItemVisible(nia09d_nav)){nia09d_counter++;}
 	else if(nia09d_nav && nia09d_nav_btn && isItemVisible(nia09d_nav_btn)){nia09d_counter++;}
+	else if(debug_flag){ console.log("navigation principale non trouvé");}
 	if(nia09d_search && isItemVisible(nia09d_search)){nia09d_counter++;}
 	else if(nia09d_search && nia09d_search_btn && isItemVisible(nia09d_search_btn)){nia09d_counter++;}
+	else if(debug_flag){ console.log("recherche non trouvé");}
 	if(nia09d_plan && isItemVisible(nia09d_plan)){nia09d_counter++;}
+	else if(debug_flag){ console.log("plan du site non trouvé");}
 	if(nia09d_counter < 2){
 		if(nia09d_footer_links && nia09d_footer_links.length <= 3){
 			setItemToResultList("man","<li><span class='result-focus label-yellow'>09-D</span> : Le site doit être muni de 2 systèmes de navigation (exception : One-page, etc.) [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-1-1' target='_blank'>RAWeb 12.1.1</a>]</li>");

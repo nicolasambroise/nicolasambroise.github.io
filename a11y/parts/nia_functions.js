@@ -146,7 +146,7 @@ function isItemHasDirectContent(item){
 
 // Fonction Sanitize Text = No extra space, trimmed 
 function sanitizeText(txt, locale) {
-	return txt.toLowerCase().toLocaleLowerCase(locale).replaceAll(/\n|\r/g, ' ').replaceAll(/[.:;,?!{}$()|'"-]/g, ' ').replaceAll(/\s+/g, ' ').trim();
+	return txt.toLowerCase().toLocaleLowerCase(locale).replaceAll(/\n|\r/g, ' ').replaceAll(/[.:;,?!{}$()|'"-\/]/g, ' ').replaceAll(/\s+/g, ' ').trim();
 }
 
 // Fonction Calculate Contrast (https://dev.to/alvaromontoro/building-your-own-color-contrast-checker-4j7o)
