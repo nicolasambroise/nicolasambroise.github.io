@@ -26,7 +26,7 @@ if(currentUrl.includes("/prototype/")){isPrototype = true;}
 if(currentUrl.includes("/support/accessibilite.html") || currentUrl.includes("/support/accessibilite/accessibilite-guichet.html")){isDecla = true;}
 
 
-if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu") && !currentUrl.includes("sig-gr.eu") && !currentUrl.includes(".mae.lu")){
+if(!currentUrl.includes(".public.lu") && !currentUrl.includes("gouvernement.lu") && !currentUrl.includes(".etat.lu") && !currentUrl.includes("sig-gr.eu") && !currentUrl.includes(".mae.lu") && !currentUrl.includes("lu-alert.lu")){
   alert("Ce Bookmarklet est à utiliser seulement sur les sites étatiques luxembourgeois");
 }
 
