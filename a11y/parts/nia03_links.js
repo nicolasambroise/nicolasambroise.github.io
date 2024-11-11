@@ -63,21 +63,23 @@ function check_part_03(){
 	let nia03e_content = "", nia03e_title = "", nia03e_lang = "";
 	if(nia03e_nodes && nia03e_nodes.length > 0){
 		for(let i = 0; i < nia03e_nodes.length; i++){
-			nia03e_lang = nia03e_nodes[i].closest('[lang]').getAttribute('lang')
-			nia03e_title = sanitizeText(nia03e_nodes[i].getAttribute("title"),nia03e_lang);
-			nia03e_innerText = nia03e_nodes[i].innerText;
-			//console.log(nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length);
-			if(nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length > 0){
-				for(let j = 0; j < nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length; j++){
-					//console.log(nia03e_nodes[i].getElementsByClassName('checkA11YSpan')[j]);
-					nia03e_innerText = nia03e_innerText.replace(nia03e_nodes[i].getElementsByClassName('checkA11YSpan')[j].textContent,'')
+			if(isItemVisible(nia03e_nodes[i])){
+				nia03e_lang = nia03e_nodes[i].closest('[lang]').getAttribute('lang')
+				nia03e_title = sanitizeText(nia03e_nodes[i].getAttribute("title"),nia03e_lang);
+				nia03e_innerText = nia03e_nodes[i].innerText;
+				//console.log(nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length);
+				if(nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length > 0){
+					for(let j = 0; j < nia03e_nodes[i].getElementsByClassName('checkA11YSpan').length; j++){
+						//console.log(nia03e_nodes[i].getElementsByClassName('checkA11YSpan')[j]);
+						nia03e_innerText = nia03e_innerText.replace(nia03e_nodes[i].getElementsByClassName('checkA11YSpan')[j].textContent,'')
+					}
 				}
-			}
-			nia03e_content = sanitizeText(nia03e_innerText,nia03e_lang);
-			if(!nia03e_title.includes(nia03e_content) && !nia03e_title.includes(nia03e_content.replace(" pdf"," pdf "))){
-				if(debug_flag) console.log("%cERROR","font-weight:700;color:darkred","["+nia03e_title+"] VS ["+nia03e_content+"] ");
-				setItemOutline(nia03e_nodes[i],"red","nia03e","03-E");
-				nia03e_flag = true;
+				nia03e_content = sanitizeText(nia03e_innerText,nia03e_lang);
+				if(!nia03e_title.includes(nia03e_content) && !nia03e_title.includes(nia03e_content.replace(" pdf"," pdf "))){
+					if(debug_flag) console.log("%cERROR","font-weight:700;color:darkred","["+nia03e_title+"] VS ["+nia03e_content+"] ");
+					setItemOutline(nia03e_nodes[i],"red","nia03e","03-E");
+					nia03e_flag = true;
+				}
 			}
 		}
 	}
