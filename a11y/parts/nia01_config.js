@@ -45,6 +45,12 @@ function check_part_01(){
 		  setItemToResultList("nc","<li><a href='#' data-destination='nia01d' class='result-focus label-red'>01-D</a> : Absence de l'aria-label sur le menu de selection de langue (à ajouter dans le cqdialog)</li>");
 		  setItemsOutline(nia01d_nodes,"red","nia01d","01-D");
 		}
+		
+		const nia01d2_nodes = document.querySelectorAll('#page-langs ul[role="menu"] > li[role="none"]');
+		if(nia01d2_nodes && nia01d2_nodes.length > 0){
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia01d2' class='result-focus label-orange'>01-D</a> : Faiblesse de la structure du menu de switch des langues : ne pas utiliser role=menu</li>");
+		  setItemsOutline(nia01d2_nodes,"orange","nia01d2","01-D");
+		}
 	}
 
 	// E. Video player
@@ -260,11 +266,17 @@ function check_part_01(){
 							setItemToResultList("dev","<li><a href='#' data-destination='nia01f53' class='result-focus label-red'>01-F</a> : Conflit dans le type d'ouverture du menu : Modal ou Disclosure ?</li>");
 							setItemOutline(nia01f30_Dest,"red","nia01f53","01-F");
 						}
+						
+						if(nia01f20_btn.hasAttribute("aria-haspopup")){
+							if(debug_flag) console.log(" - F5.4 : Conflit entre les attributs aria-haspopup et aria-expanded du bouton d'ouverture du menu");
+							setItemToResultList("dev","<li><a href='#' data-destination='nia01f54' class='result-focus label-red'>01-F</a> : Conflit entre les attributs aria-haspopup et aria-expanded du bouton d'ouverture du menu</li>");
+							setItemOutline(nia01f20_btn,"red","nia01f54","01-F");
+						}
 					}
 					if(nia01f30_Dest.hasAttribute("aria-hidden") && nia01f30_Dest.getAttribute("aria-hidden") == false){
-						if(debug_flag) console.log(" - F5.4 : Vocalisation du menu caché en mobile");
-						setItemToResultList("dev","<li><a href='#' data-destination='nia01f54' class='result-focus label-red'>01-F</a> : Vocalisation du menu caché en mobile</li>");
-						setItemOutline(nia01f30_Dest,"red","nia01f54","01-F");
+						if(debug_flag) console.log(" - F5.5 : Vocalisation du menu caché en mobile");
+						setItemToResultList("dev","<li><a href='#' data-destination='nia01f55' class='result-focus label-red'>01-F</a> : Vocalisation du menu caché en mobile</li>");
+						setItemOutline(nia01f30_Dest,"red","nia01f55","01-F");
 					}
 				
 					// On click sur le bouton pour ouvrir le menu (s'il n'est pas déjà ouvert)
@@ -344,5 +356,45 @@ function check_part_01(){
 		else {
 			  setItemToResultList("man","<li><span class='result-focus label-yellow'>01-F</span> : Absence de barre de navigation</li>");
 		}
+	}
+	
+	// G. Recherche
+	
+	// Presence de l'aria label
+	const nia01g1_nodes = document.querySelectorAll('role[search]:not([aria-label])');
+	if(nia01g1_nodes && nia01g1_nodes.length > 0 && isItemsVisible(nia01g1_nodes)){
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01g1' class='result-focus label-orange'>01-G</a> : Aria-label absent de la recherche</li>");
+	  setItemsOutline(nia01g1_nodes,"orange","nia01g1","01-G");
+	}
+
+	// Placeholder différent du titre
+	const nia01g2_nodes = document.querySelectorAll('input[type="search"]');
+	let nia01g2_flag = false;
+	if(nia01g2_nodes && nia01g2_nodes.length > 0 && isItemsVisible(nia01g2_nodes)){
+	  for(let i = 0; i < nia01g2_nodes.length; i++){
+
+		if(nia01g2_nodes[i].getAttribute("placeholder") != nia01g2_nodes[i].getAttribute("title")){
+			nia01g2_flag = true;
+			setItemOutline(nia01g2_nodes[i],"red","nia01g2","01-G");
+		}
+	  }
+	}
+	if(nia01g2_flag == true){
+	   setItemToResultList("dev","<li><a href='#' data-destination='nia01g2' class='result-focus label-red'>01-G</a> : Problème avec le placeholder de la recherche</li>");
+	}
+	
+	// Titre de recherche trop court
+	const nia01g3_nodes = document.querySelectorAll('input[type="search"]');
+	let nia01g3_flag = false;
+	if(nia01g3_nodes && nia01g3_nodes.length > 0 && isItemsVisible(nia01g3_nodes)){
+	  for(let i = 0; i < nia01g3_nodes.length; i++){
+		if(nia01g3_nodes[i].getAttribute("title").length < 15){
+			nia01g3_flag = true;
+			setItemOutline(nia01g3_nodes[i],"orange","nia01g3","01-G");
+		}
+	  }
+	}
+	if(nia01g3_flag == true){
+	   setItemToResultList("nth","<li><a href='#' data-destination='nia01g3' class='result-focus label-orange'>01-G</a> : Problème avec la pertinence du titre de la recherche</li>");
 	}
 }

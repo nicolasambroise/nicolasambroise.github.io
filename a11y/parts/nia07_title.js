@@ -68,4 +68,21 @@ function check_part_07(){
 	if(nia07e_flag == true) {
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia07e' class='result-focus label-yellow'>07-E</a> : Présence de sauts de titres [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-9-1-1' target='_blank'>RAWeb 9.1.1</a>]</li>");
 	}
+	
+	// F. 2 Heading H1 : Conforme seulement si pertinent
+	const nia07f_nodes = document.querySelectorAll('h1, [role="heading"][aria-level="1"]');
+	let nia07f_flag = false;
+	let nia07f_counter = 0;
+	if(nia07f_nodes && nia07f_nodes.length > 1 && isItemsVisible(nia07f_nodes)){
+	  for(let i = 0; i < nia07f_nodes.length; i++){	
+	    if(isItemVisible(nia07f_nodes[i])){
+			nia07f_counter++;
+		}
+	  }
+	  if(nia07f_counter > 1) nia07f_flag = true;
+	}
+	if(nia07f_flag == true) {
+	  setItemToResultList("man","<li><a href='#' data-destination='nia07f' class='result-focus label-yellow'>07-F</a> : Présence de 2 titres H1. Pertinence de ceux-ci à vérifier manuellement</li>");
+	  setItemsOutline(nia07f_nodes,"yellow","nia07f","07-F");
+	}
 }

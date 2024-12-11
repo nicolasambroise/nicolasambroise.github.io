@@ -110,8 +110,8 @@ const nia03f_nodes = document.querySelectorAll('a[href]:not([href^="#"]),[role="
 	// G. Présence de liens sans href
 	const nia03g_nodes = document.querySelectorAll('a:not([href]),[role="link"]:not([href])');
 	if(nia03g_nodes && nia03g_nodes.length > 0 && isItemsVisible(nia03g_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia03g' class='result-focus label-red'>03-G</a> : Présence d'un lien sans destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6-1-1' target='_blank'>RAWeb 6.1.1</a>]</li>");
-	  setItemsOutline(nia03g_nodes,"red","nia03g","03-G");
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia03g' class='result-focus label-yellow'>03-G</a> : Présence d'un lien sans destination</li>");
+	  setItemsOutline(nia03g_nodes,"yellow","nia03g","03-G");
 	}
 	
 	// H. Liens tel: mailto: fax:
