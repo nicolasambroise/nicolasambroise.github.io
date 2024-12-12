@@ -23,7 +23,7 @@ function thirdPartValidation(){
 			//console.log(data);
 			let elem = document.getElementById("result_html5");
 			// Filter data result
-			const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”","Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)","CSS: Parse Error.","Attribute “value” not allowed on element “meta” at this point."].join("|");
+			const filterStrings=["role is unnecessary for element","Section lacks heading","Bad value “” for attribute “id” on element “script”","Attribute “screen_capture_injected” not allowed","A “figure” element with a “figcaption” descendant must not have a “role” attribute","Element “meta” is missing required attribute “content”","Element “meta” is missing one or more of the following attributes: “content”, “property”","Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)","CSS: Parse Error.","Attribute “value” not allowed on element “meta” at this point.","Bad value “opt-in” for attribute “type” on element “script”","Element “script” must not have attribute “async” unless attribute “src” is also specified or unless attribute “type” is specified with value “module”"].join("|");
 			const error = data.messages.filter(msg => msg.type === 'error' && msg?.message.match(filterStrings) === null);
 			let msg_html5 = "";
 			
@@ -79,11 +79,25 @@ function thirdPartValidation(){
 			  let lighthouse_bp_score = data.lighthouseResult.categories["best-practices"].score * 100;
 			  let lighthouse_seo_score = data.lighthouseResult.categories["seo"].score * 100;
 			
-			  if(lighthouse_access_score < 80) lighthouse_access_score = "<span style=\"color:red;\">"+lighthouse_access_score+"</span>";
-			  if(lighthouse_bp_score < 80) lighthouse_bp_score = "<span style=\"color:red;\">"+lighthouse_bp_score+"</span>";
-			  if(lighthouse_seo_score < 80) lighthouse_seo_score = "<span style=\"color:red;\">"+lighthouse_seo_score+"</span>";
+			  if(lighthouse_access_score < 80) lighthouse_access_score = "<span style=\"color:red;\" class=\"result_lighthouse_access\">"+lighthouse_access_score+"</span>";
+			  else lighthouse_access_score = "<span class=\"result_lighthouse_access\">"+lighthouse_access_score+"</span>";
+			  lighthouse_access_score = "Accessibility : "+lighthouse_access_score+"/100</li>"
+			  if(lighthouse_access_score < 80)  "<li class=\"label-error\">"+lighthouse_access_score;
+			  else lighthouse_access_score = "<li>"+lighthouse_access_score;
+		  
+			  if(lighthouse_bp_score < 80) lighthouse_bp_score = "<span style=\"color:red;\" class=\"result_lighthouse_bp\">"+lighthouse_bp_score+"</span>";
+			  else lighthouse_bp_score = "<span class=\"result_lighthouse_bp\">"+lighthouse_bp_score+"</span>";
+			  lighthouse_bp_score = "Best practices : "+lighthouse_bp_score+"/100</li>"
+			  if(lighthouse_bp_score < 80)  "<li class=\"label-error\">"+lighthouse_bp_score;
+			  else lighthouse_bp_score = "<li>"+lighthouse_bp_score;
+			  
+			  if(lighthouse_seo_score < 80) lighthouse_seo_score = "<span style=\"color:red;\" class=\"result_lighthouse_seo\">"+lighthouse_seo_score+"</span>";
+			  else lighthouse_seo_score = "<span class=\"result_lighthouse_seo\">"+lighthouse_seo_score+"</span>";
+			  lighthouse_seo_score = "SEO : "+lighthouse_seo_score+"/100</li>"
+			  if(lighthouse_seo_score < 80)  "<li class=\"label-error\">"+lighthouse_seo_score;
+			  else lighthouse_seo_score = "<li>"+lighthouse_seo_score;
 			
-			  const lighthouse_msg = "<li>Accessibility : "+lighthouse_access_score+"/100</li><li>Best practices : "+lighthouse_bp_score+"/100</li><li>SEO : "+lighthouse_seo_score+"/100</li>";
+			  const lighthouse_msg = lighthouse_access_score+lighthouse_bp_score+lighthouse_seo_score;
 			  
 			  let elem = document.getElementById("result_lighthouse");
 			  elem.innerHTML += "<ul>"+lighthouse_msg+"</ul>";

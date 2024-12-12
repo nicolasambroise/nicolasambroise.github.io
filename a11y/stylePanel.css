@@ -263,7 +263,7 @@ body.check-panel-active [role="dialog"]{
 	outline: 1px dotted #035384 !important;
 	background-color:#FFF !important;}
 
-#checkA11YPanel.active .cmp-accordion .cmp-accordion__panel{background-color:#FFF !important;display:block !important}
+#checkA11YPanel.active .cmp-accordion .cmp-accordion__panel{background-color:#FFF !important;display:block !important;padding: 1.5rem 2rem !important;}
 
 
 .checkA11YSpan{
