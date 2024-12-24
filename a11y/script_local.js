@@ -114,6 +114,7 @@ else{
 	
 	beforeCheck();
 	/* Pour le Plugin (les script sont appelé dans le fichier sw_chrome.js) */ 
+	/* Pour debugger, il suffit de commenter les appels à check_part_XX une par une */
 	var p01 = new Promise(function(resolve) {check_part_01();setTimeout(resolve, 100);});
 	var p02 = new Promise(function(resolve) {check_part_02();setTimeout(resolve, 100);});
 	var p03 = new Promise(function(resolve) {check_part_03();setTimeout(resolve, 100);});
@@ -129,7 +130,7 @@ else{
 	var p13 = new Promise(function(resolve) {check_part_13();setTimeout(resolve, 100);});
 	var p14 = new Promise(function(resolve) {check_part_14();setTimeout(resolve, 100);});
 	var p15 = new Promise(function(resolve) {check_part_15();setTimeout(resolve, 100);});
-
+	
 	Promise.all([p01,p02,p03,p04,p05,p06,p07,p08,p09,p10,p11,p12,p13,p14,p15])
 	.then(function() {setTimeout(createResultPanel(), 100);})
 	.then(function() {setTimeout(thirdPartValidation(), 100);})

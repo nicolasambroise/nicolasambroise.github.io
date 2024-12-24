@@ -121,7 +121,11 @@ function check_part_04(){
 				}
 				else{
 					nia04d_label = document.querySelectorAll("label[for='"+nia04d_id+"']");
-					if(!nia04d_label || nia04d_label.length != 1){
+					if(!nia04d_label || nia04d_label.length == 0){
+						setItemOutline(nia04d_nodes[i],"red","nia04d","04-D");
+						nia04d_flag1 = true;
+					}
+					else if(nia04d_label.length > 1){
 						setItemOutline(nia04d_nodes[i],"red","nia04d","04-D");
 						nia04d_flag2 = true;
 					}

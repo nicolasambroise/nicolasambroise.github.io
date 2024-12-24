@@ -189,7 +189,7 @@ const nia03f_nodes = document.querySelectorAll('a[href]:not([href^="#"]),[role="
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia03k' class='result-focus label-yellow'>03-K</a> : Trop de liens Pour en savoir plus (" + nia03k_nodes.length + ")</li>");
 	  setItemsOutline(nia03k_nodes,"yellow","nia03k","03-K");
 	}
-	
+
 	// L Présence de soulignement en dehors de lien
 	const nia03l_nodes = document.querySelectorAll("body *:not(a)");
 	let nia03l_flag = false;
@@ -204,5 +204,12 @@ const nia03f_nodes = document.querySelectorAll('a[href]:not([href^="#"]),[role="
 	if(nia03l_flag == true) {
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia03l' class='result-focus label-yellow'>03-L</a> : Réservez le soulignement aux liens</li>");
 	}
-	
+
+	// M. Présence de liens avec un espace dans le href
+	const nia03m_nodes = document.querySelectorAll('a[href*=" "],[role="link"][href*=" "]');
+	if(nia03m_nodes && nia03m_nodes.length > 0 && isItemsVisible(nia03m_nodes)){
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia03m' class='result-focus label-orange'>03-M</a> : Présence d'un lien erroné (espace present dans l'attribut href)</li>");
+	  setItemsOutline(nia03m_nodes,"orange","nia03m","03-M");
+	}
+
 }
