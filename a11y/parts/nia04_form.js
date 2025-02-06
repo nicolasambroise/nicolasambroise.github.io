@@ -393,4 +393,14 @@ function check_part_04(){
 		setItemToResultList("nth","<li><a href='#' data-destination='nia04l' class='result-focus label-yellow'>04-L</a> : Formulaire avec bouton de soumission mal placé </li>");
 	}
 	
+	
+	// TODO
+	/*
+	- Ajouter un attribut aria_invalid=’true’ sur les champs en erreur 
+	- Les messages d’erreurs de chaque champ doivent lui être lié via aria_describedby
+	- Un groupe de Checkbox doit être structuré dans un fieldset
+	- Un groupe de Radio doit être structuré dans un fieldset
+	- Pour le message d’erreur en cas de format date /tel/fax invalide, un exemple de saisie doit être proposé
+	- Si Datepicker type=text, l’annonce du format est obligatoire
+	*/
 }

@@ -38,7 +38,7 @@ function check_part_12(){
 				nia12c_lang = nia12c_nodes[i].closest('[lang]').getAttribute('lang');
 				if(nia12c_nodes[i].hasAttribute("title")) nia12c_title = sanitizeText(nia12c_nodes[i].getAttribute("title"),nia12c_lang);
 				if(nia12c_nodes[i].hasAttribute("aria-label")) nia12c_label = sanitizeText(nia12c_nodes[i].getAttribute("aria-label"),nia12c_lang);
-				nia12c_content = sanitizeText(nia12c_nodes[i].innerText,nia12c_lang);
+				nia12c_content = sanitizeText(nia12c_nodes[i].innerText != "" ? nia12c_nodes[i].innerText : nia12c_nodes[i].textContent ,nia12c_lang);
 				if(nia12c_nodes[i].hasAttribute("title") && !nia12c_title.includes(nia12c_content)){
 					if(debug_flag) console.log("%cERROR","font-weight:700;color:darkred","["+nia12c_title+"] VS ["+nia12c_content+"] ");
 					setItemOutline(nia12c_nodes[i],"red","nia12c1","12-C");

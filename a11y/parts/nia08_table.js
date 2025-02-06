@@ -70,4 +70,10 @@ function check_part_08(){
 	if(nia08f_flag == true) {
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia08f' class='result-focus label-orange'>08-F</a> : Présence d'un tableau de données sans résumé</li>");
 	}	
+	
+	/* Todo 
+	- Faire une fonction qui renvoi le type de table : decoratif, de données ou complexe.
+	- Si tableau de données : S’il possède un titre, celui_ci doit être soit une balise <caption> soit lié avec aria_labelledby
+	- Si tableau complexe : caption obligatoire
+*/
 }

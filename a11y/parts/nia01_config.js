@@ -187,40 +187,40 @@ function check_part_01(){
 				}
 				
 				if(nia01f_list21 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f21' class='result-focus label-orange'>01-F</a> Absence de lien pour se rendre à la page passerelle pour l'élément de menu n°"+nia01f_list21.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f21' class='result-focus label-orange'>01-F</a> Absence de lien pour se rendre à la page passerelle <span class='cy-hidden'>pour l'élément de menu n°"+nia01f_list21.slice(0,-1)+"</span></li>");
 				}
 				if(nia01f_list22 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f22' class='result-focus label-orange'>01-F</a> : Absence de bouton pour déplier le sous-menu pour l'élement de menu n°"+nia01f_list22.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f22' class='result-focus label-orange'>01-F</a> : Absence de bouton pour déplier le sous-menu<span class='cy-hidden'> pour l'élement de menu n°"+nia01f_list22.slice(0,-1)+"</span></li>");
 				}
 				if(nia01f_list23 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f23' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list23.slice(0,-1)+" (absence de sous-menu alors que la classe has-subnav est présente)</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f23' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list23.slice(0,-1)+"</span>: absence de sous-menu alors que la classe has-subnav est présente</li>");
 				}
 				if(nia01f_list24 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f24' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list24.slice(0,-1)+" (absence de l'attribut aria-expanded)</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f24' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list24.slice(0,-1)+"</span>: absence de l'attribut aria-expanded</li>");
 				}
 				if(nia01f_list31 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f31' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list31.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f31' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list31.slice(0,-1)+"</span>: conflit sur le lien pour aller sur la page passerelle</li>");
 				}
 				if(nia01f_list32 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f32' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list32.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f32' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list32.slice(0,-1)+"</span>: absence de bouton pour déplier le sous-menu</li>");
 				}
 				if(nia01f_list33 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f33' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list33.slice(0,-1)+" (absence de sous-menu alors que la classe has-subnav est présente)</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f33' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list33.slice(0,-1)+"</span>: absence de sous-menu alors que la classe has-subnav est présente)</li>");
 				}
 				if(nia01f_list34 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f34' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list34.slice(0,-1)+" (absence de l'attribut aria-expanded)</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f34' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list34.slice(0,-1)+"</span>: absence de l'attribut aria-expanded</li>");
 				}
 				if(nia01f_list41 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f41' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list41.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f41' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list41.slice(0,-1)+"</span>: absence de lien pour acceder aux pages passerelle.</li>");
 				}
 				if(nia01f_list42 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f42' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list42.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f42' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list42.slice(0,-1)+"</span>: remplacer les boutons par des liens de navigation</li>");
 				}
 				if(nia01f_list43 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f43' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list43.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f43' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list43.slice(0,-1)+"</span>: un item du menu sans sous-menu contient une liste ul</li>");
 				}
 				if(nia01f_list44 != ""){
-					setItemToResultList("dev","<li><a href='#' data-destination='nia01f44' class='result-focus label-orange'>01-F</a> : Un problème a été detecté pour l'élement de menu n°"+nia01f_list44.slice(0,-1)+"</li>");
+					setItemToResultList("dev","<li><a href='#' data-destination='nia01f44' class='result-focus label-orange'>01-F</a> : Un problème a été detecté <span class='cy-hidden'>pour l'élement de menu n°"+nia01f_list44.slice(0,-1)+"</span>: présence d'attributs aria-expanded ou aria-haspopup sur un item du menu</li>");
 				}
 			}
 					

@@ -35,7 +35,7 @@ function check_part_03(){
 	// B. Verification de titre vide
 	const nia03b_nodes = document.querySelectorAll('a[title=" "],a[title="Nouvelle fenêtre"],a[title="- Nouvelle fenêtre"],a[title$="Nouvelle fenêtre - Nouvelle fenêtre"]');
 	if(nia03b_nodes && nia03b_nodes.length > 0 && isItemsVisible(nia03b_nodes)){
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia03b' class='result-focus label-red'>03-B</a> : Vérifier qu'il n'y a pas de lien avec un titre vide [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6.1.1' target='_blank'>RAWeb 6.1.1</a>]</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia03b' class='result-focus label-red'>03-B</a> : Vérifier qu'il n'y a pas de lien avec un titre non pertinant [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6.1.1' target='_blank'>RAWeb 6.1.1</a>]</li>");
 	  setItemsOutline(nia03b_nodes,"red","nia03b","03-B");
 	}
 
@@ -191,11 +191,11 @@ const nia03f_nodes = document.querySelectorAll('a[href]:not([href^="#"]),[role="
 	}
 
 	// L Présence de soulignement en dehors de lien
-	const nia03l_nodes = document.querySelectorAll("body *:not(a)");
+	const nia03l_nodes = document.querySelectorAll("body *:not(a):not(mark)");
 	let nia03l_flag = false;
 	if(nia03l_nodes && nia03l_nodes.length > 0 && isItemsVisible(nia03l_nodes)){	
 		for(let i = 0; i < nia03l_nodes.length; i++){
-			if(isItemVisible(nia03l_nodes[i]) && nia03l_nodes[i].style.textDecoration == "underline"){
+			if(isItemVisible(nia03l_nodes[i]) && window.getComputedStyle(nia03l_nodes[i], null).textDecorationLine == "underline"){
 				setItemOutline(nia03l_nodes[i],"yellow","nia03l","03-L");
 				nia03l_flag = true;
 			}
@@ -212,4 +212,18 @@ const nia03f_nodes = document.querySelectorAll('a[href]:not([href^="#"]),[role="
 	  setItemsOutline(nia03m_nodes,"orange","nia03m","03-M");
 	}
 
+	// N. Un lien non_souligné et inclus dans un paragraphe de texte doit être suffisamment contrasté avec le texte environnant (à l’état par défaut, hover et focus). Idéalement, toujours souligner les liens.
+	const nia03n_nodes = document.querySelectorAll("p > a, li:not(.cmp-focus-list-item):not(.nav-item):not(.cmp-languagenavigation__item):not(.cmp-breadcrumb__item):not(.subnav-item):not(.cmp-grid__item ) > a");
+	let nia03n_flag = false;
+	if(nia03n_nodes && nia03n_nodes.length > 0 && isItemsVisible(nia03l_nodes)){	
+		for(let i = 0; i < nia03n_nodes.length; i++){
+			if(isItemVisible(nia03n_nodes[i]) && window.getComputedStyle(nia03n_nodes[i], null).textDecorationLine != "underline"){
+				setItemOutline(nia03n_nodes[i],"yellow","nia03n","03-N");
+				nia03n_flag = true;
+			}
+		}
+	}
+	if(nia03n_flag == true) {
+	  setItemToResultList("man","<li><a href='#' data-destination='nia03n' class='result-focus label-yellow'>03-N</a> : Présence d'un lien non souligné, vérifier son contraste avec le texte environnant</li>");
+	}
 }

@@ -23,6 +23,7 @@ function check_part_02(){
 	  setItemsOutline(nia02a2_nodes,"yellow","nia02a2","02-A");
 	}
 
+
 	// B. Vérification des attributs des svg, 
 	const nia02b1_nodes = document.querySelectorAll('svg:not([aria-hidden="true"]):not(.iconset)'); 
 	const nia02b2_nodes = document.querySelectorAll('svg:not([focusable="false"]):not(.iconset)');
@@ -31,8 +32,8 @@ function check_part_02(){
 	  setItemsOutline(nia02b1_nodes,"red","nia02b1","02-B");
 	}
 	if(nia02b2_nodes && nia02b2_nodes.length > 0 && isItemsVisible(nia02b2_nodes)){
-	  setItemToResultList("nth","<li><a href='#' data-destination='nia02b2' class='result-focus label-orange'>02-B</a> : Absence de certains attributs sur des SVG (focusable=false) [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>");
-	  setItemsOutline(nia02b2_nodes,"orange","nia02b2","02-B");
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia02b2' class='result-focus label-yellow'>02-B</a> : Absence de certains attributs sur des SVG (focusable=false) [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-decorative-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'>Opquast 111</a>]</li>");
+	  setItemsOutline(nia02b2_nodes,"yellow","nia02b2","02-B");
 	}
 	
 	const nia02b3_nodes = document.querySelectorAll('svg[role="img"]:not([title]):not([aria-labelledby]):not([aria-label])');
@@ -120,7 +121,7 @@ function check_part_02(){
 		  setItemsOutline(nia02f5_nodes,"red","nia02f5","02-F");
 		}
 	}
-	
+
 	// G. Les images de décoration ne doivent pas avoir d'attributs permettant de fournir une alternative textuelle
 	const nia02g1_nodes = document.querySelectorAll('img:where([alt=""],[aria-hidden="true"],[role="presentation"],[role="none"]):where([aria-label][aria-labelledby][title])');
 	if(nia02g1_nodes && nia02g1_nodes.length > 0 && isItemsVisible(nia02g1_nodes)){
@@ -181,7 +182,7 @@ function check_part_02(){
 			 setItemToResultList("nc","<li><a href='#' data-destination='nia02g7' class='result-focus label-red'>02-G</a> : Les images bitmap de décoration (canvas) ne doivent pas avoir de contenu alternatif présent entre ses balises [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-2-3' target='_blank'>RAWeb 1.2.3</a>] </li>");
 		}
 	}
-	
+
 	// H. L'alternative doit être courte et concise - estimation max 150 caractères
 	const nia02h_nodes = document.querySelectorAll(':where(img,svg,canvas,embed[type^="image/"],object[type^="image/"]):where([alt],[aria-label],[aria-labelledby],[title]):not([aria-hidden="true"]):not([role="presentation"]):not([role="none"])');
 	let nia02h_flag = false;
@@ -218,14 +219,19 @@ function check_part_02(){
 	  setItemToResultList("nth","<li><a href='#' data-destination='nia02h' class='result-focus label-yellow'>02-H</a> : Présence d'alternative textuelle trop longue [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-1-3-9' target='_blank'>RAWeb 1.3.9</a>]</li>");
 	}
 	
+	
 	// I Chaque image-lien est dotée d'une alternative textuelle appropriée.
-	const nia02i_nodes = document.querySelectorAll('a:not(.blocklink):has(> img)');
+	const nia02i_nodes = document.querySelectorAll('a:not(.blocklink):has(> img),a:not(.blocklink):has(> svg)');
 	let nia02i_title ="";
 	let nia02i_flag = false;
 	if(nia02i_nodes && nia02i_nodes.length > 0){
 	  for(let i = 0; i < nia02i_nodes.length; i++){
 			if(isItemVisible(nia02i_nodes[i])){
-				if(nia02i_nodes[i].childElementCount == 1 && nia02i_nodes[i].getElementsByTagName("img")[0].getAttribute("alt") == ""){
+				if(nia02i_nodes[i].childElementCount == 1 && nia02i_nodes[i].getElementsByTagName("img")[0] != null && nia02i_nodes[i].getElementsByTagName("img")[0].getAttribute("alt") == ""){
+					setItemOutline(nia02i_nodes[i],"yellow","nia02i","02-I");
+					nia02i_flag = true;
+				}
+				else if(nia02i_nodes[i].childElementCount == 1 && nia02i_nodes[i].getElementsByTagName("svg")[0] != null){
 					setItemOutline(nia02i_nodes[i],"yellow","nia02i","02-I");
 					nia02i_flag = true;
 				}
@@ -233,8 +239,9 @@ function check_part_02(){
 		}
 	}
 	if(nia02i_flag == true) {
-	  setItemToResultList("nth","<li><a href='#' data-destination='nia02i' class='result-focus label-yellow'>02-I</a> : Présence d'image-lien avec une alternative textuelle non pertinente [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-lien-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'> Opquast 112</a>]</li>");
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia02i' class='result-focus label-yellow'>02-I</a> : Présence d'image-lien avec une alternative textuelle non pertinente [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-6-1-5' target='_blank'>RAWeb 6.1.5</a>, <a href='https://checklists.opquast.com/fr/assurance-qualite-web/chaque-image-lien-est-dotee-dune-alternative-textuelle-appropriee' target='_blank'> Opquast 112</a>]</li>");
 	}
+	
 	
 	// J.Les vignettes et aperçus ne sont pas des images de taille supérieure redimensionnées côté client.
 	const nia02j_nodes = document.querySelectorAll('*:not(.feed-item-content > p):not(.feed-item-header):not(.ol-full-screen-false) > img:not([src$=".svg"])');
