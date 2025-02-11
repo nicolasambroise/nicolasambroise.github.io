@@ -127,7 +127,7 @@ function check_part_09(){
 		}
 	}
 	
-	// G. Skiplinks
+	// E. Skiplinks
 	if(!only_redactor){
 		const nia09e_main = document.querySelector('.skiplinks a[href="#main"]');
 		if(nia09e_main == null){
@@ -155,6 +155,13 @@ function check_part_09(){
 		  setItemToResultList("dev","<li><span class='result-focus label-red'>09-E</span> : Un skiplinks n'est pas correctement lié à sa destination [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-12-7-1' target='_blank'>RAWeb 12.7.1</a>]</li>");
 		}
 	}
+	
+	/* TODO Skiplinks */
+	/*
+	Les skiplinks situé dans l’entête doivent être dans un élément <nav role=’navigation’> avec un aria_label
+	Les skiplinks situé dans l’entête doivent être les premiers éléments tabulable de la page (hors modale des cookies) 
+	S’il y a plusieurs Skiplinks, ils doivent être structurée sous forme de liste <ul>
+	*/
 
 	// F taille des éléments interactifs minimum attendue est de 24px par 24px.
 	if(!only_redactor){

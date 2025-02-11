@@ -402,5 +402,6 @@ function check_part_04(){
 	- Un groupe de Radio doit être structuré dans un fieldset
 	- Pour le message d’erreur en cas de format date /tel/fax invalide, un exemple de saisie doit être proposé
 	- Si Datepicker type=text, l’annonce du format est obligatoire
+	- Les messages d’erreurs de chaque champ doivent lui être lié via aria_describedby
 	*/
 }

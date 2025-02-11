@@ -240,6 +240,14 @@ function check_part_05(){
 		}
 	}
 	
+	// P Logo
+	/*
+	Le lien sur le logo redirige vers la page d’accueil et possède un attribut title respectant la nomenclature suivante : « [XXX] – Accueil »
+	Si du texte est présent sur le logo, possibilité de saisir un texte alt
+	Si du texte rédigé dans une langue étangère est présente sur le logo, possibilité de préciser une langue.
+	*/
+	
+	
 	// Y. TODO -->  Detect Overflow
 	// https://stackoverflow.com/questions/143815/determine-if-an-html-elements-content-overflows
 	// https://webtips.dev/webtips/javascript/find-overflowing-elements-with-javascript

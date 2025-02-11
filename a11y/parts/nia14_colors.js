@@ -503,4 +503,6 @@ function check_part_14(){
 		}
 	}
 	*/
+	
+	// Todo E presence de dégradé sans couleur de replis
 }
