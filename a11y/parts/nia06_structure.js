@@ -98,6 +98,8 @@ function check_part_06(){
 	Menu contextuel ;
 	Table des matières concernant un ensemble de pages.
 	*/
+	
+
 	if(!only_redactor){
 		const nia06e2_nodes = document.querySelectorAll('*:not(.page-langs):not(.right-part):not(.cmp-directory) > nav:not(.page-headernav):not(.page-headernavmobile):not(.page-headernav-desk):not(.automaticnav):not(.cmp-breadcrumb):not(.page-localnav):not(.cmp-backtonav):not(.cmp-breadcrumb-demarches):not(.topnav):not(.page-bloub):not(#headernav):not(.headernav-detached):not(.headernav):not(.headernav-fixed)');
 		if(nia06e2_nodes && nia06e2_nodes.length > 0&& isItemsVisible(nia06e2_nodes)){
@@ -153,8 +155,6 @@ function check_part_06(){
 	Le lien vers la page « plan du site » doit être présent (à l’exception des sites One_page) 
 	Les différents items sont présentés dans des structures de type liste <ul> 
 	*/
-
-	
 	
 	// H. Cadres iframe
 	// H1 Présence de titre
@@ -238,6 +238,8 @@ function check_part_06(){
 	  setItemsOutline(nia06k_nodes,"yellow","nia06k","06-K");
 	}
 	
+
+	
 	// L Accordéon
 	const nia06l1_nodes = document.querySelectorAll('.cmp-accordion > *:not(details), .cmp-accordion > details > *:not(summary):not(.cmp-accordion__panel), .filters-content > *:not(details), .filters-content > details > *:not(summary):not(.filter-content)');
 	if(nia06l1_nodes && nia06l1_nodes.length > 0 && isItemsVisible(nia06l1_nodes)){
@@ -320,7 +322,7 @@ function check_part_06(){
 			setItemToResultList("dev","<li><a href='#' data-destination='nia06n2' class='result-focus label-red'>06-N</a> : Le sommaire ne contient pas d'élément de navigation</li>");
 		}
 	}
-	
+		
 	// O Composant Focus
 	// Le composant focus doit avoir un titre même si celui_ci est visuellement masqué (.at ou .sr_only). Ce titre de composant doit être d’ 1 niveau supérieur à celui des titres des items
 	// Les items du focus doivent être dans une seule et même liste <ul>
@@ -421,7 +423,7 @@ function check_part_06(){
 
 	const nia06p1_nodes = document.querySelectorAll('.cmp-grid');
 	let nia06p1_items;
-	let nia06p1_itemTitle,nia06p1_itemContent;
+	let nia06p1_itemTitle,nia06p1_itemContent, nia06p1_itemTitleSani;
 	let nia06p1_counter;
 	let nia06p2_flag = false;
 	let nia06p3_flag = false;
@@ -441,24 +443,26 @@ function check_part_06(){
 					nia06p1_itemContent	= sanitizeText(nia06p1_items[j].textContent);
 					
 					if(nia06p1_itemTitle){
-						if(nia06p1_itemContent == sanitizeText(nia06p1_itemTitle.textContent)){
+						nia06p1_itemTitleSani = sanitizeText(nia06p1_itemTitle.textContent);					
+						if(nia06p1_itemContent == nia06p1_itemTitleSani){
 							nia06p1_counter++;	
 						}
-						else if(nia06p1_itemContent.indexOf(sanitizeText(nia06o2_itemTitle.textContent)) != 0){
+						else if(nia06p1_itemContent.indexOf(nia06p1_itemTitleSani) != 0){
 							nia06p2_flag = true;
 							setItemOutline(nia06p1_items[j],"orange","nia06p2","06-P");
 						}
 					}
 					if(nia06p1_itemContent == ""){
 						nia06p4_flag = true;
-						setItemOutline(nia06p1_items,"orange","nia06p4","06-P");
-					}		
+						setItemOutline(nia06p1_items[j],"orange","nia06p4","06-P");
+					}	
 				}
 				if(nia06p1_counter == nia06p1_items.length){
 					nia06p3_flag = true;
 					setItemOutline(nia06p1_nodes[i],"orange","nia06p3","06-P");	
 				}
 			}
+			
 		}	
 	}
 	if(nia06p2_flag == true) {
@@ -472,11 +476,13 @@ function check_part_06(){
 	}
 
 
+
 	// Q Tabs
 	// Vérifier la présence d’un container avec l’attribut role=’tablist’ et ainsi qu’un aria_label ou aria_labelledby  
 	// Chaque item d’onglet sera dans une balise <button> et aura l’attribut role=’tab’ ainsi qu’un attribut aria_controls lié avec l’id de son contenu.
 	// Chaque item d’onglet actif aura un attribut aria_selected=’true’, sinon il aura la valeur ‘false’ dans le cas contraire
 	// Chaque contenu d’onglet sera dans un element possédant les attributs role=’tabpanel’ , tabindex=’0’ et ainsi qu’un aria_labelledby  faisant référence au titre de l’onglet.
+
 
 	
 	// R Back-To-Top
@@ -511,9 +517,10 @@ function check_part_06(){
 	// Présence de l'attribut aria_current=’page’ sur le dernier item du fils d'ariane
 	// Le breadcrumb doit être dans une balise <nav role=navigation> avec l’attribut aria_label pertinent : "Vous êtes ici" ("Fil d'Ariane" est considéré comme un terme technique). 
 	
-	if(!only_redactor){
+	
+	if(!only_redactor && !isHomepage){
 		const nia06s1_nodes = document.querySelectorAll('nav[id^=breadcrumb-], nav.cmp-breadcrumb');
-		if(!isHomepage && (!nia06s1_nodes || nia06s1_nodes.length == 0 || !isItemsVisible(nia06s1_nodes))){
+		if(!nia06s1_nodes || nia06s1_nodes.length == 0 || !isItemsVisible(nia06s1_nodes)){
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia06s1' class='result-focus label-orange'>06-S</a> : Les pages secondaires doivent disposer d’un breadcrumb.</li>");
 		  setItemsOutline(nia06s1_nodes,"orange","nia06s1","06-S");
 		}
@@ -597,5 +604,4 @@ function check_part_06(){
 			}
 		}
 	}
-
 }

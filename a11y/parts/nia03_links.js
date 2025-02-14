@@ -213,7 +213,7 @@ const nia03f_nodes = document.querySelectorAll('a[href]:not([href^="#"]),[role="
 	}
 
 	// N. Un lien non_souligné et inclus dans un paragraphe de texte doit être suffisamment contrasté avec le texte environnant (à l’état par défaut, hover et focus). Idéalement, toujours souligner les liens.
-	const nia03n_nodes = document.querySelectorAll("*:not(li.nav-item) > p > a, li:not(.cmp-focus-list-item):not(.nav-item):not(.cmp-languagenavigation__item):not(.cmp-breadcrumb__item):not(.subnav-item):not(.cmp-grid__item ) > a:not(.toc-anchor)");
+	const nia03n_nodes = document.querySelectorAll("*:not(li.nav-item) > p > a, li:not(.cmp-focus-list-item):not(.nav-item):not(.cmp-languagenavigation__item):not(.cmp-breadcrumb__item):not(.subnav-item):not(.cmp-grid__item ):not(.filter-item) > a:not(.toc-anchor)");
 	let nia03n_flag = false;
 	if(nia03n_nodes && nia03n_nodes.length > 0 && isItemsVisible(nia03l_nodes)){	
 		for(let i = 0; i < nia03n_nodes.length; i++){

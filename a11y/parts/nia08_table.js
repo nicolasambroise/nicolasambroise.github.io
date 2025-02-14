@@ -53,7 +53,7 @@ function check_part_08(){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia08e' class='result-focus label-red'>08-E</a> : Présence d'un tableau de données sans en-tête [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-5-6-1' target='_blank'>RAWeb 5.6.1</a>]</li>");
 	}
 	
-	// F Chaque tableau possède un Caption() {
+	// F Chaque tableau de donnée complexe possède un Caption() {
 	const nia08f_nodes = document.querySelectorAll('table:not([summary]):not([aria-describedby]):not([role="presentation"])');
 	let nia08f_flag = false;
 	let nia08f_caption = "";
@@ -62,13 +62,13 @@ function check_part_08(){
 			nia08f_caption = nia08f_nodes[i].querySelector(':scope > caption')
 			if(nia08f_caption == null || nia08f_caption.textContent == ""){
 				if(debug_flag) console.log(nia08f_nodes[i]);
-				setItemOutline(nia08f_nodes[i],"orange","nia08f","08-F");
+				setItemOutline(nia08f_nodes[i],"yellow","nia08f","08-F");
 				nia08f_flag = true;
 			}
 		}
 	}
 	if(nia08f_flag == true) {
-	  setItemToResultList("nc","<li><a href='#' data-destination='nia08f' class='result-focus label-orange'>08-F</a> : Présence d'un tableau de données sans résumé</li>");
+	  setItemToResultList("nc","<li><a href='#' data-destination='nia08f' class='result-focus label-yellow'>08-F</a> : Présence d'un tableau de données sans résumé</li>");
 	}	
 	
 	/* Todo 

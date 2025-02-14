@@ -393,15 +393,54 @@ function check_part_04(){
 		setItemToResultList("nth","<li><a href='#' data-destination='nia04l' class='result-focus label-yellow'>04-L</a> : Formulaire avec bouton de soumission mal placé </li>");
 	}
 	
+	// M Un groupe de Checkbox/Radio doit être structuré dans un fieldset
+	const nia04m_nodes = document.querySelectorAll('input[type="checkbox"],input[type="radio"]');
+	let nia04m_flag = false;
+	if(nia04m_nodes && nia04m_nodes.length > 0 && isItemsVisible(nia04m_nodes)){
+		for(let i = 0; i < nia04m_nodes.length; i++){
+			if(!nia04m_nodes[i].parentElement.closest("fieldset")){	
+				nia04m_flag = true;
+				setItemsOutline(nia04g_nodes,"yellow","nia04g","04-G");
+			}
+		}
+	}
+	if(nia04m_flag == true) {
+		setItemToResultList("man","<li><a href='#' data-destination='nia04n' class='result-focus label-yellow'>04-M</a> : Un groupe de Checkbox/Radio doit être structuré dans un fieldset</li>");
+	}
+	
+	// N Le format de saisie du datepicker est indiqué (soit un aria-descibedby, soit des paranthèses dans le label)
+	const nia04n_nodes = document.querySelectorAll("input[type='text'].datepicker:not([aria-describedby]), input[type='text'][pattern='([0-9]{2}-){2}[0-9]{4}']:not([aria-describedby])");
+	let nia04n_flag = false;
+	let nia04n_label = "", nia04n_id = "";
+	if(nia04n_nodes && nia04n_nodes.length > 0){
+		for(let i = 0; i < nia04n_nodes.length; i++){
+			if(isItemVisible(nia04n_nodes[i])){
+				nia04n_id = nia04n_nodes[i].getAttribute("id");
+				if(!nia04n_id || nia04n_id == ""){
+					setItemOutline(nia04n_nodes[i],"red","nia04n","04-N");
+					nia04n_flag = true;
+				}
+				else{
+					nia04n_label = document.querySelectorAll("[for='"+nia04n_id+"']");
+					if(!nia04n_label || nia04n_label.length != 1){
+						setItemOutline(nia04n_nodes[i],"red","nia04n","04-N");
+						nia04j_flag = true;
+					}
+					else if(nia04n_label[0].innerText.indexOf("(") < 0){
+						setItemOutline(nia04n_nodes[i],"red","nia04n","04-N");
+						nia04n_flag = true;
+					}
+				}
+			}
+		}
+	}
+	if(nia04n_flag == true) {
+		setItemToResultList("nc","<li><a href='#' data-destination='nia04n' class='result-focus label-red'>04-N</a> : Absence du format de saisie dans un datepicker [<a href='https://checklists.opquast.com/fr/assurance-qualite-web/le-format-de-saisie-des-champs-de-formulaire-qui-le-necessitent-est-indique' target='_blank'>Opquast 70</a>]</li>");
+	}
 	
 	// TODO
 	/*
 	- Ajouter un attribut aria_invalid=’true’ sur les champs en erreur 
-	- Les messages d’erreurs de chaque champ doivent lui être lié via aria_describedby
-	- Un groupe de Checkbox doit être structuré dans un fieldset
-	- Un groupe de Radio doit être structuré dans un fieldset
-	- Pour le message d’erreur en cas de format date /tel/fax invalide, un exemple de saisie doit être proposé
-	- Si Datepicker type=text, l’annonce du format est obligatoire
 	- Les messages d’erreurs de chaque champ doivent lui être lié via aria_describedby
 	*/
 }

@@ -240,13 +240,42 @@ function check_part_05(){
 		}
 	}
 	
-	// P Logo
+	// P. Section vide dans la page
+	const nia05p_nodes = document.querySelectorAll('section.cmp-section');
+	let nia05p_flag = false;
+	let nia05p_clean_node = "", nia05p_container = "", nia05p_lang = "";
+	if(nia05p_nodes && nia05p_nodes.length > 0){
+		for(let i = 0; i < nia05p_nodes.length; i++){
+			nia05p_lang = nia05p_nodes[i].closest('[lang]').getAttribute('lang');
+			nia05p_clean_node = sanitizeText(nia05p_nodes[i].innerText, nia05p_lang);
+			if(nia05p_clean_node == "" && isItemVisible(nia05p_nodes[i])){
+				setItemOutline(nia05p_nodes[i],"yellow","nia05p","05-P");
+				nia05p_container = nia05p_nodes[i].parentElement;
+				nia05p_flag = true;
+			}
+		}
+	}
+	if(nia05p_flag == true) {
+	  setItemToResultList("nth","<li><a href='#' data-destination='nia05p' class='result-focus label-yellow'>05-P</a> : Présence de section vides (ou avec un contenu assimilable à vide) [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-8-9-1' target='_blank'>RAWeb 8.9.1</a>]</li>");
+	}
+	
+	// Q Logo
 	/*
 	Le lien sur le logo redirige vers la page d’accueil et possède un attribut title respectant la nomenclature suivante : « [XXX] – Accueil »
 	Si du texte est présent sur le logo, possibilité de saisir un texte alt
 	Si du texte rédigé dans une langue étangère est présente sur le logo, possibilité de préciser une langue.
+	Pas d'indication du mot "logo" dans le texte alt du logo
 	*/
-	
+	const nia05q_nodes = document.querySelectorAll('header .logo');
+	let nia05q_flag1 = false;
+	let nia05q_flag2 = false;
+	let nia05q_flag3 = false;
+	let nia05q_flag4 = false;
+	if(nia05q_nodes && nia05q_nodes.length > 0){
+		for(let i = 0; i < nia05q_nodes.length; i++){
+			
+		}
+	}
 	
 	// Y. TODO -->  Detect Overflow
 	// https://stackoverflow.com/questions/143815/determine-if-an-html-elements-content-overflows

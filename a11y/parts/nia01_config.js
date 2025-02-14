@@ -24,7 +24,6 @@ function check_part_01(){
 	
 	// B. Recherche
 	
-	
 	// Presence de l'aria label
 	const nia01b1_nodes = document.querySelectorAll('role[search]:not([aria-label])');
 	if(nia01b1_nodes && nia01b1_nodes.length > 0 && isItemsVisible(nia01b1_nodes)){
@@ -63,34 +62,70 @@ function check_part_01(){
 	   setItemToResultList("nth","<li><a href='#' data-destination='nia01b3' class='result-focus label-orange'>01-B</a> : Problème avec la pertinence du titre de la recherche</li>");
 	}
 	
-	// TODO Search
-	/* 
-	Secondary search (actu, public, ect.)
-	o   Ne pas mettre de role=search sur les éléments de recherche secondaire search_logic 
-	o   Dans le cas où un placeholder est présent sur la balise <input>, celui_ci doit être identique à son attribut title
-	Filter
-	o   Les filtres sont présentés avec une structure en accordéon details/summary
-	o   Être vigilant sur le contraste des boutons radio/checkbox
-	o   En mobile, l’affichage des filtres doit respecter le DP dialog ou le DP disclosure
-	Resultat
-	o   Affichage du nombre de résultat
-	o   Dans le cas d’affichage des résultats sans rechargement de page, il faut s’assurer que le nombre de résultat soit dans une zone live
-	o   Les résultats sont présentés sous forme d’une suite de balise <article> ou sous forme de liste ul
-	Pagination
-	o   La pagination doit être structurée dans un élément <nav role=‘navigation’> avec un aria_label
-	o   Les différents éléments de la pagination doivent être sous forme de liste (ul ou ol)
-	o   La page active doit avoir un aria_current= ‘page’
-	Rechargement infini
-	o   Vérifier à repositionner le focus sur le premier contenu qui est a été ajouté (dans l’ordre du DOM)
-	Page Title : le terme recherche, l’absence de résultat, le nombre de filtre activé et le numéro de la page courante doivent être présente dans le titre de la page.
-	Note : Dans plusieurs site récent la prise de focus n’est pas visible sur l’élement <summary> à cause du summary:focus {outline: 0;} 
-	Note : Les thumbnails de résultat de recherche sont considéré comme décoratif et donc alt vide 
-	*/
+	// Role search sur les recherches secondaires
+	const nia01b4_nodes = document.querySelectorAll('main form[role="search"]:not([action$="recherche.html"]):not([aria-label="Globale"]):not([aria-label="Global"])');
+	if(nia01b4_nodes && nia01b4_nodes.length > 0 && isItemsVisible(nia01b4_nodes)){
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b4' class='result-focus label-yellow'>01-B</a> : Présence d'un role=search sur les éléments de recherche secondaire</li>");
+	  setItemsOutline(nia01b4_nodes,"yellow","nia01b4","01-B");
+	}
+	
+	// Les filtres sont présentés avec une structure en accordéon details/summary
+	const nia01b5_nodes = document.querySelectorAll('.filters-content > *:not(details)');
+	if(nia01b5_nodes && nia01b5_nodes.length > 0 && isItemsVisible(nia01b5_nodes)){
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b5' class='result-focus label-yellow'>01-B</a> : Il est recommander de présenter les filtres avec une structure en accordéon details/summary</li>");
+	  setItemsOutline(nia01b5_nodes,"yellow","nia01b5","01-B");
+	}
+	
+	//Affichage du nombre de résultat
+	const nia01b6_nodes = document.querySelectorAll('.search-meta-count');
+	if(nia01b6_nodes && nia01b6_nodes.length > 0 && !isItemsVisible(nia01b6_nodes)){
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b6' class='result-focus label-orange'>01-B</a> : Absence du nombre de resultat de la recherche</li>");
+	  setItemsOutline(nia01b6_nodes,"orange","nia01b6","01-B");
+	}
+	
+	// Les résultats sont présentés sous forme d’une suite de balise <article> ou <li>
+	const nia01b7_nodes = document.querySelectorAll('.search-results .search-result > *:not(article):not(li)');
+	if(nia01b7_nodes && nia01b7_nodes.length > 0 && isItemsVisible(nia01b7_nodes)){
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b7' class='result-focus label-yellow'>01-B</a> : Les résultats doivent être présentés sous forme d’une suite de balise 'article' ou 'li'</li>");
+	  setItemsOutline(nia01b7_nodes,"yellow","nia01b7","01-B");
+	}
+	
+	// La pagination doit être structurée dans un élément <nav role=‘navigation’> avec un aria_label
+	const nia01b8_nodes = document.querySelectorAll('nav:not([role="navigation"]) > :is(ol,ul).pagination, *:not(nav) > :is(ol,ul).pagination, nav:not([aria-label]) > :is(ol,ul).pagination');
+	if(nia01b8_nodes && nia01b8_nodes.length > 0 && isItemsVisible(nia01b8_nodes)){
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b8' class='result-focus label-red'>01-B</a> : La pagination doit être structurée dans un élément 'nav'  avec le role=navigation et un aria_label</li>");
+	  setItemsOutline(nia01b8_nodes,"red","nia01b8","01-B");
+	}
+	
+	//Les différents éléments de la pagination doivent être sous forme de liste (ul ou ol)
+	const nia01b9_nodes = document.querySelectorAll('nav > .pagination:not(ol,ul)');
+	if(nia01b9_nodes && nia01b9_nodes.length > 0 && isItemsVisible(nia01b9_nodes)){
+	  setItemToResultList("dev","<li><a href='#' data-destination='nia01b9' class='result-focus label-red'>01-B</a> : Les différents éléments de la pagination doivent être sous forme de liste (ul ou ol)</li>");
+	  setItemsOutline(nia01b9_nodes,"red","nia01b9","01-B");
+	}
+	
+	// La page active doit avoir un aria_current= ‘page’
+	const nia01b10_nodes = document.querySelectorAll('.pagination .pagination-page');
+	let nia01b10_flag = false;
+	let nia01b11_counter = 0;
+	if(nia01b10_nodes && nia01b10_nodes.length > 0 && isItemsVisible(nia01b10_nodes)){
+		for(let i = 0; i < nia01b10_nodes.length; i++){
+			if(nia01b10_nodes[i].tagName != 'LI') {setItemsOutline(nia01b10_nodes,"red","nia01b10","01-B");nia01b10_flag = true;}
+			else if(!nia01b10_nodes[i].firstElementChild || (nia01b10_nodes[i].firstElementChild.tagName == 'A' && ( !nia01b10_nodes[i].firstElementChild.hasAttribute("aria-label") || nia01b10_nodes[i].firstElementChild.getAttribute("aria-label").length < 4))) {setItemsOutline(nia01b10_nodes,"red","nia01b10","01-B");nia01b10_flag = true;}
+			if(nia01b10_nodes[i].hasAttribute("aria-current") && nia01b10_nodes[i].getAttribute("aria-current") == "page"){nia01b11_counter++;}
+		}
 
-
-
+		if(nia01b10_flag == true){
+		   setItemToResultList("dev","<li><a href='#' data-destination='nia01b10' class='result-focus label-red'>01-B</a> : Les item de la pagination doivent être dans une balise li et leur enfant posseder un aria-label pertinent</li>");
+		}
+		if(nia01b11_counter == 0){
+		   setItemToResultList("dev","<li><a href='#' data-destination='nia01b11' class='result-focus label-red'>01-B</a> : La page active de la pagination doit avoir un aria_current= ‘page’</li>");
+		   setItemsOutline(nia01b10_nodes,"red","nia01b11","01-B");
+		}
+	}
 
 	// C. Tooltip
+
 	const nia01c_nodes = document.querySelectorAll('.search-view');
 	if(nia01c_nodes && nia01c_nodes.length > 0 && isItemsVisible(nia01c_nodes)){
 	  setItemToResultList("nc","<li><a href='#' data-destination='nia01c' class='result-focus label-red'>01-C</a> : Présence de tooltip non accessible sur les résultats de recherches [<a href='https://accessibilite.public.lu/fr/raweb1/criteres.html#test-10-13-1' target='_blank'>RAWeb 10.13.1</a>]</li>");
@@ -98,27 +133,32 @@ function check_part_01(){
 	}
 
 	// D. Menu langue
+
 	if(!only_redactor){
-		const nia01d_nodes = document.querySelectorAll('nav[id^="language-"]:not([aria-label])');
-		if(nia01d_nodes && nia01d_nodes.length > 0 && isItemsVisible(nia01d_nodes)){
-		  setItemToResultList("nc","<li><a href='#' data-destination='nia01d' class='result-focus label-red'>01-D</a> : Absence de l'aria-label sur le menu de selection de langue (à ajouter dans le cqdialog)</li>");
-		  setItemsOutline(nia01d_nodes,"red","nia01d","01-D");
+		const nia01d1_nodes = document.querySelectorAll('nav[id^="language-"]:not([aria-label]), div > ul.cmp-languagenavigation__group:not([aria-label])');
+		if(nia01d1_nodes && nia01d1_nodes.length > 0 && isItemsVisible(nia01d1_nodes)){
+		  setItemToResultList("nc","<li><a href='#' data-destination='nia01d1' class='result-focus label-red'>01-D</a> : Absence de l'aria-label sur le menu de selection de langue (à ajouter dans le cqdialog)</li>");
+		  setItemsOutline(nia01d1_nodes,"red","nia01d1","01-D");
 		}
 		
+		// Check vieux composant switch lang
 		const nia01d2_nodes = document.querySelectorAll('#page-langs ul[role="menu"] > li[role="none"]');
 		if(nia01d2_nodes && nia01d2_nodes.length > 0){
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia01d2' class='result-focus label-orange'>01-D</a> : Faiblesse de la structure du menu de switch des langues : ne pas utiliser role=menu</li>");
 		  setItemsOutline(nia01d2_nodes,"orange","nia01d2","01-D");
 		}
+		
+		// Les liens vers les versions linguistique doivent avoir l’attribut lang et posséder le title et le contenu textuel « de – Deutsch » 
+		const nia01d3_nodes = document.querySelectorAll('.cmp-languagenavigation__group .cmp-languagenavigation__item-link:not([title*=" - "]),.cmp-languagenavigation__group .cmp-languagenavigation__item-link:not([lang]),.cmp-languagenavigation__group .cmp-languagenavigation__item-link:not([hreflang])');
+		if(nia01d3_nodes && nia01d3_nodes.length > 0 && isItemsVisible(nia01d3_nodes)){
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia01d3' class='result-focus label-orange'>01-D</a> : Les liens vers les versions linguistique doivent avoir les attributs lang, hreflang et posséder un attribut title dont le contenu textuel est tel que : « de – Deutsch » </li>");
+		  setItemsOutline(nia01d_nodes,"orange","nia01d3","01-D");
+		}
 	}
-	
-	// TODO Langue
-	/*
-	Vérifier que les langues sont affichées en listes <ul> (soit directement affichées soit dans une structure de type disclosure)
-	Les liens vers les versions linguistique doivent avoir l’attribut lang et posséder le title et le contenu textuel « de – Deutsch » 
-	*/
+
 
 	// E. Video player
+
 	const nia01e_nodes = document.querySelectorAll('.cmp-multiplayer .player_img img[alt="Lire la vidéo Youtube, voir légende ci-après"][lang]:not([lang="fr"])');
 	if(nia01e_nodes && nia01e_nodes.length > 0 && isItemsVisible(nia01e_nodes)){
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia01e' class='result-focus label-orange'>01-E</a> : Traduction manquante dans le composant Multimedia Player</li>");
@@ -409,23 +449,73 @@ function check_part_01(){
 					
 					nia01f20_btn.click();
 				}
-			//window.resizeTo(currentWidth, currentHeight);		
+			//window.resizeTo(currentWidth, currentHeight);
+
+			// G Structure globale du menu
+	
+			const nia01g1_nodes = document.querySelectorAll('nav#headernav .nav--primary:not(ul), nav#headernav ul.nav--primary > .nav-item:not(li), nav#headernav ul.nav--primary > li.nav-item.has-subnav .subnav-item:not(li)');
+			if(nia01g1_nodes && nia01g1_nodes.length > 0){
+			  setItemToResultList("dev","<li><a href='#' data-destination='nia01g1' class='result-focus label-red'>01-G</a> : Les items du menu et du sous menu sont sous forme de liste ul/li</li>");
+			  setItemsOutline(nia01g1_nodes,"red","nia01g1","01-G");
+			}
+
+			const nia01g2_nodes = document.querySelectorAll('nav#headernav :is(a,button)');
+			let nia01g2_flag = false;
+			if(nia01g2_nodes && nia01g2_nodes.length > 0){
+			  for(let i = 0; i < nia01g2_nodes.length; i++){
+				  if(!nia01g2_nodes[i].textContent || nia01g2_nodes[i].textContent == ""){
+					  nia01g2_flag = true;
+					  setItemsOutline(nia01g2_nodes,"red","nia01g2","01-G");
+				  }
+			  }
+			}
+			if(nia01g2_flag == true){
+				 setItemToResultList("dev","<li><a href='#' data-destination='nia01g2' class='result-focus label-red'>01-G</a> : Les éléments du menu et des sous_menus doivent avoir un intitulé </li>");
+			}
+			
+			const nia01g3_nodes = document.querySelectorAll('nav#headernav li a');
+			let nia01g3_items;
+			let nia01g3_flag = false;
+			let nia01g4_flag = false; 
+			let nia01g5_counter = 0; 			
+			if(nia01g3_nodes && nia01g3_nodes.length > 0){
+			  for(let i = 0; i < nia01g3_nodes.length; i++){
+				  if(nia01g3_nodes[i].hasAttribute("aria-current")){
+					  if(nia01g3_nodes[i].getAttribute("aria-current") == 'page'){
+						  nia01g5_counter++;
+						  if(nia01g3_nodes[i].parentElement.classList.contains("subnav-item")){
+							if(!nia01g3_nodes[i].parentElement.closest("has-subnav") || !nia01g3_nodes[i].parentElement.closest("has-subnav").firstElementChild.hasAttribute("aria-current") ||  nia01g3_nodes[i].parentElement.closest("has-subnav").firstElementChild.hasAttribute("aria-current") != 'true'){
+								nia01g3_flag = true;
+								setItemsOutline(nia01g3_nodes[i],"red","nia01g3","01-G");
+							}
+						  }  
+					  }
+					  else if(nia01g3_nodes[i].getAttribute("aria-current") == 'true'){
+						  nia01g3_items = nia01g3_nodes[i].querySelectorAll('a[aria-current="page"]');
+						  if(!nia01g3_items || nia01g3_items.length != 1){
+							nia01g4_flag = true;
+							setItemsOutline(nia01g3_nodes[i],"red","nia01g4","01-G");
+						  }
+					  }
+				  }
+			  }
+			}
+
+			if(nia01g3_flag == true){
+				 setItemToResultList("dev","<li><a href='#' data-destination='nia01g3' class='result-focus label-red'>01-G</a> : Les pages parentes de la page courante doivent avoir un attribut aria_current= 'true' </li>");
+			}
+			if(nia01g4_flag == true){
+				 setItemToResultList("dev","<li><a href='#' data-destination='nia01g4' class='result-focus label-red'>01-G</a> : Une des pages enfant d'un menu actif doit avoir un attribut aria_current= 'page' </li>");
+			}
+			if(nia01g5_counter > 1){
+				setItemToResultList("dev","<li><a href='#' data-destination='nia01g4' class='result-focus label-red'>01-G</a> : Il ne peut y avoir qu'un seul élément dans le menu avec l'attribut aria-current=page </li>");
+			}
+
+			
 		}
 		else {
 			  setItemToResultList("man","<li><span class='result-focus label-yellow'>01-F</span> : Absence de barre de navigation</li>");
 		}
 	}
-	
-	// Todo Menu
-	/*
-	o   Les items du menu et du sous menu sont sous forme de <ul></li>
-	o   Les éléments dépliant les sous_menus doivent être des éléments <button>
-	o   Les éléments permettant de naviguer vers une page doivent être des éléments <a>
-	o   Les éléments du menu et des sous_menus doivent avoir un intitulé 
-	o   La page courante doit avoir un attribut aria_current= ‘page’ 
-	o   Les pages parentes de la page courante doivent avoir un attribut aria_current= ‘true 
-	*/
-		
-
 	
 }

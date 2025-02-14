@@ -299,6 +299,7 @@ function check_part_14(){
 				if(isItemVisible(nia14c_nodes[i])){
 					nia14c_color1 = window.getComputedStyle(nia14c_nodes[i],'::placeholder').getPropertyValue('color');  // Placeholder Color
 					nia14c_color2 = getInheritedBackgroundColor(nia14c_nodes[i]) // Bg Color
+					nia14c_opacity = window.getComputedStyle(nia14c_nodes[i],'::placeholder').getPropertyValue('opacity');  // Placeholder Color
 					
 					//console.log("14C "+nia14c_color1+" vs "+nia14c_color2);
 					// Convert hexa
@@ -313,38 +314,37 @@ function check_part_14(){
 						//console.log(color1+" vs "+color2+" = "+ nia14c_ratio_inv)
 						if(nia14c_ratio_inv < 4.5){
 							if(debug_flag) console.log("14C - FAIL 3.2.1 Standard ratio : "+nia14c_ratio_inv+" ("+nia14c_color1+" vs "+nia14c_color2+")");
-							setItemOutline(nia14c_nodes[i],"orange","nia14c","14-C");
+							setItemOutline(nia14c_nodes[i],"orange","nia14c1","14-C");
 							nia14c_flag1 = true;
 						}
-						if(nia14c_color1 == "rgb(0, 0, 0)"){
+						if(nia14c_color1 == "rgb(0, 0, 0)" && nia14c_color2 != "rgb(255, 255, 255)"){
 							// Todo : Résultat différent sur Firefox et Chrome --> à vérifier
+							setItemOutline(nia14c_nodes[i],"yellow","nia14c2","14-C");
 							nia14c_flag2 = true;
 						}
 					}
 					else{
 						if(debug_flag) console.log("couleur de placeholder inconnu");
 					}
-					
-					nia14c_opacity = window.getComputedStyle(nia14c_nodes[i],'::placeholder').getPropertyValue('opacity');  // Placeholder Color
+					// Check Opacité ajouté par le navigateur			
 					if(nia14c_opacity != "1"){
-							setItemOutline(nia14c_nodes[i],"yellow","nia14c","14-C");
+							setItemOutline(nia14c_nodes[i],"yellow","nia14c3","14-C");
 							nia14c_flag3 = true;
 					}
 				}
 			}
 		}
 		if(nia14c_flag1 == true) {
-		  setItemToResultList("dev","<li><a href='#' data-destination='nia14c' class='result-focus label-orange'>14-C</a> : Présence d'élément placeholder insuffisament contrasté</li>");
+		  setItemToResultList("dev","<li><a href='#' data-destination='nia14c1' class='result-focus label-orange'>14-C</a> : Présence d'élément placeholder insuffisament contrasté</li>");
 		}
 		if(nia14c_flag2 == true) {
-		  setItemToResultList("man","<li><a href='#' data-destination='nia14c' class='result-focus label-yellow'>14-C</a> : Vérifier si l'élément placeholder est suffisament contrasté</li>");
+		  setItemToResultList("man","<li><a href='#' data-destination='nia14c2' class='result-focus label-yellow'>14-C</a> : Vérifier si l'élément placeholder est suffisament contrasté</li>");
 		}
 		if(nia14c_flag3 == true) {
-		  setItemToResultList("man","<li><a href='#' data-destination='nia14c' class='result-focus label-yellow'>14-C</a> : Vérifier si l'élément placeholder possède une opacité suffisante</li>");
+		  setItemToResultList("man","<li><a href='#' data-destination='nia14c3' class='result-focus label-yellow'>14-C</a> : Vérifier si l'élément placeholder possède une opacité suffisante</li>");
 		}
 	}
 
-	/*
 	// D. Opacité de l'outline
 	if(!only_redactor){
 		const nia14d_nodes = document.querySelectorAll('*:not(.skiplinks) > a:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([disabled]), summary');
@@ -408,7 +408,7 @@ function check_part_14(){
 							nia14d_flag1b = true;
 						}
 					}
-					else{
+					else if(nia14d_outline && nia14d_outline_style && nia14d_outline_style != "auto"){
 						nia14d_color1 = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline-color');  // Outline Color
 						nia14d_color2 = getInheritedBackgroundColor(nia14d_nodes[i])  // In BG Color
 						nia14d_color3 = getInheritedBackgroundColor(nia14d_nodes[i].parentElement) // Out BG Color
@@ -442,7 +442,6 @@ function check_part_14(){
 										console.log("Outline InBG :"+nia14d_color2);
 										console.log("Outline Out BG :"+nia14d_color3);
 									}
-									
 									if(debug_flag && nia14d_ratio12_inv < 3) console.log("14D - FAIL 10.7 Standard ratio (Outline VS InBG) : "+nia14d_ratio12_inv+" ("+nia14d_color1+" vs "+nia14d_color2+")");
 									else if(debug_flag && nia14d_ratio13_inv < 3) console.log("14D - FAIL 10.7 Standard ratio (Outline VS OutBG) : "+nia14d_ratio13_inv+" ("+nia14d_color1+" vs "+nia14d_color3+")");
 									else if(debug_flag && nia14d_ratio23_inv < 3) console.log("14D - FAIL 10.7 Standard ratio (InBG VS OutBG): "+nia14d_ratio23_inv+" ("+nia14d_color2+" vs "+nia14d_color3+")");
@@ -481,7 +480,8 @@ function check_part_14(){
 											nia14d_flag1b = true;
 										}
 									}
-									else { // Probabilité de conflit
+									else { 
+										// Probabilité de conflit : Pour les items déjà en erreur, c'est la couleur de l'outline Jaune/Orange/Rouge qui est récuperé pour les tests.	
 										setItemOutline(nia14d_nodes[i],"yellow","nia14d","14-D");
 										nia14d_flag1b = true;
 									}
@@ -496,13 +496,29 @@ function check_part_14(){
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia14d' class='result-focus label-orange'>14-D</a> : Présence d'élément dont l'outline est insuffisament contrasté</li>");
 		}
 		if(nia14d_flag1b == true) {
-		  setItemToResultList("man","<li><a href='#' data-destination='nia14d' class='result-focus label-yellow'>14-D</a> : Vérifier l'apparence de l'outline de certains éléments</li>");
+		  setItemToResultList("man","<li><a href='#' data-destination='nia14d' class='result-focus label-yellow'>14-D</a> : Vérifier l'apparence de l'outline de certains éléments - Couleur du focus non récupérable à cause d'un autre problème sur le composant.</li>");
 		}
 		if(nia14d_flag2 == true) {
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia14d' class='result-focus label-orange'>14-D</a> : Présence d'élément dont l'outline est masqué</li>");
 		}
 	}
-	*/
 	
-	// Todo E presence de dégradé sans couleur de replis
+	// E presence de dégradé sans couleur de replis
+	// Pour des soucis de perf, on ne test que certain element
+	if(!only_redactor){
+		const nia14e_nodes = document.querySelectorAll('header, footer, .cmp-section, aside, article');
+		let nia14e_flag = false;
+		if(nia14e_nodes && nia14e_nodes.length > 0){
+			for(let i = 0; i < nia14e_nodes.length; i++){
+				if(isItemVisible(nia14e_nodes[i])){
+					nia14e_bgi = window.getComputedStyle(nia14e_nodes[i],null).getPropertyValue('background-image');
+					nia14e_bgc = window.getComputedStyle(nia14e_nodes[i],null).getPropertyValue('background-color');
+					//TODO A FINIR !
+					
+				}
+			}
+		}
+	}
+	
+	
 }
