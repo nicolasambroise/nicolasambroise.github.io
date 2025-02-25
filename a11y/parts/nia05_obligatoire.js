@@ -112,7 +112,7 @@ function check_part_05(){
 	// G. Présence de la Govbar
 	const nia05g_govbar = document.querySelector('#govbar.govbar');
 	if(nia05g_govbar == null || !isItemVisible(nia05g_govbar)){
-		setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-G</span> : Absence de la govbar</li>");
+		setItemToResultList("nth","<li><span class='result-focus label-yellow'>05-G</span> : Absence de la govbar, vérifier si ce n'est pas un oubli</li>");
 	}
 	
 	// H. Detect double <br>

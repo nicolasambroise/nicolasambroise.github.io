@@ -212,7 +212,7 @@ function check_part_06(){
 	}
 	
 	// J. Vérifier que le liste <ul> et <ol> contiennent plusieurs éléments
-	const nia06j_nodes = document.querySelectorAll('*:not(.geoportail-addresses) > ul:not(.cmp-focus-list):not(.article-metas),ol,[role="list"]');
+	const nia06j_nodes = document.querySelectorAll('*:not(.geoportail-addresses):not(.subnav-item) > ul:not(.cmp-focus-list):not(.article-metas),ol,[role="list"]');
 	let nia06j_flag = false;
 	let nia06j_result;
 	if(nia06j_nodes && nia06j_nodes.length > 0){
@@ -543,10 +543,10 @@ function check_part_06(){
 		  setItemsOutline(nia06s4_nodes,"red","nia06s4","06-S");
 		}
 		
-		const nia06s5_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb) .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child');
+		const nia06s5_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb) .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child > span:not([aria-current="page"])');
 		if(nia06s5_nodes && nia06s5_nodes.length > 0 && isItemsVisible(nia06s5_nodes)){
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia06s5' class='result-focus label-red'>06-S</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane --> Vérifier dans les propriétés de la page que celle-ci n'est pas cachée dans la navigation.</li>");
-		  setItemsOutline(nia06s5_nodes,"red","nia06s5","01-B");
+		  setItemsOutline(nia06s5_nodes,"red","nia06s5","06-S");
 		}
 	}
 	

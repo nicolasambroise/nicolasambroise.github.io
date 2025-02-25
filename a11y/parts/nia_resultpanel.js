@@ -3,13 +3,13 @@ function createResultPanel(){
 	let result_global = "";
 	if (result_crit != ""){result_crit = "<h2 id='result_crit'>Points critiques</h2><ul>"+result_crit+"</ul>";}
 	if (result_nc != ""){result_nc = "<h2 id='result_nc'>Points non-conformes</h2><ul>"+result_nc+"</ul>";}
-	if (result_nth != ""){result_nth = "<h2 id='result_nth'>Nice to have</h2><ul>"+result_nth+"</ul>";}
 	if (result_dev != ""){result_dev = "<h2 id='result_dev'>Problèmes Techniques</h2><ul>"+result_dev+"</ul>";}
+	if (result_nth != ""){result_nth = "<h2 id='result_nth'>Nice to have</h2><ul>"+result_nth+"</ul>";}
 	if (result_man != ""){result_man = "<h2 id='result_man'>A vérifier manuellement</h2><ul>"+result_man+"</ul>";}
 	if (result_crit == "" && result_nc == "" && result_nth == "" && result_dev == "" && result_man == ""  ){
 	  result_global = "Pas de points remontés !"; 
 	}
-	else { result_global = result_crit + result_nc + result_nth + result_man + result_dev;}
+	else { result_global = result_crit + result_nc + result_dev + result_nth + result_man;}
 
 	let checkA11YPanel = document.createElement('div');
 	checkA11YPanel.setAttribute("id", "checkA11YPanel");

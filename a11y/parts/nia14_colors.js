@@ -359,9 +359,7 @@ function check_part_14(){
 			for(let i = 0; i < nia14d_nodes.length; i++){
 				if(isItemVisible(nia14d_nodes[i])){
 					
-					//nia14d_nodes[i].contentEditable = true;
-					nia14d_nodes[i].focus();
-					//nia14d_nodes[i].contentEditable = false;
+					nia14d_nodes[i].focus({ focusVisible: true });
 					
 					nia14d_outline = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline');
 					nia14d_outline_style = window.getComputedStyle(nia14d_nodes[i],null).getPropertyValue('outline-style');
