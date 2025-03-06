@@ -35,6 +35,7 @@ function saveDeclaInBdd(){
 	if(nc_details.indexOf("tableaux de données complexes") > -1 || cd_details.indexOf("tableaux de données complexes") > -1 || ex_details.indexOf("tableaux de données complexes") > -1) sensible_cmp += "Tableaux complexes,";
 	if(sensible_cmp != "") sensible_cmp = sensible_cmp.slice(0, -1); // Remove last ,
 	
+	/*
 	let dataToSave = {
 		"url":  currentUrl, // URL de la décla
 		"conf": conf, // conformité indiquée dans le décla
@@ -56,30 +57,34 @@ function saveDeclaInBdd(){
 	};
 
 	console.log(dataToSave);
+	*/
 	if(isDecla && !isPreview && save_to_db){
 
-
+		/*
 		const db_api_url = "https://webux.gouv.etat.lu/a11y/a11y_bookmarklet/backend/save_decla.php"; 
 		console.log("START Save Decla");
 		fetch(db_api_url, {
-				method: "POST",
-				headers: {'Content-Type': 'text/html;charset=UTF-8'}, 
-				body: JSON.stringify(dataToSave)
-			})
-			// output the status and return response
-			.then((response) => {
-			  if (response.ok) {return response;}
-			  return Promise.reject(response); 
-			})
-			.then(response => console.log(response.status) || response)
-			.catch((response) => {
-			  console.log(JSON.stringify(dataToSave))
-			  console.log(response.status, response.statusText);
-			});
+			method: "POST",
+			headers: {'Content-Type': 'text/html;charset=UTF-8'}, 
+			body: JSON.stringify(dataToSave)
+		})
+		// output the status and return response
+		.then((response) => {
+		  if (response.ok) {return response;}
+		  return Promise.reject(response); 
+		})
+		.then(response => console.log(response.status) || response)
+		.catch((response) => {
+		  console.log(JSON.stringify(dataToSave))
+		  console.log(response.status, response.statusText);
+		});
+		*/
 	}
 }
 
 // Fonction pour enlever les crochets et leur contenu à l'interieur de ceux-ci
+/*
 function removeBracket(data){
 	return data ? data.replaceAll(/(\r\n|\n|\r)/g, "").replaceAll(/\[.+?\]/g, "").replaceAll(/'/g, '"') : "";	
 }
+*/

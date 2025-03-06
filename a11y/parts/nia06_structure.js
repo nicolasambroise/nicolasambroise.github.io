@@ -85,19 +85,19 @@ function check_part_06(){
 		}
 	}
 	
-	/*
-	Les principales barres de navigation (critère 12.2) sont :
-	Un menu de navigation ;
-	Un fil d’ariane ;
-	Une liste de navigation d’une liste de résultats ;
-	Des liens d’évitement.
 	
-	Il existe différents types de menu de navigation (critère 12.1 et critère 12.2) :
-	Menu de navigation principal ;
-	Menu de sous-rubrique ;
-	Menu contextuel ;
-	Table des matières concernant un ensemble de pages.
-	*/
+	// Les principales barres de navigation (critère 12.2) sont :
+	// - Un menu de navigation ;
+	// - Un fil d’ariane ;
+	// - Une liste de navigation d’une liste de résultats ;
+	// - Des liens d’évitement.
+	
+	// Il existe différents types de menu de navigation (critère 12.1 et critère 12.2) :
+	// - Menu de navigation principal ;
+	// - Menu de sous-rubrique ;
+	// - Menu contextuel ;
+	// - Table des matières concernant un ensemble de pages.
+	
 	
 
 	if(!only_redactor){
@@ -149,12 +149,10 @@ function check_part_06(){
 	}
 	
 	// Todo Footer
-	/*
-	Vérifier la hiérarchie des titres :  si des titres de rubriques sont affichés, les mettre en <h3> précédé par un élément <h2> visuellement masqué (classe .at ou .sr_only)
-	Le lien vers la page « déclaration d’accessibilité » doit être présent 
-	Le lien vers la page « plan du site » doit être présent (à l’exception des sites One_page) 
-	Les différents items sont présentés dans des structures de type liste <ul> 
-	*/
+	// - Vérifier la hiérarchie des titres :  si des titres de rubriques sont affichés, les mettre en <h3> précédé par un élément <h2> visuellement masqué (classe .at ou .sr_only)
+	// - Le lien vers la page « déclaration d’accessibilité » doit être présent 
+	// - Le lien vers la page « plan du site » doit être présent (à l’exception des sites One_page) 
+	// - Les différents items sont présentés dans des structures de type liste <ul> 
 	
 	// H. Cadres iframe
 	// H1 Présence de titre
@@ -238,7 +236,6 @@ function check_part_06(){
 	  setItemsOutline(nia06k_nodes,"yellow","nia06k","06-K");
 	}
 	
-
 	
 	// L Accordéon
 	const nia06l1_nodes = document.querySelectorAll('.cmp-accordion > *:not(details), .cmp-accordion > details > *:not(summary):not(.cmp-accordion__panel), .filters-content > *:not(details), .filters-content > details > *:not(summary):not(.filter-content)');
@@ -273,6 +270,11 @@ function check_part_06(){
 				if(nia06m_Adress && nia06m_Adress.length > 0){
 					nia06m_Contact = nia06m_Adress[0].querySelectorAll('dl');
 					nia06m_StreetAdress = nia06m_Adress[0].querySelectorAll('span[itemprop="streetAddress"]');
+					
+					console.log(nia06m_Contact)
+					console.log(nia06m_StreetAdress)
+					
+					
 					if(!nia06m_Contact || nia06m_Contact.length != 1 || !isItemsVisible(nia06m_Contact)){nia06m5_flag=true;setItemOutline(nia06m_nodes[i],"orange","nia06m5","06-M");}
 					if(!nia06m_StreetAdress || nia06m_StreetAdress.length != 1 || !isItemsVisible(nia06m_StreetAdress) || (nia06m_StreetAdress[0].parentElement.tagName != "P" && nia06m_StreetAdress[0].parentElement.tagName != "DD")){nia06m6_flag=true;setItemOutline(nia06m_nodes[i],"yellow","nia06m6","06-M");}
 				}
@@ -415,7 +417,6 @@ function check_part_06(){
 		setItemToResultList("man","<li><a href='#' data-destination='nia06o6' class='result-focus label-yellow'>06-O</a> : Vérifier s'il est normal d'avoir un focus-on-top comme seul élément du focus </li>");	
 	}
 
-	
 	// P Grid
 	// Les items du grid doivent est structuré sous forme de liste (ul, ol ou dl)
 	// Le premier élément informatif dans le DOM de chaque item doit être le titre
@@ -524,29 +525,30 @@ function check_part_06(){
 		  setItemToResultList("dev","<li><a href='#' data-destination='nia06s1' class='result-focus label-orange'>06-S</a> : Les pages secondaires doivent disposer d’un breadcrumb.</li>");
 		  setItemsOutline(nia06s1_nodes,"orange","nia06s1","06-S");
 		}
-		
-		const nia06s2_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb):not([role="navigation"])');
-		if(nia06s2_nodes && nia06s2_nodes.length > 0){
-		  setItemToResultList("dev","<li><a href='#' data-destination='nia06s2' class='result-focus label-orange'>06-S</a> : Il manque l'attribut role sur la balise nav du breadcrumb.</li>");
-		  setItemsOutline(nia06s2_nodes,"orange","nia06s2","06-S");
-		}
-		
-		const nia06s3_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb):not([aria-label])');
-		if(nia06s3_nodes && nia06s3_nodes.length > 0){
-		  setItemToResultList("dev","<li><a href='#' data-destination='nia06s3' class='result-focus label-orange'>06-S</a> : Il manque l'attribut aria-label sur la balise nav du breadcrumb.</li>");
-		  setItemsOutline(nia06s3_nodes,"orange","nia06s3","06-S");
-		}
+		else{
+			const nia06s2_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb):not([role="navigation"])');
+			if(nia06s2_nodes && nia06s2_nodes.length > 0){
+			  setItemToResultList("dev","<li><a href='#' data-destination='nia06s2' class='result-focus label-orange'>06-S</a> : Il manque l'attribut role sur la balise nav du breadcrumb.</li>");
+			  setItemsOutline(nia06s2_nodes,"orange","nia06s2","06-S");
+			}
+			
+			const nia06s3_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb):not([aria-label])');
+			if(nia06s3_nodes && nia06s3_nodes.length > 0){
+			  setItemToResultList("dev","<li><a href='#' data-destination='nia06s3' class='result-focus label-orange'>06-S</a> : Il manque l'attribut aria-label sur la balise nav du breadcrumb.</li>");
+			  setItemsOutline(nia06s3_nodes,"orange","nia06s3","06-S");
+			}
 
-		const nia06s4_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb) :is(ul,ol).cmp-breadcrumb__list > li.cmp-breadcrumb__item');
-		if(!nia06s4_nodes || nia06s4_nodes.length == 0){
-		  setItemToResultList("dev","<li><a href='#' data-destination='nia06s3' class='result-focus label-red'>06-S</a> : Les liens du breadcrumb doivent être présenté dans une liste ul/ol.</li>");
-		  setItemsOutline(nia06s4_nodes,"red","nia06s4","06-S");
-		}
-		
-		const nia06s5_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb) .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child > span:not([aria-current="page"])');
-		if(nia06s5_nodes && nia06s5_nodes.length > 0 && isItemsVisible(nia06s5_nodes)){
-		  setItemToResultList("dev","<li><a href='#' data-destination='nia06s5' class='result-focus label-red'>06-S</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane --> Vérifier dans les propriétés de la page que celle-ci n'est pas cachée dans la navigation.</li>");
-		  setItemsOutline(nia06s5_nodes,"red","nia06s5","06-S");
+			const nia06s4_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb) :is(ul,ol).cmp-breadcrumb__list > li.cmp-breadcrumb__item');
+			if(!nia06s4_nodes || nia06s4_nodes.length == 0){
+			  setItemToResultList("dev","<li><a href='#' data-destination='nia06s3' class='result-focus label-red'>06-S</a> : Les liens du breadcrumb doivent être présenté dans une liste ul/ol.</li>");
+			  setItemsOutline(nia06s4_nodes,"red","nia06s4","06-S");
+			}
+			
+			const nia06s5_nodes = document.querySelectorAll(':is(nav[id^=breadcrumb-], nav.cmp-breadcrumb) .cmp-breadcrumb__list > .cmp-breadcrumb__item:not([aria-current="page"]):last-child > span:not([aria-current="page"])');
+			if(nia06s5_nodes && nia06s5_nodes.length > 0 && isItemsVisible(nia06s5_nodes)){
+			  setItemToResultList("dev","<li><a href='#' data-destination='nia06s5' class='result-focus label-red'>06-S</a> : Absence de l'attribut aria-current sur le dernier item du fils d'ariane --> Vérifier dans les propriétés de la page que celle-ci n'est pas cachée dans la navigation.</li>");
+			  setItemsOutline(nia06s5_nodes,"red","nia06s5","06-S");
+			}
 		}
 	}
 	
@@ -565,7 +567,6 @@ function check_part_06(){
 	// Etape « Récapitulatif »
 	// o   Les différentes meta et ligne de prix doivent être présentées sous forme de liste (<ul> ou <dl>)
 	// o   Des titres de niveau approprié doivent être utiliser pour structurer la page
-	
 
 	// U Localnav
 	// Les différents items sont dans une structure de type liste <ul>
@@ -576,6 +577,7 @@ function check_part_06(){
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia06u1' class='result-focus label-orange'>06-U</a> : Il manque l'attribut role sur la balise nav du localnav.</li>");
 	  setItemsOutline(nia06u1_nodes,"orange","nia06u1","06-U");
 	}
+	
 	
 	const nia06u2_nodes = document.querySelectorAll('nav.page-localnav:not([aria-labelledby])');
 	if(nia06u2_nodes && nia06u2_nodes.length > 0){
@@ -588,7 +590,7 @@ function check_part_06(){
 	  setItemToResultList("dev","<li><a href='#' data-destination='nia06u3' class='result-focus label-red'>06-U</a> : Le composant localnav doit avoir un titre Hn lié avec un couple aria-labelledby-id unique (celui-ci peut être visuellement masqué) </li>");
 	  setItemsOutline(nia06u3_nodes,"red","nia06u3","06-U");
 	}
-
+	
 	const nia06u4_nodes = document.querySelectorAll('nav.page-localnav');
 	let nia06u4_items;
 	if(nia06u4_nodes && nia06u4_nodes.length > 0){
@@ -596,11 +598,11 @@ function check_part_06(){
 			nia06u4_items = nia06u4_nodes[i].querySelectorAll('ul li.nav-item');
 			if(!nia06u4_items || nia06u4_items.length == 0){
 			  setItemToResultList("dev","<li><a href='#' data-destination='nia06u4' class='result-focus label-red'>06-U</a> : Le composant localnav doit contenir des items.</li>");
-			  setItemOutline(nia06s4_nodes[i],"red","nia06u4","06-U");
+			  setItemOutline(nia06u4_nodes[i],"red","nia06u4","06-U");
 			}
 			else if(nia06u4_items && nia06u4_items.length == 1){
 			  setItemToResultList("nth","<li><a href='#' data-destination='nia06u5' class='result-focus label-yellow'>06-U</a> : Le composant localnav doit idéalement contenir plusieurs items.</li>");
-			  setItemOutline(nia06s4_nodes[i],"yellow","nia06u5","06-U");
+			  setItemOutline(nia06u4_nodes[i],"yellow","nia06u5","06-U");
 			}
 		}
 	}
