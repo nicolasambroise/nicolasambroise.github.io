@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Tabs</title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+		
+	.tabs{
+	  padding: 10px;
+	  position:relative;
+	}
+
+	.tabs .tabs-wrapper{
+	  display: block;
+	  overflow-x: auto;
+	  overflow-y: hidden;
+	}
+
+	.tabs [role=tablist] {
+	  border: none;
+	  border-bottom: 1px solid #274891;
+	  border-radius: 0;
+	  box-shadow: none;
+	  margin-bottom: 0;
+	  min-width: 100%;
+	  width: max-content;
+	  padding: 0;
+	}
+
+	.tabs [role=tab] {
+	  display: inline-block;
+	  margin: 0;
+	  background: none;
+	  border: 1px solid transparent;
+	  border-top-left-radius: .3125rem;
+	  border-top-right-radius: .3125rem;
+	  color: #060606;
+	  font-size: .9375rem;
+	  margin-bottom: -1px;
+	  padding: .5625rem .625rem;
+	  position: relative;
+	  text-decoration: none;
+	  width: auto
+	}
+
+	.tabs [role=tab]:hover,
+	.tabs [role=tab]:focus {
+	  background: #fff;
+	  border-color: #fff #fff #274891
+	}
+
+	.tabs [role=tab][aria-selected=true] {
+	  background: #fff;
+	  border-color: #274891 #274891 #fff
+	}
+
+	.tabs [role=tab]:first-child,
+	.tabs [role=tab]:last-child {
+	  border-radius: .3125rem .3125rem 0 0
+	}
+
+	.tabs [role=tab]+[role=tab] {
+	  border-top: none
+	}
+
+	.tabs [role=tab]+[role=tab][aria-selected=true] {
+	  border-top: 1px solid #274891
+	}
+
+	.tabs [role=tabpanel] {
+		background: #fff;
+		padding: .9375rem 1.25rem;
+		margin-bottom: .9375rem;
+		display: none;
+		border: 1px solid #efefef;
+		border-top: 0;
+	}
+
+	.tabs [role=tabpanel].is-active {
+	  display: block
+	}
+
+
+	.tabs [role=tab][disabled]{
+	  color: gray;
+	}
+
+	.tabs [role=tab]:not([disabled]):not([aria-selected=true]):hover{
+	  cursor:pointer;
+	}
+
+	.tabs [role=tab]:not([disabled]):not([aria-selected=true]):hover:after {
+		content: "";
+		width: 100%;
+		background-color: #274891;
+		height: 2px;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+
+	.tabs .tabs-actions {
+	  display: flex;
+	  justify-content: flex-end;
+	}
+
+	.tabs .tabs-action {
+	  display: none;
+	  position: absolute;
+	  z-index: 1;
+	  border: 0;
+	  cursor: pointer;
+	  width: 1.6rem;
+	  height: 1.6rem;
+	  background-color: #FFF;
+	  border-radius: 100%;
+	  margin-top: 5px;
+	}
+
+	.tabs .tab-overflow .tabs-action{
+	  display: block;
+	}
+
+	.tabs .tab-overflow [role=tablist] {
+		min-width: calc(100% - 50px);
+		padding: 0 25px;
+	}
+
+	.tabs .tabs-action.tabs-action--previous{
+		left: 0; 
+	}
+
+	.tabs .tabs-action.tabs-action--next{
+		right: 0;
+	}
+
+	.tabs .tabs-action .tabs-action-icon {
+		display: flex;
+		align-items: center;
+	}
+
+	.tabs .tabs-action:hover {
+		  background-color: #274891;
+	}
+
+
+	.tabs .tabs-action .tabs-action-icon::after {
+		  border-bottom: 2px solid #274891;
+		  border-right: 2px solid #274891;
+		  content: "";
+		  display: inline-block;
+		  height: .4rem;
+		  transform: rotate(-45deg);
+		  width: .4rem;
+		  margin-left: 2px;
+	}
+
+	.tabs .tabs-action:hover .tabs-action-icon::after{
+		border-bottom-color: #FFF;
+		border-right-color: #FFF;
+	}
+
+	.tabs .tabs-action.tabs-action--previous .tabs-action-icon::after{
+		transform: rotate(135deg);
+		margin-left: 4px;
+	}
+
+	.tabs .tabs-action .tabs-action-text {
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px;
+		overflow: hidden;
+		position: absolute !important;
+		width: 1px;
+	}
+
+	.tabs .tab-overflow:not(.scrollEndReached) .tabs-action.tabs-action--previous{
+		display:none;
+	}
+
+	.tabs .tab-overflow:not(.scrollStartReached) .tabs-action.tabs-action--next{
+		display:none;
+	}
+
+	.tabs .tabs-wrapper{
+	   scrollbar-width: none;
+	}
+
+	</style>
+	<!-- link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css"-->
+	<script src="tabs.js"></script>
+</head>
+<body>
+	<header>
+		<h1>POC Onglets</h1>
+	</header>
+	<main>
+		<div class="tabs">
+		  <div class="tabs-wrapper">
+			  <div class="tabs-actions">
+				<button class="tabs-action tabs-action--previous" type="button" aria-label="Précédent">
+					<span class="tabs-action-icon"></span>
+					<span class="tabs-action-text">Précédent</span>
+				</button>
+				<button class="tabs-action tabs-action--next" type="button" aria-label="Suivant">
+					<span class="tabs-action-icon"></span>
+					<span class="tabs-action-text">Suivant</span>
+				</button>
+			  </div>
+			  <div role="tablist" aria-label="Un système d'onglet" class="tabs-tablist" tabindex="0">
+				<button id="tab-33" class="btn" type="button" aria-selected="true" aria-controls="tabpanel-32" role="tab" tabindex="0">Tab label 1</button>
+				<button id="tab-35" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-34" role="tab" tabindex="-1">Very long long long longTab label 2</button>
+				<button id="tab-37" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-36" role="tab" tabindex="-1">Tab label 3</button>
+				<button id="tab-39" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-38" role="tab" tabindex="-1" disabled>Tab label 4 disabled</button>
+				<button id="tab-41" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-40" role="tab" tabindex="-1">Tab label 5</button>
+			  </div>
+		  </div>
+		  <div class="tabs-tabpanel is-active" role="tabpanel" id="tabpanel-32" aria-labelledby="tab-33">
+			<h3>Ceci est le contenu du panel n°1</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis purus a augue posuere vestibulum. Donec id enim leo. Fusce blandit nunc vel dictum dignissim. Donec non commodo sem, et aliquam tortor. Curabitur et posuere sem. Nunc dignissim, lorem vel pulvinar pharetra, odio sapien interdum neque, sit amet dapibus elit mauris a sem. Nulla consequat vel mauris non mollis. Nam ultrices ex id nisi fermentum, eu gravida nibh euismod. Mauris ac metus erat.</p>
+		  </div>
+		  <div class="tabs-tabpanel" role="tabpanel" id="tabpanel-34" aria-labelledby="tab-35">
+			<h3>Ceci est le contenu du panel n°2</h3>
+			<p>Nunc rhoncus nisl suscipit, tempus sapien id, congue urna. Nulla tincidunt fringilla risus, a molestie nulla mattis non. Sed consectetur pulvinar sem, eget finibus mi posuere ac. Cras malesuada rhoncus diam, auctor finibus urna varius id. Proin sit amet ligula a dolor congue ornare vitae sed ex. Integer eget lacinia dolor. Sed id augue turpis. Integer at purus vitae orci bibendum ornare. Cras pretium est non ex tincidunt porta. Aliquam aliquet dui et lectus condimentum, nec consectetur nulla luctus. Integer a libero mattis, posuere ante et, faucibus mi. Suspendisse tincidunt nunc malesuada, molestie nunc in, ultrices magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus accumsan porttitor nunc nec iaculis.</p>
+		  </div>
+		  <div class="tabs-tabpanel" role="tabpanel" id="tabpanel-36" aria-labelledby="tab-37">
+			<h3>Ceci est le contenu du panel n°3</h3>
+			<p>Praesent risus nibh, porta interdum vehicula at, mattis nec tortor. Etiam augue dui, consequat et pharetra quis, ornare vitae ipsum. Sed a turpis at sem imperdiet placerat in et purus. Proin dapibus velit odio, sit amet tristique nunc posuere sit amet. Pellentesque efficitur, lacus id sodales convallis, massa libero laoreet augue, scelerisque porta enim sem eget metus. Duis pretium porttitor felis at aliquet. Aliquam non vehicula enim. Integer euismod lacus eu massa congue congue interdum in enim. Ut sed massa quam. Proin sit amet mauris in velit accumsan pellentesque eu a lacus. Pellentesque vulputate sem sollicitudin malesuada dignissim. Fusce eget nulla auctor, ullamcorper dui in, semper massa. Phasellus finibus metus sed metus rhoncus pellentesque.</p>
+		  </div>
+		  <div class="tabs-tabpanel" role="tabpanel" id="tabpanel-38" aria-labelledby="tab-39">
+			<h3>Ceci est le contenu du panel n°4</h3>
+			<p>Cet onglet est "disabled".</p>
+		  </div>
+		  <div class="tabs-tabpanel" role="tabpanel" id="tabpanel-40" aria-labelledby="tab-41">
+			<h3>Ceci est le contenu du panel n°5</h3>
+			<p>Sed venenatis dapibus urna, id iaculis dui fermentum nec. Fusce sagittis, ligula at venenatis efficitur, lectus risus ornare metus, euismod mattis arcu dui congue metus. Maecenas cursus, justo eu mollis imperdiet, erat diam finibus nunc, eu gravida diam justo vitae nulla. Vivamus in ullamcorper lectus. Vestibulum libero sem, rhoncus ac dignissim eget, fringilla suscipit nibh. Suspendisse consectetur orci turpis, nec rhoncus metus tristique vitae. Vivamus congue vehicula pulvinar. Aenean consequat consectetur tempor. Sed velit magna, luctus nec eleifend at, venenatis quis turpis. Quisque venenatis, massa sit amet vestibulum imperdiet, mauris lorem vulputate sem, quis blandit massa velit vel sem. Suspendisse in tortor nec purus congue hendrerit in nec risus. In dapibus diam at dui luctus egestas. Praesent at faucibus lacus.</p>
+		  </div>
+		</div>
+	</main>
+</body>
+</html>

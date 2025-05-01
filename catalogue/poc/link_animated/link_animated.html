@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Link animated</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}
+
+		[class*="example"] {
+		  + & {
+			border-top: 2px gray solid;
+		  }
+		}
+
+		a {
+		  background: transparent no-repeat 100% 100%;
+		  background-image: linear-gradient(
+			0deg,
+			color-mix(in srgb, currentColor 10%, transparent),
+			color-mix(in srgb, currentColor 10%, transparent)
+		  );
+		  transition: .3s ease-in;
+		}
+
+		.example-1 {
+		  a {
+			background-size: 100% 0%;
+			background-position: bottom 10% center;
+
+			&:is(:hover, :focus) {
+			  background-size: 100% 35%;
+			}
+		  }
+		}
+
+		.example-2 {
+		  a {
+			background-size: 0% 80%;
+			background-position: bottom 10% right;
+
+			&:is(:hover, :focus) {
+			  background-size: 100% 80%;
+			}
+		  }
+		}
+
+		.example-3 {
+		  a {
+			background-size: 100% 80%;
+			background-position: bottom 10% right;
+
+			&:is(:hover, :focus) {
+			  background-size: 0 80%;
+			}
+		  }
+		}
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+  <header>
+	<h1>POC Animated links on hover/focus</h1>
+  </header>
+  <main>
+	<div class="example-1">
+	  <h2>Exemple 1 - vertical</h2>
+	  <p>
+	   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">Venenatis urna cursus</a> eget nunc scelerisque viverra mauris in. Tortor consequat id porta nibh. Magna fringilla urna porttitor rhoncus dolor <a href="#">purus non enim praesent</a>. Turpis nunc eget lorem dolor sed viverra.
+	  </p>
+	</div>
+
+	<div class="example-2">
+	  <h2>Exemple 2 - rtl</h2>
+	  <p>
+	   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">Venenatis urna cursus</a> eget nunc scelerisque viverra mauris in. Tortor consequat id porta nibh. Magna fringilla urna porttitor rhoncus dolor <a href="#">purus non enim praesent</a>. Turpis nunc eget lorem dolor sed viverra.
+	  </p>
+	</div>
+
+	<div class="example-3">
+	  <h2>Exemple 3 - ltr</h2>
+	  <p>
+	   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">Venenatis urna cursus</a> eget nunc scelerisque viverra mauris in. Tortor consequat id porta nibh. Magna fringilla urna porttitor rhoncus dolor <a href="#">purus non enim praesent</a>. Turpis nunc eget lorem dolor sed viverra.
+	  </p>
+	</div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Carrousel</title>
+	<style>
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+	
+	header > h1{
+		margin-top:0;
+	}
+
+	.visually-hidden, .sr-only {
+	  clip: rect(0 0 0 0);
+	  clip-path: inset(50%);
+	  height: 1px;
+	  overflow: hidden;
+	  position: absolute;
+	  white-space: nowrap;
+	  width: 1px;
+	} 
+	
+	.cmp-carousel{
+		position: relative;
+		width: 100%;
+		max-width: 500px;
+	}
+
+	.cmp-carousel__content{
+	    padding: 0 40px;
+	}
+
+	.cmp-carousel .cmp-carousel__action{
+		position: absolute;
+		top: 200px;
+		left:.5rem;
+		right:auto;
+		cursor: pointer;
+		width: 24px;
+		height: 36px;
+	}
+
+	.cmp-carousel .cmp-carousel__action.cmp-carousel__action--next{
+		left:auto;
+		right:.5rem;
+	}
+
+	.cmp-carousel .cmp-carousel__action .cmp-carousel__action-icon {
+		border-style: solid;
+		border-width: 2px 2px 0 0;
+		display: inline-block;
+		height: 12px;
+		left: 0;
+		transform: rotate(-135deg);
+		position: relative;
+		top: 0;
+		vertical-align: top;
+		width: 12px;
+	}
+	
+	.cmp-carousel .cmp-carousel__action.cmp-carousel__action--next .cmp-carousel__action-icon {
+		left: -4px;
+		transform: rotate(45deg);
+	}
+
+	.cmp-carousel__indicators{
+		position: absolute;
+		top: .5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 1;
+	}
+
+	.cmp-carousel__indicator {
+		position: relative;
+		flex: 0 1 auto;
+		width: .5rem;
+		height: 1rem;
+		margin: 0 .375rem;
+		border-radius: 50%;
+		font-size: 0;
+		text-indent: -3000px;
+		cursor: pointer;
+	}
+	
+	.cmp-carousel__indicator:hover,
+	.cmp-carousel__indicator:focus {
+		background-color:gray;
+		border-color:black;
+	}
+
+	.cmp-carousel__indicator.cmp-carousel__indicator--active{
+		background-color:black;
+		border-color:white;
+	}
+
+	.cmp-carousel__item {
+		display: none;
+		position: relative;
+	}
+
+	.cmp-carousel__item--active {
+		display: block;
+	}
+
+	.cmp-carousel__item img{
+		width: 100%
+	}
+
+	.cmp-teaser{
+	    display: flex;
+		flex-direction: column-reverse;
+	}
+
+	.cmp-teaser .cmp-teaser__content{
+		background-color: #ddd;
+		padding: 0 15px;
+		top: 100%;
+		width: 100%;
+	}
+
+	.cmp-teaser a[href]::after {
+	  content: "";
+	  display: block;
+	  position: absolute;
+	  top: 0;  bottom: 0;  left: 0;  right: 0;
+	}
+	</style>
+	<!-- link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css"-->
+	<script src="../tabs/tabs.js"></script>
+	<script src="carrousel.js"></script>
+</head>
+<body>
+  <header>
+	<h1>POC Carrousel</h1>
+  </header>
+  <main>
+	<div id="carousel-aaa" class="cmp-carousel" role="region" aria-roledescription="carousel" aria-label="Titre du carrousel"> 
+	  <div class="cmp-carousel__content" aria-atomic="false" aria-live="polite">
+		<div class="cmp-carousel__actions"> 
+		  <button class="cmp-carousel__action cmp-carousel__action--previous" type="button" aria-label="Previous" title="Previous">    
+			<span class="cmp-carousel__action-icon"></span><span class="cmp-carousel__action-text sr-only">Previous</span>
+		  </button>
+		  <button class="cmp-carousel__action cmp-carousel__action--next" type="button" aria-label="Next" title="Next">
+			<span class="cmp-carousel__action-icon"></span><span class="cmp-carousel__action-text sr-only">Next</span>
+		  </button>
+		</div>
+		<div class="cmp-carousel__indicators" role="tablist" aria-label="Choose a slide to display">
+		  <button type="button" id="carousel-aaa-item-111-tab" class="cmp-carousel__indicator cmp-carousel__indicator--active" role="tab" aria-controls="carousel-aaa-item-111-tabpanel" title="Aller au Slide 1" aria-selected="true">
+			Aller au Slide 1
+		  </button>
+		  <button type="button" id="carousel-aaa-item-222-tab" class="cmp-carousel__indicator" role="tab" aria-controls="carousel-aaa-item-222-tabpanel" title="Aller au Slide 2" aria-selected="false" tabindex="-1">
+			Aller au Slide 2
+		  </button >
+		  <button type="button" id="carousel-aaa-item-333-tab" class="cmp-carousel__indicator" role="tab" aria-controls="carousel-aaa-item-333-tabpanel" title="Aller au Slide 3" tabindex="-1">
+			Aller au Slide 3
+		  </button >
+		</div>
+		<div class="cmp-carousel__items">
+			<div id="carousel-aaa-item-111-tabpanel" class="cmp-carousel__item cmp-carousel__item--active" role="tabpanel" aria-roledescription="slide" aria-label="Slide 1 of 3" tabindex="-1">
+			  <div class="image">
+				<div class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+				  <img src="./xxx.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc xxx">
+				</div>
+			  </div>
+			</div>
+			<div id="carousel-aaa-item-222-tabpanel" class="cmp-carousel__item" role="tabpanel" aria-roledescription="slide" aria-label="Slide 2 of 3" tabindex="-1">
+			  <div class="teaser">
+				<div id="teaser-222" class="cmp-teaser">
+				  <div class="cmp-teaser__content">
+					<h2 class="cmp-teaser__title">Second Teaser Title</h2>
+					<div class="cmp-teaser__description"><p>Teaser Description 2</p></div>
+				  </div>
+				  <div class="cmp-teaser__image">
+					<div id="teaser-222-image" class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+					  <img src="./yyy.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc yyy" title="Desc yyy">     
+					  <meta itemprop="caption" content="Desc yyy">
+				   </div>
+				 </div>
+				</div>
+			  </div>
+			</div>
+			<div id="carousel-aaa-item-333-tabpanel" class="cmp-carousel__item" role="tabpanel" aria-roledescription="slide" aria-label="Slide 3 of 3" tabindex="-1">
+			  <div class="teaser">
+				<div id="teaser-333" class="cmp-teaser">
+				  <div class="cmp-teaser__content">
+					<h2 class="cmp-teaser__title">
+					  <a class="cmp-teaser__link" data-cmp-clickable="" href="/zzz.html">Third Teaser Title</a>
+					</h2>
+					<div class="cmp-teaser__description"><p>Teaser Description 3</p></div>
+				  </div>
+				  <div class="cmp-teaser__image">
+					  <div id="teaser-333-image" class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+						<img src="./zzz.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc zzz" title="Desc zzz">     
+						<meta itemprop="caption" content="Desc zzz">
+					 </div>
+				   </div>
+				</div>
+			  </div>
+			</div>
+		 </div>
+	  </div>
+	</div>
+  </main>
+<script>
+
+	/** Initialisations des carrousels */
+	const carouselsList = document.querySelectorAll(".cmp-carousel")
+	for (const carousel of carouselsList) {
+	  var c = new initCarousel();
+	  c.init({id: carousel.id});
+	}
+
+</script>
+</body>
+</html>

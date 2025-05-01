@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Tooltip</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}	
+
+		.tooltip-content { 
+		  margin: 5px 0 0 -5px !important;
+		}
+    </style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<header>
+		<h1>POC Tooltip</h1>
+    </header>
+	<main>
+	  <div class="form-group">
+		<div class="form-group-label">
+		  <label for="firstname">Prénom(s)<span class="field-required">*</span></label>
+		  <div class="tooltip">
+			<button class="btn tooltip-button" type="button" aria-controls="id-0" aria-label="Aide sur le champ Prénom(s)" aria-expanded="false">i</button>
+			<div id="id-0" class="tooltip-content">Si la personne n'a pas de prénom, veuillez saisir un tiret (-)<div class="tooltip-content-arrow"></div>
+			</div>
+		  </div>
+		</div>
+		<div class="form-group-field">
+		  <input type="text" id="firstname" name="firstname" required="" aria-describedby="id-0" autocomplete="given-name">
+		</div>
+	  </div>
+	  <div class="form-group">
+	    <div class="form-group-label">
+		  <label for="demo">Exemple avec un label un peu plus long</label>		
+		  <div class="tooltip">
+		    <button
+			  class="btn tooltip-button"
+			  type="button"
+			  aria-controls="id-1"
+			  aria-label="Aide sur le champs Exemple avec un label un peu plus long "
+			  aria-expanded="false"
+		    >i</button>
+		    <div id="id-1" class="tooltip-content">
+			  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non fermentum est. Curabitur ac lorem tellus. Sed cursus euismod mollis. Sed nisi nunc, sollicitudin at sagittis ac, ornare mattis purus. Etiam vel sodales libero, vitae gravida sem. Nam sit amet lorem eu felis tempus tincidunt eu eget felis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque fringilla tellus nec posuere lacinia. Donec scelerisque sed nulla a sagittis. Maecenas volutpat elit vitae nisi feugiat, et sollicitudin eros mollis. Cras neque ligula, dignissim in nisl a, placerat placerat sem. Nulla congue, neque et sagittis dignissim, lectus diam placerat ipsum, ut consectetur enim purus vel enim.
+			  <div class="tooltip-content-arrow"></div>
+		    </div>
+		  </div>
+	    </div>
+	    <div class="form-group-field">
+		  <input type="text" id="demo" name="demo" aria-describedby="id-1">
+	    </div>
+	  </div>
+	  <p><small><strong>Note</strong>:  Position de la tooltip et gestion du débordement seront gérés via : https://floating-ui.com/docs/vue</small></p>
+    </main>
+<script>
+
+	// Inspiration de https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/
+
+	/*
+	 *   This content is licensed according to the W3C Software License at
+	 *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+	 *
+	 *   File:   disclosure-button.js
+	 *
+	 *   Desc:   Disclosure button widget that implements ARIA Authoring Best Practices
+	 */
+
+	'use strict';
+
+	/*
+	 *   @constructorTooltipButton
+	 *
+	 *
+	 */
+	
+	class TooltipButton {
+	  constructor(buttonNode) {
+		this.buttonNode = buttonNode;
+		this.controlledNode = false;
+
+		var id = this.buttonNode.getAttribute('aria-controls');
+
+		if (id) {
+		  this.controlledNode = document.getElementById(id);
+		}
+
+		this.buttonNode.setAttribute('aria-expanded', 'false');
+		this.hideContent();
+
+		this.buttonNode.addEventListener('click', this.onClick.bind(this));
+		this.buttonNode.addEventListener('focus', this.onFocus.bind(this));
+		this.buttonNode.addEventListener('blur', this.onBlur.bind(this));
+		
+		document.addEventListener('keydown', this.onExternalKeydown.bind(this)); // Addition
+		document.addEventListener('click', this.onExternalClick.bind(this)); // Addition
+	  }
+
+	  showContent() {
+		if (this.controlledNode) {
+		  this.controlledNode.style.display = 'block';
+		  this.controlledNode.setAttribute('tabindex',"0"); // Addition
+		}
+	  }
+
+	  hideContent() {
+		if (this.controlledNode) {
+		  this.controlledNode.removeAttribute('tabindex'); // Addition
+		  this.controlledNode.style.display = 'none';
+		}
+	  }
+
+	  toggleExpand() {
+		if (this.buttonNode.getAttribute('aria-expanded') === 'true') {
+		  this.buttonNode.setAttribute('aria-expanded', 'false');	  
+		  this.hideContent();
+		} else {
+		  this.buttonNode.setAttribute('aria-expanded', 'true');	 
+		  this.showContent();
+		}
+	  }
+
+	  /* EVENT HANDLERS */
+
+	  onClick() {
+		this.toggleExpand();
+	  }
+
+	  onFocus() {
+		this.buttonNode.classList.add('focus');
+	  }
+
+	  onBlur() {
+		this.buttonNode.classList.remove('focus');
+	  }
+	  
+	  onExternalClick(e) {  // Addition
+		// Gestion du click hors de la tooltip pour fermer la tooltip (Facultatif mais recommandé)
+		if (this.buttonNode.getAttribute('aria-expanded') === 'true' && e.target != this.controlledNode && e.target != this.buttonNode){
+		  this.toggleExpand();
+		}
+	  }
+			
+	  onExternalKeydown(e) { // Addition
+		// Gestion de la touche Echap pour fermer la tooltip (avec repositionnement du focus)
+		if (e.key === 'Escape' && this.buttonNode.getAttribute('aria-expanded') === 'true'){
+			this.toggleExpand();
+			if (e.target == this.controlledNode || e.target == this.buttonNode) this.buttonNode.focus();
+		}
+		// Gestion de la touche Tab / BackTab pour fermer la tooltip automatiquement (Facultatif mais recommandé)
+		else if (e.key === 'Tab' && this.buttonNode.getAttribute('aria-expanded') === 'true'){
+			if (e.target != this.controlledNode && e.target != this.buttonNode) this.toggleExpand();
+		}		
+	  }
+	}
+	
+	/* Initialize Hide/Show Buttons */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		var buttons = document.querySelectorAll(
+		  'button.tooltip-button[aria-expanded][aria-controls]'
+		);
+
+		for (var i = 0; i < buttons.length; i++) {
+		  new TooltipButton(buttons[i]);
+		}		
+	  },
+	  false
+	);
+
+	
+</script>
+</body>
+</html>

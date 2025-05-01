@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Accordeon</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}	
+		
+		.accordion-wrapper > button.btn{
+			margin-left: auto;
+			display: block;
+		}
+		
+    </style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<header>
+		<h1>POC Accordeon</h1>
+    </header>
+	<main>
+	    <div class="accordion-wrapper">
+		  <button class="btn btn-secondary" aria-controls="id-344 id-345 id-346">Afficher tout</button>
+		  <details id="id-344" class="accordion">
+			<summary class="accordion-summary">
+			  <h3 class="accordion-header">My summary content 1</h3>
+			</summary>
+			<div class="accordion-panel">
+			  <p>My accordion content 1</p>
+			</div>
+		  </details>
+		  <details id="id-345" class="accordion">
+			<summary class="accordion-summary">
+			  <h3 class="accordion-header">My summary content 2</h3>
+			</summary>
+			<div class="accordion-panel">
+			  <p>My accordion content 2</p>
+			</div>
+		  </details>
+		  <details id="id-346" class="accordion">
+			<summary class="accordion-summary">
+			  <h3 class="accordion-header">My summary content 3</h3>
+			</summary>
+			<div class="accordion-panel">
+			  <p>My accordion content 3</p>
+			</div>
+		  </details>
+		</div>
+	</main>
+<script>
+	
+	/* Initialize Accordion Show/All */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		document.querySelectorAll('.accordion-wrapper > button.btn')
+		  .forEach((el) => {
+			el.onclick = (event) => {
+			  if(!el.classList.contains("accordion-global-toggle--active")){
+				el.parentElement.querySelectorAll('& > details.accordion')
+				  .forEach((accordion) => {
+				    accordion.open = true;
+				  });
+				el.classList.add("accordion-global-toggle--active");
+				el.innerText = "Masquer tout";
+			  }
+			  else{
+				el.parentElement.querySelectorAll('& > details.accordion')
+				  .forEach((accordion) => {
+				    accordion.open = false;
+				  });
+				el.classList.remove("accordion-global-toggle--active");
+				el.innerText = "Afficher tout";
+			  }			  
+			};
+		  });
+	  },
+	  false
+	);
+</script>
+</body>
+</html>

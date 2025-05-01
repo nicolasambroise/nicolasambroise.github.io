@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Check all checkboxes</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}	
+		
+		.accordion-wrapper > button.btn{
+			margin-left: auto;
+			display: block;
+		}
+		
+    </style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<header>
+		<h1>POC Check all checkboxes</h1>
+    </header>
+	<main>  
+	  <form>
+	    <div class="form-group">
+		  <fieldset class="form-options form-options--checkbox">
+			<legend class="label form-options-legend">Label</legend>
+			<div class="form-options-wrapper">
+			  <button class="btn btn-secondary" aria-controls="id-1 id-3 id-5" type="button">Cocher tout</button>
+			  <ul class="form-options-content">
+				<li class="form-options-group">
+				  <label for="id-1" class="form-options-label">
+					<input type="checkbox" id="id-1" class="form-options-field form-options-field--checkbox" name="checkbox-0" value="1"><span class="form-options-description">Option 1</span>
+				  </label>
+				</li>
+				<li class="form-options-group">
+				  <label for="id-3" class="form-options-label">
+					<input type="checkbox" id="id-3" class="form-options-field form-options-field--checkbox" name="checkbox-2" value="2"><span class="form-options-description">Option 2</span>
+				  </label>
+				</li>
+				<li class="form-options-group">
+				  <label for="id-5" class="form-options-label">
+					<input type="checkbox" id="id-5" class="form-options-field form-options-field--checkbox" name="checkbox-4" value="3"><span class="form-options-description">Option 3</span>
+				  </label>
+				</li>
+			  </ul>
+			</div>
+		  </fieldset>
+		</div>
+		
+		<div class="form-group">
+		  <fieldset class="form-options form-options--switch">
+			<legend class="label form-options-legend">Label</legend>	
+			<div class="form-options-wrapper">
+			  <button class="btn btn-secondary" aria-controls="id-242 id-244 id-246" type="button">Cocher tout</button>
+			  <ul class="form-options-content">
+				<li class="form-options-group">
+				  <label for="id-242" class="form-options-label">
+					<input type="checkbox" id="id-242" class="form-options-field form-options-field--checkbox" name="checkbox-241" value="1" role="switch"><span class="state"><span class="container"><span class="position"></span></span></span><span class="form-options-description">Option 1</span>
+				  </label>
+				</li>
+				<li class="form-options-group">
+				  <label for="id-244" class="form-options-label">
+					<input type="checkbox" id="id-244" class="form-options-field form-options-field--checkbox" name="checkbox-243" value="2" role="switch"><span class="state"><span class="container"><span class="position"></span></span></span><span class="form-options-description">Option 2</span>
+				  </label>
+				</li>
+				<li class="form-options-group">
+				  <label for="id-246" class="form-options-label">
+					<input type="checkbox" id="id-246" class="form-options-field form-options-field--checkbox" name="checkbox-245" value="3" role="switch"><span class="state"><span class="container"><span class="position"></span></span></span><span class="form-options-description">Option 3</span>
+				  </label>
+				</li>
+			  </ul>
+			</div>
+		  </fieldset>
+		</div>
+	  </form>
+	</main>
+<script>
+	
+	/* Initialize Accordion Show/All */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		document.querySelectorAll('.form-options-wrapper > button.btn')
+		  .forEach((el) => {
+			el.onclick = (event) => {
+			  if(!el.classList.contains("form-options-toggle--active")){
+				el.parentElement.querySelectorAll('input[type="checkbox"]')
+				  .forEach((checkbox) => {
+				    checkbox.checked = true;
+				  });
+				el.classList.add("form-options-toggle--active");
+				el.innerText = "Décocher tout";
+			  }
+			  else{
+				el.parentElement.querySelectorAll('input[type="checkbox"]')
+				  .forEach((checkbox) => {
+				    checkbox.checked = false;
+				  });
+				el.classList.remove("form-options-toggle--active");
+				el.innerText = "Cocher tout";
+			  }			  
+			};
+		  });
+	  },
+	  false
+	);
+</script>
+</body>
+</html>

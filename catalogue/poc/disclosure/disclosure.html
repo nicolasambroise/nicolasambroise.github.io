@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Disclosure</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}
+		
+		main > div {
+			position: relative;
+			display:block;
+			margin: 10px 15px;
+		}
+		
+		#id_menu{
+			position: absolute;
+			background-color: #feecca;
+			min-width: 150px;
+			border-left : 1px solid #274891;
+		    padding: .25rem .625rem;
+			color: #274891;
+			border-radius: 5px;
+		}
+		
+		#id_menu ul{
+			list-style-type: none;
+			margin: .5rem 0;
+		}
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<svg class="iconset" style="display: none;" xmlns="http://www.w3.org/2000/svg">
+		<symbol id="icon-arrow-down" viewBox="0 0 24 24"><path d="M12 19.5c-.3 0-.6-.1-.8-.4l-11-13c-.4-.4-.3-1.1.1-1.4.4-.4 1.1-.3 1.4.1L12 17 22.2 4.9c.4-.4 1-.5 1.4-.1s.5 1 .1 1.4l-11 13c-.1.2-.4.3-.7.3"></path></symbol>
+		<symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M1.5 19.5c-.2 0-.4-.1-.6-.2-.4-.3-.5-1-.1-1.4l10.5-13c.2-.2.5-.4.8-.4s.6.1.8.4l11 13c.4.4.3 1.1-.1 1.4-.4.4-1.1.3-1.4-.1L12 7.1l-9.7 12c-.2.3-.5.4-.8.4"></path></symbol>
+	</svg>
+    <header>
+		<h1>POC Disclosure</h1>
+    </header>
+	<main>
+	  <div>
+		<button type="button" aria-expanded="false" aria-controls="id_desc" class="btn btn-secondary btn--small btn-disclosure">
+		  <span class="btn-text">Description</span>
+		  <span class="btn-icon">
+			<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+			  <use x="0" y="0" xlink:href="#icon-arrow-down"></use>
+			</svg>
+		  </span>
+		</button>
+		<div id="id_desc">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum.</p>
+		</div>
+	  </div>
+	  <div>
+		<button type="button" aria-expanded="false" aria-controls="id_menu" class="btn btn-secondary btn--small btn-disclosure">
+		  <span class="btn-text">Menu</span>
+		  <span class="btn-icon">
+			<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+			  <use x="0" y="0" xlink:href="#icon-arrow-down"></use>
+			</svg>
+		  </span>
+		</button>
+		<div id="id_menu">
+			<ul>
+				<li><a href="#">Lien 1</a></li>
+				<li><a href="#">Lien 2</a></li>
+			</ul>
+		</div>
+	  </div>
+	</main>
+<script>
+	// Inspiration de https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/
+	
+	/*
+	 *   This content is licensed according to the W3C Software License at
+	 *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+	 *
+	 *   File:   disclosure-button.js
+	 *
+	 *   Desc:   Disclosure button widget that implements ARIA Authoring Best Practices
+	 */
+
+	'use strict';
+
+	/*
+	 *   @constructorDisclosureButton
+	 *
+	 *
+	 */
+	class DisclosureButton {
+	  constructor(buttonNode) {
+		this.buttonNode = buttonNode;
+		this.controlledNode = false;
+
+		var id = this.buttonNode.getAttribute('aria-controls');
+
+		if (id) {
+		  this.controlledNode = document.getElementById(id);
+		}
+
+		this.buttonNode.setAttribute('aria-expanded', 'false');
+		this.hideContent();
+
+		this.buttonNode.addEventListener('click', this.onClick.bind(this));
+		this.buttonNode.addEventListener('focus', this.onFocus.bind(this));
+		this.buttonNode.addEventListener('blur', this.onBlur.bind(this));
+		
+		this.buttonNode.addEventListener('keydown', this.onKeydown.bind(this)); // Addition
+	  }
+
+	  showContent() {
+		if (this.controlledNode) {
+		  this.controlledNode.style.display = 'block';
+		}
+	  }
+
+	  hideContent() {
+		if (this.controlledNode) {
+		  this.controlledNode.style.display = 'none';
+		}
+	  }
+
+	  toggleExpand() {
+		if (this.buttonNode.getAttribute('aria-expanded') === 'true') {
+		  this.buttonNode.setAttribute('aria-expanded', 'false');
+		  this.buttonNode.querySelector('.btn-icon svg.icon use').setAttribute('xlink:href', '#icon-arrow-down'); // Addition	  
+		  this.hideContent();
+		} else {
+		  this.buttonNode.setAttribute('aria-expanded', 'true');
+		  this.buttonNode.querySelector('.btn-icon svg.icon use').setAttribute('xlink:href', '#icon-arrow-up'); // Addition		 
+		  this.showContent();
+		}
+	  }
+
+	  /* EVENT HANDLERS */
+
+	  onClick() {
+		this.toggleExpand();
+	  }
+
+	  onFocus() {
+		this.buttonNode.classList.add('focus');
+	  }
+
+	  onBlur() {
+		this.buttonNode.classList.remove('focus');
+	  }
+	  
+	  onKeydown(event) { // Addition
+		if (event.key === 'Escape' && this.buttonNode.getAttribute('aria-expanded') === 'true') {
+			this.toggleExpand();
+        }
+	  }
+	}
+
+	/* Initialize Hide/Show Buttons */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		var buttons = document.querySelectorAll(
+		  'button.btn-disclosure[aria-expanded][aria-controls]' // Edition
+		);
+
+		for (var i = 0; i < buttons.length; i++) {
+		  new DisclosureButton(buttons[i]);
+		}
+	  },
+	  false
+	);
+
+
+</script>
+</body>
+</html>

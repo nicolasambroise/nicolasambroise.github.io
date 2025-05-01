@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Material Design</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}	
+		
+		form .form-group.form-group--useMaterialDesign {
+		  position: relative;
+
+		  .form-group-label {
+			font-size: 17px;
+			cursor: text;
+			top: 10px;
+			transition: 0.2s;
+			left: 10px;
+			display: block;
+			position: absolute;
+			color: black;
+			padding: 0;
+			pointer-events: none; /* Fix bug Firefox */
+			z-index: 1;
+		  }
+
+		  &.form-group--is-filled .form-group-label {
+			top: 0;
+			font-size: 12px;
+		  }
+
+		  &.form-group--useMaterialDesignMobile .form-group-label {
+			position: relative;
+			top: 0;
+		  }
+
+		  .form-group-field input{
+			padding-top: 1.40625rem;
+		  }
+
+		  &:focus,
+		  &:active,
+		  &.form-group--is-active {
+			.form-group-label {
+			  top: 0;
+			  font-size: 12px;
+			  color: black;
+			}
+		  }
+		}
+			
+    </style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<header>
+		<h1>POC Material Design</h1>
+    </header>
+	<main>
+	  <form>
+	    <fieldset>
+		  <legend>Signalétique</legend>
+		  <div class="form-group form-group--useMaterialDesign">
+			<div class="form-group-label">
+			  <label for="lastname">Nom<span class="field-required">*</span></label>
+			</div>
+			<div class="form-group-field">
+			  <input type="text" id="lastname" name="lastname" required="" autocomplete="family-name">
+			</div>
+		  </div>
+		  <div class="form-group form-group--useMaterialDesign">
+			<div class="form-group-label">
+			  <label for="firstname">Prénom(s)</label>
+			</div>
+			<div class="form-group-field">
+			  <input type="text" id="firstname" name="firstname" autocomplete="given-name">
+			</div>
+		  </div>
+	    </fieldset>
+	  </form>
+	</main>
+<script>
+	
+	const setActive = (el, active) => {
+		  const formField = el.closest('.form-group.form-group--useMaterialDesign');
+		  if (active) {
+			formField.classList.add('form-group--is-active');
+		  } else {
+			formField.classList.remove('form-group--is-active');
+			el.value.replace(/(\s|\r\n|\n|\r)/gm, '') === ''
+			  ? formField.classList.remove('form-group--is-filled')
+			  : formField.classList.add('form-group--is-filled');
+		  }
+		};
+		
+	function onWindowResize() {
+		  document.querySelectorAll('.form-group.form-group--useMaterialDesign')
+			.forEach((el) => {
+			  if (el.clientWidth <= 520) {
+				el.classList.add('form-group--useMaterialDesignMobile');
+			  } else {
+				el.classList.remove('form-group--useMaterialDesignMobile');
+			  }
+			});
+		}
+	
+	/* Initialize Material Design */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		document.querySelectorAll('.form-group.form-group--useMaterialDesign .form-group-field input')
+		  .forEach((el) => {
+			el.onblur = (event) => {
+			  setActive(el, false);
+			  event.stopPropagation();
+			};
+			el.onfocus = (event) => {
+			  setActive(el, true);
+			  event.stopPropagation();
+			};
+			// Add class if data is present
+			if (el.value.trim() !== '' && el.value.trim().length > 0) {
+			  el.closest('.form-group.form-group--useMaterialDesign').classList.add('form-group--is-filled');
+			}
+		  });
+
+		document.querySelectorAll('.form-group.form-group--useMaterialDesign')
+		  .forEach((el) => {
+			el.addEventListener(
+			  'click',
+			  function (event) {
+				event.preventDefault();
+				el.querySelector('.form-group-field input').focus();
+			  },
+			  false
+			);
+		  });
+
+		onWindowResize();
+		window.addEventListener('resize', onWindowResize);
+	  },
+	  false
+	);
+</script>
+</body>
+</html>
