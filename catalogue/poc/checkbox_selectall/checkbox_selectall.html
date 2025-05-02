@@ -18,9 +18,25 @@
 			margin-top:0;
 		}	
 		
-		.accordion-wrapper > button.btn{
-			margin-left: auto;
-			display: block;
+		form{
+			width: 100%;
+			display: flex;
+			justify-content: space-around;
+			align-items: flex-start;
+			overflow: auto;
+		}
+		
+		form > .form-group{
+			min-width: 300px;
+		}
+		
+		.form-options-wrapper > .form-options-btn{
+			text-align: right;
+		}
+		
+		.form-options-wrapper > .form-options-btn li {
+			list-style-type: none;
+			display: inline-block;
 		}
 		
     </style>
@@ -36,7 +52,10 @@
 		  <fieldset class="form-options form-options--checkbox">
 			<legend class="label form-options-legend">Label</legend>
 			<div class="form-options-wrapper">
-			  <button class="btn btn-secondary" aria-controls="id-1 id-3 id-5" type="button">Cocher tout</button>
+			  <ul class="form-options-btn">
+				<li><button class="btn btn-borderless btn-activate btn--small" aria-controls="id-242 id-244 id-246" type="button">Cocher tout</button></li>
+				<li><button class="btn btn-borderless btn-desactivate btn--small" aria-controls="id-242 id-244 id-246" type="button">Décocher tout</button></li>
+			  </ul>
 			  <ul class="form-options-content">
 				<li class="form-options-group">
 				  <label for="id-1" class="form-options-label">
@@ -62,7 +81,10 @@
 		  <fieldset class="form-options form-options--switch">
 			<legend class="label form-options-legend">Label</legend>	
 			<div class="form-options-wrapper">
-			  <button class="btn btn-secondary" aria-controls="id-242 id-244 id-246" type="button">Cocher tout</button>
+			  <ul class="form-options-btn">
+				<li><button class="btn btn-borderless btn-activate btn--small" aria-controls="id-242 id-244 id-246" type="button">Cocher tout</button></li>
+				<li><button class="btn btn-borderless btn-desactivate btn--small" aria-controls="id-242 id-244 id-246" type="button">Décocher tout</button></li>
+			  </ul>
 			  <ul class="form-options-content">
 				<li class="form-options-group">
 				  <label for="id-242" class="form-options-label">
@@ -92,24 +114,23 @@
 	window.addEventListener(
 	  'load',
 	  function () {
-		document.querySelectorAll('.form-options-wrapper > button.btn')
+		document.querySelectorAll('.form-options-wrapper button.btn-activate, .form-options-wrapper button.btn-desactivate')
 		  .forEach((el) => {
 			el.onclick = (event) => {
-			  if(!el.classList.contains("form-options-toggle--active")){
-				el.parentElement.querySelectorAll('input[type="checkbox"]')
+			
+			  console.log(el)
+			
+			  if(el.classList.contains("btn-activate")){
+				el.closest('.form-options-wrapper').querySelectorAll('input[type="checkbox"]')
 				  .forEach((checkbox) => {
 				    checkbox.checked = true;
 				  });
-				el.classList.add("form-options-toggle--active");
-				el.innerText = "Décocher tout";
 			  }
-			  else{
-				el.parentElement.querySelectorAll('input[type="checkbox"]')
+			  else if(el.classList.contains("btn-desactivate")){
+				el.closest('.form-options-wrapper').querySelectorAll('input[type="checkbox"]')
 				  .forEach((checkbox) => {
 				    checkbox.checked = false;
 				  });
-				el.classList.remove("form-options-toggle--active");
-				el.innerText = "Cocher tout";
 			  }			  
 			};
 		  });
