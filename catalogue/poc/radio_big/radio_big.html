@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Big radio</title>
+	<style>
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+	
+	header > h1 {
+		margin-top:0;
+	}
+
+	.form-options .form-options-content.form-options-content-bordered{
+		list-style-type: none;
+		padding-left:0;
+		margin-top: 2rem;
+	}
+	.form-options-content-bordered > li{
+		background: #fff;
+		border-radius: 1rem;
+		border: 1px solid #dfdfdf;
+		margin-bottom: 1.5rem;
+		position: relative;
+		padding: 1rem 0.5rem 0.5rem 1.5rem;
+		cursor: pointer;
+	}
+	.form-options-content-bordered > li:has(:checked){
+		background-color: aliceblue;
+		border-color:#0075FF;
+	}
+	.form-options-content-bordered > li:hover{
+		box-shadow: #dfdfdf 1px 2px 5px;
+	}
+	.form-options-content-bordered > li > label.form-options-label{
+		font-weight: 600;
+		line-height: 2.4rem;
+		font-size: 1.2rem;
+	}
+	.form-options-content-bordered > li > label.form-options-label > input[type="radio"]{
+		width: 2.4rem;
+		height: 2.2rem;
+		margin: 0.1rem 1.5rem 0 0;
+		vertical-align: text-top;
+		cursor: pointer;
+		position: absolute;
+		top: calc(50% - 1.2rem);
+	}
+	.form-options-content-bordered > li > label.form-options-label > span{
+		padding-left: 3.5rem;
+		display: block;
+	}
+	.form-options-content-bordered > li > p{
+		margin: 0 0 1rem 3.5rem;
+	}
+	.form-options-content-bordered > li::before {
+		content: "";
+		background-image: url("./bigradio_default.svg");
+		background-size: 2.4rem 2.4rem;
+		background-repeat: no-repeat;
+		width: 2.4rem;
+		height: 2.4rem;
+		display: block;
+		position: absolute;
+		z-index:1;
+		top: calc(50% - 1.2rem);
+	}
+	.form-options-content-bordered > li:has(:checked)::before {
+		background-image: url("./bigradio_active.svg");
+	}
+	.form-options-content-bordered > li > label::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+	}
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+  </head>
+  <body>
+	<header>
+		<h1>POC Big Radio</h1>
+    </header>
+	<main class="page-main" role="main" id="main">
+	  <form>
+		<div class="form-group">
+		  <fieldset class="form-options form-options--radio">
+			<legend class="label form-options-legend">Label</legend>
+			<div class="form-options-wrapper">
+			  <ul class="form-options-content form-options-content-bordered">
+				<li class="form-options-group">
+				  <label class="form-options-label" for="opt1">
+					<input class="form-options-field form-options-field--radio" id="opt1" type="radio" name="radio-group" value="opt1" aria-describedby="opt1_desc">
+					<span class="form-options-description">Option 1</span>
+				  </label>
+				  <p id="opt1_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+				</li>
+				<li class="form-options-group">
+				  <label class="form-options-label" for="opt2">
+					<input class="form-options-field form-options-field--radio" id="opt2" type="radio" name="radio-group" value="opt2" aria-describedby="opt2_desc">
+					<span class="form-options-description">Option 2</span>
+				  </label>
+				  <p id="opt2_desc">Nunc volutpat elit eget nisl luctus, quis sodales sem pellentesque. Curabitur nisl ligula, condimentum id varius id, pharetra et metus. Integer fringilla sem sit amet dapibus congue.</p>
+				</li>
+				<li class="form-options-group">
+				  <label class="form-options-label" for="opt3">
+					<input class="form-options-field form-options-field--radio" id="opt3" type="radio" name="radio-group" value="opt3" aria-describedby="opt3_desc">
+					<span class="form-options-description">Option 3</span>
+				  </label>
+				  <p id="opt3_desc">Vivamus mattis nisi dolor, eu lobortis massa sollicitudin cursus. Mauris porttitor sagittis nulla, id malesuada elit pharetra nec. Suspendisse feugiat eleifend egestas. Nulla laoreet, mauris a ullamcorper congue, tellus tortor accumsan enim, non commodo diam orci eu nisi. Proin aliquet nisi vitae nunc tempus fermentum. Curabitur eleifend feugiat libero, eu feugiat metus venenatis id. Aenean aliquam feugiat sem, euismod pulvinar metus lobortis non. Nullam sed mattis arcu. Sed ut nisl vel turpis pulvinar laoreet sed in ligula.</p>
+				</li>
+			  </ul>
+			</div>
+		  </fieldset>
+		</div>
+	  </form>
+	</main>
+  </body>
+</html>

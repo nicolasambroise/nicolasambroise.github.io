@@ -19,7 +19,7 @@ class TabsManual {
     this.firstTab = null;
     this.lastTab = null;
 
-    this.tabs = Array.from(this.tablistNode.querySelectorAll('[role=tab]'));
+    this.tabs = Array.from(this.tablistNode.querySelectorAll('[role=tab]:not([aria-disabled="true"])'));
     this.tabpanels = [];
 
     for (var i = 0; i < this.tabs.length; i += 1) {
@@ -49,10 +49,12 @@ class TabsManual {
         tab.setAttribute('aria-selected', 'true');
         tab.removeAttribute('tabindex');
         this.tabpanels[i].classList.add('is-active');
+		this.tabpanels[i].tabIndex = 0;
       } else {
         tab.setAttribute('aria-selected', 'false');
         tab.tabIndex = -1;
         this.tabpanels[i].classList.remove('is-active');
+		this.tabpanels[i].removeAttribute('tabindex');
       }
     }
   }
@@ -183,12 +185,19 @@ function blurTab(el){
 	var tabslist_width = el.getBoundingClientRect().width;
 	  var scrollLeft = el.scrollLeft
 	  var scrollWidth = el.scrollWidth
-	  console.log(tabslist_width+ " - "+scrollLeft+" - "+scrollWidth)
+	  var focused = document.activeElement;
+	  //console.log(tabslist_width+ " - "+scrollLeft+" - "+scrollWidth)
 	  if (scrollLeft + tabslist_width >= scrollWidth) {
+		if(focused && focused.classList.contains("tabs-action--next")){
+			el.parentElement.querySelectorAll(".tabs-action--previous")[0].focus();
+		}
 		el.classList.add("scrollEndReached");
-		el.classList.remove("scrollStartReached");
+		el.classList.remove("scrollStartReached");	
 	  }
 	  else if(scrollLeft == 0){
+		if(focused && focused.classList.contains("tabs-action--previous")){
+			el.parentElement.querySelectorAll(".tabs-action--next")[0].focus();
+		}
 		el.classList.add("scrollStartReached");
 		el.classList.remove("scrollEndReached");
 	  }

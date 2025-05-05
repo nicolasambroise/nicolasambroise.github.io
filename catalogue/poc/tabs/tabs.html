@@ -40,6 +40,10 @@
 	  width: max-content;
 	  padding: 0;
 	}
+	
+	.tabs [role=tablist]:focus{
+		outline-offset: -2px;
+	}
 
 	.tabs [role=tab] {
 	  display: inline-block;
@@ -61,6 +65,10 @@
 	.tabs [role=tab]:focus {
 	  background: #fff;
 	  border-color: #fff #fff #274891
+	}
+
+	.tabs [role=tab]:focus{
+		outline-offset: -2px;
 	}
 
 	.tabs [role=tab][aria-selected=true] {
@@ -95,15 +103,16 @@
 	}
 
 
-	.tabs [role=tab][disabled]{
+	.tabs [role=tab][aria-disabled="true"]{
 	  color: gray;
+	  pointer-events: none;
 	}
 
-	.tabs [role=tab]:not([disabled]):not([aria-selected=true]):hover{
+	.tabs [role=tab]:not([aria-disabled="true"]):not([aria-selected=true]):hover{
 	  cursor:pointer;
 	}
 
-	.tabs [role=tab]:not([disabled]):not([aria-selected=true]):hover:after {
+	.tabs [role=tab]:not([aria-disabled="true"]):not([aria-selected=true]):hover:after {
 		content: "";
 		width: 100%;
 		background-color: #274891;
@@ -211,20 +220,20 @@
 		<div class="tabs">
 		  <div class="tabs-wrapper">
 			  <div class="tabs-actions">
-				<button class="tabs-action tabs-action--previous" type="button" aria-label="Précédent">
+				<button class="tabs-action tabs-action--previous" type="button" aria-label="Défiler les onglets vers la gauche">
 					<span class="tabs-action-icon"></span>
-					<span class="tabs-action-text">Précédent</span>
+					<span class="tabs-action-text">Défiler les onglets vers la gauche</span>
 				</button>
-				<button class="tabs-action tabs-action--next" type="button" aria-label="Suivant">
+				<button class="tabs-action tabs-action--next" type="button" aria-label="Défiler les onglets vers la droite">
 					<span class="tabs-action-icon"></span>
-					<span class="tabs-action-text">Suivant</span>
+					<span class="tabs-action-text">Défiler les onglets vers la droite</span>
 				</button>
 			  </div>
 			  <div role="tablist" aria-label="Un système d'onglet" class="tabs-tablist" tabindex="0">
 				<button id="tab-33" class="btn" type="button" aria-selected="true" aria-controls="tabpanel-32" role="tab" tabindex="0">Tab label 1</button>
 				<button id="tab-35" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-34" role="tab" tabindex="-1">Very long long long longTab label 2</button>
 				<button id="tab-37" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-36" role="tab" tabindex="-1">Tab label 3</button>
-				<button id="tab-39" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-38" role="tab" tabindex="-1" disabled>Tab label 4 disabled</button>
+				<button id="tab-39" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-38" role="tab" tabindex="-1" aria-disabled="true">Tab label 4 disabled</button>
 				<button id="tab-41" class="btn" type="button" aria-selected="false" aria-controls="tabpanel-40" role="tab" tabindex="-1">Tab label 5</button>
 			  </div>
 		  </div>

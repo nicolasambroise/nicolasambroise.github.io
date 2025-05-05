@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Counter Simple</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}
+		
+		.form-group textarea{
+			min-height: auto;
+		}
+		
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+    <header>
+		<h1>POC Counter Simple</h1>
+    </header>
+	<main>
+	  <!-- La classe `.has-limit` permet de sélectionner tous compteurs. -->
+	  <div class="form-group has-limit">
+		<div class="form-group-label">
+		  <label for="field-1">Label</label>
+	  
+		  <!--
+			Les compteurs sont regroupés dans le même parent pour
+			permettre une restitution des TAs utilisées avec la souris
+		  -->
+		  <p class="field-counter">
+			<!-- Compteur visuel, ignoré des TAs -->
+			<span aria-hidden="true">
+			  <span class="field-counter-value">0</span> /
+			  <span class="field-counter-max">30</span>
+			</span>
+			<!--
+			  Compteur explicite pour les TAs
+			  - Masqué visuellement
+			  - Lié au champ via aria-describedby
+
+			  /!\ Attention à la verbosité /!\ :
+			  - Ne pas MAJ à chaque input clavier.
+			  - Attendre 1-2s (debounce) avant de Maj pour être sûr que la saisie ait stoppé.
+			-->
+			<span id="field-counter-ta" class="form-group-counter-ta sr-only">
+			  0 caractères sur 30 maximum.
+			</span>
+		  </p>
+		</div>
+
+		<div class="form-group-field">
+		  <textarea class=""
+			type="text"
+			id="field-1"
+			name="field-1"
+			aria-describedby="field-counter-ta"
+		  ></textarea>
+
+		  <!-- Cette zone de status masquée n'est pas prévue pour les erreurs de saisie. -->
+		  <span class="field-status sr-only" role="status"></span>
+		</div>
+	  </div>
+	  
+	  <ul>
+		<li>Compteur visible masqué aux <abbr title="technologies d'assitance">TAs</abbr> (lecteurs d'écrans, etc…) avec l'attribut <code>aria-hidden="true"</code>.</li>
+		<li>Compteur masqué explicite lié avec <code>aria-describedby</code>.</li>
+		<li>Le compteur masqué se met à jour après un court délai sans saisie.</li>
+		<li>Les deux compteurs sont structurés au sein d'un élément <code>&lt;p&gt;</code> commun pour permettre au personnes utilisant un lecteur avec pointeur de pouvoir restituer le contenu du compteur.</li>
+	  </ul>
+	</main>
+<script>
+	//inspiration : https://www.niquette.ca/articles/input-counter/
+	
+	const debounceDelay = 2000
+	/** Délai avant mise à jour du compteur / insertion du message de statut */
+	let timer
+	
+	/**
+	 * Gère les actions liées à la limite de caractère:
+	 * - Mise à jour du compteur visible à chaque input
+	 * - Mise à jour du compteur accessible après un debounce
+	 * - Pas de gestion de message de status
+	 */
+	function handleInputLimitSimple(evt) {
+	  /** Élément de formulaire textarea ou input / @type {HTMLInputElement} */
+	  const fieldElem = evt.target
+	  /** Élément parent / @type {HTMLElement} */
+	  const wrapperElem = fieldElem.closest(".form-group")
+	  /** Compteur visible ignoré des TAs / @type {HTMLElement} */
+	  const displayedCounterElem = wrapperElem.querySelector(".field-counter [aria-hidden='true'] .field-counter-value")
+	  /** Compteur masqué visuellement / @type {HTMLElement} */
+	  const hiddenCounterElem = wrapperElem.querySelector(".form-group-counter-ta")
+
+	  /** Limite de caractères / @type {number} */
+	  const maxLength = parseInt(wrapperElem.querySelector(".field-counter-max").textContent)
+	  /** Taille de la chaine de contenu / @type {number} */
+	  const currentLength = evt.target.value.length
+	  
+	  /** Maj du compteur visible */
+	  displayedCounterElem.textContent = currentLength
+	  
+	  /** Debounce */
+	  clearTimeout(timer)
+	  timer = setTimeout(
+		() => {
+		  /** Maj la description accessible du champ (alternative au compteur visible). */
+		  hiddenCounterElem.textContent = `${currentLength} caractères sur ${maxLength} maximum.`
+		},
+		debounceDelay
+	  )
+	}
+
+	/* Initialize Counter Field */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		var counterFields = document.querySelectorAll(
+		  '.has-limit :is(textarea, input)'
+		);
+
+		counterFields.forEach(field => field.addEventListener("input", handleInputLimitSimple))
+	  },
+	  false
+	);
+
+</script>
+</body>
+</html>

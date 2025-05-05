@@ -22,7 +22,7 @@ const initCarousel = (function() {
 				if(slides[carousel.id][i].id == target){
 					indicator.addEventListener('click', function() {
 						setSlides(carousel.id, i);
-						slides[carousel.id][i].focus();
+						//slides[carousel.id][i].focus();
 					});
 					break;
 				}

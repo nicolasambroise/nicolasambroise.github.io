@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Counter Complexe</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}
+		
+		.form-group textarea{
+			min-height: auto;
+		}
+		
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+    <header>
+		<h1>POC Counter Complexe</h1>
+    </header>
+	<main>
+	  <!-- La classe `.has-limit` permet de sélectionner tous compteurs. -->
+	  <div class="form-group has-limit has-limit-status">
+		<div class="form-group-label">
+		  <label for="field-2">Label</label>
+	  
+		  <!--
+			Les compteurs sont regroupés dans le même parent pour
+			permettre une restitution des TAs utilisées avec la souris
+		  -->
+		  <p class="field-counter">
+			<!-- Compteur visuel, ignoré des TAs -->
+			<span aria-hidden="true">
+			  <span class="field-counter-value">0</span> /
+			  <span class="field-counter-max">30</span>
+			</span>
+			<!--
+			  Compteur explicite pour les TAs
+			  - Masqué visuellement
+			  - Lié au champ via aria-describedby
+
+			  /!\ Attention à la verbosité /!\ :
+			  - Ne pas MAJ à chaque input clavier.
+			  - Attendre 1-2s (debounce) avant de Maj pour être sûr que la saisie ait stoppé.
+			-->
+			<span id="field-counter-ta" class="form-group-counter-ta sr-only">
+			  0 caractères sur 30 maximum.
+			</span>
+		  </p>
+		</div>
+
+		<div class="form-group-field">
+		  <textarea class=""
+			type="text"
+			id="field-2"
+			name="field-2"
+			aria-describedby="field-counter-ta"
+		  ></textarea>
+
+		  <!-- Cette zone de status masquée n'est pas prévue pour les erreurs de saisie. -->
+		  <span class="field-status sr-only" role="status"></span>
+		</div>
+	  </div>
+	
+	<p>Reprends l'implémentation de l'exemple du counter simple avec en complément :</p>	
+	<ul>
+      <li>L'ajout d'un message de statut caché lorsque la limite est dépassée.</li>
+      <li>Ce message s'auto-efface après un court délai pour éviter les annonce en lecture linéaire par les TAs</li>
+      <li>L'ajout dynamique d'un attribut <code>data-limit-reached</code> sur l'élément <code>textarea</code> pour déterminer si l'annonce du dépassement du seuil a déjà été faite (évite les redites).</li>
+    </ul>
+  
+	<p><i>Note: Cette version plus complexe à mettre en place peut ne pas s'avérer pertinente dans le cas ou les erreurs sont gérées lors de la saisie. L'affichage de l'erreur en sus pendant la saisie risque de provoquer une double annonce.</i></p>
+  </main>
+<script>
+	//inspiration : https://www.niquette.ca/articles/input-counter/
+	
+	const debounceDelay = 2000
+	/** Délai avant mise à jour du compteur / insertion du message de statut */
+	let timer
+	
+	/**
+	 * Gère les actions liées à la limite de caractère:
+	 * - Mise à jour du compteur visible à chaque input
+	 * - Mise à jour du compteur accessible après un debounce
+	 * - Pas de gestion de message de status
+	 */
+	function handleInputLimit(evt) {
+	  /** Élément de formulaire textarea ou input / @type {HTMLInputElement} */
+	  const fieldElem = evt.target
+	  /** Élément parent / @type {HTMLElement} */
+	  const wrapperElem = fieldElem.closest(".form-group")
+	  /** Compteur visible ignoré des TAs / @type {HTMLElement} */
+	  const displayedCounterElem = wrapperElem.querySelector(".field-counter [aria-hidden='true'] .field-counter-value")
+	  /** Compteur masqué visuellement / @type {HTMLElement} */
+	  const hiddenCounterElem = wrapperElem.querySelector(".form-group-counter-ta")
+	  /** Zone de message de Status du champ / @type {HTMLElement} */
+	  const statusZoneElem = wrapperElem.querySelector(".field-status")
+
+	  /** Limite de caractères / @type {number} */
+	  const maxLength = parseInt(wrapperElem.querySelector(".field-counter-max").textContent)
+	  /** Taille de la chaine de contenu / @type {number} */
+	  const currentLength = evt.target.value.length
+	  
+	  /** Maj du compteur visible */
+	  displayedCounterElem.textContent = currentLength
+	  
+	  /** Annonce (status) le dépassement de la limite aux TA / @type {boolean} */
+	  const announceLimitStatus = wrapperElem.classList.contains(`has-limit-status`)
+	  
+	  /** Debounce */
+	  clearTimeout(timer)
+	  timer = setTimeout(
+		() => {
+		  /** Maj la description accessible du champ (alternative au compteur visible). */
+		  hiddenCounterElem.textContent = `${currentLength} caractères sur ${maxLength} maximum.`
+		  if (announceLimitStatus) {
+			const hasReachedLimit = fieldElem.dataset.limitReached
+
+			if(currentLength > maxLength && hasReachedLimit === (undefined || "false")) {
+			  statusZoneElem.textContent = `Limite de caractères dépassée.`
+			  // Supprime immediatement le contenu pour éviter que les TAs naviguent dessus
+			  setTimeout(() => { statusZoneElem.textContent = `` }, 500)
+			}
+			
+			if(fieldElem.dataset.limitReached === undefined) {
+			  fieldElem.setAttribute(`data-limit-reached`, currentLength > maxLength)
+			} else {
+			  fieldElem.dataset.limitReached = currentLength > maxLength
+			}
+		  }
+		},
+		debounceDelay
+	  )
+	}
+
+	/* Initialize Counter Field */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		var counterFields = document.querySelectorAll(
+		  '.has-limit :is(textarea, input)'
+		);
+
+		counterFields.forEach(field => field.addEventListener("input", handleInputLimit))
+	  },
+	  false
+	);
+
+</script>
+</body>
+</html>
