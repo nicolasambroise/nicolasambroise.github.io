@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Closable Alerts</title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+	
+	.alert{
+		max-width: 1024px;
+		margin: 0 auto;
+	}
+	
+	.alert .btn-close.btn-borderless{
+		color: black;
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 4px 10px;
+	}	
+	
+	.alert .btn-close.btn-borderless .icon{
+		width: 16px;
+		height: 16px;
+	}	
+	
+	.alert.alert--closable p{
+	    margin-bottom: 0; 
+	}
+	
+	.alert.alert--closable.alert--closable-closed{
+	    position: relative;
+		opacity: 0;
+		margin-bottom: 0;
+		margin-top: 0;
+		width: 100%;
+		border : 0;
+		padding-bottom : 0;
+		padding-top: 0;
+		visibility: hidden;
+		transition: all 1s ease-out;
+	}
+
+	.alert.alert--closable.alert--closable-closed p{
+	    position: absolute;
+		top: 2px;
+		opacity: 0;
+		transition: opacity .25s;
+	}
+	
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<svg class="iconset" style="display: none;" xmlns="http://www.w3.org/2000/svg">
+		<symbol id="icon-close" viewBox="0 0 24 24"><path d="M13.4 12 23.7 1.7c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0L12 10.6 1.7.3C1.3-.1.7-.1.3.3c-.4.4-.4 1 0 1.4L10.6 12 .3 22.3c-.4.4-.4 1 0 1.4.2.2.4.3.7.3.3 0 .5-.1.7-.3L12 13.4l10.3 10.3c.2.2.5.3.7.3.3 0 .5-.1.7-.3.4-.4.4-1 0-1.4L13.4 12z"></path></symbol>
+	</svg>
+	<header>
+		<h1>POC Closable Alerts</h1>
+	</header>
+	<main>
+		<div class="alert alert--success alert--closable">
+		  <p><span class="sr-only">Succès : </span>Ceci est un message de succès</p>
+		</div>
+		<div class="alert alert--error alert--closable">
+		  <p><span class="sr-only">Erreur : </span>Ceci est un message d'erreur</p>
+		</div>
+		<div class="alert alert--info alert--closable">
+		  <p><span class="sr-only">Information : </span>Ceci est un message d'information</p>
+		</div>
+	</main>
+</body>
+<script>
+	/* Initialize Cloasble Alerts */
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		const close_btn = `<button class="btn btn-borderless btn-icon-only btn-close" type="button" title="Fermer">
+		  <span class="btn-icon">
+			<svg
+			  class="icon"
+			  viewBox="0 0 24 24"
+			  width="24"
+			  height="24"
+			  aria-hidden="true"
+			  focusable="false"
+			>
+			  <use x="0" y="0" xlink:href="#icon-close"></use>
+			</svg>
+		  </span>
+		  <span class="btn-text sr-only">Fermer</span>
+		</button>`;
+	  
+	  
+		document.querySelectorAll('.alert.alert--closable')
+		  .forEach((el) => {
+		    el.innerHTML += (close_btn);
+			el.querySelector(".btn-close").onclick = (event) => {
+			  el.classList.add('alert--closable-closed')
+			};
+		  });
+	  },
+	  false
+	);
+
+</script>
+</html>

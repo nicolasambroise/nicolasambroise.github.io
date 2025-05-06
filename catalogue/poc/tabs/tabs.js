@@ -19,7 +19,7 @@ class TabsManual {
     this.firstTab = null;
     this.lastTab = null;
 
-    this.tabs = Array.from(this.tablistNode.querySelectorAll('[role=tab]:not([aria-disabled="true"])'));
+    this.tabs = Array.from(this.tablistNode.querySelectorAll('[role=tab]'));
     this.tabpanels = [];
 
     for (var i = 0; i < this.tabs.length; i += 1) {
@@ -125,7 +125,10 @@ class TabsManual {
   // Since this example uses buttons for the tabs, the click onr also is activated
   // with the space and enter keys
   onClick(event) {
-    this.setSelectedTab(event.currentTarget);
+    const tab = event.currentTarget
+    if(tab.getAttribute('aria-disabled') === null) {
+        this.setSelectedTab(tab);
+    }
   }
 }
 
@@ -158,9 +161,11 @@ function toggleArrow(element){
 	console.log(tabslist_width +" - "+tabswrapper_width)
 	if(tabslist_width > tabswrapper_width && !element.parentElement.classList.contains("tab-overflow")){
 		element.parentElement.classList.add("tab-overflow");
+		blurTab(element.parentElement)
 	}
 	else if(tabslist_width <= tabswrapper_width && element.parentElement.classList.contains("tab-overflow")){
 		element.parentElement.classList.remove("tab-overflow");
+		blurTab(element.parentElement)
 	}
 }
 

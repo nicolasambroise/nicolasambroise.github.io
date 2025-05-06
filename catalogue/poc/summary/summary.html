@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Summary</title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+	
+	main {
+		display: flex;
+	}
+	
+	main .summary-wrapper {
+		min-width: 200px;
+	}
+	
+	main h2 {
+		margin-top: 0;
+	}
+	
+	.summary {
+		position:fixed;
+	}
+	
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<header>
+		<h1>POC Summary</h1>
+	</header>
+	<main>
+	  <div class="summary-wrapper">
+		<div class="summary">
+		  <h2 id="summary-title-334" class="summary-title">Summary</h2>
+		  <nav  class="summary-navigation"  role="navigation"  aria-labelledby="summary-title-334"
+		  >
+			<ol class="summary-list has-sublevel">
+			  <li class="summary-item summary-item--completed">
+				<a href="#section1" class="summary-item-text">Section 1</a>
+			  </li>
+			  <li class="summary-item summary-item--active" aria-current="true">
+				<a href="#section2" class="summary-item-text">Section 2</a>
+			  </li>
+			  <li class="summary-item">
+				<a href="#section3" class="summary-item-text">Section 3</a>
+				<ol>
+				  <li class="summary-item">
+					<a href="#section3-1" class="summary-item-text">Section 3.1</a>
+				  </li>
+				  <li class="summary-item">
+					<a href="#section3-2" class="summary-item-text">Section 3.2</a>
+				  </li>
+				</ol>
+			  </li>
+			  <li class="summary-item">
+				<a href="#section4" class="summary-item-text">Section 4</a>
+			  </li>
+			</ol>
+		  </nav>
+		</div>
+	  </div>
+	  <div>
+<h2 id="section1">Section 1</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id elementum nibh, id eleifend ligula. Nulla facilisi. Suspendisse a bibendum libero, eget auctor nibh. Curabitur non est nec velit fermentum vestibulum. Donec facilisis tortor sed cursus condimentum. Vestibulum laoreet pretium orci, eget tempus mi laoreet vitae. Cras mattis urna consectetur urna euismod, sed egestas velit lacinia. Sed interdum dolor a eros lobortis pulvinar. Sed dapibus hendrerit lacinia. Aliquam feugiat eros tempus, condimentum turpis tincidunt, finibus turpis. Pellentesque sit amet porttitor ante. Donec in nibh quam.</p>
+<h2 id="section2">Section 2</h2>
+<p>Mauris a orci interdum, vulputate quam egestas, consectetur augue. Donec at massa id sem semper consectetur. Donec lectus orci, hendrerit vel odio finibus, rhoncus sodales felis. Vivamus dictum in urna vel porta. Sed id risus in odio vestibulum venenatis. Cras facilisis purus eget sem cursus, vitae luctus tortor malesuada. In id laoreet metus. Aliquam ac diam lorem. Duis at commodo purus. Pellentesque vel egestas neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In enim risus, semper vitae lectus ac, pharetra pellentesque diam. Praesent eros mi, sodales ac auctor et, laoreet vitae ante.</p>
+<h2 id="section3">Section 3</h2>
+<h3 id="section3-1">Section 3.1</h3>
+<p>Vestibulum dolor erat, blandit ac imperdiet sed, aliquam eget orci. Integer tellus magna, bibendum vitae feugiat at, elementum ac metus. Sed non arcu et felis suscipit fringilla eu vitae augue. Pellentesque commodo elit enim, at lacinia ex rhoncus in. Nullam dignissim imperdiet libero id iaculis. In non porta libero, vel gravida felis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed enim tortor, venenatis vulputate neque in, pellentesque pharetra lacus. Aliquam egestas felis purus, eget posuere risus sodales eu. Duis dictum elit ut consequat sodales. Vestibulum accumsan maximus efficitur. Pellentesque mi libero, dapibus sed metus eu, finibus ultricies ligula. Fusce ex sem, sodales interdum congue a, molestie sed tellus.</p>
+<h3 id="section3-2">Section 3.2</h3>
+<p>Vivamus rhoncus arcu id magna feugiat, id eleifend leo convallis. Maecenas porttitor porttitor sollicitudin. Sed vel diam commodo nibh hendrerit porta sed posuere libero. Praesent consequat velit sit amet malesuada facilisis. Quisque nec leo et diam venenatis auctor. Etiam sollicitudin tellus id laoreet sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin a scelerisque ipsum, a molestie tortor. Etiam a felis in enim malesuada pulvinar sit amet id leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vehicula, odio sed blandit commodo, magna erat posuere augue, in condimentum lorem magna nec erat. Nulla malesuada purus lectus, ut consequat magna lacinia quis.</p>
+<h2 id="section4">Section 4</h2>
+<p>Suspendisse rhoncus velit vitae dui vehicula ullamcorper. Fusce rhoncus augue purus, at faucibus urna rutrum ac. Pellentesque molestie ut nibh id condimentum. Nunc fringilla mattis ex quis imperdiet. Mauris vitae ligula sit amet risus pulvinar aliquam. Suspendisse sodales aliquet molestie. Donec elementum auctor mi non aliquet.</p>
+		</div>
+	</main>
+</body>
+</html>

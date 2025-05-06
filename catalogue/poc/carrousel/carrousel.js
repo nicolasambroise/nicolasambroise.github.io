@@ -42,14 +42,17 @@ const initCarousel = (function() {
 	// Reset
     for (var i = slides[carousel_id].length - 1; i >= 0; i--) {
       slides[carousel_id][i].className = "cmp-carousel__item";
+	  
     }
 	for (var i = indicators[carousel_id].length - 1; i >= 0; i--) {
       indicators[carousel_id][i].className = "cmp-carousel__indicator";
+	  indicators[carousel_id][i].setAttribute("aria-selected", false);
     }
 	
 	// Set Active 
     slides[carousel_id][new_current].classList.add('cmp-carousel__item--active');
 	indicators[carousel_id][new_current].classList.add('cmp-carousel__indicator--active');
+    indicators[carousel_id][new_current].setAttribute("aria-selected", true);
    
 	// Update index
     index[carousel_id] = new_current;

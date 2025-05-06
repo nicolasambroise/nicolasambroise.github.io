@@ -28,6 +28,7 @@
 	  display: block;
 	  overflow-x: auto;
 	  overflow-y: hidden;
+	  padding: 2px;
 	}
 
 	.tabs [role=tablist] {
@@ -73,7 +74,8 @@
 
 	.tabs [role=tab][aria-selected=true] {
 	  background: #fff;
-	  border-color: #274891 #274891 #fff
+	  border-color: #274891 #274891 #fff;
+	  font-weight: bold;
 	}
 
 	.tabs [role=tab]:first-child,
@@ -145,8 +147,8 @@
 	}
 
 	.tabs .tab-overflow [role=tablist] {
-		min-width: calc(100% - 50px);
-		padding: 0 25px;
+		min-width: calc(100% - 10px);
+		padding: 0 5px;
 	}
 
 	.tabs .tabs-action.tabs-action--previous{
@@ -196,17 +198,49 @@
 		width: 1px;
 	}
 
-	.tabs .tab-overflow:not(.scrollEndReached) .tabs-action.tabs-action--previous{
+	.tabs .tab-overflow:not(.scrollEndReached) .tabs-action.tabs-action--previous {
 		display:none;
 	}
 
-	.tabs .tab-overflow:not(.scrollStartReached) .tabs-action.tabs-action--next{
+	.tabs .tab-overflow:not(.scrollStartReached) .tabs-action.tabs-action--next {
 		display:none;
 	}
 
-	.tabs .tabs-wrapper{
+	.tabs .tabs-wrapper {
 	   scrollbar-width: none;
 	}
+	
+	.tabs .tabs-action.tabs-action--previous:before {
+		left: 0;
+		content: "";
+		background: linear-gradient(90deg, #FFF, transparent);
+		width: 100px;
+		height: inherit;
+		display: block;
+		position: absolute;
+		top: 0;
+		z-index: -1;
+	}
+
+	.tabs .tabs-action.tabs-action--next:before {
+		right: 0;
+		content: "";
+		background: linear-gradient(90deg, transparent, #FFF);
+		width: 100px;
+		height: inherit;
+		display: block;
+		position: absolute;
+		top: 0;
+		z-index: -1;
+	}
+
+	.tabs .tabs-action:hover:before,
+	.tabs .tabs-action:focus:before{
+		content:none;
+	}
+
+
+
 
 	</style>
 	<!-- link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css"-->
