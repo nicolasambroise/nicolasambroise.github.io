@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Iteratif</title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	body{
+		max-width: 800px;
+		width: 100%;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+	
+	.iterative-rows .btn-remove{
+	  display:none;
+	}
+
+	.iterative-rows.iterative-rows-multiple .btn-remove{
+	  display:block;
+	}	
+	
+		
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<svg class="iconset" style="display: none;" xmlns="http://www.w3.org/2000/svg">	
+	<symbol x="0px" y="0px" enable-background="new 0 0 24 24" id="icon-bin-1" viewBox="0 0 24 24"><g><path d="M23,3h-3.5H16V0.5C16,0.2,15.8,0,15.5,0h-8C7.2,0,7,0.2,7,0.5V3H3.5H1C0.7,3,0.5,3.2,0.5,3.5S0.7,4,1,4h2v19.5   C3,23.8,3.2,24,3.5,24h16c0.3,0,0.5-0.2,0.5-0.5V4h3c0.3,0,0.5-0.2,0.5-0.5S23.3,3,23,3z M8,18.5C8,18.8,7.8,19,7.5,19   S7,18.8,7,18.5v-11C7,7.2,7.2,7,7.5,7S8,7.2,8,7.5V18.5z M8,1h7v2H8V1z M12,18.5c0,0.3-0.2,0.5-0.5,0.5S11,18.8,11,18.5v-11   C11,7.2,11.2,7,11.5,7S12,7.2,12,7.5V18.5z M16,18.5c0,0.3-0.2,0.5-0.5,0.5S15,18.8,15,18.5v-11C15,7.2,15.2,7,15.5,7   S16,7.2,16,7.5V18.5z"></path></g></symbol>
+	<symbol x="0px" y="0px" enable-background="new 0 0 24 24" id="icon-person-add-2" viewBox="0 0 24 24"><g><g><path d="M14.9,13c-0.3-0.1-0.7-0.2-1-0.3c-0.6-0.2-1.3-0.4-1.9-0.6v-1.9c0.5-0.3,1.4-1.2,1.5-2.9c0.4-0.2,0.6-0.7,0.6-1.4    c0-0.6-0.2-1-0.5-1.3c0.2-0.6,0.6-1.7,0.4-2.8C13.7,0.4,11.8,0,10.2,0l0,0c-1.3,0-3,0.4-3.6,1.4c-0.5,0-0.9,0.1-1.2,0.4    C4.8,2.5,5.2,3.8,5.4,4.6C5.3,4.7,5.2,4.8,5.1,5C5,5.2,4.9,5.6,4.9,5.9c0,0.6,0.2,1.1,0.6,1.4C5.6,9,6.5,9.9,7,10.2V12    c-0.6,0.2-1.3,0.4-1.9,0.6c-2.4,0.8-4.2,1.4-4.6,2.5C0,16.7,0,19.3,0,19.5c0,0.1,0.1,0.3,0.1,0.4C0.2,19.9,0.4,20,0.5,20h11.7    c-0.1-0.5-0.2-1-0.2-1.5C12,16.2,13.2,14.2,14.9,13z"></path><path d="M18.5,13c-3,0-5.5,2.5-5.5,5.5c0,3,2.5,5.5,5.5,5.5c3,0,5.5-2.5,5.5-5.5C24,15.4,21.5,13,18.5,13z M21,19h-2v2    c0,0.3-0.2,0.5-0.5,0.5c-0.3,0-0.5-0.2-0.5-0.5v-2h0h-2c-0.3,0-0.5-0.2-0.5-0.5S15.7,18,16,18h2v-2c0-0.3,0.2-0.5,0.5-0.5    c0.3,0,0.5,0.2,0.5,0.5v2h2c0.3,0,0.5,0.2,0.5,0.5S21.3,19,21,19z"></path></g></g><g display="none"><g display="inline"><circle fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10" cx="18.5" cy="18.5" r="5"></circle><line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="18.5" y1="16" x2="18.5" y2="21"></line><line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="21" y1="18.5" x2="16" y2="18.5"></line><path fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10" d="M14,13.3c-0.8-0.3-1.6-0.5-2.5-0.9V9.9    c0,0,1.5-0.6,1.5-3c0.8,0,0.8-2.1,0-2.1c0-0.2,0.8-1.6,0.5-2.9C13,0,7.5,0,7,1.9c-2.4-0.5-1,2.7-1,3c-0.8,0-0.8,2,0,2    c0,2.4,1.5,3,1.5,3v2.5c-2.8,1.1-6.1,1.8-6.5,3c-0.5,1.4-0.5,4.1-0.5,4.1H11"></path></g></g></symbol>	
+	</svg>
+
+	<header>
+		<h1>POC Iteratif</h1>
+	</header>
+	<main>
+		<div class="iterative-wrapper">
+		  <div class="iterative-rows">
+		  </div>
+		  <button class="btn btn-primary" type="button"><span class="btn-icon"><svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+				<use x="0" y="0" xlink:href="#icon-person-add-2"></use>
+			  </svg></span><span class="btn-text">Ajouter un contact</span></button>
+		</div>
+	</main>
+<script>
+
+	function AddContact(index){
+		return `<fieldset id="iterative-item-${index}">
+			<legend>Informations de contact #${index}</legend>
+			<button class="btn btn-borderless btn-icon-only btn-remove" title="Supprimer cette occurence #${index}">
+				<span class="btn-icon">
+				  <svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+					<use x="0" y="0" xlink:href="#icon-bin-1"></use>
+				  </svg>
+				</span>
+				<span class="btn-text sr-only">Supprimer cette occurence #${index}</span>
+			</button>
+			<div class="form-group">
+			  <div class="form-group-label">
+				<label for="lastname-${index}">Nom<span class="field-required">*</span></label>
+			  </div>
+			  <div class="form-group-field">
+				<input type="text" id="lastname-${index}" name="lastname-${index}" required="">
+			  </div>
+			</div>
+			<div class="form-group">
+			  <div class="form-group-label">
+				<label for="firstname-${index}">Prénom(s)</label>
+			  </div>
+			  <div class="form-group-field">
+				<input type="text" id="firstname-${index}" name="firstname-${index}">
+			  </div>
+			</div>
+		  </fieldset>`
+	}
+	
+	function registerRemoveBtn(el, index){
+		el.querySelector("#iterative-item-"+index+" .btn-remove").onclick = (event) => {
+			if(confirm("remove "+index)){
+				var next_item = el.querySelector("#iterative-item-"+index+" + fieldset input");
+				if(next_item) next_item.focus();
+				else el.querySelector("& > button.btn").focus();
+				el.querySelector("#iterative-item-"+index).remove();
+				checkMultipleItems(el);
+			}
+		};
+	}
+	
+	function checkMultipleItems(el){
+		var children = el.querySelectorAll('.iterative-rows > fieldset');
+		if(!children || children.length < 0){ alert("error : not initialized");}
+		else if(children.length == 1 && el.querySelector('.iterative-rows').classList.contains("iterative-rows-multiple")) { el.querySelector('.iterative-rows').classList.remove("iterative-rows-multiple");}
+		else if(children.length > 1 && !el.querySelector('.iterative-rows').classList.contains("iterative-rows-multiple")) { el.querySelector('.iterative-rows').classList.add("iterative-rows-multiple");}
+	}
+
+	window.addEventListener(
+	  'load',
+	  function () {
+		document.querySelectorAll('.iterative-wrapper')
+		  .forEach((el) => {
+			var current_index = 1;
+			el.querySelector('.iterative-rows').insertAdjacentHTML('beforeend',AddContact(current_index));
+			checkMultipleItems(el);
+			registerRemoveBtn(el, current_index);
+			
+			el.querySelector("& > button.btn").onclick = (event) => {
+				current_index++;
+				el.querySelector('.iterative-rows').insertAdjacentHTML('beforeend',AddContact(current_index));
+				checkMultipleItems(el);
+				registerRemoveBtn(el, current_index);
+				
+			};
+		  });
+	  },
+	  false
+	);
+
+
+</script>
+</body>
+</html>
