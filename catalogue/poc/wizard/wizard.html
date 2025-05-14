@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Wizard</title>
+	<style>
+		*, *:before, *:after {
+		  box-sizing: border-box;
+		}
+
+		*:not(code, pre) {
+		  font-family: sans-serif;
+		}
+		
+		header > h1{
+			margin-top:0;
+		}
+		
+.basket-steps {
+    align-items: center;
+    display: flex;
+    list-style: none;
+    margin: 1.5rem 0 3rem;
+    padding: 0;
+    text-align: center
+}
+
+.basket-steps .basket-step {
+    color: #767679;
+    flex: 1;
+    font-style: italic;
+    padding: 0;
+    position: relative;
+    z-index: 0
+}
+
+.basket-steps .basket-step:before {
+    content: none
+}
+
+.basket-steps .basket-step:after {
+    border-top: 2px solid #cccccf;
+    content: "";
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    z-index: -1
+}
+
+.basket-steps .basket-step.is--active~.basket-step .basket-step-label {
+    font-style: italic
+}
+
+.basket-steps .icon {
+    background: #FFFFFF;
+    border: 1px solid #767679;
+    color: #767679;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+	min-width: 44px;
+    min-height: 44px;
+    padding: .5rem;
+}
+
+.basket-steps .basket-step.is--done {
+    color: #E86364;
+    font-style: normal
+}
+
+.basket-steps .basket-step.is--done .icon {
+    border-color: #E86364;
+    color: #E86364
+}
+
+.basket-steps .basket-step.is--active {
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 700
+}
+
+.basket-steps .basket-step.is--active .icon {
+    background: #E86364;
+    border-color: #E86364;
+    color: #FFFFFF;
+    height: 54px;
+    width: 54px
+}
+
+.basket-steps .basket-step.is--active:after {
+    border-color: #E86364
+}
+
+.basket-steps .basket-step-label {
+    display: block;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px,1px,1px,1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute!important;
+    width: 1px
+}
+
+@media (min-width: 45em) {
+    .basket-steps .basket-step .icon {
+        height:60px;
+        width: 60px
+    }
+
+    .basket-steps .basket-step.is--active .icon {
+        height: 70px;
+        width: 70px
+    }
+}
+
+.basket-steps .basket-step.is--active .basket-step-label {
+    color: #677787
+}
+
+.basket-steps .basket-step.is--active:after {
+    border-color: #677787
+}
+
+.basket-steps .basket-step.is--active .icon {
+    background: #677787;
+    border-color: #677787;
+    height: 60px;
+    width: 60px
+}
+
+.basket-steps .basket-step.is--done .icon {
+    background: #FFFFFF;
+    border-color: #677787;
+    color: #677787
+}
+
+.basket-steps .basket-step.is--done .basket-step-label {
+    color: #677787
+}
+
+.basket-steps .basket-step.is--done:after {
+    border-color: #677787
+}
+
+.basket-steps .basket-step .basket-step-label {
+    left: 50%;
+    margin-top: .5rem;
+    transform: translateX(-50%);
+    width: 100%
+}
+
+.basket-steps .basket-step:focus .basket-step-label,
+.basket-steps .basket-step:hover .basket-step-label {
+    clip: auto;
+    height: auto;
+    overflow: visible;
+    position: static!important;
+    position: absolute!important;
+    width: auto;
+    width: 100%
+}
+
+@media (min-width: 45em) {
+    .basket-steps .basket-step {
+        display:flex;
+        flex-direction: column;
+        gap: 1rem
+    }
+
+    .basket-steps .basket-step:after {
+        display: block;
+        order: 2;
+        position: relative
+    }
+
+    .basket-steps .basket-step .icon {
+        order: 1
+    }
+
+    .basket-steps .basket-step .basket-step-label {
+        color: #767679;
+        font-size: 1.8rem;
+        font-style: normal;
+        margin: 0;
+        order: 3;
+        transform: inherit
+    }
+
+    .basket-steps .basket-step .basket-step-label,
+	.basket-steps .basket-step:focus .basket-step-label,
+	.basket-steps .basket-step:hover .basket-step-label {
+        clip: auto;
+        height: auto;
+        overflow: visible;
+        position: static!important;
+        width: auto
+    }
+}
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<svg class="iconset" style="display: none;" xmlns="http://www.w3.org/2000/svg">
+		<symbol id="icon-basket-view" viewBox="0 0 26 26"><path d="M25.48 5.01a.74.74 0 0 0-.58-.28H5.21L4.8 2.76a.748.748 0 0 0-.73-.6H1.1c-.41 0-.75.34-.75.75s.34.75.75.75h2.36L6.09 16.3v2.96c0 .41.34.75.75.75h15.82c.41 0 .75-.34.75-.75s-.34-.75-.75-.75H7.58v-1.59l15.4-1.2c.33-.03.61-.27.68-.59l1.98-9.49c.05-.22 0-.45-.15-.63Zm-3.18 9.26L7.43 15.43 5.52 6.24h18.45l-1.67 8.04ZM7.96 20.36a1.741 1.741 0 0 0 0 3.48 1.741 1.741 0 0 0 0-3.48Zm-.24 1.74c0-.13.11-.24.24-.24s.24.11.24.24c0 .26-.48.26-.48 0Zm13.35-1.74a1.741 1.741 0 0 0 0 3.48 1.741 1.741 0 0 0 0-3.48Zm-.24 1.74c0-.13.11-.24.24-.24s.24.11.24.24c0 .26-.48.26-.48 0Z"></path></symbol>
+		<symbol id="icon-basket-delivery" viewBox="0 0 26 26"><path d="M21.9 3.32H4.1c-.41 0-.75.34-.75.75v17.86c0 .41.34.75.75.75h17.79c.41 0 .75-.34.75-.75V4.07c0-.41-.34-.75-.75-.75Zm-6.69 1.5v2.64l-2.1-.32h-.22l-2.1.32V4.82h4.42Zm5.94 16.36H4.85V4.82h4.44v3.51c0 .22.1.43.26.57.17.14.39.21.6.17L13 8.64l2.85.43h.11a.742.742 0 0 0 .75-.75V4.81h4.44v16.36Z"></path></symbol>
+		<symbol id="icon-basket-identity" viewBox="0 0 26 26"><path d="M13 .84a7.27 7.27 0 0 0-7.27 7.27 7.28 7.28 0 0 0 3.55 6.25l-.85 10.8 4.66-9.78c3.97-.05 7.17-3.29 7.17-7.27S17.01.84 13 .84Zm.08 13.04h-.93l-.4.85-1.17 2.46.21-2.72.07-.93-.8-.48A5.808 5.808 0 0 1 7.24 8.1c0-3.18 2.59-5.77 5.77-5.77s5.77 2.59 5.77 5.77-2.55 5.73-5.69 5.77Z"></path></symbol>
+		<symbol id="icon-basket-check" viewBox="0 0 26 26"><path d="M21.07 6.18 10.31 17.85l-5.38-5.83a.746.746 0 0 0-1.06-.04c-.3.28-.32.75-.04 1.06l6.48 7.03L22.17 7.21c.28-.3.26-.78-.04-1.06a.755.755 0 0 0-1.06.04Z"></path></symbol>
+	</svg>
+    <header>
+		<h1>POC Wizard</h1>
+    </header>
+	<main>
+	  <div>
+		<ol class="basket-steps">
+			<li class="basket-step is--done" aria-current="step" tabindex="0">
+				<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-basket-view" x="0" y="0"></use>
+				</svg>
+				<span class="basket-step-label">Etape 1</span>
+			</li>
+			<li class="basket-step is--active" tabindex="0">
+				<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-basket-delivery" x="0" y="0"></use>
+				</svg>
+				<span class="basket-step-label">Etape 2</span>
+			</li>
+			<li class="basket-step" tabindex="0">
+				<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-basket-identity" x="0" y="0"></use>
+				</svg>
+				<span class="basket-step-label">Etape 3</span>
+			</li>
+			<li class="basket-step" tabindex="0">
+				<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-basket-check" x="0" y="0"></use>
+				</svg>
+				<span class="basket-step-label">Etape 4</span>
+			</li>
+		</ol>
+	  </div>	
+	</main>
+</body>
+</html>
