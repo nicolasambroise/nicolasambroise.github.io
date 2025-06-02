@@ -21,6 +21,7 @@
 	
 	main {
 		display: flex;
+		padding: 0 10px;
 	}
 	
 	main .summary-wrapper {
@@ -31,8 +32,15 @@
 		margin-top: 0;
 	}
 	
-	.summary {
-		position:fixed;
+	@media (min-width: 45em) {
+		.summary {
+			position:fixed;
+			width: 200px;
+		}
+		
+		#full-text {
+			margin-left: 200px;
+		}
 	}
 	
 	</style>
@@ -73,7 +81,7 @@
 		  </nav>
 		</div>
 	  </div>
-	  <div>
+	  <div id="full-text">
 <h2 id="section1">Section 1</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id elementum nibh, id eleifend ligula. Nulla facilisi. Suspendisse a bibendum libero, eget auctor nibh. Curabitur non est nec velit fermentum vestibulum. Donec facilisis tortor sed cursus condimentum. Vestibulum laoreet pretium orci, eget tempus mi laoreet vitae. Cras mattis urna consectetur urna euismod, sed egestas velit lacinia. Sed interdum dolor a eros lobortis pulvinar. Sed dapibus hendrerit lacinia. Aliquam feugiat eros tempus, condimentum turpis tincidunt, finibus turpis. Pellentesque sit amet porttitor ante. Donec in nibh quam.</p>
 <h2 id="section2">Section 2</h2>

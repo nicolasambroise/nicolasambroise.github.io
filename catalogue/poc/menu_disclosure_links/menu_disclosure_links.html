@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Menu Disclosure avec pages passerelles et sans Hover </title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+	
+	
+	#headernav .navigation-container--primary {
+        margin-right: auto;
+        width: auto;
+		background-color: #efefef;
+    }
+	
+	#headernav .navigation-container--primary .nav--primary {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#headernav .navigation-container--primary .nav--primary > li {
+        box-sizing: border-box;
+        flex: 1 1 auto;
+        min-height: 100%;
+        position: relative;
+    }
+	
+	#headernav .navigation-container--primary .nav--primary > li ul {
+        background: #FAFAFA;
+        border-radius: 0;
+        display: none;
+        flex-wrap: wrap;
+        left: 0;
+        margin: .5rem 0 0;
+        padding: 1.8rem;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        width: 99%;
+        z-index: 2;
+    }
+	
+	#headernav .navigation-container--primary .nav--primary .main-link{
+	    padding: .25rem .625rem;
+	}
+	
+	@media (min-width: 500px) {
+		#headernav .navigation-container--primary .nav--primary {
+			align-items: center;
+			flex-direction: row;
+		}
+	}
+		
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+	<script src="../menu_disclosure/menu_disclosure.js"></script>
+</head>
+<body>
+	<svg class="iconset" style="display: none;" xmlns="http://www.w3.org/2000/svg">
+		<symbol id="icon-arrow-down" viewBox="0 0 24 24"><path d="M12 19.5c-.3 0-.6-.1-.8-.4l-11-13c-.4-.4-.3-1.1.1-1.4.4-.4 1.1-.3 1.4.1L12 17 22.2 4.9c.4-.4 1-.5 1.4-.1s.5 1 .1 1.4l-11 13c-.1.2-.4.3-.7.3"></path></symbol>
+		<symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M1.5 19.5c-.2 0-.4-.1-.6-.2-.4-.3-.5-1-.1-1.4l10.5-13c.2-.2.5-.4.8-.4s.6.1.8.4l11 13c.4.4.3 1.1-.1 1.4-.4.4-1.1.3-1.4-.1L12 7.1l-9.7 12c-.2.3-.5.4-.8.4"></path></symbol>
+	</svg>
+	<header>
+		<h1>POC Menu Disclosure avec pages passerelles et sans Hover </h1>
+		<nav class="page-headernav page-headernavdesktop" id="headernav" role="navigation" aria-label="Menu principal">
+		  <div class="navigation-container navigation-container--primary">
+			<ul class="nav nav--primary">
+			  <li class="nav-item has-subnav">
+				<a href="/fr/actualites.html" class="main-link">
+				  <span class="btn-text">Actualités</span>
+				</a>
+				<button aria-expanded="false" aria-controls="disclosure-nav-0" type="button" class="btn btn-borderless btn-disclosure btn--small">
+				  <span class="btn-text sr-only">Plus d'actualités</span>
+				  <span class="btn-icon">
+					<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+					  <use x="0" y="0" xlink:href="#icon-arrow-down"></use>
+					</svg>
+				  </span>
+				</button>
+				<ul id="disclosure-nav-0" class="anchor-destination">
+				  <li class="subnav-item">
+					<a href="/fr/actualites/actu-1.html"><span>Actualité 1</span></a>
+				  </li>
+				  <li class="subnav-item">
+					<a href="/fr/actualites/actu-2.html"><span>Actualité 2</span></a>
+				  </li>
+				  <li class="subnav-item">
+					<a href="/fr/actualites/actu-3.html"><span>Actualité 3</span></a>
+				  </li>
+				</ul>
+			  </li>
+			  <li class="nav-item has-subnav">
+			  	<a href="/fr/publications.html" class="main-link">
+				  <span class="btn-text">Publications</span>
+				</a>
+				<button aria-expanded="false" aria-controls="disclosure-nav-1" type="button" class="btn btn-borderless btn-disclosure btn--small">
+				  <span class="btn-text sr-only">Plus de publications</span>
+				  <span class="btn-icon">
+					<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+					  <use x="0" y="0" xlink:href="#icon-arrow-down"></use>
+					</svg>
+				  </span>
+				</button>
+				<ul id="disclosure-nav-1" class="anchor-destination">
+				  <li class="subnav-item">
+					<a href="/fr/publications/pub-1.html"><span>Publication 1</span></a>
+				  </li>
+				  <li class="subnav-item">
+					<a href="/fr/publications/pub-2.html"><span>Publication 2</span></a>
+				  </li>
+				  <li class="subnav-item">
+					<a href="/fr/publications/pub-3.html"><span>Publication 3</span></a>
+				  </li>
+				</ul>
+			  </li>
+			  <li class="nav-item">
+				<a href="/fr/support/contact.html" class="main-link">
+				  <span class="btn-text">Contact</span>
+				</a>
+			  </li>
+			</ul>
+		  </div>
+		</nav>
+	</header>
+	<main>
+		<h2 id="section1">Section 1</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id elementum nibh, id eleifend ligula. Nulla facilisi. Suspendisse a bibendum libero, eget auctor nibh. Curabitur non est nec velit fermentum vestibulum. Donec facilisis tortor sed cursus condimentum. Vestibulum laoreet pretium orci, eget tempus mi laoreet vitae. Cras mattis urna consectetur urna euismod, sed egestas velit lacinia. Sed interdum dolor a eros lobortis pulvinar. Sed dapibus hendrerit lacinia. Aliquam feugiat eros tempus, condimentum turpis tincidunt, finibus turpis. Pellentesque sit amet porttitor ante. Donec in nibh quam.</p>
+	</main>
+</body>
+</html>
