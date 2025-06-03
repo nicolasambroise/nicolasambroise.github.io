@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Table Sort</title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+	
+	table.sortable td,
+	table.sortable th {
+	  padding: 0.125em 0.25em;
+	  width: 8em;
+	}
+
+	table.sortable th {
+	  font-weight: bold;
+	  border-bottom: thin solid #888;
+	  position: relative;
+	}
+
+	table.sortable th.no-sort {
+	  padding-top: 0.35em;
+	}
+
+	table.sortable th:nth-child(5) {
+	  width: 10em;
+	}
+
+	table.sortable th button {
+	  padding: 4px;
+	  margin: 1px;
+	  font-size: 100%;
+	  font-weight: bold;
+	  background: transparent;
+	  border: none;
+	  display: inline;
+	  right: 0;
+	  left: 0;
+	  top: 0;
+	  bottom: 0;
+	  width: 100%;
+	  text-align: left;
+	  outline: none;
+	  cursor: pointer;
+	}
+
+	table.sortable th button span {
+	  position: absolute;
+	  right: 4px;
+	}
+
+	table.sortable th[aria-sort="descending"] span::after {
+	  content: "▼";
+	  color: currentcolor;
+	  font-size: 100%;
+	  top: 0;
+	}
+
+	table.sortable th[aria-sort="ascending"] span::after {
+	  content: "▲";
+	  color: currentcolor;
+	  font-size: 100%;
+	  top: 0;
+	}
+
+	table.show-unsorted-icon th:not([aria-sort]) button span::after {
+	  content: "♢";
+	  color: currentcolor;
+	  font-size: 100%;
+	  position: relative;
+	  top: -3px;
+	  left: -4px;
+	}
+
+	table.sortable td.num {
+	  text-align: right;
+	}
+
+	table.sortable tbody tr:nth-child(odd) {
+	  background-color: #ddd;
+	}
+
+	/* Focus and hover styling */
+
+	table.sortable th button:focus,
+	table.sortable th button:hover {
+	  padding: 2px;
+	  border: 2px solid currentcolor;
+	  background-color: #e5f4ff;
+	}
+
+	table.sortable th button:focus span,
+	table.sortable th button:hover span {
+	  right: 2px;
+	}
+
+	table.sortable th:not([aria-sort]) button:focus span::after,
+	table.sortable th:not([aria-sort]) button:hover span::after {
+	  content: "▼";
+	  color: currentcolor;
+	  font-size: 100%;
+	  top: 0;
+	}
+	
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+	<script src="./table_sort.js"></script>
+</head>
+<body>
+	<header>
+		<h1>POC Table Sort</h1>
+	</header>
+	<main>
+	  <div class="table-wrap">
+		<table class="sortable">
+		  <caption>
+			Students currently enrolled in WAI-ARIA 101
+			<span class="sr-only"> (column headers with buttons are sortable).</span>
+		  </caption>
+		  <thead>
+			<tr>
+			  <th>
+				<button>
+				  First Name
+				  <span aria-hidden="true"></span>
+				</button>
+			  </th>
+			  <th aria-sort="ascending">
+				<button>
+				  Last Name
+				  <span aria-hidden="true"></span>
+				</button>
+			  </th>
+			  <th>
+				<button>
+				  Company
+				  <span aria-hidden="true"></span>
+				</button>
+			  </th>
+			  <th class="no-sort">Address</th>
+			  <th class="num">
+				<button>
+				  Favorite Number
+				  <span aria-hidden="true"></span>
+				</button>
+			  </th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+			  <td>Fred</td>
+			  <td>Jackson</td>
+			  <td>Canary, Inc.</td>
+			  <td>123 Broad St.</td>
+			  <td class="num">56</td>
+			</tr>
+			<tr>
+			  <td>Sara</td>
+			  <td>James</td>
+			  <td>Cardinal, Inc.</td>
+			  <td>457 First St.</td>
+			  <td class="num">7</td>
+			</tr>
+			<tr>
+			  <td>Ralph</td>
+			  <td>Jefferson</td>
+			  <td>Robin, Inc.</td>
+			  <td>456 Main St.</td>
+			  <td class="num">513</td>
+			</tr>
+			<tr>
+			  <td>Nancy</td>
+			  <td>Jensen</td>
+			  <td>Eagle, Inc.</td>
+			  <td>2203 Logan Dr.</td>
+			  <td class="num">3.5</td>
+			</tr>
+		  </tbody>
+		</table>
+	  </div>
+	</main>
+</body>
+</html>
