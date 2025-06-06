@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Dialog Modal</title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+	
+	table td,
+	table th {
+	  padding: 0.125em 0.25em;
+	  width: 8em;
+	}
+
+	table th {
+	  font-weight: bold;
+	  border-bottom: thin solid #888;
+	  position: relative;
+	}
+
+	table th:nth-child(5) {
+	  width: 10em;
+	}
+
+	table td.num {
+	  text-align: right;
+	}
+
+	table tbody tr:nth-child(odd) {
+	  background-color: #ddd;
+	}
+	
+    [role="dialog"]{
+		-webkit-backdrop-filter: blur(10px);
+		backdrop-filter: blur(10px);
+		background: rgba(255, 255, 255, .8);
+		inset: 0;
+		position: fixed;
+		transform: translateX(100%);
+		transition: all .2s ease-in-out;
+		visibility: hidden;
+		z-index: 110;
+	}
+	
+	[role="dialog"][aria-hidden="false"]{
+		overflow-y: scroll;
+		transform: translateX(0);
+		visibility: visible;
+	}
+	
+	/* */
+	.dialog .btn-close-dialog {
+  display: none;
+}
+
+.dialog[aria-modal='true'] {
+  background: #000;
+  background: rgba(42, 42, 42, 0.69);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog[aria-modal='true'][aria-hidden='true'] {
+  display: none;
+}
+
+.dialog[aria-modal='true']>div {
+  background: #efefef;
+  border-radius: 0.625rem;
+  padding: 0.9375rem 1.25rem;
+  max-width: 39.375rem;
+  position: relative;
+  overflow: auto;
+  max-height: 90vh;
+}
+
+.dialog[aria-modal='true']>div>*:last-child {
+  margin-bottom: 0;
+}
+
+.dialog[aria-modal='true'] .btn-close-dialog {
+  background: #dbdbdb;
+  color: #535254;
+  border: 1px solid #dbdbdb;
+  border-radius: 1.25rem;
+  display: block;
+  line-height: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  text-align: center;
+  padding-inline: 0;
+  position: absolute;
+  top: 0.625rem;
+  right: 0.9375rem;
+  z-index: 1;
+}
+
+.dialog[aria-modal='true'] .btn-close-dialog svg {
+  fill: currentColor;
+}
+
+.dialog[aria-modal='true'] .btn-close-dialog:hover,
+.dialog[aria-modal='true'] .btn-close-dialog:focus {
+  background: #535254;
+  color: #dbdbdb;
+  border: 1px solid #535254;
+}
+
+.dialog[aria-modal='true'] .dialog-header {
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #e0e0e1;
+  border-radius: 0.625rem 0.625rem 0 0;
+  padding: 0.9375rem 3.75rem 0.9375rem 1.25rem;
+  margin: -0.9375rem -1.25rem 0.9375rem;
+}
+
+.dialog[aria-modal='true'] .dialog-header h2 {
+  color: #58585b;
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin: 0;
+}
+	
+
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<svg xmlns="http://www.w3.org/2000/svg" style="display: none;" class="is-hidden iconset">
+	  <symbol x="0px" y="0px" enable-background="new 0 0 24 24" id="icon-close" viewBox="0 0 24 24"><g><path d="M13.4,12L23.7,1.7c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0L12,10.6L1.7,0.3c-0.4-0.4-1-0.4-1.4,0c-0.4,0.4-0.4,1,0,1.4   L10.6,12L0.3,22.3c-0.4,0.4-0.4,1,0,1.4C0.5,23.9,0.7,24,1,24c0.3,0,0.5-0.1,0.7-0.3L12,13.4l10.3,10.3c0.2,0.2,0.5,0.3,0.7,0.3   c0.3,0,0.5-0.1,0.7-0.3c0.4-0.4,0.4-1,0-1.4L13.4,12z"></path></g><g display="none"><g display="inline"><line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0.5" y1="0.5" x2="23.5" y2="23.5"></line><line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="23.5" y1="0.5" x2="0.5" y2="23.5"></line></g></g></symbol>
+	</svg>
+	<header>
+		<h1>POC Dialog Modal</h1>
+	</header>
+	<main>
+		<button type="button" class="btn btn--small btn--dialog"  data-destination="dialog1" type="button" aria-haspopup="dialog">Open Dialog</button>
+		<div class="dialog" aria-hidden="true" aria-modal="true" role="dialog" aria-label="Boite de dialogue" id="dialog1">
+		  <div role="document">
+			<button class="btn btn-close-dialog btn-icon-only" type="button">
+				<span class="btn-icon"><svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+				  <use x="0" y="0" xlink:href="#icon-close"></use>
+				</svg></span><span class="btn-text sr-only">Fermer</span></button>
+			<div class="dialog-header">
+			  <h2>Titre</h2>
+			</div>
+			<p><a href="#">Link</a> Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 Paragraph 1 </p>
+			<p><a href="#">Link</a> Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 Paragraph 2 </p>
+			<p><a href="#">Link</a> Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 Paragraph 3 </p>
+			<p><a href="#">Link</a> Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 Paragraph 4 </p>
+			<p><a href="#">Link</a> Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 Paragraph 5 </p>
+		  </div>
+		</div>
+	 </main>
+	 <script>
+	/* Initialize Dialog Modal */
+	window.addEventListener(
+	  'load',
+	  function () {
+		document.querySelectorAll('.btn--dialog[data-destination]').forEach((el) => {
+		  el.onclick = (event) => {
+			const btnOpen = event.srcElement;
+			const dialog = document.getElementById(btnOpen.getAttribute("data-destination"))
+			dialog.setAttribute("aria-hidden","false");
+			  
+			// Close Button
+			const btnclose = dialog.querySelector(".btn-close-dialog");
+			btnclose.focus();
+			btnclose.onclick = (ev) => {
+			  dialog.setAttribute("aria-hidden","true");
+			  btnOpen.focus();
+			};
+			  
+			// Traptab + Echap
+			dialog.addEventListener('keydown', (event) => {
+              if (event.key === 'Tab') {
+			    // First we need to merge the elements inside the destination node and the trigger
+				const links = dialog.querySelectorAll('a,button,input,select,[tabindex="0"]');
+				const items = [...links];
+				const index = items.indexOf(event.target);
+				if (!event.shiftKey && index === items.length - 1) {
+				  event.preventDefault();
+				  links[0].focus();
+				} else if (event.shiftKey && index === 0) {
+				  event.preventDefault();
+				  links[links.length - 1].focus();
+				}
+			  }
+			  else if (event.key === 'Escape') {
+				document.querySelectorAll('[role="dialog"][aria-hidden="false"] .btn-close-dialog').forEach((el) => {
+				  el.click();
+				});
+			  }
+			});
+	      };
+		});
+	  },
+	  false
+	);
+	</script>
+  </body>
+</html>
