@@ -24,7 +24,7 @@
 		padding: 0 10px;
 	}
 	
-	main .summary-wrapper {
+	main .in-page-menu-wrapper {
 		min-width: 200px;
 	}
 	
@@ -32,15 +32,110 @@
 		margin-top: 0;
 	}
 	
+	ol>li.in-page-menu-item:before {
+	  content:none;
+	}
+	
 	@media (min-width: 45em) {
-		.summary {
+		.in-page-menu-wrapper {
 			position:fixed;
 			width: 200px;
+			padding-right: 10px;
 		}
 		
 		#full-text {
 			margin-left: 200px;
 		}
+	}
+	
+	/* *** */
+	.in-page-menu-anchor {
+	  background: #fff;
+	  border: 1px solid #acacac;
+	  border-radius: 0 0.9375rem 0.9375rem 0;
+	  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+	  color: #000;
+	  display: inline-block;
+	  font-weight: 600;
+	  font-size: 1rem;
+	  padding: 0.625rem 1.25rem;
+	  position: fixed;
+	  left: 0;
+	  bottom: 1.875rem;
+	  transform: translateX(0);
+	  transition: transform 200ms ease-in-out;
+	  z-index: 11;
+	}
+
+	.in-page-menu-anchor:hover,
+	.in-page-menu-anchor:focus {
+	  background: #dbdbdb;
+	  color: #000;
+	}
+
+	.in-page-menu-anchor.in-page-menu-anchor--hide {
+	  box-shadow: none;
+	  transform: translateX(-100%);
+	}
+
+	.in-page-menu-anchor.in-page-menu-anchor--hide:focus {
+	  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+	  transform: translateX(0);
+	}
+
+	.in-page-menu-nav {
+	  border-radius: 0.625rem;
+	  border: 1px solid #acacac;
+	  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+	  margin: 0.9375rem 0 1.875rem;
+	  overflow: hidden;
+	}
+
+	.in-page-menu-title {
+	  background: #fff;
+	  color: #000;
+	  font-size: 1.375rem;
+	  font-weight: 600;
+	  padding: 0.9375rem 1.25rem;
+	  margin: 0;
+	}
+
+	.in-page-menu-list {
+	  list-style-position: outside;
+	}
+
+	.in-page-menu-list,
+	.in-page-menu-item {
+	  margin: 0;
+	  padding: 0;
+	}
+
+	.in-page-menu-item {
+	  border-top: 1px solid #d1d1d1;
+	}
+
+	.in-page-menu-item::marker {
+	  color: transparent;
+	}
+
+	.in-page-menu-link {
+	  background: #fff;
+	  color: #000;
+	  display: block;
+	  font-size: 1rem;
+	  font-weight: normal;
+	  padding: 0.625rem 1.25rem;
+	  text-decoration: none;
+	}
+
+	.in-page-menu-link:hover,
+	.in-page-menu-link:focus {
+	  background: #e1e1e1;
+	  color: #000;
+	}
+	
+	.in-page-menu-link.is-active[aria-current="true"]{
+		font-weight: 700;
 	}
 	
 	</style>
@@ -51,49 +146,97 @@
 		<h1>POC Summary</h1>
 	</header>
 	<main>
-	  <div class="summary-wrapper">
-		<div class="summary">
-		  <h2 id="summary-title-334" class="summary-title">Summary</h2>
-		  <nav  class="summary-navigation"  role="navigation"  aria-labelledby="summary-title-334"
-		  >
-			<ol class="summary-list has-sublevel">
-			  <li class="summary-item summary-item--completed">
-				<a href="#section1" class="summary-item-text">Section 1</a>
-			  </li>
-			  <li class="summary-item summary-item--active" aria-current="true">
-				<a href="#section2" class="summary-item-text">Section 2</a>
-			  </li>
-			  <li class="summary-item">
-				<a href="#section3" class="summary-item-text">Section 3</a>
+	  <div class="in-page-menu-wrapper">
+	    <a href="#in-page-menu-nav-179" class="in-page-menu-anchor">Sommaire</a>
+	    <nav class="in-page-menu-nav" id="in-page-menu-nav-179" aria-labelledby="in-page-menu-title-180" role="navigation">
+		  <h2 id="in-page-menu-title-180" class="in-page-menu-title">Sommaire</h2>
+		  <ol class="in-page-menu-list">
+		    <li class="in-page-menu-item"><a href="#rubrique-1" class="in-page-menu-link">Rubrique 1</a></li>
+		    <li class="in-page-menu-item"><a href="#rubrique-2" class="in-page-menu-link">Rubrique 2</a></li>
+		    <li class="in-page-menu-item">
+				<a href="#rubrique-3" class="in-page-menu-link">Rubrique 3</a>
 				<ol>
-				  <li class="summary-item">
-					<a href="#section3-1" class="summary-item-text">Section 3.1</a>
+				  <li class="in-page-menu-item">
+					<a href="#rubrique-3-1" class="in-page-menu-link">Section 3.1</a>
 				  </li>
-				  <li class="summary-item">
-					<a href="#section3-2" class="summary-item-text">Section 3.2</a>
+				  <li class="in-page-menu-item">
+					<a href="#rubrique-3-2" class="in-page-menu-link">Section 3.2</a>
 				  </li>
 				</ol>
-			  </li>
-			  <li class="summary-item">
-				<a href="#section4" class="summary-item-text">Section 4</a>
-			  </li>
-			</ol>
-		  </nav>
-		</div>
+			</li>
+		    <li class="in-page-menu-item"><a href="#rubrique-4" class="in-page-menu-link">Rubrique 4</a></li>
+		  </ol>
+	    </nav>
 	  </div>
 	  <div id="full-text">
-<h2 id="section1">Section 1</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id elementum nibh, id eleifend ligula. Nulla facilisi. Suspendisse a bibendum libero, eget auctor nibh. Curabitur non est nec velit fermentum vestibulum. Donec facilisis tortor sed cursus condimentum. Vestibulum laoreet pretium orci, eget tempus mi laoreet vitae. Cras mattis urna consectetur urna euismod, sed egestas velit lacinia. Sed interdum dolor a eros lobortis pulvinar. Sed dapibus hendrerit lacinia. Aliquam feugiat eros tempus, condimentum turpis tincidunt, finibus turpis. Pellentesque sit amet porttitor ante. Donec in nibh quam.</p>
-<h2 id="section2">Section 2</h2>
-<p>Mauris a orci interdum, vulputate quam egestas, consectetur augue. Donec at massa id sem semper consectetur. Donec lectus orci, hendrerit vel odio finibus, rhoncus sodales felis. Vivamus dictum in urna vel porta. Sed id risus in odio vestibulum venenatis. Cras facilisis purus eget sem cursus, vitae luctus tortor malesuada. In id laoreet metus. Aliquam ac diam lorem. Duis at commodo purus. Pellentesque vel egestas neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In enim risus, semper vitae lectus ac, pharetra pellentesque diam. Praesent eros mi, sodales ac auctor et, laoreet vitae ante.</p>
-<h2 id="section3">Section 3</h2>
-<h3 id="section3-1">Section 3.1</h3>
-<p>Vestibulum dolor erat, blandit ac imperdiet sed, aliquam eget orci. Integer tellus magna, bibendum vitae feugiat at, elementum ac metus. Sed non arcu et felis suscipit fringilla eu vitae augue. Pellentesque commodo elit enim, at lacinia ex rhoncus in. Nullam dignissim imperdiet libero id iaculis. In non porta libero, vel gravida felis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed enim tortor, venenatis vulputate neque in, pellentesque pharetra lacus. Aliquam egestas felis purus, eget posuere risus sodales eu. Duis dictum elit ut consequat sodales. Vestibulum accumsan maximus efficitur. Pellentesque mi libero, dapibus sed metus eu, finibus ultricies ligula. Fusce ex sem, sodales interdum congue a, molestie sed tellus.</p>
-<h3 id="section3-2">Section 3.2</h3>
-<p>Vivamus rhoncus arcu id magna feugiat, id eleifend leo convallis. Maecenas porttitor porttitor sollicitudin. Sed vel diam commodo nibh hendrerit porta sed posuere libero. Praesent consequat velit sit amet malesuada facilisis. Quisque nec leo et diam venenatis auctor. Etiam sollicitudin tellus id laoreet sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin a scelerisque ipsum, a molestie tortor. Etiam a felis in enim malesuada pulvinar sit amet id leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vehicula, odio sed blandit commodo, magna erat posuere augue, in condimentum lorem magna nec erat. Nulla malesuada purus lectus, ut consequat magna lacinia quis.</p>
-<h2 id="section4">Section 4</h2>
-<p>Suspendisse rhoncus velit vitae dui vehicula ullamcorper. Fusce rhoncus augue purus, at faucibus urna rutrum ac. Pellentesque molestie ut nibh id condimentum. Nunc fringilla mattis ex quis imperdiet. Mauris vitae ligula sit amet risus pulvinar aliquam. Suspendisse sodales aliquet molestie. Donec elementum auctor mi non aliquet.</p>
+		<h2 id="rubrique-1">Section 1</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id elementum nibh, id eleifend ligula. Nulla facilisi. Suspendisse a bibendum libero, eget auctor nibh. Curabitur non est nec velit fermentum vestibulum. Donec facilisis tortor sed cursus condimentum. Vestibulum laoreet pretium orci, eget tempus mi laoreet vitae. Cras mattis urna consectetur urna euismod, sed egestas velit lacinia. Sed interdum dolor a eros lobortis pulvinar. Sed dapibus hendrerit lacinia. Aliquam feugiat eros tempus, condimentum turpis tincidunt, finibus turpis. Pellentesque sit amet porttitor ante. Donec in nibh quam.</p>
+		<h2 id="rubrique-2">Section 2</h2>
+		<p>Mauris a orci interdum, vulputate quam egestas, consectetur augue. Donec at massa id sem semper consectetur. Donec lectus orci, hendrerit vel odio finibus, rhoncus sodales felis. Vivamus dictum in urna vel porta. Sed id risus in odio vestibulum venenatis. Cras facilisis purus eget sem cursus, vitae luctus tortor malesuada. In id laoreet metus. Aliquam ac diam lorem. Duis at commodo purus. Pellentesque vel egestas neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In enim risus, semper vitae lectus ac, pharetra pellentesque diam. Praesent eros mi, sodales ac auctor et, laoreet vitae ante.</p>
+		<h2 id="rubrique-3">Section 3</h2>
+		<h3 id="rubrique-3-1">Section 3.1</h3>
+		<p>Vestibulum dolor erat, blandit ac imperdiet sed, aliquam eget orci. Integer tellus magna, bibendum vitae feugiat at, elementum ac metus. Sed non arcu et felis suscipit fringilla eu vitae augue. Pellentesque commodo elit enim, at lacinia ex rhoncus in. Nullam dignissim imperdiet libero id iaculis. In non porta libero, vel gravida felis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed enim tortor, venenatis vulputate neque in, pellentesque pharetra lacus. Aliquam egestas felis purus, eget posuere risus sodales eu. Duis dictum elit ut consequat sodales. Vestibulum accumsan maximus efficitur. Pellentesque mi libero, dapibus sed metus eu, finibus ultricies ligula. Fusce ex sem, sodales interdum congue a, molestie sed tellus.</p>
+		<h3 id="rubrique-3-2">Section 3.2</h3>
+		<p>Vivamus rhoncus arcu id magna feugiat, id eleifend leo convallis. Maecenas porttitor porttitor sollicitudin. Sed vel diam commodo nibh hendrerit porta sed posuere libero. Praesent consequat velit sit amet malesuada facilisis. Quisque nec leo et diam venenatis auctor. Etiam sollicitudin tellus id laoreet sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin a scelerisque ipsum, a molestie tortor. Etiam a felis in enim malesuada pulvinar sit amet id leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vehicula, odio sed blandit commodo, magna erat posuere augue, in condimentum lorem magna nec erat. Nulla malesuada purus lectus, ut consequat magna lacinia quis.</p>
+		<h2 id="rubrique-4">Section 4</h2>
+		<p>Suspendisse rhoncus velit vitae dui vehicula ullamcorper. Fusce rhoncus augue purus, at faucibus urna rutrum ac. Pellentesque molestie ut nibh id condimentum. Nunc fringilla mattis ex quis imperdiet. Mauris vitae ligula sit amet risus pulvinar aliquam. Suspendisse sodales aliquet molestie. Donec elementum auctor mi non aliquet.</p>
 		</div>
 	</main>
+	<script>
+		const inPageMenu = document.querySelector('.in-page-menu-list');
+		const inPageMenuItem = inPageMenu.querySelectorAll('a[href^="#"]');
+		const rubriques = document.querySelectorAll('[id^="rubrique-"]');
+			
+		let items = [...rubriques];
+		let positions = [];
+		
+		function updatePositions(){
+			for(let i = 0; i < rubriques.length ; i++){
+				positions[i] = rubriques[i].offsetTop + rubriques[i].offsetHeight - document.getElementsByTagName('main')[0].offsetTop;
+			}
+		}
+		updatePositions();
+
+		const scrollHandler = () => {
+			let current_position = document.documentElement.scrollTop;
+			let current_index = 0;
+			
+			positions.forEach((position, index) => {
+				if(position - current_position < 0) current_index = index
+			});
+		
+			inPageMenuItem.forEach((menuItem, index) => {
+				if(current_index == index){
+					menuItem.classList.add('is-active')
+					menuItem.setAttribute("aria-current","true");
+				}
+				else {
+					menuItem.classList.remove('is-active');
+					menuItem.setAttribute("aria-current","false");
+				}
+			});
+		}
+	
+		/* Initialize Dialog Modal */
+		window.addEventListener(
+		  'load',
+		  function () {
+			window.addEventListener('scroll', scrollHandler);
+			
+			inPageMenuItem.forEach(anchor => {
+				anchor.addEventListener('click', function (e) {
+					e.preventDefault();
+
+					document.querySelector(this.getAttribute('href')).scrollIntoView({
+						behavior: 'smooth'
+					});
+				});
+			});
+		  }
+	    );
+		
+		window.addEventListener("resize", updatePositions);
+	
+	</script>
 </body>
 </html>
