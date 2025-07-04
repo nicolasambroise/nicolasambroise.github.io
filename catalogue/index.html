@@ -57,10 +57,10 @@ footer{
 article{
     border: 1px solid darkblue;
     border-left: 5px solid darkblue;
-    padding: 5px 15px;
+    padding: 0 0 0 15px;
     margin-bottom: 25px;
 }
-article > h3{
+article > div > h3{
 	margin: 0;
     color: darkblue;
 }
@@ -69,6 +69,7 @@ article > div {
 	width:300px;
 	max-width: 100%;
 	display:inline-block;
+	margin-right:10px;
 }
 article > iframe {
 	width:650px;
@@ -78,6 +79,9 @@ article > iframe {
 	display:inline-block;
 	vertical-align: top;
     margin-top: 20px;
+	border: none;
+    border-left: 1px solid lightgray;
+    padding-left: 10px;
 }
     </style>
 </head>
@@ -112,288 +116,289 @@ article > iframe {
 			<li><a href="#anchor32">Menu disclosure avec Hover</a></li>
 			<li><a href="#anchor33">Menu disclosure-links</a></li>
 			<li><a href="#anchor34">Menu disclosure-links avec Hover</a></li>
-			<li><a href="#anchor36">Splitter</a></li>
-			<li><a href="#anchor40">Slider</a></li>
-			<li><a href="#anchor41">Custom radio</a></li>
+			<!--li><a href="#anchor36">Splitter</a></li-->
+			<!--li><a href="#anchor40">Slider</a></li-->
+			<!--li><a href="#anchor41">Custom radio</a></li-->
 			<li><a href="#anchor42">Custom radio large </a></li>
-			<li><a href="#anchor44">Read more : Article with fading</a></li>
-			<li><a href="#anchor45">Image with legend on hover</a></li>
-			<li><a href="#anchor46">Error message live-check</a></li>
+			<!--li><a href="#anchor44">Read more : Article with fading</a></li-->
+			<!--li><a href="#anchor45">Image with legend on hover</a></li-->
+			<!--li><a href="#anchor46">Error message live-check</a></li-->
 			<li><a href="#anchor48">Link with animation</a></li>
 		</ul>
 		<h2>Liste de composants</h2>
 		<article id="anchor1">
-			<h3 tabindex="-1">Button Dropdown/Disclosure</h3>
+			<div><h3 tabindex="-1">Button Dropdown/Disclosure</h3>
 			<div>
 				<p>Bouton servant à déplier un contenu (texte, menu ou liste d'action)<br>Dans l'exemple ci-contre le premier bouton affiche une description et le second affiche un menu en position absolu contenant des liens.</p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et script JS inspiré du DesignPattern W3C.</p>
 				<a href="./poc/disclosure/disclosure.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/disclosure/disclosure.html" title="POC disclosure"></iframe>
+			</div><iframe src="./poc/disclosure/disclosure.html" title="POC disclosure"></iframe>
 		</article>
 		<article id="anchor2">
-			<h3 tabindex="-1">Tooltip</h3>
+			<div><h3 tabindex="-1">Tooltip</h3>
 			<div>
 				<p>Pictogramme servant à afficher une infobulle<br>Dans l'exemple ci-contre, le click sur le picto "i" provoque l'affichage de l'infobulle.</p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et script JS inspiré du DesignPattern W3C.</p>
 				<a href="./poc/tooltip/tooltip.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/tooltip/tooltip.html" title="POC tooltip"></iframe>
+			</div><iframe src="./poc/tooltip/tooltip.html" title="POC tooltip"></iframe>
 		</article>
 		<article id="anchor3">
-			<h3 tabindex="-1">Counter Simple</h3>
+			<div><h3 tabindex="-1">Counter Simple</h3>
 			<div>
 				<p>Mise en place d'un compteur de caractère pour les champs input et textarea.</p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/counter/counter.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/counter/counter.html" title="POC Counter Simple"></iframe>
+			</div><iframe src="./poc/counter/counter.html" title="POC Counter Simple"></iframe>
 		</article>
 		<article id="anchor4">
-			<h3 tabindex="-1">Counter Complexe</h3>
+			<div><h3 tabindex="-1">Counter Complexe</h3>
 			<div>
 				<p>Mise en place d'un compteur de caractère pour les champs input et textarea. En plus de la version simple, ajout d'une annonce du dépassement du seuil.</p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/counter_complexe/counter_complexe.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/counter_complexe/counter_complexe.html" title="POC Counter Complexe"></iframe>
+			</div><iframe src="./poc/counter_complexe/counter_complexe.html" title="POC Counter Complexe"></iframe>
 		</article>
 		<article id="anchor6">
-			<h3 tabindex="-1">Material Design</h3>
+			<div><h3 tabindex="-1">Material Design</h3>
 			<div>
 				<p>Positionner le label dans le champ de saisie</p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/input_material/input_material.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/input_material/input_material.html" title="POC Material Design"></iframe>
+			</div><iframe src="./poc/input_material/input_material.html" title="POC Material Design"></iframe>
 		</article>
 		<article id="anchor7">
-			<h3 tabindex="-1">Checkbox/Switch SelectAll</h3>
+			<div><h3 tabindex="-1">Checkbox/Switch SelectAll</h3>
 			<div>
 				<p>Ajout de 2 liens pour selectionner ou déselectionner l'ensemble des checkbox d'un fieldset.</p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/checkbox_selectall/checkbox_selectall.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/checkbox_selectall/checkbox_selectall.html" title="POC Checkbox Select All"></iframe>
+			</div><iframe src="./poc/checkbox_selectall/checkbox_selectall.html" title="POC Checkbox Select All"></iframe>
 		</article>
 		<article id="anchor9">
-			<h3 tabindex="-1">Divider</h3>
+			<div><h3 tabindex="-1">Divider</h3>
 			<div>
 				<p>Mettre en place un espace entre 2 sections </p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et pas de script JS.</p>
 				<a href="./poc/divider/divider.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/divider/divider.html" title="POC Divider"></iframe>
+			</div><iframe src="./poc/divider/divider.html" title="POC Divider"></iframe>
 		</article>
 		<article id="anchor10">
-			<h3 tabindex="-1">Accordéon ShowAll</h3>
+			<div><h3 tabindex="-1">Accordéon ShowAll</h3>
 			<div>
 				<p>Bouton pour permettre l'ouverture (et la fermeture) des éléments  accordéons.</p>
 				<p>Structure et styles CSS inspirés du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/accordeon_showall/accordeon_showall.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/accordeon_showall/accordeon_showall.html" title="POC Accordéon"></iframe>
+			</div><iframe src="./poc/accordeon_showall/accordeon_showall.html" title="POC Accordéon"></iframe>
 		</article>
 		<article id="anchor11">
-			<h3 tabindex="-1">Tabs</h3>
+			<div><h3 tabindex="-1">Tabs</h3>
 			<div>
 				<p>Mise en place d'un système d'onglet compatible au clavier et en mobile.</p>
 				<p>Structure inspirée du DesignSystem Renow, style CSS custom en attendant la mise à jour du DS et script JS inspiré du DesignPattern W3C.</p>
 				<a href="./poc/tabs/tabs.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/tabs/tabs.html" title="POC tabs"></iframe>
+			</div><iframe src="./poc/tabs/tabs.html" title="POC tabs"></iframe>
 		</article>
 		<article id="anchor12">
-			<h3 tabindex="-1">Bloc Iteratif Add/Remove</h3>
+			<div><h3 tabindex="-1">Bloc Iteratif Add/Remove</h3>
 			<div>
 				<p>Ajout et retrait dynamique de Fieldset dans un formulaire</p>
 				<p>Structure et style CSS inspirés du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/iteratif/iteratif.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/iteratif/iteratif.html" title="POC Iteratif"></iframe>
+			</div><iframe src="./poc/iteratif/iteratif.html" title="POC Iteratif"></iframe>
 		</article>
 		<article id="anchor13">
-			<h3 tabindex="-1">Table Filter</h3>
+			<div><h3 tabindex="-1">Table Filter</h3>
 			<div>
 				<p>Tableau avec filtre disponible sur la première colonne.</p>
 				<p>Structure, style CSS et script JS custom.</p>
 				<a href="./poc/table_filter/table_filter.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/table_filter/table_filter.html" title="POC Table Filter"></iframe>
+			</div><iframe src="./poc/table_filter/table_filter.html" title="POC Table Filter"></iframe>
 		</article>
 		<article id="anchor14">
-			<h3 tabindex="-1">Table Sort</h3>
+			<div><h3 tabindex="-1">Table Sort</h3>
 			<div>
 				<p>Tableau avec tri disponible sur plusieurs en-tête de colonne.</p>
 				<p>Structure, style CSS et script JS inspiré du Design Pattern W3C.</p>
 				<a href="./poc/table_sort/table_sort.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/table_sort/table_sort.html" title="POC Table Sort"></iframe>
+			</div><iframe src="./poc/table_sort/table_sort.html" title="POC Table Sort"></iframe>
 		</article>
 		<article id="anchor15">
-			<h3 tabindex="-1">Table Pagination</h3>
+			<div><h3 tabindex="-1">Table Pagination</h3>
 			<div>
 				<p>Tableau avec pagination disponible sur plusieurs pages.</p>
 				<p>Structure, style CSS et script JS custom.</p>
 				<a href="./poc/table_pagination/table_pagination.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/table_pagination/table_pagination.html" title="POC Table Pagination"></iframe>
+			</div><iframe src="./poc/table_pagination/table_pagination.html" title="POC Table Pagination"></iframe>
 		</article>
 		<article id="anchor18">
-			<h3 tabindex="-1">Stepper Wizard</h3>
+			<div><h3 tabindex="-1">Stepper Wizard</h3>
 			<div>
 				<p>Le stepper wizard est utilisé comme indicateur horizontal de progression. Affichage réduit en mobile, avec affichage des nom d'étape au clic ou au survol.</p>
 				<p>Structure et CSS custom, pas de JS.</p> 
 				<a href="./poc/wizard/wizard.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/wizard/wizard.html" title="POC Wizard"></iframe>
+			</div><iframe src="./poc/wizard/wizard.html" title="POC Wizard"></iframe>
 		</article>
 		<article id="anchor19">
-			<h3 tabindex="-1">Carrousel manuel</h3>
+			<div><h3 tabindex="-1">Carrousel manuel</h3>
 			<div>
 				<p>Le carrousel désigne un diaporama dynamique qui permet d'afficher plusieurs contenus sur un même emplacement.</p>
 				<p>Structure inspirée de AEM Core, style CSS custom en attendant la mise à jour du DS et script JS qui fait appel au composant "tabs" ainsi que du script custom inspiré de AEM Core.</p>
 				<a href="./poc/carrousel/carrousel.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/carrousel/carrousel.html" title="POC carrousel"></iframe>
+			</div><iframe src="./poc/carrousel/carrousel.html" title="POC carrousel"></iframe>
 		</article>
 		<article id="anchor20">
-			<h3 tabindex="-1">Summary</h3>
+			<div><h3 tabindex="-1">Summary</h3>
 			<div>
 				<p>Liste de liens ancres permettant de naviguer dans une page.</p>
 				<p>Structure et style CSS du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/summary/summary.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/summary/summary.html" title="POC Summary"></iframe>
+			</div><iframe src="./poc/summary/summary.html" title="POC Summary"></iframe>
 		</article>
 		<article id="anchor21">
-			<h3 tabindex="-1">Closable Alert</h3>
+			<div><h3 tabindex="-1">Closable Alert</h3>
 			<div>
 				<p>Affichage d'alertes qui peuvent être fermer suite au clic sur un bouton de fermeture.</p>
 				<p>Structure inspirée du DesignSystem Renow, style CSS et script JS custom.</p>
 				<a href="./poc/alert/alert.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/alert/alert.html" title="POC Closable Alert"></iframe>
+			</div><iframe src="./poc/alert/alert.html" title="POC Closable Alert"></iframe>
 		</article>
 		<article id="anchor23">
-			<h3 tabindex="-1">Dialog Modal</h3>
+			<div><h3 tabindex="-1">Dialog Modal</h3>
 			<div>
 				<p>Bouton servant à ouvrir une fenêtre modale</p>
 				<p>Structure et style CSS du DesignSystem Renow et script JS custom.</p>
 				<a href="./poc/dialog_modal/dialog_modal.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/dialog_modal/dialog_modal.html" title="POC Dialog Modal"></iframe>
+			</div><iframe src="./poc/dialog_modal/dialog_modal.html" title="POC Dialog Modal"></iframe>
 		</article>
 		<article id="anchor30">
-			<h3 tabindex="-1">Menu links</h3>
+			<div><h3 tabindex="-1">Menu links</h3>
 			<div>
 				<p>Menu constitué uniquement de liens</p>
 				<p>Structure inspirée du DesignSystem Renow, style CSS custom et pas de JS.</p>
 				<a href="./poc/menu_links/menu_links.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/menu_links/menu_links.html" title="POC Menu links"></iframe>
+			</div><iframe src="./poc/menu_links/menu_links.html" title="POC Menu links"></iframe>
 		</article>
 		<article id="anchor31">
-			<h3 tabindex="-1">Menu disclosure</h3>
+			<div><h3 tabindex="-1">Menu disclosure</h3>
 			<div>
 				<p>Menu avec des sous-menu visible au clic</p>
 				<p>Structure inspirée du DesignSystem Renow, style CSS custom et script JS du DesignPattern W3C.</p>
 				<a href="./poc/menu_disclosure/menu_disclosure.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/menu_disclosure/menu_disclosure.html" title="POC Menu links"></iframe>
+			</div><iframe src="./poc/menu_disclosure/menu_disclosure.html" title="POC Menu links"></iframe>
 		</article>
 		<article id="anchor32">
-			<h3 tabindex="-1">Menu disclosure avec Hover</h3>
+			<div><h3 tabindex="-1">Menu disclosure avec Hover</h3>
 			<div>
 				<p>Menu avec des sous-menu visible au clic et au hover</p>
 				<p>Structure inspirée du DesignSystem Renow, style CSS custom et script JS du DesignPattern W3C.</p>
 				<a href="./poc/menu_disclosure_hover/menu_disclosure_hover.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/menu_disclosure_hover/menu_disclosure_hover.html" title="POC Menu links"></iframe>
+			</div><iframe src="./poc/menu_disclosure_hover/menu_disclosure_hover.html" title="POC Menu links"></iframe>
 		</article>
 		<article id="anchor33">
-			<h3 tabindex="-1">Menu disclosure-links</h3>
+			<div><h3 tabindex="-1">Menu disclosure-links</h3>
 			<div>
 				<p>Menu avec des sous-menu visible au clic. Les item de top niveau sont cliquable et redirige vers des pages passerelles</p>
 				<p>Structure inspirée du DesignSystem Renow, style CSS et script JS du DesignPattern W3C.</p>
 				<a href="./poc/menu_disclosure_links/menu_disclosure_links.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/menu_disclosure_links/menu_disclosure_links.html" title="POC Menu links"></iframe>
+			</div><iframe src="./poc/menu_disclosure_links/menu_disclosure_links.html" title="POC Menu links"></iframe>
 		</article>
 		<article id="anchor34">
-			<h3 tabindex="-1">Menu disclosure-links avec Hover</h3>
+			<div><h3 tabindex="-1">Menu disclosure-links avec Hover</h3>
 			<div>
 				<p>Menu avec des sous-menu visible au clic et au hover. Les item de top niveau sont cliquable et redirige vers des pages passerelles</p>
 				<p>Structure inspirée du DesignSystem Renow, style CSS et script JS du DesignPattern W3C.</p>
 				<a href="./poc/menu_disclosure_links_hover/menu_disclosure_links_hover.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/menu_disclosure_links_hover/menu_disclosure_links_hover.html" title="POC Menu links"></iframe>
+			</div><iframe src="./poc/menu_disclosure_links_hover/menu_disclosure_links_hover.html" title="POC Menu links"></iframe>
 		</article>
-		<article id="anchor36">
-			<h3 tabindex="-1">Splitter</h3>
+		<!--article id="anchor36">
+			<div><h3 tabindex="-1">Splitter</h3>
 			<div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum</p>
 				<a href="./poc" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/soon.html" title="POC disclosure"></iframe>
-		</article>
-		<article id="anchor40">
-			<h3 tabindex="-1">Slider</h3>
+			</div><iframe src="./poc/soon.html" title="POC disclosure"></iframe>
+		</article-->
+		<!--article id="anchor40">
+			<div><h3 tabindex="-1">Slider</h3>
 			<div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum</p>
 				<a href="./poc" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/soon.html" title="POC disclosure"></iframe>
-		</article>
-		<article id="anchor41">
-			<h3 tabindex="-1">Custom radio</h3>
+			</div><iframe src="./poc/soon.html" title="POC disclosure"></iframe>
+		</article-->
+		<!--article id="anchor41">
+			<div><h3 tabindex="-1">Custom radio</h3>
 			<div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum</p>
 				<a href="./poc" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/soon.html" title="POC disclosure"></iframe>
-		</article>
+			</div><iframe src="./poc/soon.html" title="POC disclosure"></iframe>
+		</article-->
 		<article id="anchor42">
-			<h3 tabindex="-1">Custom radio large </h3>
+			<div><h3 tabindex="-1">Custom radio large </h3>
 			<div>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum</p>
+				<p>Option pour afficher des listes de choix dans un formulaire en étapes</p>
+				<p>Structure, style CSS et script JS custom.</p>
 				<a href="./poc/radio_big/radio_big.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/radio_big/radio_big.html" title="POC Radio big"></iframe>
+			</div><iframe src="./poc/radio_big/radio_big.html" title="POC Radio big"></iframe>
 		</article>
-		<article id="anchor44">
-			<h3 tabindex="-1">Read more : Article with fading</h3>
+		<!--article id="anchor44">
+			<div><h3 tabindex="-1">Read more : Article with fading</h3>
 			<div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum</p>
 				<a href="./poc" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/soon.html" title="POC disclosure"></iframe>
-		</article>
-		<article id="anchor45">
-			<h3 tabindex="-1">Image with legend on hover</h3>
+			</div><iframe src="./poc/soon.html" title="POC disclosure"></iframe>
+		</article-->
+		<!--article id="anchor45">
+			<div><h3 tabindex="-1">Image with legend on hover</h3>
 			<div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum</p>
 				<a href="./poc" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/soon.html" title="POC disclosure"></iframe>
-		</article>
-		<article id="anchor46">
-			<h3 tabindex="-1">Error message live-check</h3>
+			</div><iframe src="./poc/soon.html" title="POC disclosure"></iframe>
+		</article-->
+		<!--article id="anchor46">
+			<div><h3 tabindex="-1">Error message live-check</h3>
 			<div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum sapien ac risus blandit, quis euismod enim tempor. Integer tempus neque ut diam varius blandit. Vestibulum purus risus, commodo in felis ac, accumsan maximus massa. Suspendisse laoreet hendrerit purus, ac iaculis quam elementum ac. Aliquam varius, ipsum a tincidunt gravida, lorem orci dictum nisi, vehicula lacinia purus erat at dui. Suspendisse volutpat eget purus non bibendum</p>
 				<a href="./poc" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/soon.html" title="POC disclosure"></iframe>
-		</article>
+			</div><iframe src="./poc/soon.html" title="POC disclosure"></iframe>
+		</article-->
 		<article id="anchor48">
-			<h3 tabindex="-1">Link with animation</h3>
+			<div><h3 tabindex="-1">Link with animation</h3>
 			<div>
 				<p>L'objectif ici est de pouvoir animer les liens au hover/focus et que cette animation ne pose pas de problème si on décide de masquer les images de background (ainsi que les linears gradients) </p>
 				<p>Structure conforme au DesignSystem Renow, style CSS custom et pas de script JS.</p>
 				
 				<a href="./poc/link_animated/link_animated.html" class="fullsize">Ouvrir en pleine page</a>
 			</div>
-			<iframe src="./poc/link_animated/link_animated.html" title="POC link animated"></iframe>
+			</div><iframe src="./poc/link_animated/link_animated.html" title="POC link animated"></iframe>
 		</article>
 			
 			<h2 tabindex="-1">Licence</h2>
