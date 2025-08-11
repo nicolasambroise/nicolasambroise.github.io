@@ -1,0 +1,1 @@
+import{_ as e,c as o,b as a,o as n}from"./app-DGxDvPaa.js";const r={};function l(s,t){return n(),o("div",null,t[0]||(t[0]=[a("p",null,"404 Not Found",-1)]))}const _=e(r,[["render",l]]),d=JSON.parse('{"path":"/404.html","title":"","lang":"fr","frontmatter":{"layout":"NotFound"},"headers":[],"git":{},"filePathRelative":null}');export{_ as comp,d as data};
