@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Slider</title>
+	<style>
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+	
+	header > h1{
+		margin-top:0;
+	}
+
+	.visually-hidden, .sr-only {
+	  clip: rect(0 0 0 0);
+	  clip-path: inset(50%);
+	  height: 1px;
+	  overflow: hidden;
+	  position: absolute;
+	  white-space: nowrap;
+	  width: 1px;
+	} 
+	
+	.cmp-slider{
+		position: relative;
+		width: 100%;
+	}
+
+	.cmp-slider__content{
+	    padding: 0 40px;
+	}
+
+	.cmp-slider .cmp-slider__action{
+		position: absolute;
+		top: 200px;
+		left:.5rem;
+		right:auto;
+		cursor: pointer;
+		width: 24px;
+		height: 36px;
+	}
+
+	.cmp-slider .cmp-slider__action.cmp-slider__action--next{
+		left:auto;
+		right:.5rem;
+	}
+
+	.cmp-slider .cmp-slider__action .cmp-slider__action-icon {
+		border-style: solid;
+		border-width: 2px 2px 0 0;
+		display: inline-block;
+		height: 12px;
+		left: 0;
+		transform: rotate(-135deg);
+		position: relative;
+		top: 0;
+		vertical-align: top;
+		width: 12px;
+	}
+	
+	.cmp-slider .cmp-slider__action.cmp-slider__action--next .cmp-slider__action-icon {
+		left: -4px;
+		transform: rotate(45deg);
+	}
+
+	.cmp-slider__items {
+	    display: flex;
+		align-items: stretch;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		list-style: none;
+		overflow-x: auto;
+		overflow-y: hidden;
+		gap: 0.5rem;
+		width: 100%;
+		scrollbar-color: #0067C6 #BFE7F8;
+		scrollbar-width: thin;
+	}
+	
+	.cmp-slider__item {
+		position: relative;
+		min-width: 250px;
+		background-color: lightgrey;
+	}
+
+	.cmp-slider__item img{
+		width: 100%
+	}
+
+	.cmp-teaser{
+	    display: flex;
+		flex-direction: column-reverse;
+	}
+
+	.cmp-teaser .cmp-teaser__content{
+		background-color: #fefefe;
+		padding: 5px 15px;
+		margin: 10px 5px;
+		width: auto;
+	}
+
+	.cmp-teaser a[href]::after {
+	  content: "";
+	  display: block;
+	  position: absolute;
+	  top: 0;  bottom: 0;  left: 0;  right: 0;
+	}
+	
+	.cmp-slider .cmp-slider__action{
+	  display: none;
+	}
+	
+	.cmp-slider .slider-overflow .cmp-slider__action{
+	  display: block;
+	}
+	
+	.cmp-slider .slider-overflow:not(.scrollEndReached) .cmp-slider__action.cmp-slider__action--previous {
+		display:none;
+	}
+
+	.cmp-slider .slider-overflow:not(.scrollStartReached) .cmp-slider__action.cmp-slider__action--next {
+		display:none;
+	}
+	
+	.slider-overflow.scrollEndReached .cmp-slider__items:before {
+		left: 40px;
+		content: "";
+		background: linear-gradient(90deg, #FFF, transparent);
+		width: 100px;
+		height: inherit;
+		display: block;
+		position: absolute;
+		top: 0;
+		height:100%;
+		z-index: 1;
+	}
+
+	.slider-overflow.scrollStartReached .cmp-slider__items:after {
+		right: 40px;
+		content: "";
+		background: linear-gradient(90deg, transparent, #FFF);
+		width: 100px;
+		height: inherit;
+		display: block;
+		position: absolute;
+		top: 0;
+		height:100%;
+		z-index: 1;
+	}
+	</style>
+	<!-- link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css"-->
+</head>
+<body>
+  <header>
+	<h1>POC Slider</h1>
+  </header>
+  <main>
+	<div id="slider-aaa" class="cmp-slider" role="region" aria-roledescription="slider" aria-label="Titre du carrousel"> 
+	  <div class="cmp-slider__content" aria-atomic="false" aria-live="polite">
+		<div class="cmp-slider__actions"> 
+		  <button class="cmp-slider__action cmp-slider__action--previous" type="button" aria-label="Précédent" title="Précédent">    
+			<span class="cmp-slider__action-icon"></span><span class="cmp-slider__action-text sr-only">Précédent</span>
+		  </button>
+		  <button class="cmp-slider__action cmp-slider__action--next" type="button" aria-label="Suivant" title="Suivant">
+			<span class="cmp-slider__action-icon"></span><span class="cmp-slider__action-text sr-only">Suivant</span>
+		  </button>
+		</div>
+		<div class="cmp-slider__items">
+			<div id="slider-aaa-item-111-tabpanel" class="cmp-slider__item cmp-slider__item--active" role="tabpanel" aria-roledescription="slide" aria-label="Slide 1 sur 7" tabindex="0">
+			  <div class="image">
+				<div class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+				  <img src="./xxx.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc xxx">
+				</div>
+			  </div>
+			</div>
+			<div id="slider-aaa-item-222-tabpanel" class="cmp-slider__item" role="tabpanel" aria-roledescription="slide" aria-label="Slide 2 sur 7" tabindex="0">
+			  <div class="teaser">
+				<div id="teaser-222" class="cmp-teaser">
+				  <div class="cmp-teaser__content">
+					<h2 class="cmp-teaser__title">Titre du Slide 2</h2>
+					<div class="cmp-teaser__description"><p>Description du Slide 2</p></div>
+				  </div>
+				  <div class="cmp-teaser__image">
+					<div id="teaser-222-image" class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+					  <img src="./yyy.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc yyy" title="Desc yyy">     
+					  <meta itemprop="caption" content="Desc yyy">
+				   </div>
+				 </div>
+				</div>
+			  </div>
+			</div>
+			<div id="slider-aaa-item-333-tabpanel" class="cmp-slider__item" role="tabpanel" aria-roledescription="slide" aria-label="Slide 3 sur 7" tabindex="0">
+			  <div class="teaser">
+				<div id="teaser-333" class="cmp-teaser">
+				  <div class="cmp-teaser__content">
+					<h2 class="cmp-teaser__title">
+					  <a class="cmp-teaser__link" data-cmp-clickable="" href="/zzz.html">Titre du Slide 3</a>
+					</h2>
+					<div class="cmp-teaser__description"><p>Description du Slide 3</p></div>
+				  </div>
+				  <div class="cmp-teaser__image">
+					  <div id="teaser-333-image" class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+						<img src="./zzz.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc zzz" title="Desc zzz">     
+						<meta itemprop="caption" content="Desc zzz">
+					 </div>
+				   </div>
+				</div>
+			  </div>
+			</div>
+			<div id="slider-aaa-item-444-tabpanel" class="cmp-slider__item cmp-slider__item--active" role="tabpanel" aria-roledescription="slide" aria-label="Slide 4 sur 7" tabindex="0">
+			  <div class="image">
+				<div class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+				  <img src="./xxx.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc xxx">
+				</div>
+			  </div>
+			</div>
+			<div id="slider-aaa-item-555-tabpanel" class="cmp-slider__item cmp-slider__item--active" role="tabpanel" aria-roledescription="slide" aria-label="Slide 5 sur 7" tabindex="0">
+			  <div class="image">
+				<div class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+				  <img src="./xxx.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc xxx">
+				</div>
+			  </div>
+			</div>
+			<div id="slider-aaa-item-666-tabpanel" class="cmp-slider__item cmp-slider__item--active" role="tabpanel" aria-roledescription="slide" aria-label="Slide 6 sur 7" tabindex="0">
+			  <div class="image">
+				<div class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+				  <img src="./xxx.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc xxx">
+				</div>
+			  </div>
+			</div>
+			<div id="slider-aaa-item-777-tabpanel" class="cmp-slider__item cmp-slider__item--active" role="tabpanel" aria-roledescription="slide" aria-label="Slide 7 sur 7" tabindex="0">
+			  <div class="image">
+				<div class="cmp-image" itemscope="" itemtype="http://schema.org/ImageObject">               
+				  <img src="./xxx.jpeg" class="cmp-image__image" itemprop="contentUrl" alt="Desc xxx">
+				</div>
+			  </div>
+			</div>
+		 </div>
+	  </div>
+	</div>
+  </main>
+<script>
+
+
+// Initialize Slider
+
+window.addEventListener(
+  'load',
+  function () {
+	  var sliders = document.querySelectorAll('.cmp-slider__items');
+	  for (var i = 0; i < sliders.length; i++) {
+		new toggleArrow(sliders[i]); // Addition
+		new registerArrow(sliders[i]); // Addition
+		new registerBlurSlider(sliders[i]); // Addition
+	  }
+  });
+
+// Addition
+window.addEventListener("resize", function () {
+  var sliders = document.querySelectorAll('.cmp-slider__items');
+  for (var i = 0; i < sliders.length; i++) {
+	toggleArrow(sliders[i]);
+  }
+});
+
+// Addition
+function toggleArrow(element){
+	var items = element.children;
+	var slider_width = 0; //element.getBoundingClientRect().width;
+	for (var i = 0; i < items.length; i++) {
+		slider_width += items[i].getBoundingClientRect().width
+	}
+	var sliderwrapper_width = element.parentElement.getBoundingClientRect().width;
+	//console.log(slider_width +" - "+sliderwrapper_width)
+	if(slider_width > sliderwrapper_width && !element.parentElement.classList.contains("slider-overflow")){
+		element.parentElement.classList.add("slider-overflow");
+		//console.log("add .slider-overflow");
+		blurSlider(element.parentElement)
+	}
+	else if(slider_width <= sliderwrapper_width && element.parentElement.classList.contains("slider-overflow")){
+		element.parentElement.classList.remove("slider-overflow");
+		//console.log("remove .slider-overflow");
+		blurSlider(element.parentElement)
+	}
+}
+
+// Addition -ok
+function registerArrow(element){
+	var previous = element.parentElement.querySelectorAll(".cmp-slider__action--previous")[0];
+	var next = element.parentElement.querySelectorAll(".cmp-slider__action--next")[0];
+	if(previous) previous.addEventListener("click", function () {element.scrollLeft -= 100;});
+	if(next) next.addEventListener("click", function () {element.scrollLeft += 100;});
+}
+
+// Addition
+function registerBlurSlider(element){
+	element.addEventListener("scroll", function () {
+	  blurSlider(this)
+	});
+	blurSlider(element)
+}
+
+// Addition
+function blurSlider(el){
+    //console.log("blurSlider");
+	var scrollLeft = el.scrollLeft
+	var maxScrollLeft = el.scrollWidth - el.clientWidth;
+	  
+  if (scrollLeft == maxScrollLeft) {
+	//console.log("scrollLeft = max")
+	el.parentElement.classList.add("scrollEndReached");
+	el.parentElement.classList.remove("scrollStartReached");	
+  }
+  else if(scrollLeft == 0){ 
+	//console.log("scrollLeft = 0")
+	el.parentElement.classList.add("scrollStartReached");
+	el.parentElement.classList.remove("scrollEndReached");
+  }
+  else {
+	el.parentElement.classList.add("scrollStartReached");
+	el.parentElement.classList.add("scrollEndReached");
+  }
+}
+
+
+</script>
+</body>
+</html>
