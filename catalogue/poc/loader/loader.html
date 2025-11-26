@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Loader</title>
+	<style>
+	
+	*, *:before, *:after {
+	  box-sizing: border-box;
+	}
+
+	*:not(code, pre) {
+	  font-family: sans-serif;
+	}
+
+	header > h1{
+		margin-top:0;
+	}	
+	
+	section {
+		min-height: 120px;
+		position: relative;
+		padding: 10px 20px;
+	}
+
+	.sr-only {
+		clip: rect(1px 1px 1px 1px);
+		clip: rect(1px,1px,1px,1px);
+		height: 1px;
+		overflow: hidden;
+		position: absolute!important;
+		width: 1px
+	}
+
+
+	.loader-mgu {
+		display:none;
+		background-color: #0000001a;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 100%;
+		width: 100%
+	}
+
+	.loader-mgu.is-active{
+		display:block;
+	}
+	
+	.loader-mgu.is-active + article{
+		filter: blur(5px);
+	}
+
+	.loader-mgu div.loader-mgu-center {
+		position: absolute;
+		list-style-type: none;
+		left: calc(50% - .7em);
+		top: 5rem; /*calc(50% - 4.2em);*/
+		display: inline-block;
+		text-indent: 2.8em
+	}
+
+	.loader-mgu div.loader-mgu-center div.loader-mgu-ext:after,.loader-mgu div.loader-mgu-center:after {
+		width: 1.4em;
+		height: 1.4em;
+		background-color: #706f6f;
+		border-radius: 100%
+	}
+
+	.loader-mgu div.loader-mgu-center div.loader-mgu-ext:after {
+		width: 1.19em;
+		height: 1.19em
+	}
+
+	.loader-mgu div.loader-mgu-center div.loader-mgu-ext:after,.loader-mgu div.loader-mgu-center:after {
+		content: "";
+		display: block
+	}
+
+	.loader-mgu div.loader-mgu-center:after {
+		position: absolute;
+		top: 2.8em;
+		left: 0;
+		background-color: #b22d36
+	}
+
+	.loader-mgu div.loader-mgu-ext {
+		position: absolute;
+		padding-bottom: 5.6em;
+		top: 0;
+		left: 0
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(1) {
+		transform: rotate(0);
+		animation-delay: .15625s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(1):after {
+		animation-delay: .15625s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(2) {
+		transform: rotate(45deg);
+		animation-delay: .3125s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(2):after {
+		animation-delay: .3125s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(3) {
+		transform: rotate(90deg);
+		animation-delay: .46875s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(3):after {
+		animation-delay: .46875s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(4) {
+		transform: rotate(135deg);
+		animation-delay: .625s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(4):after {
+		animation-delay: .625s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(5) {
+		transform: rotate(180deg);
+		animation-delay: .78125s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(5):after {
+		animation-delay: .78125s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(6) {
+		transform: rotate(225deg);
+		animation-delay: .9375s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(6):after {
+		animation-delay: .9375s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(7) {
+		transform: rotate(270deg);
+		animation-delay: 1.09375s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(7):after {
+		animation-delay: 1.09375s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(8) {
+		transform: rotate(315deg);
+		animation-delay: 1.25s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(8):after {
+		animation-delay: 1.25s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(9) {
+		transform: rotate(360deg);
+		animation-delay: 1.40625s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(9):after {
+		animation-delay: 1.40625s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(10) {
+		transform: rotate(405deg);
+		animation-delay: 1.5625s
+	}
+
+	.loader-mgu div.loader-mgu-ext:nth-child(10):after {
+		animation-delay: 1.5625s
+	}
+
+	.loader-mgu div.loader-mgu-ext {
+		animation: dotAnimation 2.5s infinite
+	}
+
+	.loader-mgu div.loader-mgu-ext:after {
+		animation: dotAnimationTwo 2.5s infinite
+	}
+
+
+	@keyframes dotAnimation {
+		0%,55%,to {
+			padding: 0 0 5.6em
+		}
+
+		5%,50% {
+			padding: 2.8em 0
+		}
+	}
+
+	@-webkit-keyframes dotAnimationTwo {
+		0%,55%,to {
+			opacity: 1;
+			transform: scale(1)
+		}
+
+		5%,50% {
+			opacity: .5;
+			transform: scale(.5)
+		}
+	}
+	
+	
+	</style>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/myguichet.css">
+</head>
+<body>
+	<svg class="iconset" style="display: none;" xmlns="http://www.w3.org/2000/svg">
+		<symbol id="icon-close" viewBox="0 0 24 24"><path d="M13.4 12 23.7 1.7c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0L12 10.6 1.7.3C1.3-.1.7-.1.3.3c-.4.4-.4 1 0 1.4L10.6 12 .3 22.3c-.4.4-.4 1 0 1.4.2.2.4.3.7.3.3 0 .5-.1.7-.3L12 13.4l10.3 10.3c.2.2.5.3.7.3.3 0 .5-.1.7-.3.4-.4.4-1 0-1.4L13.4 12z"></path></symbol>
+	</svg>
+	<header>
+		<h1>POC Loader</h1>
+	</header>
+	<main>
+		<div>
+			<button class="btn btn-primary btn--small" type="button" id="refreshBtn">Refresh section (5s)</button>
+		</div>
+		  <section>
+			  <div role="status" aria-live="polite">
+				  <div class="loader-mgu" >
+					  <div class="sr-only"></div>
+					  <div class="loader-mgu-center" aria-hidden="true">
+						<div class="loader-mgu-ext"></div>
+						<div class="loader-mgu-ext"></div>
+						<div class="loader-mgu-ext"></div>
+						<div class="loader-mgu-ext"></div>
+						<div class="loader-mgu-ext"></div>
+						<div class="loader-mgu-ext"></div>
+						<div class="loader-mgu-ext"></div>
+						<div class="loader-mgu-ext"></div>
+					  </div>
+				  </div>
+			  </div>
+			  <article aria-hidden="false">
+				<h2>Lorem ipsum</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas non maximus augue. Pellentesque sit amet porta diam. Nunc in nunc sem. Cras ac cursus nulla. Etiam suscipit posuere est, in fringilla elit dapibus quis. Proin efficitur feugiat euismod. Cras eros quam, dignissim sit amet interdum at, rutrum vitae tellus. Ut nibh arcu, scelerisque eu enim in, gravida facilisis quam.
+					</p>
+					<p>
+					Donec scelerisque ligula eget enim faucibus aliquet. Proin diam neque, tempor non ullamcorper ac, ultrices pulvinar dolor. Proin sit amet enim ac neque euismod interdum. Vestibulum lobortis tellus metus, quis fermentum libero tincidunt ut. Mauris at odio diam. Fusce lobortis pretium enim et vehicula. Integer efficitur lacus eu gravida scelerisque. Duis molestie laoreet nibh id dictum. Quisque euismod condimentum commodo. Nullam mattis nulla quis ex rhoncus molestie. Suspendisse potenti. Suspendisse eu sem at felis pharetra fringilla a a urna. Aliquam at metus rutrum, aliquam diam ac, sagittis lacus. Nullam vel scelerisque libero. Vestibulum dignissim porta massa eu suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+					</p>
+					<p>
+					Sed eu metus a nisi faucibus molestie. Sed sit amet ante sed mi pharetra congue a a quam. Aliquam a luctus lacus, at pharetra odio. Proin a gravida nibh. Cras ex turpis, sagittis sed mauris at, convallis consectetur diam. Phasellus massa nulla, condimentum ac nisi non, commodo pulvinar erat. Phasellus at sapien sem. Sed mi massa, ultricies vel euismod ornare, malesuada a felis. Ut fringilla scelerisque ante, ac dignissim risus pretium blandit. <a href="#">link</a>
+					</p>
+			  </article>
+		</section>
+	</main>
+</body>
+<script>
+	const refreshBtn = document.getElementById('refreshBtn');
+	const loadingSpinner = document.querySelector('.loader-mgu');
+	const contentSection = document.querySelector('section article');
+	const contentSectionLinks = contentSection.querySelectorAll('a');
+	
+	function showLoadingSpinner() {
+	  loadingSpinner.classList.add('is-active')
+	  loadingSpinner.firstElementChild.innerHTML = "<p>Chargement en cours</p>";
+	  contentSection.setAttribute('aria-hidden', 'true');
+	  for (var i=0; i < contentSectionLinks.length; i++) {
+		contentSectionLinks[i].setAttribute('tabindex','-1');
+	  }
+	  document.body.style.overflow = 'hidden';
+
+	  setTimeout(() => {hideLoadingSpinner();}, 5000); 
+	}
+
+	function hideLoadingSpinner() {
+	  loadingSpinner.firstElementChild.innerHTML = "<p>Chargement terminé</p>";
+	  contentSection.setAttribute('aria-hidden', 'false');
+		for (var i=0; i < contentSectionLinks.length; i++) {
+		contentSectionLinks[i].removeAttribute('tabindex');
+	  }
+	  document.body.style.overflow = 'auto';
+	  setTimeout(() => {
+		loadingSpinner.classList.remove('is-active');
+		loadingSpinner.firstElementChild.innerHTML = "";
+	  }, 200); 
+	}
+
+	refreshBtn.addEventListener('click', () => {
+	  showLoadingSpinner();
+	});
+</script>
+</html>
