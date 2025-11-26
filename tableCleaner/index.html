@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Script pour enlever les attributs obsolètes des tableaux</title>
+	<meta name="description" content="Ce script sert à enlever les attributs obsolètes des tableaux avant leur importation dans AEM">
+	<link rel="stylesheet" href="./richtexteditor/rte_theme_default.css" />
+	<script type="text/javascript" src="./richtexteditor/rte.js"></script>
+	<script type="text/javascript" src='./richtexteditor/plugins/all_plugins.js'></script>
+	<link rel="stylesheet" href="https://storybook.renow.lu/assets/ctie.css" />
+	<style>
+	html {
+		font-size: 62.5%;
+	}
+	
+	header,main,footer{
+		max-width: 1020px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	h1 {
+		margin-top: .5em;
+		border-bottom: 1px solid #eaecef;
+	}
+	h1 strong{
+		text-transform: uppercase; 
+		display:block;
+	}
+
+	article{
+		margin-bottom:10px;
+	}
+
+	#tablecaption{
+		width: 350px;
+		max-width: 100%;
+		margin-left: 5px;
+	}
+	#tablecaption[readonly]{
+		cursor: not-allowed;
+	}
+	
+	.form-group-inline > div{
+		display: inline;
+	}
+	details[open] > .accordion-panel{
+	    display: flex;
+		justify-content: space-around;
+	}
+	textarea{
+		min-height: 10rem;
+	}
+	.richtexteditor rte-plusbtn,
+	.richtexteditor rte-powerby > a,
+	.richtexteditor rte-floatpanel{
+		display:none !important;
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px;
+		overflow: hidden;
+		position: absolute !important;
+		width: 1px;
+	}
+	.btn-group{margin-top:1rem;}
+	
+
+	</style>
+</head>
+<body>
+    <header>
+        <h1><strong lang="en">Table cleaner</strong> Script pour enlever les attributs obsolètes des tableaux</h1>
+    </header>
+	<main>
+		<article class="markdown-body entry-content container-lg" itemprop="text">
+			<h2>Etape 1 - Coller votre tableau Excel/Word à nettoyer</h2>
+			
+			<textarea name="" id="input" cols="30" rows="15" class="form-control"></textarea>
+			
+			<details class="accordion">
+  <summary class="accordion-summary">
+    <h3 class="accordion-header">Afficher les options avancées</h3>
+  </summary>
+  <div class="accordion-panel">
+
+
+			<div class="form-group">
+			  <fieldset class="form-options form-options--checkbox">
+				<legend class="label form-options-legend">Vos options:</legend>
+				<div class="form-options-wrapper">
+				  <ul class="form-options-content">
+					<li class="form-options-group">
+					  <label for="removestyle" class="form-options-label">
+						<input type="checkbox" id="removestyle" class="form-options-field form-options-field--checkbox" name="removestyle" value="removestyle" checked=""><span class="form-options-description">Enlever les styles inline</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="removeclass" class="form-options-label">
+						<input type="checkbox" id="removeclass" class="form-options-field form-options-field--checkbox" name="removeclass" value="removeclass" checked=""><span class="form-options-description">Enlever les CSS Classes</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="removeid" class="form-options-label">
+						<input type="checkbox" id="removeid" class="form-options-field form-options-field--checkbox" name="removeid" value="removeid" checked=""><span class="form-options-description">Enlever les ID</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="removebr" class="form-options-label">
+						<input type="checkbox" id="removebr" class="form-options-field form-options-field--checkbox" name="removebr" value="removebr" checked=""><span class="form-options-description">Enlever les balises br</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="removep" class="form-options-label">
+						<input type="checkbox" id="removep" class="form-options-field form-options-field--checkbox" name="removep" value="removep" checked=""><span class="form-options-description">Enlever les paragraphes vide</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="removeold" class="form-options-label">
+						<input type="checkbox" id="removeold" class="form-options-field form-options-field--checkbox" name="removeold" value="removeold" checked=""><span class="form-options-description">Enlever les attributs obsolètes</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="updateold" class="form-options-label">
+						<input type="checkbox" id="updateold" class="form-options-field form-options-field--checkbox" name="updateold" value="updateold" checked=""><span class="form-options-description">Modifier les balises obsolètes</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="minify" class="form-options-label">
+						<input type="checkbox" id="minify" class="form-options-field form-options-field--checkbox" name="minify" value="minify" checked=""><span class="form-options-description">Minifier le code</span>
+					  </label>
+					</li>
+				  </ul>
+				</div>
+			  </fieldset>
+			</div>
+			
+				<div class="form-group">
+				  <fieldset class="form-options form-options--radio">
+					<legend class="label form-options-legend">Affichage du titre</legend>
+					<div class="form-options-wrapper">
+					  <ul class="form-options-content">
+						<li class="form-options-group">
+						  <label for="displaycaption-0" class="form-options-label">
+							<input type="radio" id="displaycaption-0" class="form-options-field form-options-field--radio" name="displaycaption" value="1" checked=""><span class="form-options-description">Balise caption visible</span>
+						  </label>
+						</li>
+						<li class="form-options-group">
+						  <label for="displaycaption-1" class="form-options-label">
+							<input type="radio" id="displaycaption-1" class="form-options-field form-options-field--radio" name="displaycaption" value="2"><span class="form-options-description">Balise caption invisible</span>
+						  </label>
+						</li>
+						<li class="form-options-group">
+						  <label for="displaycaption-2" class="form-options-label">
+							<input type="radio" id="displaycaption-2" class="form-options-field form-options-field--radio" name="displaycaption" value="3"><span class="form-options-description">Titre H2</span>
+						  </label>
+						</li>
+						<li class="form-options-group">
+						  <label for="displaycaption-3" class="form-options-label">
+							<input type="radio" id="displaycaption-3" class="form-options-field form-options-field--radio" name="displaycaption" value="3"><span class="form-options-description">Titre H3</span>
+						  </label>
+						</li>
+					  </ul>
+					</div>
+				  </fieldset>
+				</div>
+			  </div>
+			</details>
+		  
+			<h2>Etape 2 - En-tête du tableau</h2>	  
+		    <div class="form-group">
+			  <fieldset class="form-options form-options--checkbox">
+				<legend class="label form-options-legend sr-only">Présence d'en-tête</legend>
+				<div class="form-options-wrapper">
+				  <ul class="form-options-content">
+					<li class="form-options-group">
+					  <label for="scoperow" class="form-options-label">
+						<input type="checkbox" id="scoperow" class="form-options-field form-options-field--checkbox" name="scoperow" value="scoperow"><span class="form-options-description">En-tête de ligne</span>
+					  </label>
+					</li>
+					<li class="form-options-group">
+					  <label for="scopecol" class="form-options-label">
+						<input type="checkbox" id="scopecol" class="form-options-field form-options-field--checkbox" name="scopecol" value="scopecol" checked=""><span class="form-options-description">En-tête de colonne</span>
+					  </label>
+					</li>
+				  </ul>
+				</div>
+			  </fieldset>
+			</div>
+		  
+		  
+			<h2>Etape 3 - Titre du tableau</h2>
+				
+				<div class="form-group form-group-inline">
+				  <div class="form-group-label">
+					<label for="tablecaption">Titre</label>
+				  </div>
+				  <div class="form-group-field">
+					<input type="text" id="tablecaption" name="tablecaption" aria-describedby="tablecaptiondesc" value="TEST">
+					<div class="msg msg--info" id="tablecaptiondesc">
+					  <p><em>Note</em> : <strong>Uniquement</strong> pour les tableaux avec en-tête.</p>
+					</div>
+				  </div>
+				</div>
+				
+				
+				
+		  
+		  
+			<h2>Etape 4 - Finalisation</h2>
+				<button class="btn btn-primary" id="cleanHTML">Nettoyer mon tableau</button>
+			<br>
+			<h2>Etape 5 - Résultat</h2>			  	  
+			<textarea id="output_rte" name="output_rte" cols="30" rows="5" readonly=""></textarea>
+			<textarea id="output_html" name="output_html" cols="30" rows="5" readonly="" class="sr-only"></textarea>
+			<div id="output_text" class="sr-only"></div>
+			  
+			<ul class="btn-group">
+				<li><button class="btn btn-primary" id="addText2Clipboard">Copier le tableau pour AEM</button>	
+				</li>
+				<li><button class="btn btn-secondary" id="addHTML2Clipboard">Copier le code html du tableau</button>
+				</li>
+			</ul>  
+			  
+			
+						  
+		    
+		</article>
+	</main>
+
+<script>
+
+	// https://richtexteditor.com/docs/cmd_allcommands.aspx
+	var editor1cfg = {}
+	editor1cfg.toolbar = "mytoolbar";
+	editor1cfg.svgCode_generate = '<svg viewBox="-2 -2 20 20" fill="#5F6368" style="width: 100%; height: 100%;"><path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z" clip-rule="evenodd"></path></svg>';
+	editor1cfg.toolbar_mytoolbar = "{bold,italic}|{insertorderedlist,insertunorderedlist}|removeformat|code"
+		+ "#{newdoc,generate,undo,redo,fullscreenenter,fullscreenexit}";	
+	editor1cfg.url_base = "https://webux.gouv.etat.lu/a11y/a11y_tableCleaner/richtexteditor";
+	
+	var editor_input = new RichTextEditor("#input", editor1cfg);
+	
+	editor_input.attachEvent("exec_command_generate", function (state, cmd, value) {
+		state.returnValue = true;//set it has been handled
+		console.log("Clean textarea");
+
+		if (window.confirm("Do you really want to replace current content by lorem ipsum ?")) {
+		 editor_input.setHTMLCode('<table border="1" cellspacing="0" cellpadding="0" id="mytable" class="table" style="width:100%;"><tbody><tr><td width="236" valign="top">Heading 1</td><td width="365" valign="top">Heading 2</td></tr><tr><td width="236" valign="top">Item 1<br></br></td><td width="365" valign="top">Item 2<p>&nbsp</p></td></tr></tbody></table>');
+		}
+	});
+	
+	var editor2cfg = {}
+	editor2cfg.readOnly = true;
+	editor2cfg.toolbar = "none";
+	editor2cfg.toolbar_none = "code";
+	editor2cfg.url_base = "https://webux.gouv.etat.lu/a11y/a11y_tableCleaner/richtexteditor";
+	
+	var editor_output = new RichTextEditor("#output_rte", editor2cfg);
+
+	/*
+		Auteur : Nicolas AMBROISE
+		webux_access@ctie.etat.lu
+	*/
+
+	window.addEventListener('load', function(event) {
+
+		// Get references to the elements
+		const cleanButton = document.getElementById('cleanHTML');
+		const addText2Clipboard = document.getElementById('addText2Clipboard');
+		const addHTML2Clipboard = document.getElementById('addHTML2Clipboard');
+		const outputHTMLField = document.getElementById('output_html');
+		const outputRTEField = document.getElementById('output_rte');
+		const outputTextField = document.getElementById('output_text');
+		
+		const tablecaption = document.getElementById('tablecaption');
+		const hidecaption = document.getElementById('hidecaption');
+		const scoperow = document.getElementById('scoperow');
+		const scopecol = document.getElementById('scopecol');
+
+		const space = document.createTextNode("\n");
+		const debug = true;
+
+		cleanButton.addEventListener('click', function() {
+			  console.log('clean');
+			  
+			  // get input
+			  let input = editor_input.getHTMLCode();
+			  let strippedString = input.replace(/[\n\r\t]/gm, "");
+
+			  // trim
+			  strippedString = strippedString.substring(strippedString.indexOf("<table"));
+			  strippedString = strippedString.substring(0,strippedString.indexOf("</table>") + 8);
+			  
+			  
+			  // Checkboxes for br, p 
+			  const removeBrCheckbox = document.getElementById('removebr');
+			  const removePCheckbox = document.getElementById('removep');
+			  
+			  if (removeBrCheckbox.checked) {
+				strippedString = strippedString.replace(/<\/?br[^>]*>/g, "");
+			  }
+
+			  if (removePCheckbox.checked) {
+				strippedString = strippedString.replace(/\u00a0/g, " ").replace(/&nbsp;/g, " ").replace(/\xA0/g," ").replace(/<p> <\/p>/g, "").replace(/<\/?p[^>]*>/g, "");
+			  }
+			  
+			  // Checkboxes for style, id, class and old elements
+			  const removeStyleCheckbox = document.getElementById('removestyle');
+			  const removeIdCheckbox = document.getElementById('removeid');
+			  const removeClassCheckbox = document.getElementById('removeclass');
+			  const removeOldCheckbox = document.getElementById('removeold');	
+			  const updateOldCheckbox = document.getElementById('updateold');			  
+		
+			  if (removeStyleCheckbox.checked) {
+				strippedString = strippedString.replace(/(style=".+?")/gm, '');
+			  }
+
+			  if (removeIdCheckbox.checked) {
+				strippedString = strippedString.replace(/(id=".+?")/gm, '');
+			  }
+
+			  if (removeClassCheckbox.checked) {
+				strippedString = strippedString.replace(/(class=".+?")/gm, '');
+			  } 
+			  if (removeOldCheckbox.checked) {
+				strippedString = strippedString
+					.replace(/(width=".+?")/gm, '')
+					.replace(/(height=".+?")/gm, '')
+					.replace(/(border=".+?")/gm, '')
+					.replace(/(cellspacing=".+?")/gm, '') 
+					.replace(/(cellpadding=".+?")/gm, '')
+					.replace(/(valign=".+?")/gm, '')
+					.replace(/(align=".+?")/gm, '')
+					.replace(/(bgcolor=".+?")/gm, '')
+					.replace(/(frame=".+?")/gm, '')
+					.replace(/(rules=".+?")/gm, '')
+					.replace(/(summary=".+?")/gm, '')
+			  } 
+			  if (updateOldCheckbox.checked) {
+				strippedString = strippedString
+					.replaceAll('<b>', '<strong>')
+					.replaceAll('</b>', '</strong>')
+					.replaceAll('<i>', '<em>')
+					.replaceAll('</i>', '</em>');
+			  } 
+		      //if(debug) console.log(strippedString)
+			  			  
+			  const template = document.createElement('template');
+			  template.innerHTML = strippedString;		  
+			  const tables = Array.from(template.content.childNodes).filter(item => item.tagName == 'TABLE');		  
+			  let table = tables[0];  
+			  
+			  if(debug) console.log(table);
+			  
+			  const displaycaption = document.querySelector('input[type=radio][name="displaycaption"]:checked');
+			  
+			  if(table.length == 0 || table.tagName != 'TABLE') { alert("Votre code ne commence pas par un tableau"); outputField.value = "Error";}
+			  else if(tablecaption.value == "" && (scoperow.checked || scopecol.checked) && table.getElementsByTagName("caption").length == 0){alert("Votre tableau n'a pas de titre !"); outputField.value = "Error";}
+			  else {
+			  
+				const caption = table.getElementsByTagName("caption");
+				const hastbody = table.getElementsByTagName("tbody");
+				const hasthead = table.getElementsByTagName("thead");
+	  
+				  if(hastbody.length == 0){
+					var tbody = document.createElement("tbody");
+					tbody.innerHTML = "\n  " + table.innerHTML + "\n";
+					table.innerHTML = '';
+					table.insertBefore(tbody, table.children[0]);
+				  }
+					  
+				  if(tablecaption.value != "" && ( scoperow.checked || scopecol.checked )) {
+					if(caption.length > 0){ 
+						alert("Votre tableau contient déjà une balise <caption>, celle-ci sera remplacé par le titre choisi !");
+						for(let i=0; i < caption.length; i++){
+							caption[i].remove();
+						}
+					}
+					
+					
+					if(displaycaption.id == "displaycaption-0" ||displaycaption.id == "displaycaption-1"){
+					
+					  let new_caption = document.createElement("caption");
+					  new_caption.innerHTML = tablecaption.value;	
+					  if(displaycaption.id == "displaycaption-1") {new_caption.classList.add("sr_only");}
+					  table.insertBefore(new_caption, table.children[0]);
+					  table.insertBefore(space, table.children[1]);
+					}
+					else if(displaycaption.id == "displaycaption-2" || displaycaption.id == "displaycaption-3"){
+					
+					  let newtable = document.createElement("div");
+					  let header = document.createElement("h2");
+					  if(displaycaption.id == "displaycaption-3") {header = document.createElement("h3")}
+					  header.innerHTML = tablecaption.value;	
+					  header.id = "caption"
+					  table.setAttribute("aria-describedby",header.id);
+					  newtable.append(header);
+					  newtable.append(table);
+					  table = newtable;
+					 
+					}
+				  }
+				  
+				  const trlist = table.getElementsByTagName("tr");
+
+				  
+				  // Si scoperow=true et scopecol=false : transformer la première balise de chaque <tr> en <th scope="row">
+				  if(scoperow.checked && !scopecol.checked) {
+				  
+					if(debug) console.log(trlist)
+					if(debug) console.log(trlist.length)
+				  
+					for(var i = 0; i < trlist.length; i++){
+					  var td = Array.from(trlist[i].childNodes).filter(item => item.nodeName != '#text');
+					   
+						//console.log(td)
+						//console.log(td[0].tagName)
+						//console.log(td[0].parentNode)
+					   
+						if(td[0].tagName == 'TD'){ 
+						  var th = document.createElement("th");
+						  th.innerHTML = td[0].innerHTML;
+						  th.setAttribute("scope","row");
+						  td[0].parentNode.insertBefore(th, td[0]);
+						  td[0].remove();
+						}
+					 };
+				  
+				  }
+				  
+				  // Si scoperow=false et scopecol=true : Ajouter le <thead> et transformer toutes les balises de la première <tr> en <th scope="col">
+				  else if(!scoperow.checked && scopecol.checked) {
+					let td = Array.from(trlist[0].childNodes).filter(item => item.nodeName != '#text');
+					const first_row = trlist[0];
+				  
+					for(var i = 0; i < td.length; i++){
+						if(td[i].tagName == 'TD'){ 
+						  var th = document.createElement("th");
+						  th.innerHTML = td[i].innerHTML;
+						  th.setAttribute("scope","col");
+						  td[i].parentNode.insertBefore(th, td[i]);
+						  td[i].remove();
+						}
+					}
+					if(hasthead.length == 0){
+						var thead = document.createElement("thead");
+						//console.log(first_row);
+						thead.innerHTML = "\n  " + first_row.outerHTML + "\n";	
+						
+						if(displaycaption.id == "displaycaption-2" || displaycaption.id == "displaycaption-3"){
+							table.querySelector("table").insertBefore(thead, table.querySelector("table").children[0]);
+							table.querySelector("table").insertBefore(space, table.querySelector("table").children[1]);
+						}
+						else{
+							table.insertBefore(thead, table.children[1]);
+							table.insertBefore(space, table.children[2]);	
+						}
+						
+						first_row.remove();
+						//console.log(table.getElementsByTagName("tbody")[0])
+						//console.log(table.getElementsByTagName("tbody")[0].childNodes[0].nodeName)
+						if(table.getElementsByTagName("tbody")[0].childNodes[0].nodeName == '#text'){
+							table.getElementsByTagName("tbody")[0].childNodes[0].remove();
+						}
+					}	  
+				  }
+				  
+				  // Si scoperow=true et scopecol=true : Ajouter le <thead> et transformer toutes les balises de la première <tr> en <th scope="col"> et transformer la première balise de chaque <tr> en <th scope="row"> (sauf la première cellule si elle est vide)
+				  else if(scoperow.checked && scopecol.checked) {
+					let td = Array.from(trlist[0].childNodes).filter(item => item.nodeName != '#text');
+					const first_row = trlist[0];
+				  
+					let index_headercol = 0
+					if(td[0].textContent == "") index_headercol = 1;
+				  
+					for(var i = index_headercol; i < td.length; i++){
+						if(td[i].tagName == 'TD'){ 
+						  var th = document.createElement("th");
+						  th.innerHTML = td[i].innerHTML;
+						  th.setAttribute("scope","col");
+						  td[i].parentNode.insertBefore(th, td[i]);
+						  td[i].remove();
+						}
+					}
+					
+					for(var i = 1; i < trlist.length; i++){
+						var inner_td = Array.from(trlist[i].childNodes).filter(item => item.nodeName != '#text');
+						if(inner_td[0].tagName == 'TD'){ 
+						  var th = document.createElement("th");
+						  th.innerHTML = inner_td[0].innerHTML;
+						  th.setAttribute("scope","row");
+						  inner_td[0].parentNode.insertBefore(th, inner_td[0]);
+						  inner_td[0].remove();
+						}
+					 };
+					
+					if(hasthead.length == 0){
+						var thead = document.createElement("thead");
+						console.log(first_row);
+						thead.innerHTML = "\n  " + first_row.outerHTML + "\n";	
+						
+						if(displaycaption.id == "displaycaption-2" || displaycaption.id == "displaycaption-3"){
+							table.querySelector("table").insertBefore(thead, table.querySelector("table").children[0]);
+							table.querySelector("table").insertBefore(space, table.querySelector("table").children[1]);
+						}
+						else{
+							table.insertBefore(thead, table.children[1]);
+							table.insertBefore(space, table.children[2]);	
+						}
+						
+						first_row.remove();
+						console.log(table.getElementsByTagName("tbody")[0])
+						console.log(table.getElementsByTagName("tbody")[0].childNodes[0].nodeName)
+						if(table.getElementsByTagName("tbody")[0].childNodes[0].nodeName == '#text'){
+							table.getElementsByTagName("tbody")[0].childNodes[0].remove();
+						}
+					}		  
+				  }
+				  
+				  // Si scoperow=false et scopecol=false : Ajouter l'attribut role=presentation sur l'en-tête
+				  else if(!scoperow.checked && !scopecol.checked) {
+					table.setAttribute("role", "presentation");
+				  }
+				  
+
+				  // Checkbox for minify
+				  const minifyCheckbox = document.getElementById('minify');
+				  let table_result = table.outerHTML; 
+				  
+				  if (minifyCheckbox.checked) {
+					table_result = table_result.replace( /\s\s+/g,'');
+				  }
+				
+				  // Output
+				  outputHTMLField.value = table_result;
+				  outputTextField.innerHTML = table_result;
+				  editor_output.setHTMLCode(table_result);
+				    
+			}
+			
+			if(debug) console.log("Ready")
+			
+		});
+		
+
+		
+		scoperow.addEventListener('click', function() {
+			checkcaption();
+		});
+		scopecol.addEventListener('click', function() {
+			checkcaption();
+		});
+		
+		function checkcaption(){
+			if(scoperow.checked || scopecol.checked){
+				tablecaption.removeAttribute('readonly');
+			}
+			else{
+				tablecaption.setAttribute('readonly',true);
+			}		
+		}
+		
+		addHTML2Clipboard.addEventListener('click', function() {
+		  addHtmlClipboard(outputHTMLField)
+		});
+		addText2Clipboard.addEventListener('click', function() {
+		  addTextClipboard(outputTextField)
+		});
+		
+		function addTextClipboard(item){
+		
+		  let range, sel;
+		  
+		  // Ensure that range and selection are supported by the browsers
+		  if (document.createRange && window.getSelection) {
+			
+			range = document.createRange();
+			sel = window.getSelection();
+			// unselect any element in the page
+			sel.removeAllRanges();
+
+			try {
+			  range.selectNodeContents(item);
+			  sel.addRange(range);
+			} catch (e) {
+			  range.selectNode(item);
+			  sel.addRange(range);
+			}
+
+			document.execCommand('copy');
+		  }
+
+		  sel.removeAllRanges();
+		  alert("Table for AEM copied !");
+		};
+		
+		function addHtmlClipboard(item){
+		  item.select();
+		  document.execCommand("copy");
+		  
+		  alert("Table HTML copied !");
+		};
+	});
+	
+
+</script>
+</body>
+</html>
