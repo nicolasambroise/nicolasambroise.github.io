@@ -1,710 +1,62 @@
+<!doctype html>
 <html lang="fr"><head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/svg+xml" href="/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="./images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plugin A11Y Renowify</title>
     <style>
-  html {
-	font-family:
-	  -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-	  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  }
+      html {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+          sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      }
 
-  body {
-	margin: 0;
-	font-size: 16px;
-	line-height: 1.5;
-	word-wrap: break-word;
-	color: #1f2328;
-  }
-  header,
-  main,
-  footer {
-	max-width: 1012px;
-	margin-right: auto;
-	margin-left: auto;
-  }
-  h1 {
-	padding-bottom: 0.3em;
-	font-size: 2em;
-	border-bottom: 1px solid #eaecef;
-	margin-bottom: 16px;
-	font-weight: 600;
-	line-height: 1.25;
-  }
-  h2 {
-	padding-bottom: 0.3em;
-	font-size: 1.5em;
-	border-bottom: 1px solid #eaecef;
-	margin-top: 24px;
-	margin-bottom: 16px;
-	font-weight: 600;
-	line-height: 1.25;
-  }
-  #app > button {
-	display: none;
-  }
-  #app pre {
-	color: darkgreen;
-	margin: 0;
-	max-width: 100%;
-	text-wrap: initial;
-  }
-  footer {
-	text-align: right;
-  }
-/*
- * Global
- */
-:root {
-  --Typeface-family-Body: source-sans-pro, calibri, segoe, segoe ui, optima, arial, sans-serif;
-  --Typeface-family-Code: monaco, menlo, consolas, courier new, monospace;
-  --Typeface-size-Body: calc(1.6rem / var(--Root-Font-Size) * 10);
-  --Typeface-line-height-Body: calc(2.4rem / var(--Root-Font-Size) * 10);
-  --Typeface-size-H2: calc(1.9rem / var(--Root-Font-Size) * 10);
-  --Typeface-size-Small: calc(1.4rem / var(--Root-Font-Size) * 10);
-  --Typeface-size-Tag: calc(1.4rem / var(--Root-Font-Size) * 10);
-  --Typeface-width-Tag: calc(2.9rem / var(--Root-Font-Size) * 10);
-  --Typeface-height-Tag: calc(1.7rem / var(--Root-Font-Size) * 10);
-  --Root-Font-Size: 16;
-}
-@font-face {
-  font-family: source-sans-pro;
-  font-style: normal;
-  font-weight: 400;
-  src: url("//cdn.public.lu/fonts/source-sans-pro/source-sans-pro-n4.woff2") format("woff2"), url("//cdn.public.lu/fonts/source-sans-pro/source-sans-pro-n4.woff") format("woff");
-}
-@font-face {
-  font-family: source-sans-pro;
-  font-style: normal;
-  font-weight: 600;
-  src: url("//cdn.public.lu/fonts/source-sans-pro/source-sans-pro-n6.woff2") format("woff2"), url("//cdn.public.lu/fonts/source-sans-pro/source-sans-pro-n6.woff") format("woff");
-}
-/*
- * Hide
- */
-.at {
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  overflow: hidden;
-  position: absolute !important;
-  width: 1px;
-}
-:root {
-  --Main-Colours-Blue-Clear: #eefaff;
-  --Main-Colours-Blue-Lightest: #bfe7f8;
-  --Main-Colours-Blue-Lighter: #66bce2;
-  --Main-Colours-Blue-Light: #1a91c6;
-  --Main-Colours-Blue-Colour-1: #035384;
-  --Main-Colours-Blue-Dark: #003556;
-  --Main-Colours-Blue-Darker: #052940;
-  --Main-Colours-Blue-Darkest: #041926;
-  --Greys-Lightest: #fafafa;
-  --Greys-Lighter: #ececec;
-  --Greys-Light: #c2c2c2;
-  --Greys-Neutral: #767676;
-  --Greys-Dark: #636161;
-  --Greys-Darker: #474747;
-  --Greys-White: #ffffff;
-  --Greys-Black: #000000;
-  --Supplementary-Colours-Red-Crimson: #c33c54;
-  --Supplementary-Colours-Orange: #ffc000;
-  --Supplementary-Colours-Yellow: #f8f80f;
-  --Supplementary-Colours-Green: #4f9e32;
-}
-@media print {
-  #checkA11YPanel,
-  #checkA11YBottomLine,
-  #checkA11YPanelBtn,
-  .checkA11YSpan {
-    display: none !important;
-  }
-  [class*="checkA11YOutline__"] {
-    outline: none !important;
-  }
-  body.check-panel-active {
-    margin-left: 0 !important;
-  }
-}
-/*
- * Side Panel
- */
-body {
-  transition: margin 1s ease-in-out !important;
-  margin-left: 0 !important;
-}
-body.check-panel-active {
-  position: relative;
-  margin-left: 360px !important;
-}
-body.check-panel-active [role="dialog"] {
-  margin-left: 360px !important;
-}
-body.check-panel-active #checkA11YPanelBtn {
-  display: none;
-}
-body.check-panel-hidden #checkA11YPanel {
-  display: none;
-}
-body:not(.check-panel-active) #checkA11YPanelBtn {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 70000;
-}
-#checkA11YPanel {
-  letter-spacing: normal !important;
-  position: fixed !important;
-  top: 0 !important;
-  height: 100% !important;
-  z-index: 70001 !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  direction: ltr !important;
-  border-style: none !important;
-  margin: 0 !important;
-  border-right: 1px solid var(--Main-Colours-Blue-Colour-1) !important;
-  width: 360px !important;
-  margin-left: -360px !important;
-  background-color: var(--Main-Colours-Blue-Lightest) !important;
-  color: var(--Greys-Dark) !important;
-  font-family: var(--Typeface-family-Body) !important;
-  line-height: var(--Typeface-line-height-Body) !important;
-  padding: 0 !important;
-  max-width: 100% !important;
-  font-size: var(--Typeface-size-Body) !important;
-  /* Button */
-  /* Header */
-  /* Body */
-}
-#checkA11YPanel > div {
-  left: 0;
-  padding: 0;
-  right: auto;
-}
-#checkA11YPanel > .btn {
-  background-color: var(--Greys-White);
-  margin: 0;
-  color: var(--Main-Colours-Blue-Colour-1);
-  font-size: var(--Typeface-size-Body);
-  font-weight: 600;
-  font-style: normal;
-  line-height: normal;
-  border-radius: 0;
-  font-family: var(--Typeface-family-Body);
-  text-transform: capitalize;
-  cursor: pointer;
-  outline: revert;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-  border: none;
-  box-shadow: none;
-  padding: 15px 20px;
-  min-width: unset;
-  transition: none;
-  animation: none;
-}
-#checkA11YPanel > .btn > .btn-icon {
-  width: 9px;
-  height: 15px;
-  display: block;
-}
-#checkA11YPanel > .btn > .btn-icon svg {
-  width: 9px;
-  height: 15px;
-  transform: rotate(0deg);
-  vertical-align: unset;
-}
-#checkA11YPanel > .btn:focus,
-#checkA11YPanel > .btn:hover {
-  background-color: var(--Main-Colours-Blue-Colour-1);
-  color: var(--Greys-White);
-  border: 1px solid var(--Greys-White);
-}
-#checkA11YPanel > .btn:focus svg,
-#checkA11YPanel > .btn:hover svg {
-  filter: brightness(0) invert(1);
-}
-#checkA11YPanel > .btn::before,
-#checkA11YPanel > .btn::after {
-  content: none;
-}
-#checkA11YPanel .hidden {
-  display: none;
-}
-#checkA11YPanel .panel-header {
-  text-align: left !important;
-  margin: 0 !important;
-  padding: 20px !important;
-  background-color: var(--Greys-White) !important;
-  position: relative !important;
-  display: block !important;
-  box-shadow: none !important;
-  height: 24px !important;
-  border-bottom: 1px solid var(--Main-Colours-Blue-Light) !important;
-}
-#checkA11YPanel .panel-header h1 {
-  height: auto !important;
-  line-height: normal !important;
-  font-size: unset !important;
-  text-align: left !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background-color: var(--Greys-White) !important;
-  text-transform: uppercase !important;
-  position: relative !important;
-  display: block !important;
-  color: var(--Greys-Black) !important;
-  font-weight: 400 !important;
-  font-family: var(--Typeface-family-Body) !important;
-  letter-spacing: 0.868px !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-#checkA11YPanel .panel-header h1::before,
-#checkA11YPanel .panel-header h1::after {
-  content: none !important;
-}
-#checkA11YPanel .panel-header h1 > svg {
-  width: auto !important;
-  height: 24px !important;
-  vertical-align: text-bottom !important;
-  margin-right: 10px !important;
-}
-#checkA11YPanel .panel-body {
-  overflow-y: auto !important;
-  height: calc(100% - 56px) !important;
-  color: var(--Greys-Black);
-  background-color: var(--Main-Colours-Blue-Lightest) !important;
-  width: auto !important;
-  display: flex !important;
-  padding: 12px !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  gap: 12px !important;
-  flex: 1 0 0 !important;
-  align-self: stretch !important;
-}
-#checkA11YPanel .panel-body h2 {
-  font-size: var(--Typeface-size-Body) !important;
-  line-height: var(--Typeface-line-height-Body) !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  text-transform: capitalize !important;
-  position: relative !important;
-  display: block !important;
-  color: var(--Greys-Black) !important;
-  font-weight: 600 !important;
-  font-family: var(--Typeface-family-Body) !important;
-  letter-spacing: 0 !important;
-  border: none !important;
-  background-color: var(--Greys-White) !important;
-}
-#checkA11YPanel .panel-body h2::before,
-#checkA11YPanel .panel-body h2::after {
-  content: none !important;
-}
-#checkA11YPanel .panel-body .frame {
-  border: none !important;
-  background-color: var(--Greys-White) !important;
-  margin: 0 !important;
-  box-shadow: none !important;
-  display: flex !important;
-  padding: 16px 12px !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: 12px !important;
-}
-#checkA11YPanel .panel-body div.frame ul {
-  margin: 0 !important;
-  line-height: 1.7 !important;
-  list-style-type: none !important;
-  padding-left: 0 !important;
-  background-color: var(--Greys-White) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: 12px !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li {
-  display: flex !important;
-  gap: 8px !important;
-  align-self: stretch !important;
-  align-items: flex-start !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li a::before,
-#checkA11YPanel .panel-body div.frame ul > li a::after {
-  content: none !important;
-  display: none !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li::marker,
-#checkA11YPanel .panel-body div.frame ul > li::before,
-#checkA11YPanel .panel-body div.frame ul > li::after {
-  content: none !important;
-  display: none !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li .result-focus {
-  color: var(--Greys-Black) !important;
-  background-color: var(--Greys-White) !important;
-  box-shadow: none !important;
-  font-family: var(--Typeface-family-Body) !important;
-  font-size: var(--Typeface-size-Tag) !important;
-  font-weight: 400 !important;
-  line-height: normal !important;
-  text-decoration: none !important;
-  border-radius: 2px !important;
-  border: 1px solid transparent !important;
-  padding: 0 3px !important;
-  min-width: var(--Typeface-width-Tag) !important;
-  min-height: var(--Typeface-height-Tag) !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li .result-focus.label-gray {
-  color: var(--Greys-Black) !important;
-  background-color: var(--Greys-White) !important;
-  border-color: 1px solid var(--Main-Colours-Blue-Lighter);
-}
-#checkA11YPanel .panel-body div.frame ul > li .result-focus.label-yellow {
-  color: var(--Greys-Black) !important;
-  background-color: var(--Supplementary-Colours-Yellow) !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li .result-focus.label-orange {
-  color: var(--Greys-Black) !important;
-  background-color: var(--Supplementary-Colours-Orange) !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li .result-focus.label-red {
-  color: var(--Greys-White) !important;
-  background-color: var(--Supplementary-Colours-Red-Crimson) !important;
-}
-#checkA11YPanel .panel-body div.frame ul > li .result-focusa:hover,
-#checkA11YPanel .panel-body div.frame ul > li .result-focusa:focus {
-  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3) !important;
-}
-#checkA11YPanel .panel-body details.accordion {
-  margin-bottom: 50px !important;
-  background-color: var(--Greys-White) !important;
-  border-bottom: 1px solid var(--Main-Colours-Blue-Colour-1);
-  gap: 0 !important;
-  padding: 0 !important;
-}
-#checkA11YPanel .panel-body details.accordion:hover {
-  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3) !important;
-}
-#checkA11YPanel .panel-body details.accordion .accordion-summary {
-  margin: 0 !important;
-  background-color: var(--Greys-White) !important;
-  border: none !important;
-  border-radius: 0 !important;
-  cursor: pointer;
-  position: relative !important;
-  user-select: none !important;
-  padding: 16px 20px !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 32px !important;
-  align-self: stretch !important;
-  justify-content: space-between !important;
-}
-#checkA11YPanel .panel-body details.accordion .accordion-summary svg {
-  background-color: var(--Greys-White) !important;
-  float: right;
-  transform: rotate(-90deg) !important;
-  transition: transform 0.5s ease !important;
-  animation: none !important;
-  width: 20px;
-  height: 20px;
-}
-#checkA11YPanel .panel-body details.accordion .accordion-panel {
-  background-color: var(--Greys-White) !important;
-  padding: 12px 20px !important;
-}
-#checkA11YPanel .panel-body details.accordion .accordion-panel ul {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: 6px !important;
-  align-self: stretch !important;
-  margin: 0 !important;
-}
-#checkA11YPanel .panel-body details.accordion .accordion-panel ul > li {
-  list-style-type: disc !important;
-  display: list-item !important;
-  margin-left: 17px !important;
-}
-#checkA11YPanel .panel-body details.accordion .accordion-panel ul > li::marker {
-  color: var(--Main-Colours-Blue-Colour-1);
-  font-size: 15px;
-  line-height: 1;
-}
-#checkA11YPanel .panel-body details.accordion .accordion-summary::before,
-#checkA11YPanel .panel-body details.accordion .accordion-panel a::before,
-#checkA11YPanel .panel-body details.accordion .accordion-panel ul > li::before,
-#checkA11YPanel .panel-body details.accordion .accordion-summary::after,
-#checkA11YPanel .panel-body details.accordion .accordion-panel a::after,
-#checkA11YPanel .panel-body details.accordion .accordion-panel ul > li::after {
-  content: none !important;
-  display: none !important;
-}
-#checkA11YPanel .panel-body details.accordion[open] .accordion-summary svg {
-  transform: rotate(90deg) !important;
-}
-#checkA11YPanel .panel-body ul > li,
-#checkA11YPanel .panel-body .accordion-panel p {
-  font-size: var(--Typeface-size-Small) !important;
-  font-weight: 400 !important;
-  line-height: normal !important;
-  list-style-type: none !important;
-  padding: 0 !important;
-  position: relative !important;
-  color: var(--Greys-Black) !important;
-  margin: 0 !important;
-  background-color: var(--Greys-White) !important;
-}
-#checkA11YPanel .panel-body ul > li a,
-#checkA11YPanel .panel-body .accordion-panel p a,
-#checkA11YPanel .panel-body ul > li a:active,
-#checkA11YPanel .panel-body .accordion-panel p a:active,
-#checkA11YPanel .panel-body ul > li a:visited,
-#checkA11YPanel .panel-body .accordion-panel p a:visited {
-  color: var(--Main-Colours-Blue-Colour-1) !important;
-  text-decoration: underline !important;
-  background-color: var(--Greys-White) !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  line-height: normal !important;
-}
-#checkA11YPanel .panel-body ul > li a:hover,
-#checkA11YPanel .panel-body .accordion-panel p a:hover,
-#checkA11YPanel .panel-body ul > li a:focus,
-#checkA11YPanel .panel-body .accordion-panel p a:focus {
-  color: var(--Main-Colours-Blue-Dark) !important;
-  text-decoration: none !important;
-}
-#checkA11YPanelBtn {
-  display: flex;
-  width: 49px;
-  height: 45px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 0 4px 4px 0;
-  border-top: 1px solid var(--Main-Colours-Blue-Light);
-  border-right: 1px solid var(--Main-Colours-Blue-Light);
-  border-bottom: 1px solid var(--Main-Colours-Blue-Light);
-  background: var(--Greys-White);
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  outline: revert;
-  min-width: unset;
-  font-size: unset;
-  transition: none;
-  animation: none;
-}
-#checkA11YPanelBtn .btn-icon {
-  width: 24px;
-  height: 24px;
-  display: block;
-}
-#checkA11YPanelBtn .btn-icon svg {
-  width: 24px;
-  height: 24px;
-  vertical-align: unset;
-}
-#checkA11YPanelBtn:focus,
-#checkA11YPanelBtn:hover {
-  background-color: var(--Main-Colours-Blue-Colour-1);
-  color: var(--Greys-White);
-  border: 1px solid var(--Greys-White);
-}
-#checkA11YPanelBtn:focus svg,
-#checkA11YPanelBtn:hover svg {
-  filter: brightness(0) invert(1);
-}
-#checkA11YPanelBtn::before,
-#checkA11YPanelBtn::after {
-  content: none;
-}
-/*
- * Bottom line
- */
-#checkA11YBottomLine {
-  width: calc(100% - 20px);
-  display: block;
-  position: fixed;
-  bottom: 0;
-  background-color: var(--Greys-White);
-  padding: 5px 10px;
-  margin: 0 !important;
-  color: var(--Main-Colours-Blue-Colour-1);
-  font-size: var(--Typeface-size-Body);
-  font-weight: 400;
-  border-top: 3px solid var(--Main-Colours-Blue-Colour-1);
-  z-index: 70000;
-  line-height: normal;
-  max-height: 400px;
-  overflow-y: auto;
-  right: 0;
-  left: 0;
-}
-#checkA11YBottomLine ul li {
-  margin: 0 !important;
-  color: var(--Main-Colours-Blue-Colour-1);
-  font-size: var(--Typeface-size-Body);
-  font-weight: 400;
-  line-height: normal;
-  list-style-type: none;
-}
-#checkA11YBottomLine ul li::before,
-#checkA11YBottomLine ul li::after {
-  content: none;
-}
-#checkA11YBottomLine #checkA11YHeadBtn {
-  background-color: revert;
-  border: revert;
-  border-radius: revert;
-  box-sizing: border-box;
-  color: revert;
-  cursor: pointer;
-  display: revert;
-  font-size: unset;
-  font-weight: unset;
-  hyphens: none;
-  line-height: normal;
-  padding: revert;
-  text-align: unset;
-  text-decoration: none;
-  width: auto;
-  position: absolute;
-  right: 10px;
-  top: 2px;
-  text-transform: none;
-}
-#checkA11YBottomLine #checkA11YHeadBtn:hover,
-#checkA11YBottomLine #checkA11YHeadBtn:focus {
-  background-color: revert;
-  color: revert;
-}
-/*
- * In-page span and outline
- */
-.checkA11YSpan {
-  display: inline-block !important;
-  font-family: var(--Typeface-family-Body) !important;
-  font-size: var(--Typeface-size-Tag) !important;
-  box-shadow: none !important;
-  margin: 1px !important;
-  margin-right: 7px !important;
-  border: none !important;
-  clear: none !important;
-  float: none !important;
-  opacity: 1 !important;
-  z-index: 70000 !important;
-  position: static !important;
-  text-align: left !important;
-  text-indent: initial !important;
-  text-decoration: none !important;
-  text-shadow: none !important;
-  text-transform: none !important;
-  min-height: var(--Typeface-height-Tag) !important;
-  clip: auto !important;
-  font-style: normal !important;
-  padding: 0 3px !important;
-  font-weight: 400 !important;
-  line-height: normal !important;
-  min-width: var(--Typeface-width-Tag) !important;
-  border-radius: 2px !important;
-}
-.checkA11YSpan__gray {
-  background-color: var(--Greys-White) !important;
-  color: var(--Greys-Black) !important;
-}
-.checkA11YSpan__green {
-  background-color: var(--Supplementary-Colours-Green) !important;
-  color: var(--Greys-White) !important;
-}
-.checkA11YSpan__blue {
-  background-color: var(--Main-Colours-Blue-Colour-1) !important;
-  color: var(--Greys-White) !important;
-}
-.checkA11YSpan__yellow {
-  background-color: var(--Supplementary-Colours-Yellow) !important;
-  color: var(--Greys-Black) !important;
-}
-.checkA11YSpan__orange {
-  background-color: var(--Supplementary-Colours-Orange) !important;
-  color: var(--Greys-Black) !important;
-}
-.checkA11YSpan__red {
-  background-color: var(--Supplementary-Colours-Red-Crimson) !important;
-  color: var(--Greys-White) !important;
-}
-.checkA11YOutline__green {
-  outline: var(--Supplementary-Colours-Green) solid 3px !important;
-  outline-offset: 1px;
-}
-.checkA11YOutline__blue {
-  outline: var(--Main-Colours-Blue-Colour-1) solid 3px !important;
-  outline-offset: 1px;
-}
-.checkA11YOutline__yellow {
-  outline: var(--Supplementary-Colours-Yellow) solid 3px !important;
-  outline-offset: 1px;
-}
-.checkA11YOutline__orange {
-  outline: var(--Supplementary-Colours-Orange) solid 3px !important;
-  outline-offset: 1px;
-}
-.checkA11YOutline__red {
-  outline: var(--Supplementary-Colours-Red-Crimson) solid 3px !important;
-  outline-offset: 1px;
-}
-.checkA11YOutline__orange_parent {
-  outline: var(--Supplementary-Colours-Orange) dotted 3px !important;
-  outline-offset: -2px;
-}
-.checkA11YOutline__red_parent {
-  outline: var(--Supplementary-Colours-Red-Crimson) dotted 3px !important;
-  outline-offset: -2px;
-}
-.checkA11YSpan-desc {
-  background-color: var(--Greys-White) !important;
-  color: var(--Greys-Black) !important;
-  display: block !important;
-  padding: 2px 5px !important;
-  margin: 2px !important;
-  font-style: normal !important;
-}
-/*
- * Tools
- */
-body.bg-style-injected,
-body.bg-style-injected * {
-  background-image: none !important;
-}
-body.bg-style-injected::before,
-body.bg-style-injected *::before,
-body.bg-style-injected::after,
-body.bg-style-injected *::after {
-  background-image: none !important;
-  background-color: transparent !important;
-}
-body.space-style-injected * {
-  line-height: 1.5em !important;
-  letter-spacing: 0.12em !important;
-  word-spacing: 0.16em !important;
-}
-body.space-style-injected p {
-  margin-bottom: 2em !important;
-}
-body.tab-style-injected *:focus {
-  outline: 5px solid var(--Supplementary-Colours-Orange) !important;
-}
-</style><link type="text/css" rel="stylesheet" href="chrome-extension://pliejeoiejnphnpogflieobdpamaofif/style.css"><script type="text/javascript" charset="utf-8" src="chrome-extension://pliejeoiejnphnpogflieobdpamaofif/page-context.js"></script></head>
+      body {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        color: #1f2328;
+      }
+      header,
+      main,
+      footer {
+        max-width: 1012px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+      h1 {
+        padding-bottom: 0.3em;
+        font-size: 2em;
+        border-bottom: 1px solid #eaecef;
+        margin-bottom: 16px;
+        font-weight: 600;
+        line-height: 1.25;
+      }
+      h2 {
+        padding-bottom: 0.3em;
+        font-size: 1.5em;
+        border-bottom: 1px solid #eaecef;
+        margin-top: 24px;
+        margin-bottom: 16px;
+        font-weight: 600;
+        line-height: 1.25;
+      }
+      #app > button {
+        display: none;
+      }
+      #app pre {
+        color: darkgreen;
+        margin: 0;
+        max-width: 100%;
+        text-wrap: initial;
+      }
+      footer {
+        text-align: right;
+      }
+    </style>
+  </script></head>
   <body screen_capture_injected="true">
     <header>
       <h1>Renowify : Votre allié pour un web plus accessible</h1>
@@ -919,7 +271,7 @@ body.tab-style-injected *:focus {
         </ul>
 
         <h2 tabindex="-1" id="checklist">Liste des tests</h2>
-        <div id="app"><button>Renowify</button><div><button class="btn btn-secondary">Afficher tout</button><h3>1 - Couleur et contraste</h3><div class="accordion-wrapper"><details class="accordion">
+        <div id="app" class="renowify"><button>Renowify</button><div><button class="btn btn-secondary">Afficher tout</button><h3>1 - Couleur et contraste</h3><div class="accordion-wrapper"><details class="accordion">
       <summary class="accordion-summary">
       <h4 class="accordion-header" style="display: inline;">#01a1 - Texte insuffisamment contrasté</h4>
       </summary>
@@ -932,7 +284,7 @@ body.tab-style-injected *:focus {
                <li><strong>Explication : </strong>Le script calcule le contraste entre la couleur du texte et son fond. Il vérifie si le ratio atteint les seuils requis (3:1 ou 4.5:1).</li>
                <li><strong>Problème : </strong>Le texte n’est pas assez lisible. Augmenter le contraste en ajustant la couleur du texte ou du fond.</li><li><strong>Raweb : </strong>Critère 3.2</li>           
           </ul>
-      </div></details><details class="accordion" open="">
+      </div></details><details class="accordion">
       <summary class="accordion-summary">
       <h4 class="accordion-header" style="display: inline;">#01a2 - Contraste de texte à vérifier</h4>
       </summary>
@@ -1164,7 +516,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>body</pre></li>
                <li><strong>Explication : </strong>Le script vérifie si le contraste du texte principal dépasse le niveau recommandé pour un confort optimal.</li>
-               <li><strong>Problème : </strong>Un contraste plus élevé améliore la lecture. Viser un ratio proche de 7:1.</li><li><strong>Raweb : </strong>Critère 10.5</li>           
+               <li><strong>Problème : </strong>Un contraste plus élevé améliore la lecture. Viser un ratio proche de 7:1.</li><li><strong>Raweb : </strong>Critère 10.5</li><li><strong>Renow : </strong>Règle 016</li>           
           </ul>
       </div></details></div><h3>2 - Images</h3><div class="accordion-wrapper"><details class="accordion">
       <summary class="accordion-summary">
@@ -1489,7 +841,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>*:not(.feed-item-content &gt; p):not(.feed-item-header):not(.ol-full-screen-false) &gt; img:not([src$=".svg"])</pre></li>
                <li><strong>Explication : </strong>Le test détecte les images trop grandes réduites via CSS ou HTML.</li>
-               <li><strong>Problème : </strong>Charger une image à la bonne taille pour éviter perte de qualité et surcharge.</li><li><strong>Opquast : </strong>Règle 114</li>           
+               <li><strong>Problème : </strong>Charger une image à la bonne taille pour éviter perte de qualité et surcharge.</li><li><strong>Opquast : </strong>Règle 114</li><li><strong>Renow : </strong>Règle 040</li>           
           </ul>
       </div></details></div><h3>3 - Liens</h3><div class="accordion-wrapper"><details class="accordion">
       <summary class="accordion-summary">
@@ -1500,9 +852,9 @@ body.tab-style-injected *:focus {
                <li><strong>Code : </strong>03-A</li>
                <li><strong>Catégorie : </strong>nth</li>
                <li><strong>Criticité : </strong>1 (yellow)</li>
-               <li><strong>Query : </strong><pre>html[lang="fr"] a[target="_blank"]:not([title$="- Nouvelle fenêtre"]):not([title$="- Nouvelle fenêtre (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink), html[lang="fr"] a[title$="- Nouvelle fenêtre"]:not([target="_blank"]), html[lang="en"] a[target="_blank"]:not([title$="- New window"]):not([title$="- New window (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="en"] a[title$="- New window"]:not([target="_blank"]), html[lang="de"] a[target="_blank"]:not([title$="- Neues Fenster"]):not([title$="- Neues Fenster (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="de"] a[title$="- Neues Fenster"]:not([target="_blank"]),html[lang="lb"] a[target="_blank"]:not([title$="- Nei Fënster"]):not([title$="- Nei Fënster (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="lb"] a[title$="- Nei Fënster"]:not([target="_blank"])</pre></li>
+               <li><strong>Query : </strong><pre>html[lang="fr"] *:not(.frc-banner) &gt; a[target="_blank"]:not([title$="- Nouvelle fenêtre"]):not([title$="- Nouvelle fenêtre (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink), html[lang="fr"] a[title$="- Nouvelle fenêtre"]:not([target="_blank"]), html[lang="en"] *:not(.frc-banner) &gt; a[target="_blank"]:not([title$="- New window"]):not([title$="- New window (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="en"] a[title$="- New window"]:not([target="_blank"]), html[lang="de"] *:not(.frc-banner) &gt; a[target="_blank"]:not([title$="- Neues Fenster"]):not([title$="- Neues Fenster (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="de"] a[title$="- Neues Fenster"]:not([target="_blank"]),html[lang="lb"] *:not(.frc-banner) &gt; a[target="_blank"]:not([title$="- Nei Fënster"]):not([title$="- Nei Fënster (Pdf)"]):not(.mapboxgl-ctrl-logo):not(.blocklink),html[lang="lb"] a[title$="- Nei Fënster"]:not([target="_blank"])</pre></li>
                <li><strong>Explication : </strong>Le script vérifie que les liens externes annoncent l’ouverture en nouvelle fenêtre via le title.</li>
-               <li><strong>Problème : </strong>Ajouter un suffixe cohérent et traduit, par ex. « Nouvelle fenêtre ».</li><li><strong>Opquast : </strong>Règle 141</li>           
+               <li><strong>Problème : </strong>Ajouter un suffixe cohérent et traduit, par ex. « Nouvelle fenêtre ».</li><li><strong>Opquast : </strong>Règle 141</li><li><strong>Renow : </strong>Règle 064</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1515,7 +867,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>a[title=" "],a[title="Nouvelle fenêtre"],a[title="- Nouvelle fenêtre"],a[title$="Nouvelle fenêtre - Nouvelle fenêtre"], a[title="   - Nouvelle fenêtre"]</pre></li>
                <li><strong>Explication : </strong>Le test détecte les titles vides ou ne correspondant pas au texte du lien.</li>
-               <li><strong>Problème : </strong>Adapter le title pour qu’il complète le lien sans le contredire.</li><li><strong>Raweb : </strong>Critère 6.1.1</li>           
+               <li><strong>Problème : </strong>Adapter le title pour qu’il complète le lien sans le contredire.</li><li><strong>Raweb : </strong>Critère 6.1.1</li><li><strong>Renow : </strong>Règle 065</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1593,7 +945,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>*:not(.mcgyver-slot) &gt; a[href^="mailto:"]</pre></li>
                <li><strong>Explication : </strong>Le test vérifie la cohérence entre le texte du lien et l’adresse mailto.</li>
-               <li><strong>Problème : </strong>Aligner le texte du lien avec l’adresse réelle.</li>           
+               <li><strong>Problème : </strong>Aligner le texte du lien avec l’adresse réelle.</li><li><strong>Renow : </strong>Règle 027</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1619,7 +971,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>*:not(.mcgyver-slot) &gt; a[href^="tel:"]</pre></li>
                <li><strong>Explication : </strong>Le test identifie les liens tel: mal formés.</li>
-               <li><strong>Problème : </strong>Utiliser un format international, ex. +352…</li>           
+               <li><strong>Problème : </strong>Utiliser un format international, ex. +352…</li><li><strong>Renow : </strong>Règle 066</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1645,7 +997,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>html[lang="fr"] a</pre></li>
                <li><strong>Explication : </strong>Le test détecte les libellés vagues comme « ici », « cliquez ici », « lire la suite ».</li>
-               <li><strong>Problème : </strong>Utiliser un texte décrivant clairement la destination.</li><li><strong>Opquast : </strong>Règle 132</li>           
+               <li><strong>Problème : </strong>Utiliser un texte décrivant clairement la destination.</li><li><strong>Opquast : </strong>Règle 132</li><li><strong>Renow : </strong>Règle 014</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1684,7 +1036,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>body *:not(a):not(mark):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(button):not([role="tab"]):not(input):not(li.nav-item--active)</pre></li>
                <li><strong>Explication : </strong>Le script identifie du texte souligné non cliquable.</li>
-               <li><strong>Problème : </strong>Réserver le soulignement aux liens pour éviter la confusion.</li>           
+               <li><strong>Problème : </strong>Réserver le soulignement aux liens pour éviter la confusion.</li><li><strong>Renow : </strong>Règle 063</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1736,7 +1088,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>a:not([target='_blank'])</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence du format et du poids dans le libellé.</li>
-               <li><strong>Problème : </strong>Indiquer format et poids, ex. « Nom (PDF, 2 Mo) ».</li>           
+               <li><strong>Problème : </strong>Indiquer format et poids, ex. « Nom (PDF, 2 Mo) ».</li><li><strong>Renow : </strong>Règle 026</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1746,8 +1098,8 @@ body.tab-style-injected *:focus {
           <ul>
                <li><strong>Code : </strong>03-Q</li>
                <li><strong>Catégorie : </strong>dev</li>
-               <li><strong>Criticité : </strong>3 (red)</li>
-               <li><strong>Query : </strong><pre>a[href]</pre></li>
+               <li><strong>Criticité : </strong>2 (orange)</li>
+               <li><strong>Query : </strong><pre>a[href]:not(.cmp-breadcrumb__item-link)</pre></li>
                <li><strong>Explication : </strong>Le test détecte des liens ayant le même libellé mais des destinations différentes.</li>
                <li><strong>Problème : </strong>Différencier les libellés ou harmoniser les destinations.</li>           
           </ul>
@@ -1931,7 +1283,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>html[lang="fr"] main form[action*="support/contact"] button.cmp-form-button[type="SUBMIT"][name="preview"]</pre></li>
                <li><strong>Explication : </strong>Le test vérifie que le bouton utilise l’intitulé « Prévisualiser puis envoyer ».</li>
-               <li><strong>Problème : </strong>Utiliser l’intitulé recommandé pour clarifier l’action.</li><li><strong>Raweb : </strong>Critère 11.12.1</li>           
+               <li><strong>Problème : </strong>Utiliser l’intitulé recommandé pour clarifier l’action.</li><li><strong>Raweb : </strong>Critère 11.12.1</li><li><strong>Renow : </strong>Règle 032</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1944,7 +1296,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>input:not([aria-label]):not([aria-labelledby]):not([type='hidden']):not([type='submit']):not([type='reset']):not([type='button']), select:not([aria-label]):not([aria-labelledby]), textarea:not([aria-label]):not([aria-labelledby])</pre></li>
                <li><strong>Explication : </strong>Le script détecte les champs sans label associé.</li>
-               <li><strong>Problème : </strong>Ajouter un label lié via l’attribut for.</li><li><strong>Raweb : </strong>Critère 11.1.1</li><li><strong>Opquast : </strong>Règle 67</li>           
+               <li><strong>Problème : </strong>Ajouter un label lié via l’attribut for.</li><li><strong>Raweb : </strong>Critère 11.1.1</li><li><strong>Opquast : </strong>Règle 67</li><li><strong>Renow : </strong>Règle 030</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1983,7 +1335,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.cmp-ratings, .cmp-form__mandatory-text, .mandatory-label</pre></li>
                <li><strong>Explication : </strong>Le test vérifie que la signification de l’astérisque est indiquée en début de formulaire.</li>
-               <li><strong>Problème : </strong>Ajouter une note expliquant l’astérisque.</li><li><strong>Raweb : </strong>Critère 11.10.1</li>           
+               <li><strong>Problème : </strong>Ajouter une note expliquant l’astérisque.</li><li><strong>Raweb : </strong>Critère 11.10.1</li><li><strong>Renow : </strong>Règle 078</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -1996,7 +1348,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>form:not(.cmp-form__single-required-field) [required]:not([required="false"]), form [aria-required="true"]</pre></li>
                <li><strong>Explication : </strong>Le script détecte les champs required non signalés visuellement.</li>
-               <li><strong>Problème : </strong>Ajouter un astérisque ou un indicateur équivalent.</li><li><strong>Raweb : </strong>Critère 11.10.1</li><li><strong>Opquast : </strong>Règle 69</li>           
+               <li><strong>Problème : </strong>Ajouter un astérisque ou un indicateur équivalent.</li><li><strong>Raweb : </strong>Critère 11.10.1</li><li><strong>Opquast : </strong>Règle 69</li><li><strong>Renow : </strong>Règle 078</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2022,7 +1374,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>2 (orange)</li>
                <li><strong>Query : </strong><pre>input[id]:not([type="button"]):not([type="reset"]):not([type="submit"]):not([type="file"]),select[id],textarea[id]</pre></li>
                <li><strong>Explication : </strong>Le script mesure la distance visuelle entre label et champ.</li>
-               <li><strong>Problème : </strong>Rapprocher label et champ pour améliorer la lisibilité.</li><li><strong>Raweb : </strong>Critère 11.5.1</li><li><strong>Opquast : </strong>Règle 75</li>           
+               <li><strong>Problème : </strong>Rapprocher label et champ pour améliorer la lisibilité.</li><li><strong>Raweb : </strong>Critère 11.5.1</li><li><strong>Opquast : </strong>Règle 75</li><li><strong>Renow : </strong>Règle 030</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2113,7 +1465,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>input[name="email"]:not([type="email"])</pre></li>
                <li><strong>Explication : </strong>Le test vérifie que le type du champ correspond à son usage.</li>
-               <li><strong>Problème : </strong>Utiliser type="email".</li>           
+               <li><strong>Problème : </strong>Utiliser type="email".</li><li><strong>Renow : </strong>Règle 042</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2126,7 +1478,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>input[name="tel"]:not([type="tel"]), input[name="phone"]:not([type="tel"])</pre></li>
                <li><strong>Explication : </strong>Le script contrôle la cohérence du type de champ.</li>
-               <li><strong>Problème : </strong>Utiliser type="tel".</li>           
+               <li><strong>Problème : </strong>Utiliser type="tel".</li><li><strong>Renow : </strong>Règle 042</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2139,7 +1491,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>input[name*="date"]:not([type="date"])</pre></li>
                <li><strong>Explication : </strong>Le test vérifie que les champs date utilisent le type approprié.</li>
-               <li><strong>Problème : </strong>Utiliser type="date".</li>           
+               <li><strong>Problème : </strong>Utiliser type="date".</li><li><strong>Renow : </strong>Règle 042</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2165,7 +1517,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>2 (orange)</li>
                <li><strong>Query : </strong><pre>*:not(.ol-attribution) &gt; :where(p, th, strong, em, a, q, blockquote, aside, ul, li, dl, dd, dt):not([aria-hidden="true"]):not(.mapboxgl-ctrl-logo):not(.at):not(.sr-only):not(.geoportail-skip):not([role="presentation"]):empty</pre></li>
                <li><strong>Explication : </strong>Le script détecte les balises sans contenu réel.</li>
-               <li><strong>Problème : </strong>Supprimer ou compléter les balises vides.</li><li><strong>Raweb : </strong>Critère 8.9.1</li>           
+               <li><strong>Problème : </strong>Supprimer ou compléter les balises vides.</li><li><strong>Raweb : </strong>Critère 8.9.1</li><li><strong>Renow : </strong>Règle 074</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2178,7 +1530,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>2 (orange)</li>
                <li><strong>Query : </strong><pre>*:not(.ol-attribution):not([aria-hidden="true"]):not(.pagination-page) &gt; :where(p, th, strong, em, a, q, blockquote, aside, ul, li, dl, dd, dt):not([aria-hidden="true"]):not(.mapboxgl-ctrl-logo):not(:empty)</pre></li>
                <li><strong>Explication : </strong>Le test identifie les balises contenant uniquement un espace ou un retour à la ligne.</li>
-               <li><strong>Problème : </strong>Retirer ou remplir les balises sans contenu utile.</li><li><strong>Raweb : </strong>Critère 8.9.1</li>           
+               <li><strong>Problème : </strong>Retirer ou remplir les balises sans contenu utile.</li><li><strong>Raweb : </strong>Critère 8.9.1</li><li><strong>Renow : </strong>Règle 074</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2204,7 +1556,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>CUSTOM</pre></li>
                <li><strong>Explication : </strong>Le test vérifie la présence d’une balise &lt;title&gt;.</li>
-               <li><strong>Problème : </strong>Ajouter un titre pertinent dans &lt;title&gt;.</li><li><strong>Raweb : </strong>Critère 8.5.1</li>           
+               <li><strong>Problème : </strong>Ajouter un titre pertinent dans &lt;title&gt;.</li><li><strong>Raweb : </strong>Critère 8.5.1</li><li><strong>Renow : </strong>Règle 034</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2230,7 +1582,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>[dir="rtl"]</pre></li>
                <li><strong>Explication : </strong>Un élément utilise un sens de lecture droite‑gauche.</li>
-               <li><strong>Problème : </strong>Vérifier la pertinence de dir="rtl".</li><li><strong>Raweb : </strong>Critère 8.10.2</li>           
+               <li><strong>Problème : </strong>Vérifier la pertinence de dir="rtl".</li><li><strong>Raweb : </strong>Critère 8.10.2</li><li><strong>Renow : </strong>Règle 062</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2256,7 +1608,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>0 (gray)</li>
                <li><strong>Query : </strong><pre>#govbar.govbar</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence obligatoire de la govbar.</li>
-               <li><strong>Problème : </strong>Ajouter la govbar si elle est requise.</li>           
+               <li><strong>Problème : </strong>Ajouter la govbar si elle est requise.</li><li><strong>Renow : </strong>Règle 007</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2334,7 +1686,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>head meta[name="description"]</pre></li>
                <li><strong>Explication : </strong>Le test vérifie la présence d’une métadonnée décrivant la page.</li>
-               <li><strong>Problème : </strong>Ajouter une meta description pertinente.</li><li><strong>Opquast : </strong>Règle 3</li>           
+               <li><strong>Problème : </strong>Ajouter une meta description pertinente.</li><li><strong>Opquast : </strong>Règle 3</li><li><strong>Renow : </strong>Règle 054</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2347,7 +1699,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>head link[rel*='icon']</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence d’un lien vers une icône de favori.</li>
-               <li><strong>Problème : </strong>Ajouter &lt;link rel="icon"&gt;.</li><li><strong>Opquast : </strong>Règle 99</li>           
+               <li><strong>Problème : </strong>Ajouter &lt;link rel="icon"&gt;.</li><li><strong>Opquast : </strong>Règle 99</li><li><strong>Renow : </strong>Règle 035</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2399,7 +1751,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>h1,h2:not(.glossary-letter),h3,h4,h5,h6</pre></li>
                <li><strong>Explication : </strong>Le script détecte des titres insuffisamment descriptifs.</li>
-               <li><strong>Problème : </strong>Reformuler le titre pour qu’il soit informatif.</li>           
+               <li><strong>Problème : </strong>Reformuler le titre pour qu’il soit informatif.</li><li><strong>Renow : </strong>Règle 001</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2412,7 +1764,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>h1,h2:not(.glossary-letter),h3,h4,h5,h6</pre></li>
                <li><strong>Explication : </strong>Le test identifie des titres écrits en majuscules.</li>
-               <li><strong>Problème : </strong>Utiliser CSS (text-transform) plutôt que du texte en majuscules.</li><li><strong>Opquast : </strong>Règle 187</li>           
+               <li><strong>Problème : </strong>Utiliser CSS (text-transform) plutôt que du texte en majuscules.</li><li><strong>Opquast : </strong>Règle 187</li><li><strong>Renow : </strong>Règle 073</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2425,7 +1777,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.search-meta-count</pre></li>
                <li><strong>Explication : </strong>Le script vérifie que la page de résultats affiche le total.</li>
-               <li><strong>Problème : </strong>Afficher le nombre de résultats et de pages.</li><li><strong>Opquast : </strong>Règle 13</li>           
+               <li><strong>Problème : </strong>Afficher le nombre de résultats et de pages.</li><li><strong>Opquast : </strong>Règle 13</li><li><strong>Renow : </strong>Règle 020</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2490,7 +1842,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>html[lang="fr"] header .logo a</pre></li>
                <li><strong>Explication : </strong>Le script vérifie que le lien du logo suit la nomenclature « XXX – Accueil ».</li>
-               <li><strong>Problème : </strong>Adapter le title selon la nomenclature.</li>           
+               <li><strong>Problème : </strong>Adapter le title selon la nomenclature.</li><li><strong>Renow : </strong>Règle 069</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2542,7 +1894,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>0 (gray)</li>
                <li><strong>Query : </strong><pre>CUSTOM</pre></li>
                <li><strong>Explication : </strong>Le script vérifie que l’URL respecte la nomenclature officielle (*.public.lu).</li>
-               <li><strong>Problème : </strong>Corriger l’URL pour respecter le formalisme.</li>           
+               <li><strong>Problème : </strong>Corriger l’URL pour respecter le formalisme.</li><li><strong>Renow : </strong>Règle 048</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2631,7 +1983,7 @@ body.tab-style-injected *:focus {
                <li><strong>Code : </strong>06-D</li>
                <li><strong>Catégorie : </strong>dev</li>
                <li><strong>Criticité : </strong>1 (yellow)</li>
-               <li><strong>Query : </strong><pre>nav.page-headernav[role="navigation"],nav.headernav[role="navigation"],nav#headernav[role="navigation"],#headernav.page-headernav &gt; nav</pre></li>
+               <li><strong>Query : </strong><pre>nav.page-headernav[role="navigation"],nav.headernav[role="navigation"],nav#headernav[role="navigation"],#headernav.page-headernav &gt; nav,nav.page-headernavmobile[role="navigation"]</pre></li>
                <li><strong>Explication : </strong>La navigation doit utiliser les balises sémantiques appropriées.</li>
                <li><strong>Problème : </strong>Placer la navigation dans &lt;nav&gt; avec un aria-label clair.</li><li><strong>Raweb : </strong>Critère 9.2.1</li>           
           </ul>
@@ -2724,7 +2076,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>footer a[href$="accessibilite.html"], footer a[href$="barrierefreiheit.html"], footer a[href$="accessibility.html"], .navigation-container--support a[href$="accessibilite.html"], .navigation-container--support a[href$="barrierefreiheit.html"], .navigation-container--support a[href$="accessibility.html"]</pre></li>
                <li><strong>Explication : </strong>La déclaration d’accessibilité doit être accessible depuis le footer.</li>
-               <li><strong>Problème : </strong>Ajouter un lien vers la déclaration d’accessibilité.</li>           
+               <li><strong>Problème : </strong>Ajouter un lien vers la déclaration d’accessibilité.</li><li><strong>Renow : </strong>Règle 060</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -2880,7 +2232,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>abbr:not([title])</pre></li>
                <li><strong>Explication : </strong>Les abréviations doivent être compréhensibles.</li>
-               <li><strong>Problème : </strong>Utiliser &lt;abbr title='…'&gt;.</li>           
+               <li><strong>Problème : </strong>Utiliser &lt;abbr title='…'&gt;.</li><li><strong>Renow : </strong>Règle 029</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -3244,7 +2596,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>a.back</pre></li>
                <li><strong>Explication : </strong>Les pages longues doivent proposer un retour rapide en haut.</li>
-               <li><strong>Problème : </strong>Ajouter un bouton Back-to-top.</li>           
+               <li><strong>Problème : </strong>Ajouter un bouton Back-to-top.</li><li><strong>Renow : </strong>Règle 011</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -3283,7 +2635,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>2 (orange)</li>
                <li><strong>Query : </strong><pre>nav[id^=breadcrumb-], nav.cmp-breadcrumb</pre></li>
                <li><strong>Explication : </strong>Le fil d’Ariane aide à situer l’utilisateur dans l’arborescence.</li>
-               <li><strong>Problème : </strong>Ajouter un fil d’Ariane structuré.</li>           
+               <li><strong>Problème : </strong>Ajouter un fil d’Ariane structuré.</li><li><strong>Renow : </strong>Règle 010</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -3517,7 +2869,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>2 (orange)</li>
                <li><strong>Query : </strong><pre>input[type="search"]</pre></li>
                <li><strong>Explication : </strong>Le titre doit décrire clairement la fonction de recherche.</li>
-               <li><strong>Problème : </strong>Adapter le titre pour refléter la fonction réelle.</li>           
+               <li><strong>Problème : </strong>Adapter le titre pour refléter la fonction réelle.</li><li><strong>Renow : </strong>Règle 009</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4128,7 +3480,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>header nav .nav-item.has-subnav &gt; ul</pre></li>
                <li><strong>Explication : </strong>Un sous-menu doit proposer plusieurs choix.</li>
-               <li><strong>Problème : </strong>Ajouter des éléments ou supprimer le sous-menu.</li>           
+               <li><strong>Problème : </strong>Ajouter des éléments ou supprimer le sous-menu.</li><li><strong>Renow : </strong>Règle 002</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4141,7 +3493,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>header nav</pre></li>
                <li><strong>Explication : </strong>Les doublons nuisent à la compréhension de la navigation.</li>
-               <li><strong>Problème : </strong>Renommer les éléments pour éviter les doublons.</li>           
+               <li><strong>Problème : </strong>Renommer les éléments pour éviter les doublons.</li><li><strong>Renow : </strong>Règle 003</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4154,7 +3506,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>mark</pre></li>
                <li><strong>Explication : </strong>Le terme recherché doit être visuellement identifiable.</li>
-               <li><strong>Problème : </strong>Utiliser text-decoration-style: dotted.</li>           
+               <li><strong>Problème : </strong>Utiliser text-decoration-style: dotted.</li><li><strong>Renow : </strong>Règle 023</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4167,7 +3519,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>footer .footer__copyright a.renow[href="https://renow.public.lu"] img[alt="Renow"]</pre></li>
                <li><strong>Explication : </strong>Le footer doit contenir le logo Renow pointant vers renow.public.lu.</li>
-               <li><strong>Problème : </strong>Ajouter le logo Renow avec le lien correct.</li>           
+               <li><strong>Problème : </strong>Ajouter le logo Renow avec le lien correct.</li><li><strong>Renow : </strong>Règle 055</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4180,7 +3532,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>body,h1,h2,h3,p,li,strong,em,a,dt,dd,span:not(.checkA11YSpan)</pre></li>
                <li><strong>Explication : </strong>Une famille générique doit conclure la liste pour garantir un fallback correct.</li>
-               <li><strong>Problème : </strong>Terminer font-family par serif ou sans-serif.</li>           
+               <li><strong>Problème : </strong>Terminer font-family par serif ou sans-serif.</li><li><strong>Renow : </strong>Règle 041</li>           
           </ul>
       </div></details></div><h3>8 - Tableau</h3><div class="accordion-wrapper"><details class="accordion">
       <summary class="accordion-summary">
@@ -4193,7 +3545,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>:where([role="table"],table:not([role="presentation"])) th:not([scope="row"]):not([scope="col"]):not([id]):not([headers]):not([role="rowheader"]):not([role="columnheader"]):not(:only-child)</pre></li>
                <li><strong>Explication : </strong>Le script vérifie que les tableaux utilisent correctement les éléments sémantiques, notamment les &lt;th&gt; avec un scope défini.</li>
-               <li><strong>Problème : </strong>Ajouter scope="col" ou scope="row" sur les &lt;th&gt;.</li><li><strong>Raweb : </strong>Critère 5.7.1</li>           
+               <li><strong>Problème : </strong>Ajouter scope="col" ou scope="row" sur les &lt;th&gt;.</li><li><strong>Raweb : </strong>Critère 5.7.1</li><li><strong>Renow : </strong>Règle 028</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4284,7 +3636,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>.cmp-sitemap a[href*="contact"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence des pages obligatoires dans le plan du site.</li>
-               <li><strong>Problème : </strong>Ajouter la page Contact ou confirmer que son absence est volontaire.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter la page Contact ou confirmer que son absence est volontaire.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 061</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4297,7 +3649,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.page-footernav a[href*="contact"][href$=".html"], .nav--support a[href*="contact"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le test contrôle la présence des liens obligatoires dans le footer.</li>
-               <li><strong>Problème : </strong>Ajouter un lien Contact dans le footer.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter un lien Contact dans le footer.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 060</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4310,7 +3662,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>.cmp-sitemap a[href*="accessibilite"][href$=".html"],.cmp-sitemap a[href*="accessibility"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence des pages réglementaires dans le plan du site.</li>
-               <li><strong>Problème : </strong>Ajouter la page Accessibilité.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter la page Accessibilité.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 061</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4323,7 +3675,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.page-footernav a[href*="accessibilite"][href$=".html"], .nav--support a[href*="accessibilite"][href$=".html"],.page-footernav a[href*="accessibility"][href$=".html"], .nav--support a[href*="accessibility"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le test contrôle la présence des liens obligatoires dans le footer.</li>
-               <li><strong>Problème : </strong>Ajouter un lien Accessibilité dans le footer.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter un lien Accessibilité dans le footer.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 060</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4336,7 +3688,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>.cmp-sitemap a[href*="aspects-legaux"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence des pages légales obligatoires.</li>
-               <li><strong>Problème : </strong>Ajouter la page Aspects légaux.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter la page Aspects légaux.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 061</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4349,7 +3701,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.page-footernav a[href*="aspects-legaux"][href$=".html"], .nav--support a[href*="aspects-legaux"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le test contrôle la présence des liens légaux dans le footer.</li>
-               <li><strong>Problème : </strong>Ajouter un lien Aspects légaux.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter un lien Aspects légaux.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 060</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4362,7 +3714,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>.cmp-sitemap a[href*="a-propos"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence des pages institutionnelles.</li>
-               <li><strong>Problème : </strong>Ajouter la page À propos.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter la page À propos.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 061</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4375,7 +3727,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.page-footernav a[href*="a-propos"][href$=".html"], .nav--support a[href*="a-propos"][href$=".html"]</pre></li>
                <li><strong>Explication : </strong>Le test contrôle la présence des liens institutionnels dans le footer.</li>
-               <li><strong>Problème : </strong>Ajouter un lien À propos.</li><li><strong>Raweb : </strong>Critère 12.3.1</li>           
+               <li><strong>Problème : </strong>Ajouter un lien À propos.</li><li><strong>Raweb : </strong>Critère 12.3.1</li><li><strong>Renow : </strong>Règle 060</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4529,9 +3881,9 @@ body.tab-style-injected *:focus {
                <li><strong>Code : </strong>09-F</li>
                <li><strong>Catégorie : </strong>man</li>
                <li><strong>Criticité : </strong>1 (yellow)</li>
-               <li><strong>Query : </strong><pre>*:not(.cmp-text) &gt; *:not(p) &gt; a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link):not(.geoportail-skip):not(.cmp-image__link), button, input:not([type="file"]):not([type="radio"]):not([type="checkbox"]), select, details, textarea, [tabindex="0"], [tabindex="-1"]</pre></li>
+               <li><strong>Query : </strong><pre>*:not(.cmp-text) &gt; *:not(p):not(.frc-banner) &gt; a:not(.feed-item-timing):not(.cmp-breadcrumb__item-link):not(.geoportail-skip):not(.cmp-image__link), button, input:not([type="file"]):not([type="radio"]):not([type="checkbox"]), select, details, textarea, [tabindex="0"], [tabindex="-1"]</pre></li>
                <li><strong>Explication : </strong>Le script vérifie que les zones cliquables respectent la taille minimale recommandée.</li>
-               <li><strong>Problème : </strong>Atteindre une taille minimale de 24×24 px.</li><li><strong>Opquast : </strong>Règle 181</li>           
+               <li><strong>Problème : </strong>Atteindre une taille minimale de 24×24 px.</li><li><strong>Opquast : </strong>Règle 181</li><li><strong>Renow : </strong>Règle 019</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4544,7 +3896,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>2 (orange)</li>
                <li><strong>Query : </strong><pre>.cmp-error404</pre></li>
                <li><strong>Explication : </strong>La page d’erreur doit contenir certains éléments obligatoires.</li>
-               <li><strong>Problème : </strong>Ajouter recherche, lien accueil, plan du site et page contact.</li>           
+               <li><strong>Problème : </strong>Ajouter recherche, lien accueil, plan du site et page contact.</li><li><strong>Renow : </strong>Règle 039</li>           
           </ul>
       </div></details></div><h3>10 - Balises/attributs obsolètes</h3><div class="accordion-wrapper"><details class="accordion">
       <summary class="accordion-summary">
@@ -4581,7 +3933,7 @@ body.tab-style-injected *:focus {
                <li><strong>Code : </strong>10-C</li>
                <li><strong>Catégorie : </strong>nc</li>
                <li><strong>Criticité : </strong>3 (red)</li>
-               <li><strong>Query : </strong><pre>link[rev], a[rev],link[charset], a[charset],a[shape],a[coords],img[longdesc], iframe[longdesc],link[target],area[nohref],head[profile],html[version],img[name],meta[scheme],object[archive],object[classid],object[codebase],object[codetype],object[declare],object[standby],param[valuetype],param[type],td[axis],t[axis],td[abbr], t[abbr],td[scope],caption[align], iframe[align], img[align], input[align], object[align], legend[align], table[align], hr[align], div[align], h1[align], h2[align], h3[align], h4[align], h5[align], h6[align], p[align], col[align], colgroup[align], tbody[align], td[align], tfoot[align], th[align], thead[align], tr[align],body[alink],body[link],body[vlink],body[text],body[background],table[bgcolor], tr[bgcolor], td[bgcolor], th[bgcolor], body[bgcolor],table[border], object[border],table[cellpadding],table[cellspacing],col[char], colgroup[char], tbody[char], td[char], tfoot[char], th[char], thead[char],tr[char],col[charoff], colgroup[charoff], tbody[charoff], td[charoff], tfoot[charoff], th[charoff], thead[charoff], tr[charoff],br[clear],dl[compact], menu[compact], ol[compact], ul[compact],table[frame],iframe[frameborder],img[hspace], object[hspace],img[vspace], object[vspace],iframe[marginheight],iframe[marginwidth],hr[noshade],td[nowrap], th[nowrap],table[rules],iframe[scrolling],hr[size],li[type], ol[type], ul[type],col[valign], colgroup[valign], tbody[valign], td[valign], tfoot[valign], th[valign], thead[valign], tr[valign],hr[width], table[width], td[width], th[width], col[width], colgroup[width], pre[width]</pre></li>
+               <li><strong>Query : </strong><pre>link[rev], a[rev],link[charset], a[charset],a[shape],a[coords],img[longdesc], iframe[longdesc],link[target],area[nohref],head[profile],html[version],img[name],meta[scheme],object[archive],object[classid],object[codebase],object[codetype],object[declare],object[standby],param[valuetype],param[type],td[axis],t[axis],td[abbr], t[abbr],td[scope],caption[align], iframe[align], img[align], input[align], object[align], legend[align], table[align], hr[align], div[align], h1[align], h2[align], h3[align], h4[align], h5[align], h6[align], p[align], col[align], colgroup[align], tbody[align], td[align], tfoot[align], th[align], thead[align], tr[align],body[alink],body[link],body[vlink],body[text],body[background],table[bgcolor], tr[bgcolor], td[bgcolor], th[bgcolor], body[bgcolor],table[border], object[border],table[cellpadding],table[cellspacing],col[char], colgroup[char], tbody[char], td[char], tfoot[char], th[char], thead[char],tr[char],col[charoff], colgroup[charoff], tbody[charoff], td[charoff], tfoot[charoff], th[charoff], thead[charoff], tr[charoff],br[clear],dl[compact], menu[compact], ol[compact], ul[compact],table[frame],iframe[frameborder]:not(.frc-i-widget),img[hspace], object[hspace],img[vspace], object[vspace],iframe[marginheight],iframe[marginwidth],hr[noshade],td[nowrap], th[nowrap],table[rules],iframe[scrolling],hr[size],li[type], ol[type], ul[type],col[valign], colgroup[valign], tbody[valign], td[valign], tfoot[valign], th[valign], thead[valign], tr[valign],hr[width], table[width], td[width], th[width], col[width], colgroup[width], pre[width]</pre></li>
                <li><strong>Explication : </strong>Le script détecte les attributs HTML non conformes aux standards actuels.</li>
                <li><strong>Problème : </strong>Retirer bgcolor, align, border… et utiliser du CSS.</li>           
           </ul>
@@ -4594,7 +3946,7 @@ body.tab-style-injected *:focus {
                <li><strong>Code : </strong>10-D</li>
                <li><strong>Catégorie : </strong>nc</li>
                <li><strong>Criticité : </strong>3 (red)</li>
-               <li><strong>Query : </strong><pre>[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [color], [compact], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), *:not(symbol) &gt; *:not(g):not(svg[aria-hidden="true"]) &gt; [width]:not(img):not(object):not(embed):not(canvas):not(svg):not(rect):not(iframe),*:not(symbol) &gt; *:not(g):not(svg[aria-hidden="true"]) &gt; [height]:not(img):not(object):not(embed):not(canvas):not(svg):not(rect):not(iframe)</pre></li>
+               <li><strong>Query : </strong><pre>[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [color], [compact], [frameborder]:not(.frc-i-widget), [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), *:not(symbol) &gt; *:not(g):not(svg[aria-hidden="true"]) &gt; [width]:not(img):not(object):not(embed):not(canvas):not(svg):not(rect):not(iframe),*:not(symbol) &gt; *:not(g):not(svg[aria-hidden="true"]) &gt; [height]:not(img):not(object):not(embed):not(canvas):not(svg):not(rect):not(iframe)</pre></li>
                <li><strong>Explication : </strong>Le test identifie les attributs servant uniquement à la mise en forme visuelle.</li>
                <li><strong>Problème : </strong>Supprimer ces attributs et utiliser des classes CSS.</li><li><strong>Raweb : </strong>Critère 10.1.2</li>           
           </ul>
@@ -4609,7 +3961,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>html[lang]</pre></li>
                <li><strong>Explication : </strong>Le script vérifie que la langue principale de la page est définie sur la balise &lt;html&gt;.</li>
-               <li><strong>Problème : </strong>Ajouter lang='fr' (ou la langue principale) sur &lt;html&gt;.</li><li><strong>Raweb : </strong>Critère 8.3.1</li><li><strong>Opquast : </strong>Règle 125</li>           
+               <li><strong>Problème : </strong>Ajouter lang='fr' (ou la langue principale) sur &lt;html&gt;.</li><li><strong>Raweb : </strong>Critère 8.3.1</li><li><strong>Opquast : </strong>Règle 125</li><li><strong>Renow : </strong>Règle 071</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4635,7 +3987,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>2 (orange)</li>
                <li><strong>Query : </strong><pre>.cmp-text, .cmp-focus-list-description</pre></li>
                <li><strong>Explication : </strong>Le script détecte des portions de texte probablement dans une autre langue.</li>
-               <li><strong>Problème : </strong>Ajouter lang='en', 'de', etc. sur les passages concernés.</li>           
+               <li><strong>Problème : </strong>Ajouter lang='en', 'de', etc. sur les passages concernés.</li><li><strong>Renow : </strong>Règle 072</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4752,7 +4104,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>main .cmp-section *:not(.cmp-contentbox) &gt; .cmp-text p</pre></li>
                <li><strong>Explication : </strong>Le test vérifie que le texte principal respecte les tailles minimales pour une bonne lisibilité.</li>
-               <li><strong>Problème : </strong>Utiliser 16px sur desktop et 14px sur mobile.</li>           
+               <li><strong>Problème : </strong>Utiliser 16px sur desktop et 14px sur mobile.</li><li><strong>Renow : </strong>Règle 018</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4763,7 +4115,7 @@ body.tab-style-injected *:focus {
                <li><strong>Code : </strong>13-B</li>
                <li><strong>Catégorie : </strong>nth</li>
                <li><strong>Criticité : </strong>1 (yellow)</li>
-               <li><strong>Query : </strong><pre>p, span, li:not(.cmp-carousel__indicator), strong, h1, h2, h3, h4, h5, small, a, button, blockquote, q, dd, dt, label</pre></li>
+               <li><strong>Query : </strong><pre>p, span, li:not(.cmp-carousel__indicator), strong, h1, h2, h3, h4, h5, small, *:not(.frc-banner) &gt; a, button, blockquote, q, dd, dt, label</pre></li>
                <li><strong>Explication : </strong>Le script contrôle que les textes secondaires ne descendent pas sous la taille recommandée.</li>
                <li><strong>Problème : </strong>Ne pas descendre sous 12px.</li>           
           </ul>
@@ -4778,7 +4130,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.basic-information.organization-name</pre></li>
                <li><strong>Explication : </strong>Le test vérifie la présence des informations obligatoires dans la déclaration d’accessibilité.</li>
-               <li><strong>Problème : </strong>Ajouter l’organisme responsable.</li>           
+               <li><strong>Problème : </strong>Ajouter l’organisme responsable.</li><li><strong>Renow : </strong>Règle 059</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4791,7 +4143,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.basic-information.website-name</pre></li>
                <li><strong>Explication : </strong>Le script contrôle que le nom du site est bien indiqué dans la déclaration.</li>
-               <li><strong>Problème : </strong>Ajouter le nom du site.</li>           
+               <li><strong>Problème : </strong>Ajouter le nom du site.</li><li><strong>Renow : </strong>Règle 059</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4804,7 +4156,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.basic-information.conformance-status</pre></li>
                <li><strong>Explication : </strong>Le test vérifie que le niveau de conformité est renseigné.</li>
-               <li><strong>Problème : </strong>Indiquer si le site est conforme, partiellement conforme ou non conforme.</li>           
+               <li><strong>Problème : </strong>Indiquer si le site est conforme, partiellement conforme ou non conforme.</li><li><strong>Renow : </strong>Règle 059</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4817,7 +4169,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.basic-information.statement-created-date</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence de la date de rédaction ou de mise à jour.</li>
-               <li><strong>Problème : </strong>Ajouter la date de la déclaration.</li>           
+               <li><strong>Problème : </strong>Ajouter la date de la déclaration.</li><li><strong>Renow : </strong>Règle 059</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4830,7 +4182,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre>.basic-information.feedback &gt; .email</pre></li>
                <li><strong>Explication : </strong>Le test contrôle la présence d’un moyen de contact pour signaler un problème d’accessibilité.</li>
-               <li><strong>Problème : </strong>Ajouter une adresse email de contact.</li>           
+               <li><strong>Problème : </strong>Ajouter une adresse email de contact.</li><li><strong>Renow : </strong>Règle 059</li>           
           </ul>
       </div></details></div><h3>14 - Titres</h3><div class="accordion-wrapper"><details class="accordion">
       <summary class="accordion-summary">
@@ -4880,7 +4232,7 @@ body.tab-style-injected *:focus {
                <li><strong>Code : </strong>14-D</li>
                <li><strong>Catégorie : </strong>nth</li>
                <li><strong>Criticité : </strong>1 (yellow)</li>
-               <li><strong>Query : </strong><pre>p:not(.cmp-form__mandatory-text) &gt; :where(strong, b):first-child ,span &gt; :where(strong, b):first-child ,div &gt; :where(strong, b):first-child , *:not(.accordionItem) &gt; *:not(figcaption):not(.article-summary):not(.article-metas):not(.search-metas):not(.cmp-grid__textContainer):not(.feed-item-content):not(.meta-themes):not(.description):not(.meta-published-update) &gt; p:not(.cmp-lastupdate):not(.cmp-form__mandatory-text):not(.at):not(.feed-item-author):not(.orejime-Notice-description):first-child</pre></li>
+               <li><strong>Query : </strong><pre>p:not(.cmp-form__mandatory-text) &gt; :where(strong, b):first-child ,span &gt; :where(strong, b):first-child ,div &gt; :where(strong, b):first-child , *:not(.accordionItem) &gt; *:not(figcaption):not(.article-summary):not(.article-metas):not(.search-metas):not(.cmp-grid__textContainer):not(.feed-item-content):not(.meta-themes):not(.description):not(.meta-published-update) &gt; p:not([role='heading']):not(.cmp-lastupdate):not(.cmp-form__mandatory-text):not(.at):not(.feed-item-author):not(.orejime-Notice-description):first-child</pre></li>
                <li><strong>Explication : </strong>Le test identifie du texte visuellement présenté comme un titre mais sans balise de titre.</li>
                <li><strong>Problème : </strong>Utiliser des balises &lt;h1&gt; à &lt;h6&gt; pour les titres visuels.</li><li><strong>Raweb : </strong>Critère 9.1.3</li>           
           </ul>
@@ -4895,7 +4247,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>:where(h1,h2,h3,h4,h5,h6,[role="heading"]):not([aria-hidden])</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la cohérence de la structure des titres.</li>
-               <li><strong>Problème : </strong>Respecter la hiérarchie (pas de H1 → H3 sans H2).</li><li><strong>Raweb : </strong>Critère 9.1.1</li>           
+               <li><strong>Problème : </strong>Respecter la hiérarchie (pas de H1 → H3 sans H2).</li><li><strong>Raweb : </strong>Critère 9.1.1</li><li><strong>Renow : </strong>Règle 070</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4934,7 +4286,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>a[target="_blank"][href^="http://"]</pre></li>
                <li><strong>Explication : </strong>Le test détecte les contenus mixtes, qui compromettent la sécurité d’une page HTTPS.</li>
-               <li><strong>Problème : </strong>Remplacer toutes les ressources HTTP par des ressources HTTPS.</li><li><strong>Opquast : </strong>Règle 195</li>           
+               <li><strong>Problème : </strong>Remplacer toutes les ressources HTTP par des ressources HTTPS.</li><li><strong>Opquast : </strong>Règle 195</li><li><strong>Renow : </strong>Règle 050</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4947,7 +4299,7 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>3 (red)</li>
                <li><strong>Query : </strong><pre></pre></li>
                <li><strong>Explication : </strong>Le script vérifie que les pages, formulaires et liens utilisent HTTPS pour protéger les données.</li>
-               <li><strong>Problème : </strong>Rediriger automatiquement vers la version HTTPS.</li><li><strong>Opquast : </strong>Règle 192</li>           
+               <li><strong>Problème : </strong>Rediriger automatiquement vers la version HTTPS.</li><li><strong>Opquast : </strong>Règle 192</li><li><strong>Renow : </strong>Règle 050</li>           
           </ul>
       </div></details><details class="accordion">
       <summary class="accordion-summary">
@@ -4999,20 +4351,17 @@ body.tab-style-injected *:focus {
                <li><strong>Criticité : </strong>1 (yellow)</li>
                <li><strong>Query : </strong><pre>#orejime</pre></li>
                <li><strong>Explication : </strong>Le script vérifie la présence de la modale obligatoire pour la gestion du consentement.</li>
-               <li><strong>Problème : </strong>Ajouter la modale Orejime pour la gestion des cookies.</li>           
+               <li><strong>Problème : </strong>Ajouter la modale Orejime pour la gestion des cookies.</li><li><strong>Renow : </strong>Règle 056</li>           
           </ul>
       </div></details></div></div></div>
 
 	<h2 tabindex="-1">Information</h2>
 	<ul><li>Nombre de tests : 314</li>
-	  <li>Version : 2.5.0</li>
-	  <li>Date : 20/05/2026</li></ul>
+	  <li>Version : 2.5.1</li>
+	  <li>Date : 29/07/2026</li></ul>
 
         <h2 tabindex="-1">Licence</h2>
         <p>Copyright : Nicolas AMBROISE - CTIE - Licence MIT</p>
       </article>
     </main>
-    
-  
-
 </body></html>
